@@ -75,12 +75,16 @@
       <span class="htitle">CVA Scoresheet</span>
       <span class="hdesc">How to fill in the CVA county league scoresheet, with an animated set.</span>
     </button>
+    <button class="hcard" type="button" data-key="fivbsheet" aria-pressed="false">
+      <span class="htitle">FIVB Scoresheet</span>
+      <span class="hdesc">How to fill in the FIVB international scoresheet, following the FIVB instructions, with an animated set.</span>
+    </button>
     <button class="hcard" type="button" data-key="rules" aria-pressed="false">
       <span class="htitle">CVA League Rules</span>
       <span class="hdesc">Match format, league points, postponements, referees and results, in plain words.</span>
     </button>
     <button class="hcard" type="button" data-key="vbrules" aria-pressed="false">
-      <span class="htitle">Volleyball England Rules</span>
+      <span class="htitle">FIVB Volleyball Rules</span>
       <span class="hdesc">Faults, refereeing and the official hand signals (FIVB rules 2025&ndash;2028).</span>
     </button>
     <button class="hcard" type="button" data-key="about" aria-pressed="false">
@@ -3592,8 +3596,8 @@ window.VBA = (function(){
   .fb-sets{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#E1262F;font-weight:700}
   /* steps */
   .steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:12px}
-  .steps li{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px 12px 50px;position:relative}
-  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:12px;top:12px;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center}
+  .steps > li{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px 12px 50px;position:relative}
+  .steps > li::before{counter-increment:s;content:counter(s);position:absolute;left:12px;top:12px;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center}
   .steps h3{font-family:"Barlow Condensed",Arial,sans-serif;font-size:19px;text-transform:uppercase;margin:0 0 4px;line-height:1.1}
   .steps p,.steps ul{margin:0;font-size:14.5px}
   .steps ul{padding-left:18px}
@@ -4025,6 +4029,808 @@ window.VBA = (function(){
 %%VBLT%%/script>
 %%VBLT%%/body>
 %%VBLT%%/html>
+</script><script type="text/plain" id="src-fivbsheet">%%VBLT%%!DOCTYPE html>
+%%VBLT%%html lang="en">
+%%VBLT%%head>
+%%VBLT%%meta charset="utf-8">
+%%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
+%%VBLT%%meta name="color-scheme" content="light">
+%%VBLT%%title>FIVB Scoresheet%%VBLT%%/title>
+%%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+%%VBLT%%style>
+  :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--blue:#24507E;--accent:#F0A500;--pen:#1F49B0;--plc:#17803D;--scc:#C62828;--k:#1E1E1E;--grey:#E9E9E6}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Barlow","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.5}
+  header{background:linear-gradient(100deg,#16283C 0%,#24507E 100%);color:#fff;border-bottom:6px solid var(--accent)}
+  .hin{max-width:1180px;margin:0 auto;padding:26px 20px 22px}
+  h1{font-family:"Barlow Condensed",Arial,sans-serif;font-size:clamp(28px,5vw,42px);margin:0;text-transform:uppercase;line-height:1}
+  h1 em{display:block;font-style:normal;font-weight:500;font-size:.42em;color:#A9C4E0;letter-spacing:.04em;margin-top:8px;text-transform:none}
+  h1 em b{color:var(--accent);font-weight:500}
+  h2{font-family:"Barlow Condensed",Arial,sans-serif;font-size:24px;margin:0 0 8px;text-transform:uppercase;letter-spacing:.02em;color:var(--blue)}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-top:22px}
+  .lead{margin:0;color:var(--soft)}
+  .cap{min-height:48px;margin:12px 0 0;padding:10px 14px;background:#FFF7E3;border-left:4px solid var(--accent);border-radius:6px;font-size:15px}
+  .ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+  .ctrl button{font:inherit;font-weight:600;font-size:14px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:6px;padding:6px 12px;cursor:pointer}
+  .ctrl button.main{background:var(--blue);border-color:var(--blue);color:#fff;min-width:84px}
+  .ctrl button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+  .prog{height:4px;background:var(--line);border-radius:2px;margin-top:10px;overflow:hidden}
+  .prog i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+
+  /* the paper scoresheet, drawn after the FIVB international scoresheet */
+  .sheet{position:relative;margin-top:16px;background:#F6F6F3;border:1px solid #C9C9C4;border-radius:3px;padding:10px;font-family:Arial,Helvetica,sans-serif;color:var(--k);box-shadow:0 2px 8px rgba(0,0,0,.08);font-size:11px}
+  .sheet b,.sheet .t{font-weight:700}
+  .bxs{border:1.5px solid var(--k);background:#fff}
+  .f{display:flex;align-items:center;gap:5px;padding:2px 6px;min-height:28px;min-width:0}
+  .f > .hw{flex:1;min-width:0}
+  .top{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1.15fr);border:1.5px solid var(--k);background:#fff}
+  .top > div{border-right:1.5px solid var(--k);min-width:0}
+  .top > div:last-child{border-right:0}
+  .top .f + .f{border-top:1px solid var(--k)}
+  .lbl{font-size:10px;font-weight:700;white-space:nowrap}
+  .chk{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;margin-right:6px}
+  .chk i{position:relative;display:inline-block;width:15px;height:15px;border:1.5px solid var(--k);background:#fff}
+  .brand{display:flex;flex-direction:column;justify-content:center;padding:6px 10px;gap:2px}
+  .brand .fv{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:26px;letter-spacing:.04em;line-height:1}
+  .brand .is{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:20px;text-transform:uppercase;line-height:1.05}
+  .circ{position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;width:26px;height:26px;border:1.5px solid var(--k);border-radius:50%;background:#fff;vertical-align:middle}
+  .circ > small{position:absolute;top:-1px;left:50%;transform:translateX(-50%);font-size:6px;line-height:1;font-weight:700;color:#777}
+  .teamsrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr) auto;align-items:center;gap:6px}
+  .teamsrow .vs{font-weight:700;font-size:12px;text-align:center;line-height:1}
+  .teamsrow .vs small{display:block;font-size:9px;font-weight:400}
+
+  /* set block */
+  .setblk{margin-top:8px;display:grid;grid-template-columns:30px minmax(0,1fr) minmax(0,1fr);border:1.5px solid var(--k);background:var(--grey)}
+  .setlab{display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:20px;line-height:1.05;border-right:1.5px solid var(--k);background:#fff}
+  .side{min-width:0;border-right:1.5px solid var(--k);display:flex;flex-direction:column}
+  .side:last-child{border-right:0}
+  .sh{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:4px;align-items:center;padding:3px 4px;border-bottom:1.5px solid var(--k);background:#fff}
+  .tbox{border:1.5px solid var(--k);display:flex;align-items:center;gap:4px;padding:0 5px;min-height:26px;min-width:0}
+  .tbox .lbl{font-size:8.5px;line-height:1}
+  .tm{min-width:52px;justify-content:center}
+  .srs{display:flex;gap:2px}
+  .srs .circ{width:20px;height:20px;font-size:10px;font-weight:700}
+  .body{display:grid;grid-template-columns:52px minmax(0,1fr) 76px;flex:1}
+  .labs{display:grid;grid-template-rows:20px 30px 24px 21px 21px repeat(4,22px);border-right:1.5px solid var(--k);background:#fff}
+  .labs > div{display:flex;align-items:center;padding:0 3px;font-size:8.5px;line-height:1.05;font-weight:700;border-bottom:1px solid var(--k)}
+  .labs > div:last-child{border-bottom:0}
+  .labs .sr4{grid-row:span 4;border-bottom:0}
+  .cols{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));background:#fff}
+  .col{border-right:1.5px solid var(--k);display:grid;grid-template-rows:20px 30px 24px 21px 21px repeat(4,22px);min-width:0}
+  .col:last-child{border-right:1.5px solid var(--k)}
+  .col > div{position:relative;border-bottom:1px solid var(--k);display:flex;align-items:center;justify-content:center;min-width:0}
+  .col .rn{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:600;font-size:17px;background:var(--grey)}
+  .col .stp{border-bottom-width:1.5px}
+  .col .stp .hw{font-size:22px}
+  .col .ac{color:#999;font-weight:700}
+  .col .ac > .hw:not(:empty) ~ i{display:none}
+  .col > .sv{display:grid;grid-template-columns:1fr 1fr;padding:0;border-bottom:0}
+  .col > .sv:not(:last-child){border-bottom:1px solid var(--k)}
+  .sv > div{position:relative;height:100%;min-width:0}
+  .sv > div + div{border-left:1px solid var(--k)}
+  .no{position:absolute;left:1px;top:0;font-size:6.5px;line-height:1;font-weight:400;color:#555}
+  .pcol{display:flex;flex-direction:column;background:#fff;min-width:0}
+  .pts{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(12,1fr);grid-auto-flow:column;flex:1;font-size:8.5px;text-align:center;padding:2px 1px;row-gap:0;background:var(--grey)}
+  .pts span{position:relative;display:flex;align-items:center;justify-content:center;line-height:1}
+  .pts span.hit::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:2px;margin:-1px 0 0 -6px;background:var(--scc);transform:rotate(-60deg);border-radius:1px}
+  .pts span.hit.wr::after{animation:slash var(--d,.3s) ease-out var(--dl,0s) both}
+  @keyframes slash{from{transform:rotate(-60deg) scaleX(0)}to{transform:rotate(-60deg) scaleX(1)}}
+  .pts span.cx::after{content:"";position:absolute;left:12%;right:12%;top:50%;height:1.5px;margin-top:-.75px;background:var(--pen);border-radius:1px}
+  .pts span.cx.wr::after{animation:strike var(--d,.2s) ease-out both;transform-origin:left}
+  @keyframes strike{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .ph{font-size:9px;font-weight:700;text-align:center;border-bottom:1px solid var(--k);line-height:18px}
+  .tt{display:grid;grid-template-columns:auto 1fr;border-top:1.5px solid var(--k)}
+  .tt > b{font-size:10px;display:flex;align-items:center;padding:0 3px;border-right:1px solid var(--k)}
+  .tt > div{display:grid;grid-template-rows:20px 20px}
+  .tt > div > span{position:relative;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--k);color:#999;font-weight:700}
+  .tt > div > span:last-child{border-bottom:0}
+  .tt > div > span > .hw:not(:empty) ~ i{display:none}
+  .tt .hw{font-size:15px}
+
+  /* lower part */
+  .low{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr) minmax(0,1.1fr);gap:8px;margin-top:8px;align-items:start}
+  .low > div{display:flex;flex-direction:column;gap:8px;min-width:0}
+  .ttl{font-weight:700;text-align:center;font-size:12px;letter-spacing:.06em;padding:3px 0;border-bottom:1.5px solid var(--k);background:var(--grey)}
+  table.g{width:100%;border-collapse:collapse;table-layout:fixed;background:#fff}
+  table.g th,table.g td{border:1px solid var(--k);padding:0 2px;height:22px;text-align:center;font-size:9px;position:relative;overflow:visible}
+  table.g th{font-weight:700;background:var(--grey);height:20px;line-height:1.05}
+  table.g td.l{text-align:left;padding-left:4px}
+  table.g .hw{font-size:15px}
+  .ir{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:3px 6px;font-size:10px;font-weight:700}
+  .ir .circ{width:20px;height:20px}
+  .rem{min-height:44px;padding:3px 6px;font-size:10px;font-weight:700;display:flex;gap:6px;align-items:flex-start}
+  .res .tn{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto minmax(0,1fr) auto;gap:4px;align-items:center;padding:3px 4px;font-size:9px;font-weight:700;border-bottom:1px solid var(--k)}
+  .res .tn .hw{font-size:15px;text-align:center}
+  .res .tn .circ{width:22px;height:22px;font-size:11px}
+  .mt{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--k)}
+  .mt > div{border-right:1px solid var(--k);padding:2px 4px;font-size:8.5px;font-weight:700;min-height:36px;display:flex;flex-direction:column;justify-content:space-between}
+  .mt > div:last-child{border-right:0}
+  .mt .hw{font-size:15px;align-self:center}
+  .win{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;padding:4px 8px;border-top:1.5px solid var(--k);font-weight:800;font-size:14px}
+  .win .hw{text-align:center}
+  .tl{display:grid;grid-template-columns:1fr 1fr}
+  .tl > div{min-width:0}
+  .tl > div + div{border-left:1.5px solid var(--k)}
+  .tlh{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:4px;padding:2px 4px;border-bottom:1.5px solid var(--k);font-size:9px;font-weight:700}
+  .tlh .hw{font-size:15px}
+  .tlh .circ{width:20px;height:20px;font-size:10px}
+  .pr{display:grid;grid-template-columns:24px minmax(0,1fr);border-bottom:1px solid var(--k);min-height:20px}
+  .pr > span{display:flex;align-items:center;min-width:0;overflow:hidden;position:relative}
+  .pr > span:first-child{justify-content:center;border-right:1px solid var(--k)}
+  .pr > span:last-child{padding-left:4px}
+  .pr .hw{font-size:14px}
+  .sub{font-weight:700;text-align:center;font-size:9.5px;letter-spacing:.06em;padding:2px 0;border-bottom:1px solid var(--k);background:var(--grey)}
+  .of{display:grid;grid-template-columns:30px minmax(0,1fr);border-bottom:1px solid var(--k);min-height:20px}
+  .of > b{display:flex;align-items:center;justify-content:center;border-right:1px solid var(--k);font-size:10px}
+  .of > span{display:flex;align-items:center;padding-left:4px;min-width:0;overflow:hidden}
+  .of .hw{font-size:14px}
+  .sigs{display:grid;grid-template-columns:1fr 1fr}
+  .sigs > div{min-height:34px;padding:1px 4px;font-size:8.5px;font-weight:700;display:flex;flex-direction:column;justify-content:space-between;border-bottom:1px solid var(--k)}
+  .sigs > div:nth-child(odd){border-right:1px solid var(--k)}
+  .sigs .hw{font-size:15px;align-self:center}
+
+  .hw{color:var(--pen);font-size:18px;line-height:1;display:inline-block;white-space:nowrap}
+  .hw svg{height:1.3em;display:inline-block;vertical-align:-.42em;overflow:visible;fill:none;stroke:currentColor;stroke-width:2.9;stroke-linecap:round;stroke-linejoin:round}
+  .hw.pl{color:var(--plc)}
+  .hw.sc{color:var(--scc)}
+  .ov{position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);font-size:18px}
+  .hw.tk{position:absolute;left:2px;bottom:1px;font-size:11px}
+  .hw.sco{position:absolute;right:2px;top:50%;transform:translateY(-48%);font-size:14px}
+  .cur{outline:2px solid var(--accent);outline-offset:1px;border-radius:2px}
+  /* a circle drawn round a number */
+  .hw.ring:not(.sco){position:relative}
+  .ring::before{content:"";position:absolute;left:50%;top:50%;width:var(--rw,22px);height:var(--rh,20px);transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;z-index:1;
+      background:conic-gradient(var(--rc,var(--scc)) 0 var(--a),transparent var(--a) 100%);
+      -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 2px));--a:100%}
+  @property --a{syntax:"%%VBLT%%percentage>";inherits:false;initial-value:100%}
+  .ring.wr::before{animation:ring var(--d,.6s) linear var(--dl,0s) both}
+  @keyframes ring{from{--a:0%}to{--a:100%}}
+  /* the pen */
+  .penx{position:absolute;left:0;top:0;width:30px;height:30px;pointer-events:none;opacity:0;transition:opacity .2s;z-index:3;transform:translate(-3px,-27px)}
+  .penx.on{opacity:1}
+
+  /* coaches' line-up sheets */
+  .lus{display:none;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .lus.on{display:flex;animation:lin .4s ease}
+  @keyframes lin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .lucard{width:min(250px,calc(50% - 7px));min-width:0;background:#fff;border:2px solid var(--k);border-radius:4px;padding:8px;font-family:Arial,Helvetica,sans-serif;font-weight:700;color:var(--k);box-shadow:0 3px 10px rgba(0,0,0,.12)}
+  .lucard .lt{text-align:center;font-size:11px;letter-spacing:.06em;margin-bottom:6px}
+  .lucard .row1{display:flex;align-items:center;gap:6px}
+  .lucard .row1 b{font-size:22px;font-weight:900}
+  .lucard .fl{border:1.5px solid var(--k);min-height:26px;display:flex;align-items:center;padding:0 6px;font-size:9px;gap:6px;flex:1;overflow:hidden;white-space:nowrap;min-width:0}
+  .lucard .tmf{margin-top:6px}
+  .lucard .court{border:1.5px solid var(--k);margin-top:6px;padding:6px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .lucard .pos{border:1.5px solid var(--k);text-align:center;font-size:10px;padding-top:1px;min-height:44px}
+  .lucard .pos.one{border-width:3px}
+  .lucard .pos .hw{display:block;font-size:24px;margin-top:2px}
+  .lucard .sg{margin-top:6px;font-size:9px}
+  .lucard .sd{text-align:center;font-family:"Barlow Condensed",Arial,sans-serif;font-size:14px;text-transform:uppercase;color:var(--blue);margin-bottom:4px;letter-spacing:.04em}
+  @media (max-width:460px){.lucard{padding:6px;width:calc(50% - 4px)}.lucard .court{padding:4px;gap:4px}.lucard .pos .hw{font-size:20px}.lus{gap:8px}}
+  /* speech bubble next to the pen */
+  .cloud{position:absolute;left:0;top:0;z-index:4;pointer-events:none;background:#FAD4D4;color:#8E1D1D;font-family:"Barlow",Arial,sans-serif;font-weight:600;font-size:15.5px;line-height:1.25;
+    padding:8px 16px;border-radius:22px;filter:drop-shadow(0 2px 3px rgba(142,29,29,.25));width:max-content;max-width:min(440px,calc(100% - 8px));
+    opacity:0;transition:opacity .25s,left 1s cubic-bezier(.4,0,.2,1),top 1s cubic-bezier(.4,0,.2,1);--tx:50%}
+  .cloud.on{opacity:1}
+  .cloud::after{content:"";position:absolute;top:100%;left:var(--tx);margin-left:-11px;border:11px solid transparent;border-top:15px solid #FAD4D4;border-bottom:0;transition:left 1s cubic-bezier(.4,0,.2,1)}
+  /* flip scoreboard */
+  .flipb{margin-top:14px;background:linear-gradient(#EEF2F6,#DFE6EE);border-radius:10px;padding:10px 12px 12px}
+  .fb-names,.fb-srv{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;text-align:center;gap:8px;max-width:560px;margin:0 auto}
+  .fb-names span{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink)}
+  .fb-names .fb-set{font-size:14px;color:#fff;background:var(--ink);border-radius:4px;padding:1px 8px}
+  .stand{position:relative;max-width:560px;margin:18px auto 18px;padding:16px 12px 14px;background:linear-gradient(#262626,#141414);border-radius:10px 10px 4px 4px;box-shadow:0 6px 14px rgba(0,0,0,.25)}
+  .stand::after{content:"";position:absolute;left:5%;right:5%;bottom:-14px;height:14px;background:#0c0c0c;clip-path:polygon(0 0,100% 0,95% 100%,5% 100%)}
+  .cards{display:flex;justify-content:center;align-items:center;gap:clamp(3px,1vw,7px)}
+  .fc{position:relative;perspective:700px;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-weight:700;color:#141414}
+  .fc.big{width:clamp(50px,14vw,100px);height:clamp(72px,20vw,140px);font-size:clamp(60px,17vw,128px)}
+  .fc.small{width:clamp(30px,7.5vw,50px);height:clamp(44px,11vw,72px);font-size:clamp(34px,9vw,62px);color:#E1262F;margin:0 1px}
+  .fc.small + .fc.big{margin-left:clamp(3px,1vw,8px)}.fc.big + .fc.small{margin-left:clamp(3px,1vw,8px)}
+  .fc .face,.fc .leaf{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(#fff 0,#fff 60%,#F1F1F1 100%);border-radius:5px;line-height:1;box-shadow:inset 0 -3px 0 #D6D6D6}
+  .fc::before,.fc::after{content:"";position:absolute;top:-13px;width:22%;height:20px;background:#0b0b0b;border-radius:4px;z-index:3;box-shadow:inset 0 2px 0 #333}
+  .fc::before{left:16%}.fc::after{right:16%}
+  .fc.small::before{left:30%;width:40%}.fc.small::after{display:none}
+  .fc .leaf{transform-origin:50% 0;backface-visibility:hidden;animation:flip .55s cubic-bezier(.25,.1,.3,1.25) both;z-index:2}
+  .fc .leaf::after{content:"";position:absolute;inset:0;border-radius:5px;background:linear-gradient(rgba(0,0,0,.25),transparent);animation:shade .55s ease both}
+  @keyframes flip{from{transform:rotateX(-178deg)}to{transform:rotateX(0)}}
+  @keyframes shade{from{opacity:1}to{opacity:0}}
+  .fb-srv{font-size:13px;color:var(--soft);min-height:20px}
+  .fb-srv .bt{display:flex;align-items:center;justify-content:center;gap:6px;opacity:0;transition:opacity .2s;color:var(--ink)}
+  .fb-srv .bt.serving{opacity:1}
+  .ball{width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:inset -3px -2px 0 #F0A500,0 0 0 1px #9AA9B8}
+  .fb-sets{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#E1262F;font-weight:700}
+  /* how-to steps */
+  .steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:12px}
+  .steps > li{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px 12px 50px;position:relative}
+  .steps > li::before{counter-increment:s;content:counter(s);position:absolute;left:12px;top:12px;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center}
+  .steps h3{font-family:"Barlow Condensed",Arial,sans-serif;font-size:19px;text-transform:uppercase;margin:0 0 4px;line-height:1.1}
+  .steps p,.steps ul{margin:0;font-size:14.5px}
+  .steps ul{padding-left:18px}
+  .r{font-size:11.5px;font-weight:700;color:var(--blue);background:#EAF1F8;border-radius:4px;padding:0 5px;white-space:nowrap}
+  .note{font-size:13.5px;color:var(--soft);margin-top:14px}
+  @media (max-width:980px){
+    .low{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+    .low > div:last-child{grid-column:1/-1}
+  }
+  @media (max-width:820px){
+    .top .f{flex-wrap:wrap;row-gap:2px}
+    .top .f > .hw{flex:1 0 auto}
+    .top{grid-template-columns:minmax(0,1fr)}
+    .top > div{border-right:0;border-bottom:1.5px solid var(--k)}
+    .top > div:last-child{border-bottom:0}
+    .brand{flex-direction:row;align-items:baseline;gap:10px}
+    .setblk{grid-template-columns:minmax(0,1fr)}
+    .setlab{flex-direction:row;gap:6px;border-right:0;border-bottom:1.5px solid var(--k);font-size:16px;padding:2px 0}
+    .side{border-right:0}
+    .side + .side{border-top:3px solid var(--k)}
+    .low{grid-template-columns:minmax(0,1fr)}
+  }
+  @media (max-width:460px){
+    .body{grid-template-columns:44px minmax(0,1fr) 66px}
+    .labs > div{font-size:7.5px}
+    .col .stp .hw{font-size:18px}
+    .hw.sco{font-size:12px;right:1px}
+    .hw.tk{font-size:9px;left:1px}
+    .pts{font-size:7.5px}
+    .sh{grid-template-columns:auto minmax(0,1fr) auto auto}
+    .tm{min-width:44px}
+    .hw{font-size:16px}
+    .ov{font-size:16px}
+  }
+  @media (prefers-reduced-motion:reduce){.pts span.wr::after,.ring.wr::before{animation-duration:.01s!important;animation-delay:0s!important}.penx{display:none}}
+%%VBLT%%/style>
+%%VBLT%%/head>
+%%VBLT%%body>
+%%VBLT%%header>%%VBLT%%div class="hin">
+  %%VBLT%%h1>FIVB Scoresheet%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
+%%VBLT%%/div>%%VBLT%%/header>
+%%VBLT%%div class="wrap">
+
+  %%VBLT%%section class="card">
+    %%VBLT%%h2>Example scoresheet: CVC Panthers v CVC Tigers%%VBLT%%/h2>
+    %%VBLT%%p class="lead">The FIVB international scoresheet, filled in step by step following the FIVB %%VBLT%%i>Instructions for completing the volleyball scoresheet%%VBLT%%/i>. Set 1 is scored rally by rally; sets 2 and 3 are added to the results at the end.%%VBLT%%/p>
+
+    %%VBLT%%div class="flipb">
+      %%VBLT%%div class="fb-names">%%VBLT%%span>CVC Panthers%%VBLT%%/span>%%VBLT%%span class="fb-set" id="fbset">Set 1%%VBLT%%/span>%%VBLT%%span>CVC Tigers%%VBLT%%/span>%%VBLT%%/div>
+      %%VBLT%%div class="stand">%%VBLT%%div class="cards">
+        %%VBLT%%div class="fc big" id="fA1">%%VBLT%%span class="face">%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%div class="fc big" id="fA0">%%VBLT%%span class="face">0%%VBLT%%/span>%%VBLT%%/div>
+        %%VBLT%%div class="fc small" id="fSA">%%VBLT%%span class="face">0%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%div class="fc small" id="fSB">%%VBLT%%span class="face">0%%VBLT%%/span>%%VBLT%%/div>
+        %%VBLT%%div class="fc big" id="fB1">%%VBLT%%span class="face">%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%div class="fc big" id="fB0">%%VBLT%%span class="face">0%%VBLT%%/span>%%VBLT%%/div>
+      %%VBLT%%/div>%%VBLT%%/div>
+      %%VBLT%%div class="fb-srv">%%VBLT%%span class="bt" id="bA">%%VBLT%%i class="ball">%%VBLT%%/i>%%VBLT%%span id="svA">%%VBLT%%/span>%%VBLT%%/span>%%VBLT%%span class="fb-sets">sets%%VBLT%%/span>%%VBLT%%span class="bt" id="bB">%%VBLT%%i class="ball">%%VBLT%%/i>%%VBLT%%span id="svB">%%VBLT%%/span>%%VBLT%%/span>%%VBLT%%/div>
+    %%VBLT%%/div>
+    %%VBLT%%p class="cap" id="cap" aria-live="polite">%%VBLT%%/p>
+    %%VBLT%%div class="ctrl">
+      %%VBLT%%button class="main" id="play" type="button">Play%%VBLT%%/button>
+      %%VBLT%%button id="back" type="button">&larr; Back%%VBLT%%/button>
+      %%VBLT%%button id="next" type="button">Next &rarr;%%VBLT%%/button>
+    %%VBLT%%/div>
+    %%VBLT%%div class="prog">%%VBLT%%i id="prog">%%VBLT%%/i>%%VBLT%%/div>
+
+    %%VBLT%%div class="lus" id="lus">%%VBLT%%/div>
+    %%VBLT%%div class="sheet" id="sheet">
+      %%VBLT%%div class="cloud" id="cloud">%%VBLT%%/div>%%VBLT%%svg class="penx" id="pen" viewBox="0 0 30 30" aria-hidden="true">%%VBLT%%g transform="rotate(40 15 15)">%%VBLT%%rect x="12" y="-2" width="6" height="24" rx="1.5" fill="#24507E"/>%%VBLT%%rect x="12" y="-2" width="6" height="5" rx="1.5" fill="#16283C"/>%%VBLT%%path d="M12 22h6l-3 7z" fill="#E9D7B5"/>%%VBLT%%path d="M14 26.6h2l-1 2.4z" fill="#1F49B0"/>%%VBLT%%/g>%%VBLT%%/svg>
+
+      %%VBLT%%div class="top">
+        %%VBLT%%div>
+          %%VBLT%%div class="f">%%VBLT%%span class="lbl">Name of the Competition:%%VBLT%%/span>%%VBLT%%span class="hw" id="comp">%%VBLT%%/span>%%VBLT%%/div>
+          %%VBLT%%div class="f">%%VBLT%%span class="lbl">City%%VBLT%%/span>%%VBLT%%span class="hw" id="city">%%VBLT%%/span>%%VBLT%%span class="lbl">Country Code%%VBLT%%/span>%%VBLT%%span class="hw" id="cc" style="flex:0 0 3.2em">%%VBLT%%/span>%%VBLT%%/div>
+          %%VBLT%%div class="f">%%VBLT%%span class="lbl">Hall%%VBLT%%/span>%%VBLT%%span class="hw" id="hall">%%VBLT%%/span>%%VBLT%%span class="lbl">Pool/Phase%%VBLT%%/span>%%VBLT%%span class="hw" id="pool" style="flex:0 0 3.6em">%%VBLT%%/span>%%VBLT%%span class="lbl">Match N&deg;%%VBLT%%/span>%%VBLT%%span class="hw" id="mno" style="flex:0 0 2em">%%VBLT%%/span>%%VBLT%%/div>
+          %%VBLT%%div class="f">%%VBLT%%span class="lbl">Division:%%VBLT%%/span>%%VBLT%%span class="chk">Men %%VBLT%%i>%%VBLT%%/i>%%VBLT%%/span>%%VBLT%%span class="chk">Women %%VBLT%%i id="div-W">%%VBLT%%/i>%%VBLT%%/span>%%VBLT%%span class="lbl">Category:%%VBLT%%/span>%%VBLT%%span class="chk">Senior %%VBLT%%i id="cat-S">%%VBLT%%/i>%%VBLT%%/span>%%VBLT%%span class="chk">Junior %%VBLT%%i>%%VBLT%%/i>%%VBLT%%/span>%%VBLT%%span class="chk">Youth %%VBLT%%i>%%VBLT%%/i>%%VBLT%%/span>%%VBLT%%/div>
+        %%VBLT%%/div>
+        %%VBLT%%div>
+          %%VBLT%%div class="f">%%VBLT%%span class="lbl">Date%%VBLT%%/span>%%VBLT%%span class="hw" id="date">%%VBLT%%/span>%%VBLT%%span class="lbl">Time%%VBLT%%/span>%%VBLT%%span class="hw" id="time" style="flex:0 0 3em">%%VBLT%%/span>%%VBLT%%/div>
+          %%VBLT%%div class="f teamsrow" style="min-height:58px">%%VBLT%%span class="circ" id="tc1">%%VBLT%%small>A or B%%VBLT%%/small>%%VBLT%%/span>%%VBLT%%span class="hw" id="tn1">%%VBLT%%/span>%%VBLT%%span class="vs">TEAMS%%VBLT%%small>vs%%VBLT%%/small>%%VBLT%%/span>%%VBLT%%span class="hw" id="tn2">%%VBLT%%/span>%%VBLT%%span class="circ" id="tc2">%%VBLT%%small>A or B%%VBLT%%/small>%%VBLT%%/span>%%VBLT%%/div>
+        %%VBLT%%/div>
+        %%VBLT%%div class="brand">%%VBLT%%span class="fv">FIVB%%VBLT%%/span>%%VBLT%%span class="is">International Scoresheet%%VBLT%%/span>%%VBLT%%/div>
+      %%VBLT%%/div>
+
+      %%VBLT%%div class="setblk">
+        %%VBLT%%div class="setlab">%%VBLT%%span>S%%VBLT%%/span>%%VBLT%%span>E%%VBLT%%/span>%%VBLT%%span>T%%VBLT%%/span>%%VBLT%%span>1%%VBLT%%/span>%%VBLT%%/div>
+        %%VBLT%%div class="side" id="sideA">%%VBLT%%/div>
+        %%VBLT%%div class="side" id="sideB">%%VBLT%%/div>
+      %%VBLT%%/div>
+
+      %%VBLT%%div class="low">
+        %%VBLT%%div>
+          %%VBLT%%div class="bxs">
+            %%VBLT%%div class="ttl">SANCTIONS%%VBLT%%/div>
+            %%VBLT%%table class="g" id="sanc">%%VBLT%%/table>
+          %%VBLT%%/div>
+          %%VBLT%%div class="bxs ir">%%VBLT%%span>IMPROPER REQUEST%%VBLT%%/span>%%VBLT%%span>TEAM %%VBLT%%span class="circ" id="ir-A">A%%VBLT%%/span> : TEAM %%VBLT%%span class="circ" id="ir-B">B%%VBLT%%/span>%%VBLT%%/span>%%VBLT%%/div>
+          %%VBLT%%div class="bxs">%%VBLT%%div class="rem">REMARKS %%VBLT%%span class="hw" id="rem">%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%/div>
+        %%VBLT%%/div>
+        %%VBLT%%div>
+          %%VBLT%%div class="bxs">
+            %%VBLT%%div class="ttl">APPROVAL%%VBLT%%/div>
+            %%VBLT%%table class="g" id="appr">%%VBLT%%/table>
+          %%VBLT%%/div>
+          %%VBLT%%div class="bxs res">
+            %%VBLT%%div class="ttl">RESULTS%%VBLT%%/div>
+            %%VBLT%%div class="tn">%%VBLT%%span>TEAM%%VBLT%%/span>%%VBLT%%span class="hw" id="rtA">%%VBLT%%/span>%%VBLT%%span class="circ">A%%VBLT%%/span>%%VBLT%%span class="circ">B%%VBLT%%/span>%%VBLT%%span class="hw" id="rtB">%%VBLT%%/span>%%VBLT%%span>TEAM%%VBLT%%/span>%%VBLT%%/div>
+            %%VBLT%%table class="g" id="results">%%VBLT%%/table>
+            %%VBLT%%div class="mt">
+              %%VBLT%%div>Match Starting Time%%VBLT%%span class="hw" id="m-st">%%VBLT%%/span>%%VBLT%%/div>
+              %%VBLT%%div>Match Ending Time%%VBLT%%span class="hw" id="m-en">%%VBLT%%/span>%%VBLT%%/div>
+              %%VBLT%%div>Total Match Duration%%VBLT%%span class="hw" id="m-du">%%VBLT%%/span>%%VBLT%%/div>
+            %%VBLT%%/div>
+            %%VBLT%%div class="win">WINNER %%VBLT%%span class="hw" id="m-w">%%VBLT%%/span>%%VBLT%%span class="hw sc" id="m-ws">%%VBLT%%/span>%%VBLT%%/div>
+          %%VBLT%%/div>
+        %%VBLT%%/div>
+        %%VBLT%%div>
+          %%VBLT%%div class="bxs" id="lists">%%VBLT%%/div>
+        %%VBLT%%/div>
+      %%VBLT%%/div>
+    %%VBLT%%/div>
+  %%VBLT%%/section>
+
+  %%VBLT%%section class="card">
+    %%VBLT%%h2>How to fill it in%%VBLT%%/h2>
+    %%VBLT%%ol class="steps">
+      %%VBLT%%li>%%VBLT%%h3>Before the match%%VBLT%%/h3>%%VBLT%%ul>%%VBLT%%li>Top of the sheet: competition, city and country code, hall, pool/phase, match number, date and time; cross %%VBLT%%b>Women%%VBLT%%/b> or %%VBLT%%b>Men%%VBLT%%/b> and the category %%VBLT%%span class="r">1.1&ndash;1.9%%VBLT%%/span>.%%VBLT%%/li>%%VBLT%%li>Write both team names under %%VBLT%%b>TEAMS%%VBLT%%/b>; leave the A/B circles blank until the toss %%VBLT%%span class="r">1.10%%VBLT%%/span>.%%VBLT%%/li>%%VBLT%%/ul>%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%h3>Team lists%%VBLT%%/h3>%%VBLT%%ul>%%VBLT%%li>Bottom right: shirt numbers and names of each team; %%VBLT%%b>circle the captain&rsquo;s number%%VBLT%%/b> %%VBLT%%span class="r">1.11&ndash;1.12%%VBLT%%/span>.%%VBLT%%/li>%%VBLT%%li>Liberos go in %%VBLT%%b>LIBERO PLAYERS%%VBLT%%/b>, and the coach (C) and assistant coach (AC) in %%VBLT%%b>OFFICIALS%%VBLT%%/b> %%VBLT%%span class="r">1.13%%VBLT%%/span>.%%VBLT%%/li>%%VBLT%%li>Captains and coaches sign under %%VBLT%%b>SIGNATURES%%VBLT%%/b> once they have checked the lists %%VBLT%%span class="r">1.14&ndash;1.15%%VBLT%%/span>.%%VBLT%%/li>%%VBLT%%/ul>%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%h3>After the toss%%VBLT%%/h3>%%VBLT%%ul>%%VBLT%%li>Write %%VBLT%%b>A%%VBLT%%/b> and %%VBLT%%b>B%%VBLT%%/b> in the circles: team A is the team on the scorer&rsquo;s left %%VBLT%%span class="r">2.3%%VBLT%%/span>.%%VBLT%%/li>%%VBLT%%li>In the set box: team names, A/B, and cross %%VBLT%%b>S%%VBLT%%/b> for the team serving first and %%VBLT%%b>R%%VBLT%%/b> for the receiving team.%%VBLT%%/li>%%VBLT%%li>From the 2nd referee&rsquo;s line-up sheets, write the starting players under %%VBLT%%b>I&ndash;VI%%VBLT%%/b> %%VBLT%%span class="r">2.4%%VBLT%%/span>.%%VBLT%%/li>%%VBLT%%/ul>%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%h3>Start of the set%%VBLT%%/h3>%%VBLT%%p>Write the %%VBLT%%b>START time%%VBLT%%/b> (the whistle for the first service) and %%VBLT%%b>tick (&#10003;) box 1%%VBLT%%/b> under the first server, column I %%VBLT%%span class="r">3.1&ndash;3.3%%VBLT%%/span>.%%VBLT%%/p>%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%h3>Every point%%VBLT%%/h3>%%VBLT%%p>%%VBLT%%b>Slash (/)%%VBLT%%/b> the next number in that team&rsquo;s %%VBLT%%b>POINTS%%VBLT%%/b> column %%VBLT%%span class="r">3.4%%VBLT%%/span>.%%VBLT%%/p>%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%h3>When the serve is lost%%VBLT%%/h3>%%VBLT%%ul>%%VBLT%%li>Write the serving team&rsquo;s score in that server&rsquo;s %%VBLT%%b>service round box%%VBLT%%/b>.%%VBLT%%/li>%%VBLT%%li>The other team rotates: %%VBLT%%b>tick%%VBLT%%/b> the next box of its next server. The first time the receiving team wins the serve, %%VBLT%%b>cross (X) box 1 of its column I%%VBLT%%/b> and tick column II %%VBLT%%span class="r">3.4b%%VBLT%%/span>.%%VBLT%%/li>%%VBLT%%/ul>%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%h3>Substitutions%%VBLT%%/h3>%%VBLT%%p>Write the number of the player coming on in %%VBLT%%b>N&deg; of Player%%VBLT%%/b> under that position, and the score in the upper %%VBLT%%b>Score at change%%VBLT%%/b> box, %%VBLT%%b>the substituting team first%%VBLT%%/b>. When the starter comes back, circle the substitute&rsquo;s number and write the score in the lower box %%VBLT%%span class="r">3.6%%VBLT%%/span>.%%VBLT%%/p>%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%h3>Time-outs%%VBLT%%/h3>%%VBLT%%p>In the two %%VBLT%%b>&ldquo;T&rdquo;%%VBLT%%/b> boxes under POINTS, write the score at the time-out, %%VBLT%%b>the requesting team first%%VBLT%%/b> %%VBLT%%span class="r">3.7%%VBLT%%/span>.%%VBLT%%/p>%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%h3>Sanctions and improper requests%%VBLT%%/h3>%%VBLT%%p>Write the player&rsquo;s number (or C, AC&hellip;) under %%VBLT%%b>W, P, E or D%%VBLT%%/b>, then the team, the set and the score %%VBLT%%span class="r">3.8b%%VBLT%%/span>. A %%VBLT%%b>delay%%VBLT%%/b> is a &ldquo;D&rdquo; in the W or P column %%VBLT%%span class="r">3.8c%%VBLT%%/span>. An %%VBLT%%b>improper request%%VBLT%%/b> is a cross over that team&rsquo;s letter %%VBLT%%span class="r">3.8a%%VBLT%%/span>.%%VBLT%%/p>%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%h3>End of the set%%VBLT%%/h3>%%VBLT%%p>Write the %%VBLT%%b>END time%%VBLT%%/b>, cancel the unused numbers in both POINTS columns, and %%VBLT%%b>circle the final score%%VBLT%%/b> in the service round box of the last server %%VBLT%%span class="r">3.4d&ndash;f%%VBLT%%/span>.%%VBLT%%/p>%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%h3>Results%%VBLT%%/h3>%%VBLT%%p>For each set: time-outs (%%VBLT%%b>T%%VBLT%%/b>), substitutions (%%VBLT%%b>S%%VBLT%%/b>), win (%%VBLT%%b>W%%VBLT%%/b>: 1 or 0), points (%%VBLT%%b>P%%VBLT%%/b>) and the set duration in brackets; then the totals, match start, end and duration, and the %%VBLT%%b>WINNER%%VBLT%%/b> with the score in sets %%VBLT%%span class="r">4.1&ndash;4.9%%VBLT%%/span>.%%VBLT%%/p>%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%h3>Approval%%VBLT%%/h3>%%VBLT%%p>The sheet is signed in this order: %%VBLT%%b>scorer%%VBLT%%/b>, assistant scorer, the two %%VBLT%%b>team captains%%VBLT%%/b>, the %%VBLT%%b>2nd referee%%VBLT%%/b>, and finally the %%VBLT%%b>1st referee%%VBLT%%/b> %%VBLT%%span class="r">4.10%%VBLT%%/span>.%%VBLT%%/p>%%VBLT%%/li>
+    %%VBLT%%/ol>
+    %%VBLT%%p class="note">From the FIVB %%VBLT%%i>Instructions for completing the volleyball scoresheet%%VBLT%%/i> (numbers in the boxes). Sets 1&ndash;4 go to 25 points with a 2-point lead, and a deciding 5th set to 15, so the points columns run to 48 and 30. The team names, players and officials in the example are made up.%%VBLT%%/p>
+  %%VBLT%%/section>
+%%VBLT%%/div>
+
+%%VBLT%%script>
+(function () {
+  var TEAMS = {
+    A: { name: "CVC Panthers", box: "Panthers", short: "Panthers", lineup: [7, 3, 11, 5, 9, 14],
+         list: [[2, "Gia"], [3, "Bea"], [5, "Dana"], [6, "Isla"], [7, "Ana"], [9, "Elle"], [10, "Jade"], [11, "Cleo"], [12, "Hope"], [14, "Fay"]], cap: 7,
+         libs: [[16, "Hana"], [18, "Ivy"]], coach: "S. Reed", ac: "J. Park", capName: "Ana" },
+    B: { name: "CVC Tigers", box: "Tigers", short: "Tigers", lineup: [4, 10, 8, 12, 6, 15],
+         list: [[2, "Rae"], [3, "Sam"], [4, "Iris"], [5, "Tess"], [6, "Mia"], [8, "Kim"], [10, "Jo"], [12, "Lena"], [13, "Ola"], [15, "Nora"]], cap: 10,
+         libs: [[1, "Pia"], [17, "Quinn"]], coach: "K. Lowe", ac: "D. Shaw", capName: "Jo" }
+  };
+  var SEQ = "BABAAAABAABABABBABAABBBAAABBABABBBBABABAABAABAA";   // who wins each rally: 25-22 to the Panthers
+  var EVENTS = {   // after rally n (1-based)
+    9:  { type: "to",  team: "B" },
+    16: { type: "san", team: "B", who: 12, col: "W" },
+    22: { type: "sub", team: "B", pos: 3, on: 13 },
+    27: { type: "to",  team: "A" },
+    33: { type: "sub", team: "A", pos: 3, on: 2 },
+    35: { type: "to",  team: "A" },
+    38: { type: "back", team: "B", pos: 3 },
+    44: { type: "to",  team: "B" },
+    46: { type: "ir",  team: "B" }
+  };
+
+  /* ---------- draw the empty sheet ---------- */
+  var $ = function (id) { return document.getElementById(id); };
+  function side(t) {
+    var h = '%%VBLT%%div class="sh">' +
+      '%%VBLT%%div class="tbox tm">%%VBLT%%span class="lbl">' + (t === "A" ? "START%%VBLT%%br>time" : "END%%VBLT%%br>time") + '%%VBLT%%/span>%%VBLT%%span class="hw" id="' + t + '-time">%%VBLT%%/span>%%VBLT%%/div>' +
+      '%%VBLT%%div class="tbox">%%VBLT%%span class="lbl">TEAM%%VBLT%%/span>%%VBLT%%span class="hw" id="' + t + '-name">%%VBLT%%/span>%%VBLT%%/div>' +
+      '%%VBLT%%span class="circ" id="' + t + '-ab" style="width:24px;height:24px">%%VBLT%%/span>' +
+      '%%VBLT%%span class="srs">%%VBLT%%span class="circ" id="' + t + '-S">S%%VBLT%%/span>%%VBLT%%span class="circ" id="' + t + '-R">R%%VBLT%%/span>%%VBLT%%/span>%%VBLT%%/div>';
+    h += '%%VBLT%%div class="body">%%VBLT%%div class="labs">%%VBLT%%div>Service order%%VBLT%%/div>%%VBLT%%div>N&deg; of Starting players%%VBLT%%/div>%%VBLT%%div>N&deg; of Player%%VBLT%%/div>%%VBLT%%div>Score at change%%VBLT%%/div>%%VBLT%%div>%%VBLT%%/div>%%VBLT%%div class="sr4">Service rounds%%VBLT%%/div>%%VBLT%%/div>%%VBLT%%div class="cols">';
+    ["I", "II", "III", "IV", "V", "VI"].forEach(function (rn, c) {
+      c++;
+      h += '%%VBLT%%div class="col">%%VBLT%%div class="rn">' + rn + '%%VBLT%%/div>%%VBLT%%div class="stp">%%VBLT%%span class="hw pl" id="' + t + '-lu-' + c + '">%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%div>%%VBLT%%span class="hw pl" id="' + t + '-sb-' + c + '">%%VBLT%%/span>%%VBLT%%/div>' +
+        '%%VBLT%%div class="ac">%%VBLT%%span class="hw" id="' + t + '-c1-' + c + '">%%VBLT%%/span>%%VBLT%%i>:%%VBLT%%/i>%%VBLT%%/div>%%VBLT%%div class="ac">%%VBLT%%span class="hw" id="' + t + '-c2-' + c + '">%%VBLT%%/span>%%VBLT%%i>:%%VBLT%%/i>%%VBLT%%/div>';
+      for (var r = 1; r %%VBLT%%= 4; r++) h += '%%VBLT%%div class="sv">%%VBLT%%div id="' + t + '-sv-' + c + '-' + r + '">%%VBLT%%span class="no">' + r + '%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%div id="' + t + '-sv-' + c + '-' + (r + 4) + '">%%VBLT%%span class="no">' + (r + 4) + '%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%/div>';
+      h += '%%VBLT%%/div>';
+    });
+    h += '%%VBLT%%/div>%%VBLT%%div class="pcol">%%VBLT%%div class="ph">POINTS%%VBLT%%/div>%%VBLT%%div class="pts">';
+    for (var n = 1; n %%VBLT%%= 48; n++) h += '%%VBLT%%span id="' + t + '-pt-' + n + '">' + n + '%%VBLT%%/span>';
+    h += '%%VBLT%%/div>%%VBLT%%div class="tt">%%VBLT%%b>&ldquo;T&rdquo;%%VBLT%%/b>%%VBLT%%div>%%VBLT%%span>%%VBLT%%span class="hw" id="' + t + '-to-1">%%VBLT%%/span>%%VBLT%%i>:%%VBLT%%/i>%%VBLT%%/span>%%VBLT%%span>%%VBLT%%span class="hw" id="' + t + '-to-2">%%VBLT%%/span>%%VBLT%%i>:%%VBLT%%/i>%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%/div>%%VBLT%%/div>%%VBLT%%/div>';
+    return h;
+  }
+  $("sideA").innerHTML = side("A");
+  $("sideB").innerHTML = side("B");
+
+  var sh = '%%VBLT%%tr>%%VBLT%%th>W%%VBLT%%br>%%VBLT%%small>Warning%%VBLT%%/small>%%VBLT%%/th>%%VBLT%%th>P%%VBLT%%br>%%VBLT%%small>Penalty%%VBLT%%/small>%%VBLT%%/th>%%VBLT%%th>E%%VBLT%%br>%%VBLT%%small>Expulsion%%VBLT%%/small>%%VBLT%%/th>%%VBLT%%th>D%%VBLT%%br>%%VBLT%%small>Disqual.%%VBLT%%/small>%%VBLT%%/th>%%VBLT%%th>A or B%%VBLT%%/th>%%VBLT%%th>SET%%VBLT%%/th>%%VBLT%%th style="width:28%">SCORE%%VBLT%%/th>%%VBLT%%/tr>';
+  for (var i = 1; i %%VBLT%%= 4; i++) sh += '%%VBLT%%tr>' + ["W", "P", "E", "D", "T", "S", "SC"].map(function (k) { return '%%VBLT%%td>%%VBLT%%span class="hw" id="sn-' + i + '-' + k + '">%%VBLT%%/span>%%VBLT%%/td>'; }).join("") + '%%VBLT%%/tr>';
+  $("sanc").innerHTML = sh;
+
+  var ap = '%%VBLT%%tr>%%VBLT%%th style="width:23%">Referees%%VBLT%%/th>%%VBLT%%th>Name%%VBLT%%/th>%%VBLT%%th style="width:15%">Country%%VBLT%%/th>%%VBLT%%th style="width:27%">Signature%%VBLT%%/th>%%VBLT%%/tr>';
+  [["r1", "1st"], ["r2", "2nd"], ["sc", "Scorer"], ["as", "Assistant scorer"]].forEach(function (q) {
+    ap += '%%VBLT%%tr>%%VBLT%%td class="l">%%VBLT%%b>' + q[1] + '%%VBLT%%/b>%%VBLT%%/td>%%VBLT%%td>%%VBLT%%span class="hw" id="ap-' + q[0] + '-n">%%VBLT%%/span>%%VBLT%%/td>%%VBLT%%td>%%VBLT%%span class="hw" id="ap-' + q[0] + '-c">%%VBLT%%/span>%%VBLT%%/td>%%VBLT%%td>%%VBLT%%span class="hw" id="ap-' + q[0] + '-s">%%VBLT%%/span>%%VBLT%%/td>%%VBLT%%/tr>';
+  });
+  ap += '%%VBLT%%tr>%%VBLT%%td class="l">%%VBLT%%b>Team captains%%VBLT%%/b>%%VBLT%%/td>%%VBLT%%td colspan="3" style="text-align:left">%%VBLT%%b>A%%VBLT%%/b> %%VBLT%%span class="hw" id="ap-capA">%%VBLT%%/span> &nbsp; %%VBLT%%b>B%%VBLT%%/b> %%VBLT%%span class="hw" id="ap-capB">%%VBLT%%/span>%%VBLT%%/td>%%VBLT%%/tr>';
+  $("appr").innerHTML = ap;
+
+  var rs = '%%VBLT%%tr>%%VBLT%%th>&ldquo;T&rdquo;%%VBLT%%/th>%%VBLT%%th>S%%VBLT%%/th>%%VBLT%%th>W%%VBLT%%/th>%%VBLT%%th>P%%VBLT%%br>%%VBLT%%small>(Points)%%VBLT%%/small>%%VBLT%%/th>%%VBLT%%th style="width:22%">SET%%VBLT%%br>%%VBLT%%small>(Duration)%%VBLT%%/small>%%VBLT%%/th>%%VBLT%%th>P%%VBLT%%br>%%VBLT%%small>(Points)%%VBLT%%/small>%%VBLT%%/th>%%VBLT%%th>W%%VBLT%%/th>%%VBLT%%th>S%%VBLT%%/th>%%VBLT%%th>&ldquo;T&rdquo;%%VBLT%%/th>%%VBLT%%/tr>';
+  for (var k = 1; k %%VBLT%%= 5; k++) {
+    rs += '%%VBLT%%tr>' + ["T", "S", "W", "P"].map(function (c) { return '%%VBLT%%td>%%VBLT%%span class="hw" id="rA-' + c + '-' + k + '">%%VBLT%%/span>%%VBLT%%/td>'; }).join("") +
+      '%%VBLT%%td style="text-align:left;padding-left:4px">%%VBLT%%b>' + k + '%%VBLT%%/b> (%%VBLT%%span class="hw" id="rD-' + k + '">%%VBLT%%/span>)%%VBLT%%/td>' +
+      ["P", "W", "S", "T"].map(function (c) { return '%%VBLT%%td>%%VBLT%%span class="hw" id="rB-' + c + '-' + k + '">%%VBLT%%/span>%%VBLT%%/td>'; }).join("") + '%%VBLT%%/tr>';
+  }
+  rs += '%%VBLT%%tr>' + ["T", "S", "W", "P"].map(function (c) { return '%%VBLT%%td>%%VBLT%%span class="hw" id="rA-' + c + '-t">%%VBLT%%/span>%%VBLT%%/td>'; }).join("") +
+    '%%VBLT%%td style="font-size:8px;line-height:1.05">%%VBLT%%b>Total Set Duration%%VBLT%%/b>%%VBLT%%br>(%%VBLT%%span class="hw" id="rD-t">%%VBLT%%/span> mn)%%VBLT%%/td>' +
+    ["P", "W", "S", "T"].map(function (c) { return '%%VBLT%%td>%%VBLT%%span class="hw" id="rB-' + c + '-t">%%VBLT%%/span>%%VBLT%%/td>'; }).join("") + '%%VBLT%%/tr>';
+  $("results").innerHTML = rs;
+
+  function plist(t) {
+    var h = '%%VBLT%%div>%%VBLT%%div class="tlh">%%VBLT%%span class="circ" id="l' + t + '-ab">%%VBLT%%/span>%%VBLT%%span class="hw" id="l' + t + '-n">%%VBLT%%/span>%%VBLT%%/div>' +
+      '%%VBLT%%div class="pr" style="font-size:8.5px;font-weight:700">%%VBLT%%span>N&deg;%%VBLT%%/span>%%VBLT%%span>Name of the player%%VBLT%%/span>%%VBLT%%/div>';
+    for (var i = 1; i %%VBLT%%= 10; i++) h += '%%VBLT%%div class="pr">%%VBLT%%span>%%VBLT%%span class="hw pl" id="l' + t + '-' + i + 'n">%%VBLT%%/span>%%VBLT%%/span>%%VBLT%%span>%%VBLT%%span class="hw pl" id="l' + t + '-' + i + 'm">%%VBLT%%/span>%%VBLT%%/span>%%VBLT%%/div>';
+    h += '%%VBLT%%div class="sub">LIBERO PLAYERS (&ldquo;L&rdquo;)%%VBLT%%/div>';
+    for (var j = 1; j %%VBLT%%= 2; j++) h += '%%VBLT%%div class="pr">%%VBLT%%span>%%VBLT%%span class="hw pl" id="L' + t + '-' + j + 'n">%%VBLT%%/span>%%VBLT%%/span>%%VBLT%%span>%%VBLT%%span class="hw pl" id="L' + t + '-' + j + 'm">%%VBLT%%/span>%%VBLT%%/span>%%VBLT%%/div>';
+    h += '%%VBLT%%div class="sub">OFFICIALS%%VBLT%%/div>%%VBLT%%div class="of">%%VBLT%%b>C%%VBLT%%/b>%%VBLT%%span>%%VBLT%%span class="hw" id="o' + t + '-C">%%VBLT%%/span>%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%div class="of">%%VBLT%%b>AC%%VBLT%%/b>%%VBLT%%span>%%VBLT%%span class="hw" id="o' + t + '-AC">%%VBLT%%/span>%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%/div>';
+    return h;
+  }
+  $("lists").innerHTML = '%%VBLT%%div class="ttl">TEAMS%%VBLT%%/div>%%VBLT%%div class="tl">' + plist("A") + plist("B") + '%%VBLT%%/div>' +
+    '%%VBLT%%div class="sub" style="border-top:1.5px solid var(--k)">SIGNATURES%%VBLT%%/div>%%VBLT%%div class="sigs">' +
+    '%%VBLT%%div>Team Captain%%VBLT%%span class="hw" id="sg-capA">%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%div>Team Captain%%VBLT%%span class="hw" id="sg-capB">%%VBLT%%/span>%%VBLT%%/div>' +
+    '%%VBLT%%div style="border-bottom:0">Coach%%VBLT%%span class="hw" id="sg-coA">%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%div style="border-bottom:0">Coach%%VBLT%%span class="hw" id="sg-coB">%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%/div>';
+
+  /* the coaches' line-up sheets */
+  function luCard(t) {
+    var L = TEAMS[t].lineup, at = function (i) { return '%%VBLT%%span class="hw pl">' + L[i] + '%%VBLT%%/span>'; };
+    var grid = [[3, "IV"], [2, "III"], [1, "II"], [4, "V"], [5, "VI"], [0, "I"]].map(function (q) {
+      return '%%VBLT%%div class="pos' + (q[1] === "I" ? " one" : "") + '">' + q[1] + at(q[0]) + '%%VBLT%%/div>';
+    }).join("");
+    return '%%VBLT%%div class="lucard">%%VBLT%%div class="sd">' + TEAMS[t].name + '%%VBLT%%/div>%%VBLT%%div class="lt">LINE-UP SHEET%%VBLT%%/div>' +
+      '%%VBLT%%div class="row1">%%VBLT%%b>SET%%VBLT%%/b>%%VBLT%%div class="fl">%%VBLT%%span class="hw" style="font-size:20px">1%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%/div>' +
+      '%%VBLT%%div class="fl tmf">Team %%VBLT%%span class="hw" style="font-size:18px">' + TEAMS[t].name + '%%VBLT%%/span>%%VBLT%%/div>' +
+      '%%VBLT%%div class="court">' + grid + '%%VBLT%%/div>%%VBLT%%div class="fl sg">Coach signature %%VBLT%%span class="hw" style="font-size:16px">' + TEAMS[t].coach + '%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%/div>';
+  }
+  $("lus").innerHTML = luCard("A") + luCard("B");
+
+  /* ---------- turn the rallies into steps ---------- */
+  var steps = [];
+  function step(cap, ops, board) { steps.push({ cap: cap, ops: ops || [], board: board }); }
+  var st = { A: 0, B: 0, serving: "A", idx: { A: 0, B: 0 }, rnd: { A: [0,0,0,0,0,0], B: [0,0,0,0,0,0] }, to: { A: 0, B: 0 }, served: { A: true, B: false }, nsub: { A: 0, B: 0 }, san: 0 };
+  function server(t) { return TEAMS[t].lineup[st.idx[t]]; }
+  function board() { return { A: st.A, B: st.B, sA: st.sA || 0, sB: st.sB || 0, serving: st.serving, server: server(st.serving) }; }
+  function other(t) { return t === "A" ? "B" : "A"; }
+  function box(t) { return t + "-sv-" + (st.idx[t] + 1) + "-" + st.rnd[t][st.idx[t]]; }
+
+  var pre = [{ id: "comp", text: "Women's League" }, { id: "city", text: "Cambridge" }, { id: "cc", text: "ENG" }, { id: "hall", text: "Sports Hall" },
+    { id: "pool", text: "League" }, { id: "mno", text: "12" }, { id: "div-W", text: "X", x: 1, note: "Division: Women" }, { id: "cat-S", text: "X", x: 1, note: "Category: Senior" },
+    { id: "date", text: "19 10 26", note: "Date: day, month, year" }, { id: "time", text: "19:00", note: "Starting time from the programme" }];
+  step("Before the match: fill in the top of the sheet: competition, city and country code, hall, pool/phase, match number; cross Women and Senior; then the date and the programme's starting time (1.1–1.9).", pre, null);
+  step("Write the two team names under TEAMS. Leave the A/B circles blank: they are filled in after the toss (1.10).",
+    [{ id: "tn1", text: TEAMS.A.box, note: "Team names (A/B after the toss)" }, { id: "tn2", text: TEAMS.B.box }], null);
+  var li = [];
+  ["A", "B"].forEach(function (t) {
+    li.push({ id: "l" + t + "-n", text: TEAMS[t].box, note: "Team list: " + TEAMS[t].short });
+    TEAMS[t].list.forEach(function (p, i) {
+      li.push({ id: "l" + t + "-" + (i + 1) + "n", text: p[0], fast: 1, note: "Team list: number and name" });
+      li.push({ id: "l" + t + "-" + (i + 1) + "m", text: p[1], fast: 1, note: "Team list: number and name" });
+      if (p[0] === TEAMS[t].cap) li.push({ id: "l" + t + "-" + (i + 1) + "n", ring: 1, rc: "var(--plc)", rw: 22, note: "Circle the captain's number" });
+    });
+  });
+  step("Bottom right, the team lists: shirt numbers and names of both teams, with the captain's number circled (1.11–1.12).", li, null);
+  var lb = [];
+  ["A", "B"].forEach(function (t) {
+    TEAMS[t].libs.forEach(function (p, i) {
+      lb.push({ id: "L" + t + "-" + (i + 1) + "n", text: p[0], fast: 1, note: "Libero players" });
+      lb.push({ id: "L" + t + "-" + (i + 1) + "m", text: p[1], fast: 1, note: "Libero players" });
+    });
+    lb.push({ id: "o" + t + "-C", text: TEAMS[t].coach, note: "Officials: coach (C)" });
+    lb.push({ id: "o" + t + "-AC", text: TEAMS[t].ac, note: "Assistant coach (AC)" });
+  });
+  step("Write the liberos under LIBERO PLAYERS, and the coach (C) and assistant coach (AC) under OFFICIALS (1.13).", lb, null);
+  step("The captains and coaches check the lists and sign under SIGNATURES (1.14–1.15).",
+    [{ id: "sg-capA", text: TEAMS.A.capName, note: "Captains and coaches sign" }, { id: "sg-capB", text: TEAMS.B.capName }, { id: "sg-coA", text: "Reed" }, { id: "sg-coB", text: "Lowe" }], null);
+  step("After the toss: the Panthers start on the scorer's left, so they are team A. Write A and B in the circles at the top and above the team lists (2.3).",
+    [{ id: "tc1", text: "A", note: "After the toss: team A and team B" }, { id: "tc2", text: "B" }, { id: "lA-ab", text: "A" }, { id: "lB-ab", text: "B" }], null);
+  step("Set 1: write the team names and A/B in the set box. The Panthers serve first, so cross their S; the Tigers receive, so cross their R (2.3a).",
+    [{ id: "A-name", text: TEAMS.A.box, note: "Set 1: team names" }, { id: "A-ab", text: "A" }, { id: "B-name", text: TEAMS.B.box }, { id: "B-ab", text: "B" },
+     { id: "A-S", text: "X", x: 1, note: "Serving first: cross S" }, { id: "B-R", text: "X", x: 1, note: "Receiving first: cross R" }], null);
+  var lu = [];
+  ["A", "B"].forEach(function (t) { TEAMS[t].lineup.forEach(function (n, i) { lu.push({ id: t + "-lu-" + (i + 1), text: n, note: "Starting player, position " + ["I", "II", "III", "IV", "V", "VI"][i] }); }); });
+  step("Copy the line-up sheets from the 2nd referee: the starting players go under I to VI, in the order on each sheet (2.4).", lu, board());
+  steps[steps.length - 1].lus = true;
+  st.rnd.A[0] = 1;
+  step("The 1st referee whistles for the first service: write the START time, and tick box 1 under I: #7 serves first for the Panthers (3.1–3.3).",
+    [{ id: "A-time", text: "19:04", note: "START time: the whistle for the first service" }, { id: "A-sv-1-1", text: "✓", tick: 1, note: "First server: tick box 1" }], board());
+
+  for (var i = 0; i %%VBLT%% SEQ.length; i++) {
+    var w = SEQ.charAt(i), l = other(w), ops = [], cap;
+    st[w]++;
+    ops.push({ id: w + "-pt-" + st[w], hit: 1, note: "Point " + st[w] + " to the " + TEAMS[w].short });
+    if (w === st.serving) {
+      cap = TEAMS[w].short + " win the rally on #" + server(w) + "'s serve: slash " + st[w] + " in their POINTS column. #" + server(w) + " keeps serving.";
+    } else {
+      var lost = server(l), lostBox = box(l);
+      ops.push({ id: lostBox, text: st[l], sco: 1, c: "sc", note: TEAMS[l].short + " lost the serve: their score in #" + lost + "'s box" });
+      var extra = "";
+      if (!st.served[w]) {
+        ops.push({ id: w + "-sv-1-1", text: "X", x: 1, note: "First side-out: cross box 1 under I" });
+        st.rnd[w][0] = 1;
+        st.served[w] = true;
+        extra = " This is their first serve, so cross box 1 under I: they rotate before serving.";
+      }
+      st.idx[w] = (st.idx[w] + 1) % 6;
+      st.rnd[w][st.idx[w]]++;
+      st.serving = w;
+      ops.push({ id: box(w), text: "✓", tick: 1, note: "Next server: tick #" + server(w) + "'s box" });
+      cap = TEAMS[w].short + " win the rally: slash " + st[w] + ". " + TEAMS[l].short + " lose the serve, so write their score, " + st[l] + ", in #" + lost + "'s service round box." +
+        extra + " " + TEAMS[w].short + " rotate: tick the box under " + ["I", "II", "III", "IV", "V", "VI"][st.idx[w]] + ", #" + server(w) + " serves.";
+    }
+    step(cap, ops, board());
+    var ev = EVENTS[i + 1], t, sc;
+    if (!ev) continue;
+    t = ev.team; sc = t === "A" ? st.A + ":" + st.B : st.B + ":" + st.A;
+    if (ev.type === "to") {
+      var n = ++st.to[t];
+      step("Time-out " + TEAMS[t].short + " (their " + (n === 1 ? "first" : "second") + "): write the score in their " + (n === 1 ? "upper" : "lower") + " “T” box, the requesting team first: " + sc + " (3.7).",
+        [{ id: t + "-to-" + n, text: sc, c: "sc", note: "Time-out " + n + ": " + sc + ", requesting team first" }], board());
+    } else if (ev.type === "sub") {
+      var off = TEAMS[t].lineup[ev.pos - 1];
+      TEAMS[t].lineup[ev.pos - 1] = ev.on; st.nsub[t]++;
+      step("Substitution " + TEAMS[t].short + ": #" + ev.on + " comes on for #" + off + ". Write " + ev.on + " in N° of Player under " + ["I", "II", "III", "IV", "V", "VI"][ev.pos - 1] + ", and the score in the upper box, the substituting team first: " + sc + " (3.6).",
+        [{ id: t + "-sb-" + ev.pos, text: ev.on, note: "Substitute: #" + ev.on + " for #" + off }, { id: t + "-c1-" + ev.pos, text: sc, c: "sc", note: "Score at change: " + sc }], board());
+    } else if (ev.type === "back") {
+      var sb = TEAMS[t].lineup[ev.pos - 1], back = [4, 10, 8, 12, 6, 15][ev.pos - 1];
+      TEAMS[t].lineup[ev.pos - 1] = back; st.nsub[t]++;
+      step("#" + back + " comes back for #" + sb + ". Circle " + sb + ": the substitute can't come back in this set. Write the score in the lower box, the substituting team first: " + sc + " (3.6c–d).",
+        [{ id: t + "-sb-" + ev.pos, ring: 1, rc: "var(--pen)", rw: 24, note: "#" + back + " is back: circle " + sb }, { id: t + "-c2-" + ev.pos, text: sc, c: "sc", note: "Score at the return: " + sc }], board());
+    } else if (ev.type === "san") {
+      var r = ++st.san;
+      step("The 1st referee gives Tigers #" + ev.who + " a yellow-card warning for misconduct. In SANCTIONS write " + ev.who + " under W, then B, set 1 and the score " + st.A + ":" + st.B + " (3.8b).",
+        [{ id: "sn-" + r + "-W", text: ev.who, note: "Warning (W): player " + ev.who }, { id: "sn-" + r + "-T", text: t }, { id: "sn-" + r + "-S", text: "1" }, { id: "sn-" + r + "-SC", text: st.A + ":" + st.B, c: "sc", note: "Set and score at the sanction" }], board());
+    } else if (ev.type === "ir") {
+      step("The Tigers coach asks for a third time-out: it is rejected as an improper request. Cross the B next to IMPROPER REQUEST (3.8a).",
+        [{ id: "ir-B", text: "X", x: 1, note: "Improper request: cross B" }], board());
+    }
+  }
+  // end of the set: the Panthers win the last rally on their own serve
+  var cxA = [], cxB = [];
+  for (var q = st.A + 1; q %%VBLT%%= 48; q++) cxA.push("A-pt-" + q);
+  for (var q2 = st.B + 1; q2 %%VBLT%%= 48; q2++) cxB.push("B-pt-" + q2);
+  st.sA = 1;
+  step("Set 1 over, " + st.A + "–" + st.B + " to the Panthers. Write the END time, cancel the unused numbers in both POINTS columns, and circle the final score, " + st.A + ", in the box of the last server, #" + server("A") + " (3.4d–f).",
+    [{ id: "B-time", text: "19:31", note: "END time: the whistle for the last point" }, { cx: cxA, note: "Cancel the unused points" }, { cx: cxB },
+     { id: box("A"), text: st.A, sco: 1, c: "sc", note: "Final score in the last server's box" }, { id: box("A"), sel: ".sco", ring: 1, rw: 26, note: "Circle the final score" }], board());
+  var s1A = st.A, s1B = st.B;
+  step("In RESULTS, fill in set 1 for each team: time-outs (T), substitutions (S), won (W: 1 or 0) and points (P), and the set duration in brackets: 27 minutes (4.1–4.6).",
+    [{ id: "rtA", text: TEAMS.A.box, note: "Results: team names" }, { id: "rtB", text: TEAMS.B.box },
+     { id: "rA-T-1", text: st.to.A, note: "Set 1: Panthers T, S, W, P" }, { id: "rA-S-1", text: st.nsub.A }, { id: "rA-W-1", text: "1" }, { id: "rA-P-1", text: s1A, c: "sc" },
+     { id: "rD-1", text: "27", note: "Set 1 lasted 27 minutes" },
+     { id: "rB-P-1", text: s1B, c: "sc", note: "Set 1: Tigers P, W, S, T" }, { id: "rB-W-1", text: "0" }, { id: "rB-S-1", text: st.nsub.B }, { id: "rB-T-1", text: st.to.B }], board());
+  st.sA = 3; st.A = 25; st.B = 23;
+  var r2 = { A: [1, 2, 1, 25], B: [2, 3, 0, 19], d: 24 }, r3 = { A: [2, 2, 1, 25], B: [2, 4, 0, 23], d: 29 };
+  function rrow(k, r, note) {
+    return [{ id: "rA-T-" + k, text: r.A[0], note: note }, { id: "rA-S-" + k, text: r.A[1] }, { id: "rA-W-" + k, text: r.A[2] }, { id: "rA-P-" + k, text: r.A[3], c: "sc" },
+      { id: "rD-" + k, text: r.d }, { id: "rB-P-" + k, text: r.B[3], c: "sc" }, { id: "rB-W-" + k, text: r.B[2] }, { id: "rB-S-" + k, text: r.B[1] }, { id: "rB-T-" + k, text: r.B[0] }];
+  }
+  step("Sets 2 and 3 are scored the same way, each in its own set box. The Panthers win set 2, 25:19, and set 3, 25:23, so they win the match 3–0. Add both sets to the results.",
+    rrow(2, r2, "They played two more sets: set 2, Panthers 25:19").concat(rrow(3, r3, "Set 3, Panthers 25:23: match won 3–0")), board());
+  steps[steps.length - 1].setNo = 3;
+  step("Totals: add up each column, and the total set duration (27 + 24 + 29 = 80 minutes). Then the match starting and ending times, the total match duration, and the WINNER with the score in sets (4.2–4.9).",
+    [{ id: "rA-T-t", text: "5", note: "Totals for each team" }, { id: "rA-S-t", text: "5" }, { id: "rA-W-t", text: "3" }, { id: "rA-P-t", text: "75", c: "sc" },
+     { id: "rD-t", text: "80", note: "Total set duration" }, { id: "rB-P-t", text: "64", c: "sc" }, { id: "rB-W-t", text: "0" }, { id: "rB-S-t", text: "9" }, { id: "rB-T-t", text: "6" },
+     { id: "m-st", text: "19h 04", note: "Match start, end and duration" }, { id: "m-en", text: "20h 30" }, { id: "m-du", text: "1h 26" },
+     { id: "m-w", text: TEAMS.A.box, note: "WINNER: the team and the score in sets" }, { id: "m-ws", text: "3:0" }], board());
+  step("Approval: the officials' names and countries, then the signatures in order: scorer, assistant scorer, both team captains, the 2nd referee and finally the 1st referee (4.10).",
+    [{ id: "ap-r1-n", text: "R. Hale", note: "Referees, scorers: names and countries" }, { id: "ap-r1-c", text: "ENG" }, { id: "ap-r2-n", text: "T. Moss" }, { id: "ap-r2-c", text: "ENG" },
+     { id: "ap-sc-n", text: "A. Byrne" }, { id: "ap-sc-c", text: "ENG" }, { id: "ap-as-n", text: "L. Chen" }, { id: "ap-as-c", text: "ENG" },
+     { id: "ap-sc-s", text: "Byrne", note: "1. The scorer signs" }, { id: "ap-as-s", text: "Chen", note: "2. The assistant scorer" },
+     { id: "ap-capA", text: TEAMS.A.capName, note: "3. Both team captains" }, { id: "ap-capB", text: TEAMS.B.capName },
+     { id: "ap-r2-s", text: "Moss", note: "4. The 2nd referee" }, { id: "ap-r1-s", text: "Hale", note: "5. Last, the 1st referee" }], board());
+
+  /* ---------- handwriting: a single-stroke cursive (Hershey) drawn with a pen ---------- */
+  var G = {" ":[16,[]],"!":[10,[[5,-12,5,2],[5,7,4,8,5,9,6,8,5,7]]],"\"":[16,[[4,-12,4,-5],[12,-12,12,-5]]],"#":[21,[[11,-16,4,16],[17,-16,10,16],[4,-3,18,-3],[3,3,17,3]]],"$":[20,[[8,-16,8,13],[12,-16,12,13],[17,-9,15,-11,12,-12,8,-12,5,-11,3,-9,3,-7,4,-5,5,-4,7,-3,13,-1,15,0,16,1,17,3,17,6,15,8,12,9,8,9,5,8,3,6]]],"%":[24,[[21,-12,3,9],[8,-12,10,-10,10,-8,9,-6,7,-5,5,-5,3,-7,3,-9,4,-11,6,-12,8,-12,10,-11,13,-10,16,-10,19,-11,21,-12],[17,2,15,3,14,5,14,7,16,9,18,9,20,8,21,6,21,4,19,2,17,2]]],"&":[26,[[23,-3,23,-4,22,-5,21,-5,20,-4,19,-2,17,3,15,6,13,8,11,9,7,9,5,8,4,7,3,5,3,3,4,1,5,0,12,-4,13,-5,14,-7,14,-9,13,-11,11,-12,9,-11,8,-9,8,-7,9,-4,11,-1,16,6,18,8,20,9,22,9,23,8,23,7]]],"'":[4,[[2,-5,2,-1]]],"(":[14,[[11,-16,9,-14,7,-11,5,-7,4,-2,4,2,5,7,7,11,9,14,11,16]]],")":[14,[[3,-16,5,-14,7,-11,9,-7,10,-2,10,2,9,7,7,11,5,14,3,16]]],"*":[16,[[8,-6,8,6],[3,-3,13,3],[13,-3,3,3]]],"+":[26,[[13,-9,13,9],[4,0,22,0]]],",":[8,[[5,5,4,6,3,5,4,4,5,5,5,7,3,9]]],"-":[26,[[4,0,22,0]]],".":[8,[[4,4,3,5,4,6,5,5,4,4]]],"/":[22,[[20,-16,2,16]]],"0":[20,[[9,-12,6,-11,4,-8,3,-3,3,0,4,5,6,8,9,9,11,9,14,8,16,5,17,0,17,-3,16,-8,14,-11,11,-12,9,-12]]],"1":[20,[[6,-8,8,-9,11,-12,11,9]]],"2":[20,[[4,-7,4,-8,5,-10,6,-11,8,-12,12,-12,14,-11,15,-10,16,-8,16,-6,15,-4,13,-1,3,9,17,9]]],"3":[20,[[5,-12,16,-12,10,-4,13,-4,15,-3,16,-2,17,1,17,3,16,6,14,8,11,9,8,9,5,8,4,7,3,5]]],"4":[20,[[13,-12,3,2,18,2],[13,-12,13,9]]],"5":[20,[[15,-12,5,-12,4,-3,5,-4,8,-5,11,-5,14,-4,16,-2,17,1,17,3,16,6,14,8,11,9,8,9,5,8,4,7,3,5]]],"6":[20,[[16,-9,15,-11,12,-12,10,-12,7,-11,5,-8,4,-3,4,2,5,6,7,8,10,9,11,9,14,8,16,6,17,3,17,2,16,-1,14,-3,11,-4,10,-4,7,-3,5,-1,4,2]]],"7":[20,[[17,-12,7,9],[3,-12,17,-12]]],"8":[20,[[8,-12,5,-11,4,-9,4,-7,5,-5,7,-4,11,-3,14,-2,16,0,17,2,17,5,16,7,15,8,12,9,8,9,5,8,4,7,3,5,3,2,4,0,6,-2,9,-3,13,-4,15,-5,16,-7,16,-9,15,-11,12,-12,8,-12]]],"9":[20,[[16,-5,15,-2,13,0,10,1,9,1,6,0,4,-2,3,-5,3,-6,4,-9,6,-11,9,-12,10,-12,13,-11,15,-9,16,-5,16,0,15,5,13,8,10,9,8,9,5,8,4,6]]],":":[8,[[4,-3,3,-2,4,-1,5,-2,4,-3],[4,4,3,5,4,6,5,5,4,4]]],";":[8,[[4,-3,3,-2,4,-1,5,-2,4,-3],[5,5,4,6,3,5,4,4,5,5,5,7,3,9]]],"%%VBLT%%":[24,[[20,-9,4,0,20,9]]],"=":[26,[[4,-3,22,-3],[4,3,22,3]]],">":[24,[[4,-9,20,0,4,9]]],"?":[18,[[3,-7,3,-8,4,-10,5,-11,7,-12,11,-12,13,-11,14,-10,15,-8,15,-6,14,-4,13,-3,9,-1,9,2],[9,7,8,8,9,9,10,8,9,7]]],"@":[27,[[18,-4,17,-6,15,-7,12,-7,10,-6,9,-5,8,-2,8,1,9,3,11,4,14,4,16,3,17,1],[12,-7,10,-5,9,-2,9,1,10,3,11,4],[18,-7,17,1,17,3,19,4,21,4,23,2,24,-1,24,-3,23,-6,22,-8,20,-10,18,-11,15,-12,12,-12,9,-11,7,-10,5,-8,4,-6,3,-3,3,0,4,3,5,5,7,7,9,8,12,9,15,9,18,8,20,7,21,6],[19,-7,18,1,18,3,19,4]]],"A":[20,[[0,9,2,8,5,5,8,1,12,-6,15,-12,15,9,14,6,12,3,10,1,7,-1,5,-1,4,0,4,2,5,4,7,6,10,8,13,9,18,9]]],"B":[23,[[13,-10,14,-9,14,-6,13,-2,12,1,11,3,9,6,7,8,5,9,4,9,3,8,3,5,4,0,5,-3,6,-5,8,-8,10,-10,12,-11,15,-12,18,-12,20,-11,21,-9,21,-7,20,-5,19,-4,17,-3,14,-2],[13,-2,14,-2,17,-1,18,0,19,2,19,5,18,7,17,8,15,9,12,9,10,8,9,6]]],"C":[20,[[12,-6,12,-5,13,-4,15,-4,17,-5,18,-7,18,-9,17,-11,15,-12,12,-12,9,-11,7,-9,5,-6,4,-4,3,0,3,4,4,7,5,8,7,9,9,9,12,8,14,6,15,4]]],"D":[23,[[13,-12,11,-11,10,-9,9,-5,8,1,7,4,6,6,4,8,2,9,0,9,-1,8,-1,6,0,5,2,5,4,6,6,8,9,9,12,9,15,8,17,6,19,2,20,-3,20,-7,19,-10,18,-11,16,-12,13,-12,11,-10,11,-8,12,-5,14,-2,16,0,19,2,21,3]]],"E":[20,[[14,-8,14,-7,15,-6,17,-6,18,-7,18,-9,17,-11,14,-12,10,-12,7,-11,6,-9,6,-6,7,-4,8,-3,11,-2,8,-2,5,-1,4,0,3,2,3,5,4,7,5,8,8,9,11,9,14,8,16,6,17,4]]],"F":[20,[[10,-6,8,-6,6,-7,5,-9,6,-11,9,-12,12,-12,16,-11,19,-11,21,-12],[16,-11,14,-4,12,2,10,6,8,8,6,9,4,9,2,8,1,6,1,4,2,3,4,3,6,4],[9,-2,18,-2]]],"G":[23,[[0,9,2,8,6,4,9,-1,10,-4,11,-8,11,-11,10,-12,9,-12,8,-11,7,-9,7,-6,8,-4,10,-3,14,-3,17,-4,18,-5,19,-7,19,-1,18,4,17,6,15,8,12,9,8,9,5,8,3,6,2,4,2,2]]],"H":[24,[[7,-5,5,-6,4,-8,4,-9,5,-11,7,-12,8,-12,10,-11,11,-9,11,-7,10,-3,8,3,6,7,4,9,2,9,1,8,1,6],[7,0,16,-3,18,-4,21,-6,23,-8,24,-10,24,-11,23,-12,22,-12,20,-10,18,-6,16,0,15,5,15,8,16,9,17,9,19,8,20,7,22,4]]],"I":[17,[[14,4,12,2,10,-1,9,-3,8,-6,8,-9,9,-11,10,-12,12,-12,13,-11,14,-9,14,-6,13,-1,11,4,10,6,8,8,6,9,4,9,2,8,1,6,1,4,2,3,4,3,6,4]]],"J":[15,[[10,12,8,9,6,4,5,-2,5,-8,6,-11,8,-12,10,-12,11,-11,12,-8,12,-5,11,0,8,9,6,15,5,18,4,20,2,21,1,20,1,18,2,15,4,12,6,10,9,8,13,6]]],"K":[24,[[7,-5,5,-6,4,-8,4,-9,5,-11,7,-12,8,-12,10,-11,11,-9,11,-7,10,-3,8,3,6,7,4,9,2,9,1,8,1,6],[24,-9,24,-11,23,-12,22,-12,20,-11,18,-9,16,-6,14,-4,12,-3,10,-3],[12,-3,13,-1,13,6,14,8,15,9,16,9,18,8,19,7,21,4]]],"L":[19,[[4,0,6,0,10,-1,13,-3,15,-5,16,-7,16,-10,15,-12,13,-12,12,-11,11,-9,10,-4,9,1,8,4,7,6,5,8,3,9,1,9,0,8,0,6,1,5,3,5,5,6,8,8,11,9,13,9,16,8,18,6]]],"M":[33,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-7,8,-2,7,2,5,9],[7,2,10,-6,12,-10,13,-11,15,-12,16,-12,18,-11,19,-9,19,-7,18,-2,17,2,15,9],[17,2,20,-6,22,-10,23,-11,25,-12,26,-12,28,-11,29,-9,29,-7,28,-2,26,5,26,8,27,9,28,9,30,8,31,7,33,4]]],"N":[24,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-7,8,-2,7,2,5,9],[7,2,10,-6,12,-10,13,-11,15,-12,17,-12,19,-11,20,-9,20,-7,19,-2,17,5,17,8,18,9,19,9,21,8,22,7,24,4]]],"O":[21,[[12,-12,9,-11,7,-9,5,-6,4,-4,3,0,3,4,4,7,5,8,7,9,9,9,12,8,14,6,16,3,17,1,18,-3,18,-7,17,-10,16,-11,14,-12,12,-12,10,-10,10,-7,11,-4,13,-1,15,1,18,3,20,4]]],"P":[25,[[13,-10,14,-9,14,-6,13,-2,12,1,11,3,9,6,7,8,5,9,4,9,3,8,3,5,4,0,5,-3,6,-5,8,-8,10,-10,12,-11,15,-12,20,-12,22,-11,23,-10,24,-8,24,-5,23,-3,22,-2,20,-1,17,-1,15,-2,14,-3]]],"Q":[22,[[13,-6,12,-4,11,-3,9,-2,7,-2,6,-4,6,-6,7,-9,9,-11,12,-12,15,-12,17,-11,18,-9,18,-5,17,-2,15,1,11,5,8,7,6,8,3,9,1,9,0,8,0,6,1,5,3,5,5,6,8,8,11,9,14,9,17,8,19,6]]],"R":[25,[[13,-10,14,-9,14,-6,13,-2,12,1,11,3,9,6,7,8,5,9,4,9,3,8,3,5,4,0,5,-3,6,-5,8,-8,10,-10,12,-11,15,-12,19,-12,21,-11,22,-10,23,-8,23,-5,22,-3,21,-2,19,-1,16,-1,13,-2,14,-1,15,1,15,6,16,8,18,9,20,8,21,7,23,4]]],"S":[20,[[0,9,2,8,4,6,7,2,9,-1,11,-5,12,-8,12,-11,11,-12,10,-12,9,-11,8,-9,8,-7,9,-5,11,-3,14,-1,16,1,17,3,17,5,16,7,15,8,12,9,8,9,5,8,3,6,2,4,2,2]]],"T":[19,[[10,-6,8,-6,6,-7,5,-9,6,-11,9,-12,12,-12,16,-11,19,-11,21,-12],[16,-11,14,-4,12,2,10,6,8,8,6,9,4,9,2,8,1,6,1,4,2,3,4,3,6,4]]],"U":[24,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-7,8,-3,7,0,6,4,6,6,7,8,9,9,11,9,13,8,14,7,16,3,19,-5,21,-12],[19,-5,18,-1,17,5,17,8,18,9,19,9,21,8,22,7,24,4]]],"V":[23,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-7,8,-3,7,0,6,4,6,7,7,9,9,9,11,8,14,5,16,2,18,-2,19,-5,20,-9,20,-11,19,-12,18,-12,17,-11,16,-9,16,-7,17,-4,19,-2,21,-1]]],"W":[28,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-6,8,9],[18,-12,8,9],[18,-12,16,9],[30,-12,28,-11,25,-8,22,-4,19,2,16,9]]],"X":[24,[[8,-6,6,-6,5,-7,5,-9,6,-11,8,-12,10,-12,12,-11,13,-9,13,-6,11,3,11,6,12,8,14,9,16,9,18,8,19,6,19,4,18,3,16,3],[23,-9,23,-11,22,-12,20,-12,18,-11,16,-9,14,-6,10,3,8,6,6,8,4,9,2,9,1,8,1,6]]],"Y":[23,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-7,8,-3,7,0,6,4,6,6,7,8,8,9,10,9,12,8,14,6,16,3,17,1,19,-5],[21,-12,19,-5,16,5,14,11,12,16,10,20,8,21,7,20,7,18,8,15,10,12,13,9,16,7,21,4]]],"Z":[21,[[13,-6,12,-4,11,-3,9,-2,7,-2,6,-4,6,-6,7,-9,9,-11,12,-12,15,-12,17,-11,18,-9,18,-5,17,-2,15,2,12,5,8,8,6,9,3,9,2,8,2,6,3,5,6,5,8,6,9,7,10,9,10,12,9,15,8,17,6,20,4,21,3,20,3,18,4,15,6,12,9,9,12,7,18,4]]],"[":[14,[[4,-16,4,16],[5,-16,5,16],[4,-16,11,-16],[4,16,11,16]]],"\\":[14,[[0,-12,14,12]]],"]":[14,[[9,-16,9,16],[10,-16,10,16],[3,-16,10,-16],[3,16,10,16]]],"^":[16,[[8,-14,0,0],[8,-14,16,0]]],"_":[20,[[0,16,20,16]]],"`":[8,[[5,-7,3,-5,3,-3,4,-2,5,-3,4,-4,3,-3]]],"a":[16,[[9,3,8,1,6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,5,9,7,8,8,6,10,0,9,5,9,8,10,9,11,9,13,8,14,7,16,4]]],"b":[14,[[0,4,2,1,5,-4,6,-6,7,-9,7,-11,6,-12,4,-11,3,-9,2,-5,1,2,1,8,2,9,3,9,5,8,7,6,8,3,8,0,9,4,10,5,12,5,14,4]]],"c":[11,[[7,2,7,1,6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,6,9,9,7,11,4]]],"d":[16,[[9,3,8,1,6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,5,9,7,8,8,6,14,-12],[10,0,9,5,9,8,10,9,11,9,13,8,14,7,16,4]]],"e":[10,[[1,7,3,6,4,5,5,3,5,1,4,0,3,0,1,1,0,3,0,6,1,8,3,9,5,9,7,8,8,7,10,4]]],"f":[8,[[0,4,4,-1,6,-4,7,-6,8,-9,8,-11,7,-12,5,-11,4,-9,2,-1,-1,8,-4,15,-5,18,-5,20,-4,21,-2,20,-1,17,0,8,1,9,3,9,5,8,6,7,8,4]]],"g":[15,[[9,3,8,1,6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,5,9,7,8,8,7],[10,0,8,7,4,18,3,20,1,21,0,20,0,18,1,15,4,12,7,10,9,9,12,7,15,4]]],"h":[15,[[0,4,2,1,5,-4,6,-6,7,-9,7,-11,6,-12,4,-11,3,-9,2,-5,1,1,0,9],[0,9,1,6,2,4,4,1,6,0,8,0,9,1,9,3,8,6,8,8,9,9,10,9,12,8,13,7,15,4]]],"i":[7,[[3,-5,3,-4,4,-4,4,-5,3,-5],[0,4,2,0,0,6,0,8,1,9,2,9,4,8,5,7,7,4]]],"j":[7,[[3,-5,3,-4,4,-4,4,-5,3,-5],[0,4,2,0,-4,18,-5,20,-7,21,-8,20,-8,18,-7,15,-4,12,-1,10,1,9,4,7,7,4]]],"k":[14,[[0,4,2,1,5,-4,6,-6,7,-9,7,-11,6,-12,4,-11,3,-9,2,-5,1,1,0,9],[0,9,1,6,2,4,4,1,6,0,8,0,9,1,9,3,7,4,4,4],[4,4,6,5,7,8,8,9,9,9,11,8,12,7,14,4]]],"l":[8,[[0,4,2,1,5,-4,6,-6,7,-9,7,-11,6,-12,4,-11,3,-9,2,-5,1,2,1,8,2,9,3,9,5,8,6,7,8,4]]],"m":[25,[[0,4,2,1,4,0,5,1,5,2,4,6,3,9],[4,6,5,4,7,1,9,0,11,0,12,1,12,2,11,6,10,9],[11,6,12,4,14,1,16,0,18,0,19,1,19,3,18,6,18,8,19,9,20,9,22,8,23,7,25,4]]],"n":[18,[[0,4,2,1,4,0,5,1,5,2,4,6,3,9],[4,6,5,4,7,1,9,0,11,0,12,1,12,3,11,6,11,8,12,9,13,9,15,8,16,7,18,4]]],"o":[14,[[6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,5,9,7,8,8,7,9,5,9,3,8,1,6,0,5,1,5,3,6,5,8,6,11,6,13,5,14,4]]],"p":[15,[[0,4,2,1,3,-1,2,3,-4,21],[2,3,3,1,5,0,7,0,9,1,10,3,10,5,9,7,8,8,6,9],[2,8,4,9,7,9,10,8,12,7,15,4]]],"q":[15,[[9,3,8,1,6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,5,9,7,8],[10,0,9,3,7,8,4,15,3,18,3,20,4,21,6,20,7,17,7,10,9,9,12,7,15,4]]],"r":[13,[[0,4,2,1,3,-1,3,1,6,1,7,2,7,4,6,7,6,8,7,9,8,9,10,8,11,7,13,4]]],"s":[11,[[0,4,2,1,3,-1,3,1,5,4,6,6,6,8,4,9],[0,8,2,9,6,9,8,8,9,7,11,4]]],"t":[9,[[0,4,2,1,4,-3],[7,-12,1,6,1,8,2,9,4,9,6,8,7,7,9,4],[1,-4,8,-4]]],"u":[15,[[0,4,2,0,0,6,0,8,1,9,3,9,5,8,7,6,9,3],[10,0,8,6,8,8,9,9,10,9,12,8,13,7,15,4]]],"v":[15,[[0,4,2,0,1,5,1,8,2,9,3,9,6,8,8,6,9,3,9,0],[9,0,10,4,11,5,13,5,15,4]]],"w":[21,[[3,0,1,2,0,5,0,7,1,9,3,9,5,8,7,6],[9,0,7,6,7,8,8,9,10,9,12,8,14,6,15,3,15,0],[15,0,16,4,17,5,19,5,21,4]]],"x":[16,[[0,4,2,1,4,0,6,0,7,1,7,8,8,9,11,9,14,7,16,4],[13,1,12,0,10,0,9,1,5,8,4,9,2,9,1,8]]],"y":[15,[[0,4,2,0,0,6,0,8,1,9,3,9,5,8,7,6,9,3],[10,0,4,18,3,20,1,21,0,20,0,18,1,15,4,12,7,10,9,9,12,7,15,4]]],"z":[14,[[0,4,2,1,4,0,6,0,8,2,8,4,7,6,5,8,2,9,4,10,5,12,5,15,4,18,3,20,1,21,0,20,0,18,1,15,4,12,7,10,11,7,14,4]]],"{":[14,[[9,-16,7,-15,6,-14,5,-12,5,-10,6,-8,7,-7,8,-5,8,-3,6,-1],[7,-15,6,-13,6,-11,7,-9,8,-8,9,-6,9,-4,8,-2,4,0,8,2,9,4,9,6,8,8,7,9,6,11,6,13,7,15],[6,1,8,3,8,5,7,7,6,8,5,10,5,12,6,14,7,15,9,16]]],"|":[8,[[4,-16,4,16]]],"}":[14,[[5,-16,7,-15,8,-14,9,-12,9,-10,8,-8,7,-7,6,-5,6,-3,8,-1],[7,-15,8,-13,8,-11,7,-9,6,-8,5,-6,5,-4,6,-2,10,0,6,2,5,4,5,6,6,8,7,9,8,11,8,13,7,15],[8,1,6,3,6,5,7,7,8,8,9,10,9,12,8,14,7,15,5,16]]],"~":[24,[[3,3,3,1,4,-2,6,-3,8,-3,10,-2,14,1,16,2,18,2,20,1,21,-1],[3,1,4,-1,6,-2,8,-2,10,-1,14,2,16,3,18,3,20,2,21,-1,21,-3]]],"\u007f":[16,[[0,-12,0,9,1,9,1,-12,2,-12,2,9,3,9,3,-12,4,-12,4,9,5,9,5,-12,6,-12,6,9,7,9,7,-12,8,-12,8,9,9,9,9,-12,10,-12,10,9,11,9,11,-12,12,-12,12,9,13,9,13,-12,14,-12,14,9,15,9,15,-12,16,-12,16,9]]]}, YMIN = -17, HH = 39;
+  G["✓"] = [20, [[3, 0, 8, 7, 19, -10]]];
+  var XG = [22, [[3, -9, 19, 11], [19, -9, 3, 11]]];   // a cross: two strokes
+  var NS = "http://www.w3.org/2000/svg";
+  function draw(el, text, isX) {
+    el.textContent = "";
+    var svg = document.createElementNS(NS, "svg"), x = 0, paths = [];
+    String(text).split("").forEach(function (ch) {
+      var g = isX ? XG : (G[ch] || G[" "]);
+      g[1].forEach(function (s) {
+        if (s.length %%VBLT%% 4) return;
+        var d = "M" + (s[0] + x) + " " + s[1];
+        for (var i = 2; i %%VBLT%% s.length; i += 2) d += "L" + (s[i] + x) + " " + s[i + 1];
+        var p = document.createElementNS(NS, "path"); p.setAttribute("d", d); svg.appendChild(p); paths.push(p);
+      });
+      x += g[0];
+    });
+    svg.setAttribute("viewBox", "-2 " + YMIN + " " + (x + 4) + " " + HH);
+    svg.style.width = ((x + 4) / HH * 1.3) + "em";
+    svg.setAttribute("aria-hidden", "true");
+    el.appendChild(svg);
+    el.setAttribute("aria-label", text);
+    return paths;
+  }
+  document.querySelectorAll(".lucard .hw").forEach(function (e) { draw(e, e.textContent); });
+
+  var at = -1, timer = null, f = 2.2, started = false, job = 0;
+  var sheet = $("sheet"), pen = $("pen");
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var SPEED = 0.30 / f;   // pen speed, px per ms
+  function clearSheet() {
+    document.querySelectorAll("#sheet .hw").forEach(function (e) { if (e.id) { e.textContent = ""; e.classList.remove("sc"); } else e.remove(); });
+    document.querySelectorAll("#sheet .hit, #sheet .ring, #sheet .cx, #sheet .cur, #sheet .wr").forEach(function (e) { e.classList.remove("hit", "ring", "cx", "wr", "cur"); });
+  }
+  var cloud = $("cloud");
+  function penAt(x, y) {
+    var r = sheet.getBoundingClientRect(), px = x - r.left - sheet.clientLeft, py = y - r.top - sheet.clientTop;
+    pen.style.left = px + "px"; pen.style.top = py + "px";
+    pen.classList.add("on");
+    if (cloudMove && cloud.classList.contains("on")) {
+      cloudMove = false;
+      var w = cloud.offsetWidth, h = cloud.offsetHeight;
+      var cx = Math.max(4, Math.min(sheet.clientWidth - w - 4, px - w / 2 + 10)), cy = py - 30 - h - 18;
+      cloud.style.setProperty("--tx", Math.max(18, Math.min(w - 18, px + 10 - cx)) + "px");
+      cloud.style.left = cx + "px"; cloud.style.top = cy + "px";
+    }
+  }
+  var cloudMove = false;
+  function say(t) { cloud.textContent = t; cloud.classList.toggle("on", !!t); cloudMove = !!t; }
+  function apply(op, anim, items) {
+    if (op.cx) {
+      var els = op.cx.map($);
+      if (anim) items.push({ css: "cx", els: els, note: op.note || "" });
+      else els.forEach(function (e) { e.classList.add("cx"); });
+      return;
+    }
+    var e = $(op.id); if (e && op.sel) e = e.querySelector(op.sel);
+    if (!e) return;
+    if (op.hit || op.ring) {
+      if (op.ring) { if (op.rc) e.style.setProperty("--rc", op.rc); else e.style.removeProperty("--rc"); e.style.setProperty("--rw", (op.rw || 22) + "px"); e.style.setProperty("--rh", ((op.rw || 22) - 2) + "px"); }
+      if (anim) items.push({ css: op.hit ? "hit" : "ring", el: e, note: op.note || "", r: (op.rw || 22) / 2, slow: 1 });
+      else e.classList.add(op.hit ? "hit" : "ring");
+      return;
+    }
+    var tgt = e;
+    if (!e.classList.contains("hw")) { tgt = document.createElement("span"); tgt.className = "hw" + (op.tick ? " tk" : op.sco ? " sco" : " ov"); e.appendChild(tgt); }
+    if (op.c) tgt.classList.add(op.c);
+    var paths = draw(tgt, op.text, op.x);
+    if (anim) {
+      paths.forEach(function (p) { var L = p.getTotalLength(); p.style.strokeDasharray = L + " " + (L + 2); p.style.strokeDashoffset = L + 1; p._L = L; });
+      items.push({ paths: paths, fast: op.fast, note: op.note || "", slow: op.c === "sc" || /-lu-/.test(op.id) });
+    }
+  }
+  // play the items one after another, the pen following each stroke
+  function run(items, done) {
+    var my = ++job, i = 0, last = null;
+    function next() {
+      if (my !== job) return;
+      if (i >= items.length) { pen.classList.remove("on"); if (done) done(); return; }
+      var it = items[i++];
+      if (it.note && it.note !== last) { say(it.note); last = it.note; }
+      if (it.css === "cx") cxItem(it, next); else if (it.css) cssItem(it, next); else strokes(it, 0, next);
+    }
+    function strokes(it, k, cb) {
+      if (my !== job) return;
+      if (k >= it.paths.length) { setTimeout(cb, (it.slow ? 260 : it.fast ? 60 : 110) * f); return; }
+      var p = it.paths[k], L = p._L, svg = p.ownerSVGElement;
+      var scale = svg.getBoundingClientRect().height / HH;
+      var dur = Math.max(30, L * scale / (SPEED * (it.fast ? 2.6 : it.slow ? .6 : 1))), t0 = null;
+      function frame(now) {
+        if (my !== job) return;
+        if (t0 === null) t0 = now;
+        var t = Math.min(1, (now - t0) / dur);
+        p.style.strokeDashoffset = L * (1 - t) + (t %%VBLT%% 1 ? 1 : 0);
+        var pt = p.getPointAtLength(L * t), m = p.getScreenCTM();
+        penAt(m.a * pt.x + m.c * pt.y + m.e, m.b * pt.x + m.d * pt.y + m.f);
+        if (t %%VBLT%% 1) requestAnimationFrame(frame);
+        else { p.style.strokeDasharray = "none"; setTimeout(function () { strokes(it, k + 1, cb); }, 35 * f); }
+      }
+      requestAnimationFrame(frame);
+    }
+    function cssItem(it, cb) {
+      var e = it.el, r = e.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      var dur = (it.css === "hit" ? 420 : 950) * f, t0 = null;
+      e.style.setProperty("--d", dur + "ms"); e.style.setProperty("--dl", "0ms");
+      e.classList.add(it.css, "wr", "cur");
+      function frame(now) {
+        if (my !== job) return;
+        if (t0 === null) t0 = now;
+        var t = Math.min(1, (now - t0) / dur);
+        if (it.css === "hit") penAt(cx - 3.5 + 7 * t, cy + 6 - 12 * t);
+        else { var a = -Math.PI / 2 + t * 2 * Math.PI; penAt(cx + it.r * Math.cos(a), cy + (it.r - 1) * Math.sin(a)); }
+        if (t %%VBLT%% 1) requestAnimationFrame(frame); else { e.classList.remove("cur"); setTimeout(cb, 110 * f); }
+      }
+      requestAnimationFrame(frame);
+    }
+    function cxItem(it, cb) {   // strike out the unused numbers one after another
+      var k = 0;
+      function one() {
+        if (my !== job) return;
+        if (k >= it.els.length) { setTimeout(cb, 110 * f); return; }
+        var e = it.els[k++], r = e.getBoundingClientRect(), dur = 45 * f, t0 = null;
+        e.style.setProperty("--d", dur + "ms");
+        e.classList.add("cx", "wr");
+        function frame(now) {
+          if (my !== job) return;
+          if (t0 === null) t0 = now;
+          var t = Math.min(1, (now - t0) / dur);
+          penAt(r.left + r.width * (.12 + .76 * t), r.top + r.height / 2);
+          if (t %%VBLT%% 1) requestAnimationFrame(frame); else one();
+        }
+        requestAnimationFrame(frame);
+      }
+      one();
+    }
+    next();
+  }
+
+  /* ---------- the flip scoreboard ---------- */
+  function card(id, v, anim) {
+    var c = $(id), face = c.querySelector(".face"); v = String(v);
+    if (face.textContent === v) return;
+    if (!anim) { face.textContent = v; c.querySelectorAll(".leaf").forEach(function (l) { l.remove(); }); return; }
+    var leaf = document.createElement("span"); leaf.className = "leaf"; leaf.textContent = v; c.appendChild(leaf);
+    setTimeout(function () { face.textContent = v; leaf.remove(); }, 600);
+  }
+  function score(t, v, anim) { card("f" + t + "1", v >= 10 ? Math.floor(v / 10) : "", anim); card("f" + t + "0", v % 10, anim); }
+
+  function render(n, anim, done) {
+    job++;
+    pen.classList.remove("on"); say("");
+    clearSheet();
+    var items = [];
+    for (var j = 0; j %%VBLT%%= n; j++) {
+      var fresh = anim && j === n && !reduce;
+      steps[j].ops.forEach(function (op) { apply(op, fresh, fresh ? items : null); });
+    }
+    var s = steps[n], b = s.board || { A: 0, B: 0, sA: 0, sB: 0 };
+    score("A", b.A, anim); score("B", b.B, anim);
+    card("fSA", b.sA, anim); card("fSB", b.sB, anim);
+    $("bA").classList.toggle("serving", !!s.board && b.serving === "A");
+    $("bB").classList.toggle("serving", !!s.board && b.serving === "B");
+    if (s.board) { $("svA").textContent = "#" + b.server + " serving"; $("svB").textContent = "#" + b.server + " serving"; }
+    var sn = 1; for (var q = 0; q %%VBLT%%= n; q++) if (steps[q].setNo) sn = steps[q].setNo;
+    $("fbset").textContent = "Set " + sn;
+    $("cap").textContent = s.cap;
+    $("lus").classList.toggle("on", !!s.lus);
+    $("prog").style.width = ((n + 1) / steps.length * 100) + "%";
+    at = n;
+    if (items.length) run(items, done); else if (done) setTimeout(done, 300);
+  }
+  function stop() {
+    var writing = timer === "w";
+    clearTimeout(timer); timer = null;
+    if (writing && at >= 0) render(at, false);
+    $("play").textContent = at >= steps.length - 1 ? "Replay" : "Play";
+  }
+  function tick() {
+    if (at >= steps.length - 1) { timer = null; $("play").textContent = "Replay"; return; }
+    timer = "w";
+    render(at + 1, true, function () { if (timer === "w") timer = setTimeout(tick, 1000 * f); });
+  }
+  function play() {
+    if (at >= steps.length - 1) at = -1;
+    $("play").textContent = "Stop";
+    tick();
+  }
+  document.querySelector(".ctrl").addEventListener("click", function () { started = true; }, true);
+  $("play").onclick = function () { timer ? stop() : play(); };
+  $("next").onclick = function () { stop(); if (at %%VBLT%% steps.length - 1) render(at + 1, true); };
+  $("back").onclick = function () { stop(); if (at > 0) render(at - 1, false); };
+
+  $("cap").textContent = "Press Play to watch the sheet being filled in, or step through with Next.";
+  if (!reduce && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (en, ob) {
+      if (!started && en[0].isIntersecting) { started = true; ob.disconnect(); if (at %%VBLT%% 0 && !timer) play(); }
+    }, { threshold: .2 }).observe(sheet);
+  }
+})();
+%%VBLT%%/script>
+%%VBLT%%script data-vb-hub>
+(function(){
+  function send(){ try{ parent.postMessage({vbHub: window.name, h: document.documentElement.scrollHeight}, "*"); }catch(e){} }
+  if ("ResizeObserver" in window) new ResizeObserver(send).observe(document.documentElement);
+  window.addEventListener("load", send); send();
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var t = document.getElementById(a.getAttribute("href").slice(1));
+    e.preventDefault();
+    if (t) parent.postMessage({vbHub: window.name, scrollTo: t.getBoundingClientRect().top}, "*");
+  });
+})();
+%%VBLT%%/script>
+%%VBLT%%/body>
+%%VBLT%%/html>
 </script><script type="text/plain" id="src-rules">%%VBLT%%!DOCTYPE html>
 %%VBLT%%html lang="en">
 %%VBLT%%head>
@@ -4295,7 +5101,7 @@ window.VBA = (function(){
 %%VBLT%%meta charset="utf-8">
 %%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
 %%VBLT%%meta name="color-scheme" content="light">
-%%VBLT%%title>Volleyball England Rules%%VBLT%%/title>
+%%VBLT%%title>FIVB Volleyball Rules%%VBLT%%/title>
 %%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 %%VBLT%%style>
   :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--blue:#24507E;--accent:#F0A500;
@@ -4366,7 +5172,7 @@ window.VBA = (function(){
 %%VBLT%%/head>
 %%VBLT%%body>
 %%VBLT%%header>%%VBLT%%div class="hin">
-  %%VBLT%%h1>Volleyball England Rules%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
+  %%VBLT%%h1>FIVB Volleyball Rules%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
 %%VBLT%%/div>%%VBLT%%/header>
 %%VBLT%%div class="wrap">
   %%VBLT%%p class="intro">The faults, the refereeing and the hand signals from the FIVB Official Volleyball Rules 2025&ndash;2028, as adopted by Volleyball England, with the rule number on every point.%%VBLT%%/p>
