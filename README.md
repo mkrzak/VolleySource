@@ -13,8 +13,8 @@ One self-contained page (`index.html`) with eleven sections:
 - **5:1 Defence**: perimeter (2-0-4) and rotational (2-1-3) defence; drag their hitter to see the block and defence move
 - **Drills**: Grow the Team, Defence Drill and Block Cover Drill, animated
 - **CVA Scoresheet**: animated guide to filling in the CVA county league scoresheet
-- **FIVB Scoresheet**: animated guide to filling in the FIVB international scoresheet, following the FIVB instructions
 - **CVA League Rules**: key rules from the CVA County League Rules
+- **FIVB Scoresheet**: animated guide to filling in the FIVB international scoresheet, following the FIVB instructions
 - **FIVB Volleyball Rules**: faults, delays and misconduct, refereeing, and the referee hand signals
 - **About Me**
 

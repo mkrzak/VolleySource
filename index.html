@@ -39,6 +39,8 @@
     .htitle{font-size:20px} .hdesc{font-size:13px}
     .hcard[aria-pressed="true"]::after{display:none}
   }
+  .sitefoot{max-width:1100px;margin:0 auto;padding:18px 20px 24px;border-top:1px solid var(--line);text-align:center;font-size:14px;color:var(--soft)}
+  .sitefoot p{margin:0}
   @media print{header,.cards{display:none}}
 </style>
 </head>
@@ -75,13 +77,13 @@
       <span class="htitle">CVA Scoresheet</span>
       <span class="hdesc">How to fill in the CVA county league scoresheet, with an animated set.</span>
     </button>
-    <button class="hcard" type="button" data-key="fivbsheet" aria-pressed="false">
-      <span class="htitle">FIVB Scoresheet</span>
-      <span class="hdesc">How to fill in the FIVB international scoresheet, following the FIVB instructions, with an animated set.</span>
-    </button>
     <button class="hcard" type="button" data-key="rules" aria-pressed="false">
       <span class="htitle">CVA League Rules</span>
       <span class="hdesc">Match format, league points, postponements, referees and results, in plain words.</span>
+    </button>
+    <button class="hcard" type="button" data-key="fivbsheet" aria-pressed="false">
+      <span class="htitle">FIVB Scoresheet</span>
+      <span class="hdesc">How to fill in the FIVB international scoresheet, following the FIVB instructions, with an animated set.</span>
     </button>
     <button class="hcard" type="button" data-key="vbrules" aria-pressed="false">
       <span class="htitle">FIVB Volleyball Rules</span>
@@ -93,6 +95,7 @@
     </button>
 </nav>
 <main id="stage"></main>
+<footer class="sitefoot"><p>© <span id="cyear">2026</span> Monika Krzak, Cambridge Volleyball Club. All rights reserved.</p></footer>
 <script type="text/plain" id="src-warmup">%%VBLT%%!DOCTYPE html>
 %%VBLT%%html lang="en">
 %%VBLT%%head>
@@ -5525,6 +5528,7 @@ window.VBA = (function(){
   try { saved = localStorage.getItem("vb-hub-tab"); } catch (e) {}
   if (!document.getElementById("src-" + start)) start = saved && document.getElementById("src-" + saved) ? saved : "warmup";
   show(start, false);
+  try { document.getElementById("cyear").textContent = new Date().getFullYear(); } catch (e) {}
 })();
 </script>
 </body>
