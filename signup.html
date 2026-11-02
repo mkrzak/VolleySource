@@ -325,7 +325,7 @@
   <section class="card gate" id="unlockCard" hidden>
     <div class="gate-icon">🔒</div>
     <h2 class="gate-title">Team members only</h2>
-    <p class="warn">Enter the team password to see the games and tick your availability. You only need to do this once on each phone or computer.</p>
+    <p class="warn">Enter the team password to see the games and tick your availability.</p>
     <form id="unlockForm" class="pinrow">
       <input type="password" id="unlockInput" placeholder="Password" autocomplete="current-password" required>
       <button class="primary" type="submit">Unlock</button>
@@ -445,7 +445,7 @@
 </div>
     </div>
   </section>
-  <p class="lockline"><a href="#" id="lockLink" hidden>Lock this device</a></p>
+  <p class="lockline"><a href="#" id="lockLink" hidden>Lock</a></p>
 </main>
 
 <script>
@@ -460,7 +460,7 @@ const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""
 const $ = id => document.getElementById(id);
 const configured = !!(CONFIG.repo && CONFIG.team && CONFIG.organiser);
 let TOKEN = null, ROLE = null;
-try { const a = JSON.parse(localStorage.getItem("vb-signup-auth") || "null"); if(a && a.t && a.r && a.repo === CONFIG.repo){ TOKEN = a.t; ROLE = a.r; } } catch(e){}
+try { localStorage.removeItem("vb-signup-auth"); } catch(e){}   // password is asked every time; clear anything saved by older versions
 
 let PLAYERS = [], games = [], responses = {};
 let selected = null, viewY, viewM, monthPicked = false, openNote = null, loaded = false;
@@ -692,7 +692,6 @@ async function saveResponse(gameId, player, patch){
 /* ---------- unlock ---------- */
 function lockDevice(){
   TOKEN = null; ROLE = null; loaded = false; raw = null; fileSha = null; etag = null;
-  try{ localStorage.removeItem("vb-signup-auth"); }catch(e){}
   render();
 }
 $("unlockForm").onsubmit = async (ev) => {
@@ -703,7 +702,6 @@ $("unlockForm").onsubmit = async (ev) => {
   if(!t){ t = await unseal(CONFIG.team, pw); r = "team"; }
   if(!t){ $("unlockMsg").textContent = "That password isn't right."; return; }
   TOKEN = t; ROLE = r;
-  try{ localStorage.setItem("vb-signup-auth", JSON.stringify({ t, r, repo: CONFIG.repo })); }catch(e){}
   $("unlockInput").value = ""; $("unlockMsg").textContent = "";
   await load();
 };
