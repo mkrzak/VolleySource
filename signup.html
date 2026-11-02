@@ -294,6 +294,7 @@
   #gMeta .venue .maparrow{font-size:13px;font-weight:700;color:#fff;background:linear-gradient(120deg,#1d4ed8,#7c3aed);border-radius:999px;padding:3px 10px;margin-left:6px}
   #gMeta .venue:hover .maparrow{filter:brightness(1.1)}
   #gNotes:empty{display:none}
+  #hSub:empty{display:none}
   .pinrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .pinrow input{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);width:140px}
   h3.sub{font-size:14px;margin:6px 0 10px;color:var(--ink)}
@@ -312,7 +313,7 @@
   <div class="wrap">
     <div>
       <h1 id="hTitle">Game Sign-up</h1>
-      <p id="hSub">Tap a game on the calendar, find your name, tap In / Maybe / Out.</p>
+      <p id="hSub"></p>
     </div>
     <div id="hSide"></div>
     <a class="back" href="./">← VolleySource</a>
@@ -426,7 +427,7 @@
         <input type="hidden" name="id">
         <label>Date<input type="date" name="date" required></label>
         <label>Time<input name="time" placeholder="19:00" maxlength="20"></label>
-        <label class="full">Title<input name="opponent" placeholder="e.g. Panthers vs Tigers" required maxlength="80"></label>
+        <label class="full">Title<input name="opponent" placeholder="e.g. CVC Panthers vs CVC Tigers" required maxlength="80"></label>
         <label>Venue<input name="venue" placeholder="e.g. NCA" maxlength="80"></label>
         <label>Type<select name="type"><option>Home</option><option>Away</option><option>Local league</option><option>Ref</option></select></label>
         <label>Needed<input name="req" placeholder="team (+scorer)" maxlength="40"></label>
@@ -484,7 +485,7 @@ function counts(gid){
   for(const p of PLAYERS){ const s = r[slug(p)]?.status; if(DUTY[s]) c.in++; else if(c[s] !== undefined) c[s]++; }
   c.none = PLAYERS.length - c.in - c.maybe - c.out; return c;
 }
-function shortLabel(g){ return (g.opponent||"Game").replace(/^(Panthers|Home|Away) vs\.? /i,""); }
+function shortLabel(g){ return (g.opponent||"Game").replace(/^((CVC )?Panthers|Home|Away) vs\.? /i,""); }
 const VENUES = {
   "nca":          { label: "North Cambridge Academy (NCA)", q: "North Cambridge Academy, Arbury Road, Cambridge CB4 2JF" },
   "leys":         { label: "Leys Sports Complex", q: "Leys Sports Complex, Trumpington Road, Cambridge CB2 7AD" },
@@ -577,7 +578,7 @@ let renaming = false;
 async function migrateNames(data){
   if(renaming || !data) return;
   const needs = (data.players || []).some(n => RENAMES[n]) || (data.responses || []).some(r => RENAMES[r.player])
-    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles");
+    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names");
   if(!needs) return;
   renaming = true;
   try{ const { data: d } = await mutate(x => {
@@ -608,7 +609,22 @@ async function migrateNames(data){
       for(const g of (x.games || [])) g.opponent = String(g.opponent || "").replace(/^(home|away)\s+vs\.?\s+/i, "Panthers vs ");
       x.done.push("panthers-titles");
     }
-  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles"); ingest(d); render(); }
+    if(!x.done.includes("rhinos-thunders")){        // one-off: Rhinos / Thunder / Rhinos Thunder → Rhinos Thunders
+      for(const g of (x.games || [])) g.opponent = String(g.opponent || "").replace(/\bRhinos(?:\s+Thunders?)?\b|\bThunders?\b/g, "Rhinos Thunders");
+      x.done.push("rhinos-thunders");
+    }
+    if(!x.done.includes("st-phillips")){            // one-off: Philips → St Phillips
+      for(const g of (x.games || [])) g.opponent = String(g.opponent || "").replace(/\b(?:St\.?\s+)?Phill?ips\b/gi, "St Phillips");
+      x.done.push("st-phillips");
+    }
+    if(!x.done.includes("cvc-names")){              // one-off: club teams get the CVC prefix
+      for(const g of (x.games || [])) g.opponent = String(g.opponent || "")
+        .replace(/(?<!CVC )\bJuniors?(?:\s+mixed)?\b/gi, "CVC Juniors Mixed")
+        .replace(/(?<!CVC )\bTigers\b/g, "CVC Tigers")
+        .replace(/(?<!CVC )\bPanthers\b/g, "CVC Panthers");
+      x.done.push("cvc-names");
+    }
+  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams)"); ingest(d); render(); }
   catch(e){ /* someone else will retry on their next visit */ }
   finally{ renaming = false; }
 }
@@ -697,7 +713,7 @@ $("lockLink").onclick = (e) => { e.preventDefault(); lockDevice(); };
 function renderHeader(){
   $("hTitle").textContent = organiser ? "Organiser view" : "Game Sign-up";
   $("hSub").textContent = organiser ? "Who's in for each game, who hasn't replied, and reminders to send."
-                                    : "Tap a game, then ✓ In / ? Maybe / ✗ Out next to your name.";
+                                    : "";
   const side = $("hSide"); side.innerHTML = "";
   if(organiser){
     const b = document.createElement("span"); b.className="badge"; b.textContent="Organiser";
