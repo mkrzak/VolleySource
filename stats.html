@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Match Stats · VolleySource</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fafafa;--card:#fff;--ink:#111827;--muted:#6b7280;--faint:#9ca3af;--line:#e5e7eb;--soft:#f3f4f6;--accent:#4f46e5;
+    --usW:#15803d;--usWs:#dcfce7;--thW:#c2410c;--thWs:#ffedd5;--ourE:#dc2626;--ourEs:#fee2e2;--thE:#2563eb;--thEs:#dbeafe;
+    --court:#f1f5f9;--front:#e2e8f0}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);font-size:14px;background:var(--bg)}
+  header{max-width:1100px;margin:0 auto;padding:18px 16px 6px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  header h1{font-size:20px;font-weight:800;margin:0;letter-spacing:-.01em}
+  header a{color:var(--muted);font-size:13px;text-decoration:none}
+  header a:hover{color:var(--ink)}
+  main{max-width:1100px;margin:0 auto;padding:8px 16px 40px}
+  .status{font-size:13px;color:#b45309;text-align:center;padding:6px}
+  .colh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);margin:0 0 10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+  .btn{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer}
+  .btn:hover{border-color:#cbd5e1}
+  .btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn:disabled{opacity:.4;cursor:default}
+  .link{font:inherit;font-size:12px;border:0;background:none;color:var(--muted);cursor:pointer;padding:0;text-decoration:underline}
+  .link:hover{color:var(--ink)}
+  .link.danger:hover{color:#dc2626}
+  select,input[type=text],input[type=date]{font:inherit;font-size:13px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+  [hidden]{display:none !important}
+
+  /* login */
+  .gate{max-width:360px;margin:60px auto;text-align:center}
+  .gate h2{font-size:17px;margin:0 0 6px}
+  .gate p{color:var(--muted);margin:0 0 14px}
+  .pinrow{display:flex;gap:8px;justify-content:center}
+  .pwwrap{position:relative;flex:1}
+  .pwwrap input{font:inherit;width:100%;padding:9px 38px 9px 11px;border:1px solid var(--line);border-radius:8px;background:#fff}
+  .pweye{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;font-size:16px;cursor:pointer;padding:4px 6px}
+  .err{color:#dc2626;font-size:13px;min-height:18px;margin-top:8px}
+
+  /* top bar */
+  .topbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+  .topbar select{flex:1 1 220px;min-width:0}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+  .seg button{font:inherit;font-size:13px;font-weight:600;border:0;border-right:1px solid var(--line);background:none;color:var(--muted);padding:8px 12px;cursor:pointer}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--ink);color:#fff}
+  .sync{font-size:12px;font-weight:600;color:var(--muted)}
+  .sync.ok{color:#15803d} .sync.wait{color:#b45309}
+
+  /* new match / new set forms */
+  .form{display:grid;gap:10px;max-width:520px}
+  .form label{display:grid;gap:4px;font-size:12px;font-weight:600;color:var(--muted)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .choice{display:flex;gap:6px;flex-wrap:wrap}
+  .choice button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 12px;cursor:pointer;color:var(--ink)}
+  .choice button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .hint{font-size:12px;color:var(--muted);line-height:1.45}
+  .glist{display:grid;gap:6px;max-height:60vh;overflow:auto}
+  .gbtn{font:inherit;display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px 14px;cursor:pointer;color:var(--ink)}
+  .gbtn:hover{border-color:#94a3b8}
+  .gbtn.today{border:2px solid var(--ink)}
+  .gbtn b{font-size:15px}
+  .gbtn .gd{font-size:12.5px;color:var(--muted);display:block;margin-top:2px}
+  .gbtn .tag{font-size:11px;font-weight:700;border-radius:99px;padding:3px 8px;background:var(--soft);color:var(--muted);white-space:nowrap}
+  .gbtn .tag.rec{background:#dcfce7;color:#166534}
+  .gbtn .tag.now{background:var(--ink);color:#fff}
+
+  /* scoreboard */
+  .board{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:10px;text-align:center}
+  .board > div:first-child,.board > div:last-child{border-radius:14px;padding:10px 6px;color:#fff}
+  .board > div:first-child{background:linear-gradient(135deg,#16a34a,#15803d)}
+  .board > div:last-child{background:linear-gradient(135deg,#f97316,#c2410c)}
+  .board .team{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;opacity:.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .board .pts{font-size:50px;font-weight:800;line-height:1.05;font-variant-numeric:tabular-nums}
+  .board .mid{font-size:12px;color:var(--muted);display:grid;gap:6px;justify-items:center;align-content:center}
+  .board .setno{font-weight:800;color:#fff;background:#4f46e5;border-radius:99px;padding:4px 12px;font-size:13px}
+  .board #bSets{font-weight:700;color:var(--ink);font-size:13px}
+  .rotline{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:12px;font-size:13px;flex-wrap:wrap}
+  .rotline b{font-size:14px;color:#fff;background:#7c3aed;border-radius:99px;padding:2px 10px}
+  #bServe{font-weight:700;background:#fef3c7;color:#92400e;border-radius:99px;padding:3px 10px}
+  .mini-btn{font:inherit;font-size:12px;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:6px;width:28px;height:26px;cursor:pointer;color:var(--ink)}
+  .setover{margin-top:12px;padding:10px 12px;border-radius:10px;background:#fde047;border:0;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-weight:600}
+
+  /* rally buttons */
+  .pads{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:start}
+  .pad + .pad{border-left:1px solid var(--line);padding-left:14px}
+  .pgrp{display:grid;gap:4px}
+  @media (max-width:640px){ .pads{gap:8px} .pad + .pad{padding-left:8px} }
+  .pad h3{margin:0 0 6px;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#fff;border-radius:10px;padding:8px 10px;text-align:center}
+  .pad.us h3{background:linear-gradient(135deg,#16a34a,#2563eb)} .pad.them h3{background:linear-gradient(135deg,#dc2626,#ea580c)}
+  .grp{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin:10px 0 5px}
+  .pad.us .pgrp > div:first-child .grp{color:#15803d} .pad.us .pgrp > div:last-child .grp{color:#1d4ed8}
+  .pad.them .pgrp > div:first-child .grp{color:#b91c1c} .pad.them .pgrp > div:last-child .grp{color:#c2410c}
+  .keys{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  @media (max-width:640px){ .keys{grid-template-columns:1fr;gap:5px} .key{padding:10px 6px;font-size:13.5px} .key small{font-size:10.5px} .pad h3{font-size:12px} }
+  .key{font:inherit;font-size:14.5px;font-weight:800;border-radius:12px;padding:13px 6px;cursor:pointer;border:0;text-align:center;line-height:1.15;color:#fff;
+    box-shadow:0 3px 0 rgba(0,0,0,.18);transition:transform .05s,box-shadow .05s}
+  .key small{display:block;font-size:11px;font-weight:600;opacity:.9;margin-top:3px}
+  .key.usW{background:linear-gradient(160deg,#22c55e,#15803d)}
+  .key.thE{background:linear-gradient(160deg,#3b82f6,#1d4ed8)}
+  .key.ourE{background:linear-gradient(160deg,#ef4444,#b91c1c)}
+  .key.thW{background:linear-gradient(160deg,#fb923c,#c2410c)}
+  .key:hover{filter:brightness(1.06)}
+  .key:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+  .key:disabled{opacity:.35;cursor:default;filter:grayscale(.4)}
+  .key.court::after{content:" ⌖";font-weight:800}
+  .undo{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+
+  /* court tap */
+  .courtpick{position:fixed;inset:0;background:rgba(15,23,42,.55);display:grid;place-items:center;z-index:50;padding:16px}
+  .courtpick .box{background:#fff;border-radius:14px;padding:14px;width:min(420px,100%);display:grid;gap:10px}
+  .courtpick h3{margin:0;font-size:15px}
+  svg.court{width:100%;height:auto;display:block;touch-action:manipulation}
+  svg.court.tap{cursor:crosshair}
+
+  /* stats: big, colourful, readable at a glance */
+  .scope{display:flex;margin-bottom:12px}
+  .scope .seg{width:100%}
+  .scope .seg button{flex:1;padding:11px 8px;font-size:14px}
+  .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+  @media (max-width:700px){ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  .kpi{border-radius:14px;padding:12px 14px;color:#fff}
+  .kpi .v{font-size:34px;font-weight:800;line-height:1.05;font-variant-numeric:tabular-nums}
+  .kpi .l{font-size:13px;font-weight:600;opacity:.92;margin-top:3px}
+  .k-good{background:#16a34a} .k-ok{background:#d97706} .k-bad{background:#dc2626} .k-none{background:#9ca3af} .k-ink{background:#1f2937}
+  .grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:start}
+  @media (max-width:820px){ .grid2{grid-template-columns:1fr} }
+  .sh{font-size:16px;font-weight:800;margin:0 0 10px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .sh small{font-size:12px;font-weight:600;color:var(--muted)}
+  .bars{display:grid;gap:7px}
+  .bar{display:grid;grid-template-columns:128px minmax(0,1fr) 34px;gap:8px;align-items:center}
+  .bar .t{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .track{position:relative;height:26px;background:var(--soft);border-radius:7px;overflow:hidden}
+  .bar .fill{position:absolute;inset:0 auto 0 0;border-radius:7px}
+  .bar .n{text-align:right;font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+  .more{font-size:12.5px;color:var(--muted);margin-top:8px}
+  .lseg{margin-bottom:10px;width:100%}
+  .lseg button{flex:1}
+  .rots{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+  @media (max-width:520px){ .rots{grid-template-columns:repeat(3,minmax(0,1fr))} }
+  .rt{font:inherit;border:2px solid transparent;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;color:#fff}
+  .rt b{display:block;font-size:13px;opacity:.9}
+  .rt .d{display:block;font-size:24px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+  .rt small{display:block;font-size:11px;opacity:.92}
+  .rt.on{border-color:#111827;box-shadow:0 0 0 2px #fff inset}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px;justify-content:center}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+  .empty{color:var(--muted);font-size:14px;padding:10px 0}
+  .note{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.45}
+  .big-note{font-size:15px;font-weight:700;margin-top:8px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <h1>Match Stats</h1>
+  <a href="./">← VolleySource</a>
+</header>
+<main>
+  <div class="status" id="status" hidden></div>
+
+  <section class="gate" id="loginCard">
+    <h2>🔒 Organiser only</h2>
+    <p>Enter the organiser password.</p>
+    <form id="loginForm" class="pinrow">
+      <span class="pwwrap">
+        <input type="password" id="pw" placeholder="Password" autocomplete="current-password" required>
+        <button type="button" class="pweye" id="pwEye" aria-label="Show password">👁️</button>
+      </span>
+      <button class="btn dark" type="submit">Unlock</button>
+    </form>
+    <div class="err" id="loginMsg"></div>
+  </section>
+
+  <div id="app" hidden>
+    <div class="topbar">
+      <select id="matchSel" aria-label="Match"></select>
+      <div class="seg" id="tabSeg"><button type="button" data-t="rec">Record</button><button type="button" data-t="stats">Stats</button></div>
+      <span class="sync" id="sync"></span>
+      <button class="btn" id="saveBtn" type="button">Save</button>
+    </div>
+
+    <!-- new match -->
+    <section class="panel" id="newMatch" hidden>
+      <div class="colh">New match</div>
+      <div class="form">
+        <div class="hint">Tap the game to start recording.</div>
+        <div class="glist" id="nmGame"></div>
+        <div class="hint" id="nmHint" hidden>There are no home or away games in the Game Sign-up calendar yet – add the game there first.</div>
+        <div><button class="link" id="nmCancel" type="button">Cancel</button></div>
+      </div>
+    </section>
+
+    <!-- record -->
+    <div id="recView">
+      <section class="panel" id="newSet" hidden>
+        <div class="colh">Set <span id="nsNo"></span></div>
+        <div class="form">
+          <div><div class="hint" style="margin-bottom:6px">Who serves first?</div>
+            <div class="choice" id="nsServe"><button type="button" data-v="us">We serve</button><button type="button" data-v="them">They serve</button></div></div>
+          <div><div class="hint" style="margin-bottom:6px">Our starting rotation (where the setter starts)</div>
+            <div class="choice" id="nsRot"></div></div>
+          <div class="hint">Rotation 1 = setter in position 1, as on the Game Line-up page. The page then follows the rotation for you: every time we win the serve back, we rotate.</div>
+          <div><button class="btn dark" id="nsGo" type="button">Start set</button></div>
+        </div>
+      </section>
+
+      <div id="live" hidden>
+        <section class="panel">
+          <div class="board">
+            <div><div class="team" id="bUsName">Us</div><div class="pts" id="bUs">0</div></div>
+            <div class="mid"><span class="setno" id="bSet">Set 1</span><span id="bSets">0 – 0</span></div>
+            <div><div class="team" id="bThName">Them</div><div class="pts" id="bTh">0</div></div>
+          </div>
+          <div class="rotline">
+            <span id="bServe"></span>
+            <span style="white-space:nowrap">Our rotation <b id="bRot">1</b>
+            <button class="mini-btn" id="rotDown" type="button" title="Rotation back one" aria-label="Rotation back one">−</button>
+            <button class="mini-btn" id="rotUp" type="button" title="Rotation on one" aria-label="Rotation on one">+</button></span>
+          </div>
+          <div class="setover" id="setOver" hidden><span id="setOverTxt"></span><span><button class="btn dark" id="endSetBtn" type="button">End set</button></span></div>
+        </section>
+
+        <section class="panel">
+          <div class="pads">
+            <div class="pad us">
+              <h3>Point to us</h3>
+              <div class="pgrp">
+                <div><div class="grp">Our winners</div><div class="keys" id="kUsW"></div></div>
+                <div><div class="grp">Their errors</div><div class="keys" id="kThE"></div></div>
+              </div>
+            </div>
+            <div class="pad them">
+              <h3>Point to them</h3>
+              <div class="pgrp">
+                <div><div class="grp">Our errors</div><div class="keys" id="kOurE"></div></div>
+                <div><div class="grp">Their winners <span style="text-transform:none;letter-spacing:0;font-weight:500">· ⌖ = tap where it landed</span></div><div class="keys" id="kThW"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="undo"><span id="lastTxt">No rallies yet.</span><span><button class="btn" id="undoBtn" type="button">↶ Undo last rally</button></span></div>
+        </section>
+        <div style="text-align:right"><button class="link danger" id="delMatch" type="button">Delete this match</button></div>
+      </div>
+    </div>
+
+    <!-- stats -->
+    <div id="statsView" hidden>
+      <div class="scope"><div class="seg" id="scopeSeg"><button type="button" data-s="set">This set</button><button type="button" data-s="match">This match</button><button type="button" data-s="all">All matches</button></div></div>
+      <div class="kpis" id="kpis"></div>
+      <div class="grid2">
+        <section class="panel">
+          <div class="sh">Why we lose points <small id="lostSub"></small></div>
+          <div class="bars" id="lostBars"></div>
+        </section>
+        <section class="panel">
+          <div class="sh">Where their balls drop <small id="landSub"></small></div>
+          <div class="seg lseg" id="landSeg"><button type="button" data-l="all">All</button><button type="button" data-l="tk">Attacks</button><button type="button" data-l="tt">Tips</button><button type="button" data-l="ta">Aces</button></div>
+          <svg class="court" id="heat" viewBox="0 0 220 236" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Our court with the spots where the opponents' balls landed"></svg>
+          <div class="legend"><span><i style="background:#dc2626"></i>Attack</span><span><i style="background:#7c3aed"></i>Tip</span><span><i style="background:#0891b2"></i>Ace</span></div>
+          <div class="big-note" id="heatNote"></div>
+        </section>
+        <section class="panel">
+          <div class="sh">Rotations <small>tap one to filter the court</small></div>
+          <div class="rots" id="rots"></div>
+          <div class="note">Big number = points won minus lost in that rotation. Green is good, red is where we leak points. Small line = side-out % (winning the rally when they serve).</div>
+        </section>
+        <section class="panel">
+          <div class="sh">How we win points <small id="wonSub"></small></div>
+          <div class="bars" id="wonBars"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- court picker -->
+<div class="courtpick" id="picker" hidden>
+  <div class="box">
+    <h3 id="pickTitle">Where did it land?</h3>
+    <div class="hint">Our court, seen from behind our baseline: the net is at the top.</div>
+    <svg class="court tap" id="pickCourt" viewBox="0 0 220 236" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div style="display:flex;justify-content:space-between;gap:8px">
+      <button class="btn" id="pickCancel" type="button">Cancel</button>
+      <button class="btn" id="pickSkip" type="button">Not sure – skip the spot</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== SETTINGS: same locked key as the Game Sign-up and Game Line-up pages ===== */
+const CONFIG = {"repo":"mkrzak/panthers-signups","path":"data.json","team":{"s":"0YmtbjfYmCksScfHy5W7fg==","i":"/lAy1dsH9p5s2fqn","c":"Cap5lqSk8O5cAyYky75sis+1QF/PDN5wIOHv4GU5KgHwwA5HXJpa0UajYMZORvHhOGEBl2XMtLxaQYL5keyyJs3PiZZyJbqgh7gIq6+KRKnYG05/LGIXjAGOfn3Xn2dIFRQiioLnlA9pl/4Tqg=="},"organiser":{"s":"etINNWxVxvopM+wIcxbmaA==","i":"TRXqiwue1hrxru5N","c":"fLpUTmn07LCYOe8T8ckpTwoexkN05BNRArUem0F68FVgEJsbeD9qSIywmI/btlEhRxnNxKwM9oQQ/lMk+r4pl8sUcQVh7FsThvNjI+3jb11GsELOy8LgLBXZd0zi8jCMipBWHna1NmxMZXVokQ=="}};
+/* ============================================================================ */
+const enc = new TextEncoder(), dec = new TextDecoder();
+const toB64 = u8 => { let s=""; u8.forEach(b => s += String.fromCharCode(b)); return btoa(s); };
+const fromB64 = b => Uint8Array.from(atob(b), c => c.charCodeAt(0));
+async function keyFrom(pw, salt){
+  const base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name:"PBKDF2", salt, iterations: 250000, hash:"SHA-256" }, base, { name:"AES-GCM", length:256 }, false, ["encrypt","decrypt"]);
+}
+async function unseal(box, pw){
+  try{ return dec.decode(await crypto.subtle.decrypt({ name:"AES-GCM", iv: fromB64(box.i) }, await keyFrom(pw, fromB64(box.s)), fromB64(box.c))); }
+  catch(e){ return null; }
+}
+
+/* ---------- GitHub storage (data.json in the private sign-up repo) ---------- */
+let fileSha = null, raw = null, TOKEN = null;
+const b64utf8 = str => toB64(enc.encode(str));
+const utf8b64 = b => dec.decode(fromB64(b.replace(/\s/g,"")));
+function ghUrl(repo, path){ return `https://api.github.com/repos/${repo}/contents/${path.split("/").map(encodeURIComponent).join("/")}`; }
+function ghHeaders(token, extra){ return { Authorization: "Bearer " + token, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", ...(extra||{}) }; }
+class AuthError extends Error {}
+async function fetchFile(){
+  const r = await fetch(ghUrl(CONFIG.repo, CONFIG.path), { cache: "no-store", headers: ghHeaders(TOKEN) });
+  if(r.status === 401 || r.status === 403) throw new AuthError("The saving key isn't working (it may have expired).");
+  if(!r.ok) throw new Error("GitHub said " + r.status);
+  const j = await r.json();
+  fileSha = j.sha; raw = JSON.parse(utf8b64(j.content));
+  return raw;
+}
+let queue = Promise.resolve();
+function mutate(fn, message){
+  const job = queue.then(async () => {
+    for(let attempt = 0; attempt < 6; attempt++){
+      if(!raw || attempt > 0) await fetchFile();
+      const next = JSON.parse(JSON.stringify(raw));
+      fn(next);
+      const r = await fetch(ghUrl(CONFIG.repo, CONFIG.path), { method: "PUT", headers: ghHeaders(TOKEN, { "Content-Type": "application/json" }),
+        body: JSON.stringify({ message, content: b64utf8(JSON.stringify(next, null, 1) + "\n"), sha: fileSha }) });
+      if(r.ok){ const j = await r.json(); fileSha = j.content.sha; raw = next; return next; }
+      if(r.status === 401 || r.status === 403) throw new AuthError("The saving key isn't working (it may have expired).");
+      if(r.status === 409 || r.status === 422){ await new Promise(res => setTimeout(res, 300 + attempt * 400 + Math.random() * 400)); continue; }
+      throw new Error("GitHub said " + r.status);
+    }
+    throw new Error("Too many saves at once – please try again.");
+  });
+  queue = job.catch(() => {});
+  return job;
+}
+
+const $ = id => document.getElementById(id);
+function setStatus(t){ $("status").textContent = t || ""; $("status").hidden = !t; }
+
+/* ---------- what can end a rally ---------- */
+const CODES = [
+  // point to us
+  { k:"k",   g:"usW",  w:"us",   t:"Our kill",        s:"attack winner" },
+  { k:"a",   g:"usW",  w:"us",   t:"Our ace",         s:"serve winner" },
+  { k:"b",   g:"usW",  w:"us",   t:"Our block",       s:"stuff block" },
+  { k:"tse", g:"thE",  w:"us",   t:"Serve error",     s:"theirs" },
+  { k:"tae", g:"thE",  w:"us",   t:"Attack error",    s:"theirs: out, net" },
+  { k:"toe", g:"thE",  w:"us",   t:"Other error",     s:"theirs: pass, set, net touch" },
+  // point to them
+  { k:"ose", g:"ourE", w:"them", t:"Serve error",     s:"net or out" },
+  { k:"ope", g:"ourE", w:"them", t:"Pass error",      s:"serve receive" },
+  { k:"ode", g:"ourE", w:"them", t:"Dig error",       s:"touched, not kept" },
+  { k:"oxe", g:"ourE", w:"them", t:"Set error",       s:"double, lift, bad set" },
+  { k:"oae", g:"ourE", w:"them", t:"Attack error",    s:"out, net, blocked" },
+  { k:"onf", g:"ourE", w:"them", t:"Net / fault",     s:"net touch, line, rotation" },
+  { k:"tk",  g:"thW",  w:"them", t:"Their attack",    s:"landed, no touch", court:1 },
+  { k:"tt",  g:"thW",  w:"them", t:"Their tip",       s:"tip / roll shot dropped", court:1 },
+  { k:"ta",  g:"thW",  w:"them", t:"Their ace",       s:"serve, no touch", court:1 },
+  { k:"tb",  g:"thW",  w:"them", t:"Their block",     s:"stuffed" },
+];
+const CODE = Object.fromEntries(CODES.map(c => [c.k, c]));
+const GCOL = { usW:"#16a34a", thE:"#2563eb", ourE:"#dc2626", thW:"#ea580c" };
+const LANDCOL = { tk:"#dc2626", tt:"#7c3aed", ta:"#0891b2" };
+const labelOf = k => { const c = CODE[k]; return (c.g === "thE" ? "Their " + c.t.toLowerCase() : c.g === "ourE" ? "Our " + c.t.toLowerCase() : c.t); };
+
+/* ---------- state ---------- */
+let STATS = {}, GAMES = [], cur = null, tab = "rec", dirty = new Set();
+const LS = "vs-stats-v1";
+function lsLoad(){ try{ return JSON.parse(localStorage.getItem(LS) || "{}"); }catch(e){ return {}; } }
+function lsSave(){ try{ const o = {}; dirty.forEach(id => { if(STATS[id]) o[id] = STATS[id]; }); localStorage.setItem(LS, JSON.stringify(o)); }catch(e){} }
+
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const M = () => STATS[cur];
+const curSet = () => { const m = M(); return m && m.sets.length ? m.sets[m.sets.length - 1] : null; };
+function score(set){ let us = 0, th = 0; for(const r of set.r) r.w === "us" ? us++ : th++; return { us, th }; }
+function setWinner(set, n){ const s = score(set), tgt = n === 5 ? 15 : 25;
+  if(s.us >= tgt && s.us - s.th >= 2) return "us"; if(s.th >= tgt && s.th - s.us >= 2) return "them"; return null; }
+function setsWon(m){ let us = 0, th = 0; m.sets.forEach((s, i) => { if(!s.done) return; const w = setWinner(s, i + 1) || (score(s).us > score(s).th ? "us" : "them"); w === "us" ? us++ : th++; }); return { us, th }; }
+/* who serves and our rotation now, replaying the set */
+function liveState(set){
+  let serve = set.fs, rot = set.rot;
+  for(const r of set.r){ if(r.w === "us" && serve === "them") rot = rot % 6 + 1; serve = r.w; rot = r.rotAfter || rot; }
+  return { serve, rot };
+}
+
+/* ---------- court drawing ---------- */
+const NS = "http://www.w3.org/2000/svg";
+function el(name, attrs, parent, text){ const e = document.createElementNS(NS, name); for(const k in attrs) e.setAttribute(k, attrs[k]); if(text != null) e.textContent = text; if(parent) parent.appendChild(e); return e; }
+const CX = 20, CY = 22, CW = 180, CH = 180;   // our 9 x 9 m court, net at the top
+function drawCourt(svg, opts){
+  svg.innerHTML = "";
+  el("rect", { x:CX, y:2, width:CW, height:14, rx:3, fill:"#fef2f2" }, svg);
+  el("text", { x:CX + CW / 2, y:12, "text-anchor":"middle", "font-size":7.5, "font-weight":700, fill:"#9b2c2c", "letter-spacing":"1" }, svg, "THEIR SIDE");
+  el("rect", { x:CX, y:CY, width:CW, height:CH, fill:"var(--court)", stroke:"#94a3b8", "stroke-width":1.5 }, svg);
+  el("rect", { x:CX, y:CY, width:CW, height:CH / 3, fill:"var(--front)" }, svg);
+  el("line", { x1:CX, y1:CY + CH / 3, x2:CX + CW, y2:CY + CH / 3, stroke:"#94a3b8", "stroke-width":1 }, svg);
+  el("rect", { x:CX - 5, y:CY - 3, width:CW + 10, height:3, fill:"#111827" }, svg);
+  if(!opts || !opts.noZones){
+    const Z = [[4,0,0],[3,1,0],[2,2,0],[5,0,1],[6,1,1],[1,2,1]];
+    for(const [z, c, r] of Z) el("text", { x:CX + CW / 6 + c * CW / 3, y:CY + (r ? CH * 2 / 3 : CH / 6) + 4, "text-anchor":"middle", "font-size":11, "font-weight":700, fill:"#cbd5e1" }, svg, z);
+  }
+  el("text", { x:CX + CW / 2, y:CY + CH + 13, "text-anchor":"middle", "font-size":7.5, fill:"#94a3b8", "font-weight":600, "letter-spacing":"1" }, svg, "OUR BASELINE");
+}
+
+/* ---------- record view ---------- */
+function keyBtn(c){
+  const b = document.createElement("button"); b.type = "button"; b.className = "key " + c.g + (c.court ? " court" : "");
+  b.innerHTML = c.t + "<small>" + c.s + "</small>";
+  b.onclick = () => c.court ? pickSpot(c) : addRally(c.k);
+  return b;
+}
+function buildKeys(){
+  ["usW","thE","ourE","thW"].forEach(g => { const box = $({ usW:"kUsW", thE:"kThE", ourE:"kOurE", thW:"kThW" }[g]); box.innerHTML = ""; const list = CODES.filter(c => c.g === g); box.style.setProperty("--n", list.length); list.forEach(c => box.appendChild(keyBtn(c))); });
+}
+function addRally(k, spot){
+  const set = curSet(); if(!set || set.done) return;
+  const st = liveState(set), c = CODE[k];
+  const r = { w: c.w, c: k, rot: st.rot, srv: st.serve };
+  if(spot){ r.x = +spot[0].toFixed(3); r.y = +spot[1].toFixed(3); }
+  set.r.push(r);
+  touched(); renderRec();
+}
+function touched(){ const m = M(); m.updated = new Date().toISOString(); dirty.add(cur); lsSave(); renderSync(); autoSave(); }
+let saveTimer = null;
+function autoSave(){ clearTimeout(saveTimer); saveTimer = setTimeout(() => { if(dirty.size) save(true); }, 20000); }
+
+function pickSpot(c){
+  $("pickTitle").textContent = c.t + ": where did it land?";
+  const svg = $("pickCourt"); drawCourt(svg);
+  $("picker").hidden = false;
+  svg.onclick = (e) => {
+    const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+    const x = (p.x - CX) / CW, y = (p.y - CY) / CH;
+    if(x < -0.02 || x > 1.02 || y < -0.02 || y > 1.02) return;          // only inside our court
+    $("picker").hidden = true; addRally(c.k, [Math.min(1, Math.max(0, x)), Math.min(1, Math.max(0, y))]);
+  };
+  $("pickSkip").onclick = () => { $("picker").hidden = true; addRally(c.k); };
+  $("pickCancel").onclick = () => { $("picker").hidden = true; };
+}
+
+function renderRec(){
+  const m = M();
+  $("newSet").hidden = true; $("live").hidden = true;
+  if(!m) return;
+  const set = curSet();
+  const need = !set || set.done;
+  if(need){
+    const n = m.sets.length + 1, w = setsWon(m);
+    if(w.us >= 3 || w.th >= 3){
+      $("live").hidden = false; renderBoard(m, m.sets[m.sets.length - 1], true); return;
+    }
+    $("nsNo").textContent = n; $("newSet").hidden = false;
+    const last = m.sets[m.sets.length - 1];
+    if(!nsChoice.fs) nsChoice.fs = last ? (last.fs === "us" ? "them" : "us") : "us";
+    if(!nsChoice.rot) nsChoice.rot = last ? last.rot : 1;
+    document.querySelectorAll("#nsServe button").forEach(b => b.classList.toggle("on", b.dataset.v === nsChoice.fs));
+    const rb = $("nsRot"); rb.innerHTML = "";
+    for(let i = 1; i <= 6; i++){ const b = document.createElement("button"); b.type = "button"; b.textContent = "R" + i; b.className = i === nsChoice.rot ? "on" : ""; b.onclick = () => { nsChoice.rot = i; renderRec(); }; rb.appendChild(b); }
+    return;
+  }
+  $("live").hidden = false; renderBoard(m, set, false);
+}
+let nsChoice = {};
+function renderBoard(m, set, finished){
+  const s = score(set), st = liveState(set), w = setsWon(m), n = m.sets.indexOf(set) + 1;
+  $("bUsName").textContent = "Us"; $("bThName").textContent = m.opp || "Them";
+  $("bUs").textContent = s.us; $("bTh").textContent = s.th;
+  $("bSet").textContent = finished ? "Match over" : "Set " + n; $("bSets").textContent = "sets " + w.us + " – " + w.th;
+  $("bServe").innerHTML = '<i class="srv"></i>' + (st.serve === "us" ? "We serve" : (m.opp || "They") + " serve");
+  $("bRot").textContent = "R" + st.rot;
+  const sw = setWinner(set, n);
+  $("setOver").hidden = !(sw && !set.done);
+  if(sw && !set.done) $("setOverTxt").textContent = (sw === "us" ? "We win" : (m.opp || "They") + " win") + " set " + n + ", " + Math.max(s.us, s.th) + ":" + Math.min(s.us, s.th) + ". Tap Undo if that was a mistake.";
+  document.querySelectorAll(".key").forEach(b => b.disabled = finished || !!sw);
+  $("undoBtn").disabled = finished || !set.r.length;
+  $("rotDown").disabled = $("rotUp").disabled = finished;
+  const last = set.r[set.r.length - 1];
+  $("lastTxt").textContent = finished ? "Match finished – see the Stats tab." : last ? "Last rally: " + labelOf(last.c) + (last.x != null ? " (spot marked)" : "") + " → point to " + (last.w === "us" ? "us" : (m.opp || "them")) + "." : "No rallies yet in this set.";
+}
+$("undoBtn").onclick = () => { const set = curSet(); if(set && set.r.length){ set.r.pop(); touched(); renderRec(); } };
+$("endSetBtn").onclick = () => { const set = curSet(); if(!set) return; set.done = true; nsChoice = {}; touched(); save(true); renderRec(); };
+function nudgeRot(d){
+  const set = curSet(); if(!set || set.done) return;
+  if(!set.r.length){ set.rot = (set.rot - 1 + d + 6) % 6 + 1; }
+  else { const last = set.r[set.r.length - 1]; const st = liveState(set); last.rotAfter = (st.rot - 1 + d + 6) % 6 + 1; }
+  touched(); renderRec();
+}
+$("rotUp").onclick = () => nudgeRot(1);
+$("rotDown").onclick = () => nudgeRot(-1);
+document.querySelectorAll("#nsServe button").forEach(b => b.onclick = () => { nsChoice.fs = b.dataset.v; renderRec(); });
+$("nsGo").onclick = () => { M().sets.push({ fs: nsChoice.fs || "us", rot: nsChoice.rot || 1, r: [] }); nsChoice = {}; touched(); renderRec(); };
+$("delMatch").onclick = async () => {
+  const m = M(); if(!m) return;
+  if(!confirm("Delete the match against " + (m.opp || "?") + " on " + m.date + "? This can't be undone.")) return;
+  delete STATS[cur]; dirty.delete(cur); lsSave();
+  try{ await mutate(d => { if(d.stats) delete d.stats[cur]; }, "Match stats deleted"); }catch(e){ setStatus("Couldn't delete online: " + e.message); }
+  cur = null; renderAll();
+};
+
+/* ---------- match list / new match ---------- */
+function matchLabel(m){ const w = setsWon(m); return m.date + " · " + (m.opp || "?") + (m.sets.length ? "  (" + w.us + "–" + w.th + ")" : ""); }
+function sortedMatches(){ return Object.entries(STATS).sort((a, b) => (b[1].date || "").localeCompare(a[1].date || "")); }
+function renderMatchSel(){
+  const sel = $("matchSel"); sel.innerHTML = "";
+  for(const [id, m] of sortedMatches()){ const o = document.createElement("option"); o.value = id; o.textContent = matchLabel(m) + (dirty.has(id) ? " •" : ""); sel.appendChild(o); }
+  const o = document.createElement("option"); o.value = "__new"; o.textContent = "＋ New match…"; sel.appendChild(o);
+  sel.value = cur || "__new";
+}
+$("matchSel").onchange = () => { const v = $("matchSel").value; if(v === "__new"){ openNew(); } else { cur = v; nsChoice = {}; $("newMatch").hidden = true; renderAll(); } };
+function today(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+function openNew(){
+  $("newMatch").hidden = false; $("recView").hidden = true; $("statsView").hidden = true;
+  const box = $("nmGame"); box.innerHTML = "";
+  const t = today();
+  const list = GAMES.filter(x => /^(home|away)/i.test(x.type || "")).sort((a, b) => a.date.localeCompare(b.date));
+  const done = new Set(Object.values(STATS).map(m => m.game).filter(Boolean));
+  // today's game, else the next one, else the last one played
+  const pick = list.find(x => x.date === t) || list.find(x => x.date > t) || list[list.length - 1];
+  for(const x of list){
+    const b = document.createElement("button"); b.type = "button"; b.className = "gbtn" + (x === pick ? " today" : "");
+    const d = new Date(x.date + "T12:00:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+    const tag = done.has(x.id) ? '<span class="tag rec">recorded – carry on</span>' : x.date === t ? '<span class="tag now">today</span>' : x.type ? '<span class="tag">' + x.type + '</span>' : "";
+    b.innerHTML = '<span><b>' + (x.opponent || "?") + '</b><span class="gd">' + d + [x.time, x.venue].filter(Boolean).map(v => " · " + v).join("") + '</span></span>' + tag;
+    b.onclick = () => startGame(x);
+    box.appendChild(b);
+  }
+  $("nmHint").hidden = !!list.length;
+  const el = box.querySelector(".today"); if(el) el.scrollIntoView({ block: "nearest" });
+}
+function startGame(x){
+  const have = Object.entries(STATS).find(([, m]) => m.game === x.id);
+  if(have){ cur = have[0]; }          // that game already has stats: carry on with it
+  else { const id = uid(); STATS[id] = { opp: x.opponent || "Opponent", date: x.date, game: x.id, sets: [], updated: new Date().toISOString() }; cur = id; touched(); }
+  tab = "rec"; nsChoice = {}; $("newMatch").hidden = true; renderAll();
+}
+$("nmCancel").onclick = () => { $("newMatch").hidden = true; if(!cur){ const f = sortedMatches()[0]; cur = f ? f[0] : null; } if(!cur) tab = "stats"; renderAll(); };
+
+/* ---------- saving ---------- */
+function renderSync(){
+  const s = $("sync");
+  if(!dirty.size){ s.textContent = "✓ Saved"; s.className = "sync ok"; }
+  else { s.textContent = "Not saved online yet"; s.className = "sync wait"; }
+  renderMatchSel();
+}
+let saving = false;
+async function save(quiet){
+  if(saving || !dirty.size) return; saving = true;
+  const ids = [...dirty], snap = Object.fromEntries(ids.map(id => [id, JSON.parse(JSON.stringify(STATS[id]))]));
+  if(!quiet){ $("sync").textContent = "Saving…"; $("sync").className = "sync"; }
+  try{
+    await mutate(d => { d.stats = d.stats || {}; for(const id of ids) if(snap[id]) d.stats[id] = snap[id]; }, "Match stats saved");
+    ids.forEach(id => { if(JSON.stringify(STATS[id]) === JSON.stringify(snap[id])) dirty.delete(id); });
+    lsSave(); setStatus("");
+  }catch(e){ setStatus("Couldn't save online (" + e.message + "). Your rallies are kept on this device – tap Save again later."); }
+  saving = false; renderSync();
+}
+$("saveBtn").onclick = () => save(false);
+window.addEventListener("beforeunload", e => { if(dirty.size){ e.preventDefault(); e.returnValue = ""; } });
+
+/* ---------- stats view ---------- */
+let scope = "match", landF = "all", rotF = null;
+function rallies(){
+  const out = [], m = M();
+  if(scope === "all"){ for(const x of Object.values(STATS)) x.sets.forEach(st => out.push(...st.r)); return out; }
+  if(!m) return out;
+  if(scope === "set"){ const st = m.sets[m.sets.length - 1]; if(st) out.push(...st.r); return out; }
+  m.sets.forEach(st => out.push(...st.r)); return out;
+}
+const pct = (a, b) => b ? Math.round(a / b * 100) + "%" : "–";
+const tone = (v, good, ok) => v == null ? "k-none" : v >= good ? "k-good" : v >= ok ? "k-ok" : "k-bad";
+function bars(box, rows, total, top){
+  box.innerHTML = "";
+  rows = rows.filter(r => r.n).sort((a, b) => b.n - a.n);
+  if(!rows.length){ box.innerHTML = '<div class="empty">Nothing recorded yet.</div>'; return; }
+  const max = rows[0].n, show = rows.slice(0, top), rest = rows.slice(top);
+  show.forEach(r => {
+    const d = document.createElement("div"); d.className = "bar";
+    d.innerHTML = `<span class="t" style="color:${r.c}">${r.t}</span><span class="track"><span class="fill" style="width:${Math.max(6, r.n / max * 100)}%;background:${r.c}"></span></span><span class="n">${r.n}</span>`;
+    box.appendChild(d);
+  });
+  if(rest.length){ const d = document.createElement("div"); d.className = "more"; d.textContent = "Also: " + rest.map(r => r.t.toLowerCase() + " " + r.n).join(", "); box.appendChild(d); }
+}
+function renderStats(){
+  document.querySelectorAll("#scopeSeg button").forEach(b => b.classList.toggle("on", b.dataset.s === scope));
+  document.querySelectorAll("#landSeg button").forEach(b => b.classList.toggle("on", b.dataset.l === landF));
+  const R = rallies(), won = R.filter(r => r.w === "us"), lost = R.filter(r => r.w === "them");
+  const recv = R.filter(r => r.srv === "them"), serv = R.filter(r => r.srv === "us");
+  const so = recv.length ? recv.filter(r => r.w === "us").length / recv.length : null;
+  const bp = serv.length ? serv.filter(r => r.w === "us").length / serv.length : null;
+  const ourErr = lost.filter(r => CODE[r.c].g === "ourE").length;
+  const oe = lost.length ? ourErr / lost.length : null;
+  $("kpis").innerHTML = [
+    [won.length + "–" + lost.length, "Points won–lost", R.length ? (won.length >= lost.length ? "k-good" : "k-bad") : "k-none"],
+    [pct(so * recv.length, recv.length), "Side-out · their serve", tone(so, .6, .45)],
+    [pct(bp * serv.length, serv.length), "Break · our serve", tone(bp, .45, .3)],
+    [ourErr, "Points given away (our errors)", oe == null ? "k-none" : oe <= .35 ? "k-good" : oe <= .5 ? "k-ok" : "k-bad"],
+  ].map(([v, l, c]) => `<div class="kpi ${c}"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+  const count = (list, g) => CODES.filter(c => c.g === g).map(c => ({ t: labelOf(c.k), n: list.filter(r => r.c === c.k).length, c: GCOL[g] }));
+  bars($("lostBars"), count(lost, "ourE").concat(count(lost, "thW")), lost.length, 5);
+  bars($("wonBars"), count(won, "usW").concat(count(won, "thE")), won.length, 4);
+  $("lostSub").textContent = lost.length ? lost.length + " points" : ""; $("wonSub").textContent = won.length ? won.length + " points" : "";
+  // rotations
+  const rb = $("rots"); rb.innerHTML = "";
+  for(let n = 1; n <= 6; n++){
+    const rr = R.filter(r => r.rot === n), w = rr.filter(r => r.w === "us").length, l = rr.length - w, d = w - l;
+    const rc = rr.filter(r => r.srv === "them");
+    const b = document.createElement("button"); b.type = "button";
+    b.className = "rt " + (!rr.length ? "k-none" : d > 0 ? "k-good" : d === 0 ? "k-ok" : "k-bad") + (rotF === n ? " on" : "");
+    b.innerHTML = `<b>R${n}</b><span class="d">${rr.length ? (d > 0 ? "+" : "") + d : "–"}</span><small>${rc.length ? "SO " + pct(rc.filter(r => r.w === "us").length, rc.length) : (rr.length ? w + "–" + l : "")}</small>`;
+    b.title = `Rotation ${n}: won ${w}, lost ${l}`;
+    b.onclick = () => { rotF = rotF === n ? null : n; renderStats(); };
+    rb.appendChild(b);
+  }
+  // landing map
+  const land = R.filter(r => CODE[r.c].court && (landF === "all" || r.c === landF) && (rotF == null || r.rot === rotF));
+  const spots = land.filter(r => r.x != null);
+  $("landSub").textContent = (rotF ? "rotation " + rotF + " · " : "") + spots.length + " marked";
+  const svg = $("heat"); drawCourt(svg, { noZones: true });
+  const cells = Array.from({ length: 9 }, () => 0);
+  spots.forEach(r => { const c = Math.min(2, Math.floor(r.x * 3)), w = Math.min(2, Math.floor(r.y * 3)); cells[w * 3 + c]++; });
+  const cmax = Math.max(...cells, 1), top = cells.indexOf(Math.max(...cells));
+  cells.forEach((n, i) => {
+    const c = i % 3, w = Math.floor(i / 3), x = CX + c * CW / 3, y = CY + w * CH / 3;
+    if(n) el("rect", { x: x + 1, y: y + 1, width: CW / 3 - 2, height: CH / 3 - 2, rx: 3, fill: "#ef4444", "fill-opacity": (0.12 + 0.5 * n / cmax).toFixed(2), stroke: i === top && spots.length ? "#991b1b" : "none", "stroke-width": 2 }, svg);
+  });
+  [[1/3, 0, 1/3, 1], [2/3, 0, 2/3, 1], [0, 2/3, 1, 2/3]].forEach(([a, b, c, d]) => el("line", { x1: CX + a * CW, y1: CY + b * CH, x2: CX + c * CW, y2: CY + d * CH, stroke: "#cbd5e1", "stroke-dasharray": "3 3" }, svg));
+  spots.forEach(r => { const c = el("circle", { cx: CX + r.x * CW, cy: CY + r.y * CH, r: 3.6, fill: LANDCOL[r.c], stroke: "#fff", "stroke-width": 1.2 }, svg); el("title", {}, c, labelOf(r.c) + " · rotation " + r.rot); });
+  cells.forEach((n, i) => { if(!n) return;
+    const c = i % 3, w = Math.floor(i / 3), x = CX + c * CW / 3 + CW / 6, y = CY + w * CH / 3 + CH / 6;
+    el("text", { x, y: y + 8, "text-anchor": "middle", "font-size": 24, "font-weight": 800, fill: "#7f1d1d", stroke: "#fff", "stroke-width": 3, "paint-order": "stroke" }, svg, n);
+  });
+  const names = ["front left","front middle","front right","middle left","middle","middle right","deep left","deep middle","deep right"];
+  $("heatNote").textContent = spots.length >= 3 ? "Most drop: " + names[top] + " (" + pct(cells[top], spots.length) + ")" : spots.length ? "" : "No spots marked yet.";
+}
+document.querySelectorAll("#scopeSeg button").forEach(b => b.onclick = () => { scope = b.dataset.s; renderStats(); });
+document.querySelectorAll("#landSeg button").forEach(b => b.onclick = () => { landF = b.dataset.l; renderStats(); });
+
+/* ---------- tabs ---------- */
+document.querySelectorAll("#tabSeg button").forEach(b => b.onclick = () => { tab = b.dataset.t; $("newMatch").hidden = true; renderAll(); });
+function renderAll(){
+  renderMatchSel(); renderSync();
+  document.querySelectorAll("#tabSeg button").forEach(b => b.classList.toggle("on", b.dataset.t === tab));
+  if(!cur && tab === "rec"){ openNew(); return; }
+  $("recView").hidden = tab !== "rec"; $("statsView").hidden = tab !== "stats";
+  if(tab === "rec") renderRec(); else renderStats();
+}
+
+/* ---------- login (organiser password only) ---------- */
+$("pwEye").onclick = () => { const i = $("pw"), show = i.type === "password"; i.type = show ? "text" : "password"; $("pwEye").textContent = show ? "🙈" : "👁️"; i.focus(); };
+$("loginForm").onsubmit = async (ev) => {
+  ev.preventDefault();
+  const pw = $("pw").value; if(!pw) return;
+  $("loginMsg").textContent = "Checking…";
+  const t = await unseal(CONFIG.organiser, pw);
+  if(!t){ $("loginMsg").textContent = (await unseal(CONFIG.team, pw)) ? "That's the team password – this page needs the organiser password." : "That password isn't right."; return; }
+  TOKEN = t; $("pw").value = "";
+  try{
+    const data = await fetchFile();
+    GAMES = (data.games || []).filter(g => g.id && g.date);
+    STATS = JSON.parse(JSON.stringify(data.stats || {}));
+    // anything recorded on this device but not saved online yet wins
+    const local = lsLoad();
+    for(const [id, m] of Object.entries(local)){
+      if(!STATS[id] || (m.updated || "") > (STATS[id].updated || "")){ STATS[id] = m; dirty.add(id); }
+    }
+    cur = sortedMatches().length ? sortedMatches()[0][0] : null;     // most recent match
+    buildKeys();
+    $("loginMsg").textContent = ""; $("loginCard").hidden = true; $("app").hidden = false;
+    renderAll();
+    if(dirty.size) setStatus("Rallies from this device that weren't saved online yet were restored – tap Save.");
+  }catch(e){
+    TOKEN = null;
+    $("loginMsg").textContent = e instanceof AuthError ? e.message : "Couldn't load – check your connection.";
+  }
+};
+</script>
+</body>
+</html>

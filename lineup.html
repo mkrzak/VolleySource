@@ -402,7 +402,7 @@ function renderSlots(){
     if(cur){ const sm = document.createElement("small"); sm.textContent = r.label.replace(/ \(.*\)/, ""); nm.appendChild(sm); }
     const x = document.createElement("button"); x.type = "button"; x.className = "x"; x.textContent = cur ? "×" : ""; x.title = "Remove";
     x.onclick = (e) => { e.stopPropagation(); delete lineup[r.k]; changed(); };
-    if(cur && shirts[cur.name] !== "" && shirts[cur.name] != null){ const sm2 = nm.querySelector("small"); if(sm2) sm2.textContent += " · #" + shirts[cur.name]; }
+    if(cur && shirts[cur.name] !== "" && shirts[cur.name] != null){ const sm2 = nm.querySelector("small"); if(sm2) sm2.textContent += " · " + shirts[cur.name]; }
     row.append(badge, nm, x);
     row.onclick = () => { if(picked) assign(r.k, picked); };
     row.ondragover = (e) => { e.preventDefault(); row.classList.add("dragover"); };

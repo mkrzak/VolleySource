@@ -589,7 +589,7 @@ let renaming = false;
 async function migrateNames(data){
   if(renaming || !data) return;
   const needs = (data.players || []).some(n => RENAMES[n]) || (data.responses || []).some(r => RENAMES[r.player])
-    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names") || !(data.done || []).includes("refs-only") || !(data.done || []).includes("remove-siri") || !(data.done || []).includes("team-need-12") || !(data.done || []).includes("team-need-all") || !(data.done || []).includes("league-need-all") || !(data.done || []).includes("add-olga");
+    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names") || !(data.done || []).includes("refs-only") || !(data.done || []).includes("remove-siri") || !(data.done || []).includes("team-need-12") || !(data.done || []).includes("team-need-all") || !(data.done || []).includes("league-need-all") || !(data.done || []).includes("add-olga") || !(data.done || []).includes("remove-olga");
   if(!needs) return;
   renaming = true;
   try{ const { data: d } = await mutate(x => {
@@ -663,7 +663,12 @@ async function migrateNames(data){
       if(!x.players.includes("Olga")) x.players.push("Olga");
       x.done.push("add-olga");
     }
-  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams); refs only; squad update; team and league games need the whole squad; Olga added"); ingest(d); render(); }
+    if(!x.done.includes("remove-olga")){            // one-off: Olga is no longer in the squad
+      x.players = (x.players || []).filter(n => n !== "Olga");
+      x.responses = (x.responses || []).filter(r => r.player !== "Olga");
+      x.done.push("remove-olga");
+    }
+  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams); refs only; squad update; team and league games need the whole squad; Olga added, then removed"); ingest(d); render(); }
   catch(e){ /* someone else will retry on their next visit */ }
   finally{ renaming = false; }
 }
