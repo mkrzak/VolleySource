@@ -39,6 +39,9 @@
     .htitle{font-size:20px} .hdesc{font-size:13px}
     .hcard[aria-pressed="true"]::after{display:none}
   }
+  .hcard.hext{text-decoration:none;border-color:var(--accent);background:linear-gradient(135deg,#FFF8E6 0%,#fff 70%)}
+  .hcard.hext:hover{border-color:#D18F00}
+  .hcard.hext::before{content:"\2197";position:absolute;right:16px;top:12px;font-weight:700;font-size:18px;color:var(--accent)}
   .sitefoot{max-width:1100px;margin:0 auto;padding:18px 20px 24px;border-top:1px solid var(--line);text-align:center;font-size:14px;color:var(--soft)}
   .sitefoot p{margin:0}
   @media print{header,.cards{display:none}}
@@ -85,6 +88,10 @@
       <span class="htitle">FIVB Volleyball Rules</span>
       <span class="hdesc">Faults, refereeing and the official hand signals (FIVB rules 2025&ndash;2028).</span>
     </button>
+    <a class="hcard hext" href="https://claude.ai/artifact/PFQVpxtr9grsEzzyHZ9Mms" target="_blank" rel="noopener">
+      <span class="htitle">Game Sign-up</span>
+      <span class="hdesc">Calendar of Panthers games and ref duties &mdash; tap In, Maybe or Out next to your name.</span>
+    </a>
     <button class="hcard" type="button" data-key="about" aria-pressed="false">
       <span class="htitle">About Me</span>
       <span class="hdesc">Who put these materials together, and what they are for.</span>
@@ -3790,11 +3797,11 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%div class="wrap">
 
   %%VBLT%%section class="card">
-    %%VBLT%%h2>Example scoresheet: CVC Panthers v CVC Tigers%%VBLT%%/h2>
-    %%VBLT%%p class="lead">The FIVB international scoresheet, filled in step by step following the FIVB %%VBLT%%i>Instructions for completing the volleyball scoresheet%%VBLT%%/i>. Set 1 is scored rally by rally; sets 2 and 3 are added to the results at the end.%%VBLT%%/p>
+    %%VBLT%%h2>Example scoresheet: Nuneaton Flames v Cambridge 3%%VBLT%%/h2>
+    %%VBLT%%p class="lead">The FIVB international scoresheet, filled in step by step following the FIVB %%VBLT%%i>Instructions for completing the volleyball scoresheet%%VBLT%%/i>. It follows a real NVL Division 3 Central match (player and official names changed). Set 1 is scored rally by rally; sets 2 to 4 are added to the results at the end.%%VBLT%%/p>
 
     %%VBLT%%div class="flipb">
-      %%VBLT%%div class="fb-names">%%VBLT%%span>CVC Panthers%%VBLT%%/span>%%VBLT%%span class="fb-set" id="fbset">Set 1%%VBLT%%/span>%%VBLT%%span>CVC Tigers%%VBLT%%/span>%%VBLT%%/div>
+      %%VBLT%%div class="fb-names">%%VBLT%%span>Nuneaton Flames%%VBLT%%/span>%%VBLT%%span class="fb-set" id="fbset">Set 1%%VBLT%%/span>%%VBLT%%span>Cambridge 3%%VBLT%%/span>%%VBLT%%/div>
       %%VBLT%%div class="stand">%%VBLT%%div class="cards">
         %%VBLT%%div class="fc big" id="fA1">%%VBLT%%span class="face">%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%div class="fc big" id="fA0">%%VBLT%%span class="face">0%%VBLT%%/span>%%VBLT%%/div>
         %%VBLT%%div class="fc small" id="fSA">%%VBLT%%span class="face">0%%VBLT%%/span>%%VBLT%%/div>%%VBLT%%div class="fc small" id="fSB">%%VBLT%%span class="face">0%%VBLT%%/span>%%VBLT%%/div>
@@ -3890,24 +3897,19 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%script>
 (function () {
   var TEAMS = {
-    A: { name: "CVC Panthers", box: "Panthers", short: "Panthers", lineup: [7, 3, 11, 5, 9, 14],
-         list: [[2, "Gia"], [3, "Bea"], [5, "Dana"], [6, "Isla"], [7, "Ana"], [9, "Elle"], [10, "Jade"], [11, "Cleo"], [12, "Hope"], [14, "Fay"]], cap: 7,
-         libs: [[16, "Hana"], [18, "Ivy"]], coach: "S. Reed", ac: "J. Park", capName: "Ana" },
-    B: { name: "CVC Tigers", box: "Tigers", short: "Tigers", lineup: [4, 10, 8, 12, 6, 15],
-         list: [[2, "Rae"], [3, "Sam"], [4, "Iris"], [5, "Tess"], [6, "Mia"], [8, "Kim"], [10, "Jo"], [12, "Lena"], [13, "Ola"], [15, "Nora"]], cap: 10,
-         libs: [[1, "Pia"], [17, "Quinn"]], coach: "K. Lowe", ac: "D. Shaw", capName: "Jo" }
+    A: { name: "Nuneaton Flames", box: "NUF", short: "Nuneaton", lineup: [14, 50, 34, 49, 37, 3],
+         list: [[3, "J. Harris"], [9, "E. Turner"], [13, "L. Moreno"], [14, "K. Novak"], [23, "S. Walsh"], [27, "R. Patel"], [34, "A. Fischer"], [37, "C. Doyle"], [49, "M. Rossi"], [50, "T. Owens"]], cap: 14,
+         libs: [[4, "B. Reyes"], [8, "G. Hughes"]], coach: "P. Grant", ac: "", capName: "Novak" },
+    B: { name: "Cambridge 3", box: "CV3", short: "Cambridge", lineup: [13, 5, 8, 3, 12, 14],
+         list: [[1, "P. Lindqvist"], [3, "D. Okafor"], [5, "V. Marsh"], [7, "Y. Tanaka"], [8, "F. Costa"], [10, "I. Brennan"], [12, "O. Kowal"], [13, "H. Silva"], [14, "Z. Ahmed"], [16, "E. Varga"]], cap: 12,
+         libs: [[19, "L. Berg"], [20, "N. Duarte"]], coach: "R. Alvarez", ac: "S. Moran", capName: "Kowal" }
   };
-  var SEQ = "BABAAAABAABABABBABAABBBAAABBABABBBBABABAABAABAA";   // who wins each rally: 25-22 to the Panthers
+  var SEQ = "AABBABBABABAABABAABBBABAABBBBAABABBABBBBBB";   // who wins each rally: 25-17 to Cambridge, as on the real sheet
   var EVENTS = {   // after rally n (1-based)
-    9:  { type: "to",  team: "B" },
-    16: { type: "san", team: "B", who: 12, col: "W" },
-    22: { type: "sub", team: "B", pos: 3, on: 13 },
-    27: { type: "to",  team: "A" },
-    33: { type: "sub", team: "A", pos: 3, on: 2 },
-    35: { type: "to",  team: "A" },
-    38: { type: "back", team: "B", pos: 3 },
-    44: { type: "to",  team: "B" },
-    46: { type: "ir",  team: "B" }
+    25: { type: "to",  team: "B" },
+    37: { type: "sub", team: "B", pos: 1, on: 2 },
+    39: { type: "to",  team: "A" },
+    41: { type: "to",  team: "A" }
   };
 
   /* ---------- draw the empty sheet ---------- */
@@ -3992,9 +3994,9 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
   function other(t) { return t === "A" ? "B" : "A"; }
   function box(t) { return t + "-sv-" + (st.idx[t] + 1) + "-" + st.rnd[t][st.idx[t]]; }
 
-  var pre = [{ id: "comp", text: "Women's League" }, { id: "city", text: "Cambridge" }, { id: "cc", text: "ENG" }, { id: "hall", text: "Sports Hall" },
-    { id: "pool", text: "League" }, { id: "mno", text: "12" }, { id: "div-W", text: "X", x: 1, note: "Division: Women" }, { id: "cat-S", text: "X", x: 1, note: "Category: Senior" },
-    { id: "date", text: "19 10 26", note: "Date: day, month, year" }, { id: "time", text: "19:00", note: "Starting time from the programme" }];
+  var pre = [{ id: "comp", text: "NVL Division 3 Central" }, { id: "city", text: "Northampton" }, { id: "cc", text: "ENG" }, { id: "hall", text: "Moulton College" },
+    { id: "pool", text: "W3C" }, { id: "mno", text: "21" }, { id: "div-W", text: "X", x: 1, note: "Division: Women" }, { id: "cat-S", text: "X", x: 1, note: "Category: Senior" },
+    { id: "date", text: "11 10 26", note: "Date: day, month, year" }, { id: "time", text: "14:00", note: "Starting time from the programme" }];
   step("Before the match: fill in the top of the sheet: competition, city and country code, hall, pool/phase, match number; cross Women and Senior; then the date and the programme's starting time (1.1–1.9).", pre, null);
   step("Write the two team names under TEAMS. Leave the A/B circles blank: they are filled in after the toss (1.10).",
     [{ id: "tn1", text: TEAMS.A.box, note: "Team names (A/B after the toss)" }, { id: "tn2", text: TEAMS.B.box }], null);
@@ -4015,14 +4017,14 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
       lb.push({ id: "L" + t + "-" + (i + 1) + "m", text: p[1], fast: 1, note: "Libero players" });
     });
     lb.push({ id: "o" + t + "-C", text: TEAMS[t].coach, note: "Officials: coach (C)" });
-    lb.push({ id: "o" + t + "-AC", text: TEAMS[t].ac, note: "Assistant coach (AC)" });
+    if (TEAMS[t].ac) lb.push({ id: "o" + t + "-AC", text: TEAMS[t].ac, note: "Assistant coach (AC)" });
   });
   step("Write the liberos under LIBERO PLAYERS, and the coach (C) and assistant coach (AC) under OFFICIALS (1.13).", lb, null);
   step("The captains and coaches check the lists and sign under SIGNATURES (1.14–1.15).",
-    [{ id: "sg-capA", text: TEAMS.A.capName, note: "Captains and coaches sign" }, { id: "sg-capB", text: TEAMS.B.capName }, { id: "sg-coA", text: "Reed" }, { id: "sg-coB", text: "Lowe" }], null);
-  step("After the toss: the Panthers start on the scorer's left, so they are team A. Write A and B in the circles at the top and above the team lists (2.3).",
+    [{ id: "sg-capA", text: TEAMS.A.capName, note: "Captains and coaches sign" }, { id: "sg-capB", text: TEAMS.B.capName }, { id: "sg-coA", text: "Grant" }, { id: "sg-coB", text: "Alvarez" }], null);
+  step("After the toss: Nuneaton start on the scorer's left, so they are team A. Write A and B in the circles at the top and above the team lists (2.3).",
     [{ id: "tc1", text: "A", note: "After the toss: team A and team B" }, { id: "tc2", text: "B" }, { id: "lA-ab", text: "A" }, { id: "lB-ab", text: "B" }], null);
-  step("Set 1: write the team names and A/B in the set box. The Panthers serve first, so cross their S; the Tigers receive, so cross their R (2.3a).",
+  step("Set 1: write the team names and A/B in the set box. Nuneaton serve first, so cross their S; Cambridge receive, so cross their R (2.3a).",
     [{ id: "A-name", text: TEAMS.A.box, note: "Set 1: team names" }, { id: "A-ab", text: "A" }, { id: "B-name", text: TEAMS.B.box }, { id: "B-ab", text: "B" },
      { id: "A-S", text: "X", x: 1, note: "Serving first: cross S" }, { id: "B-R", text: "X", x: 1, note: "Receiving first: cross R" }], null);
   var lu = [];
@@ -4030,8 +4032,8 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
   step("Copy the line-up sheets from the 2nd referee: the starting players go under I to VI, in the order on each sheet (2.4).", lu, board());
   steps[steps.length - 1].lus = true;
   st.rnd.A[0] = 1;
-  step("The 1st referee whistles for the first service: write the START time, and tick box 1 under I: #7 serves first for the Panthers (3.1–3.3).",
-    [{ id: "A-time", text: "19:04", note: "START time: the whistle for the first service" }, { id: "A-sv-1-1", text: "✓", tick: 1, note: "First server: tick box 1" }], board());
+  step("The 1st referee whistles for the first service: write the START time, and tick box 1 under I: #14 serves first for Nuneaton (3.1–3.3).",
+    [{ id: "A-time", text: "14:00", note: "START time: the whistle for the first service" }, { id: "A-sv-1-1", text: "✓", tick: 1, note: "First server: tick box 1" }], board());
 
   for (var i = 0; i %%VBLT%% SEQ.length; i++) {
     var w = SEQ.charAt(i), l = other(w), ops = [], cap;
@@ -4070,53 +4072,53 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
       step("Substitution " + TEAMS[t].short + ": #" + ev.on + " comes on for #" + off + ". Write " + ev.on + " in N° of Player under " + ["I", "II", "III", "IV", "V", "VI"][ev.pos - 1] + ", and the score in the upper box, the substituting team first: " + sc + " (3.6).",
         [{ id: t + "-sb-" + ev.pos, text: ev.on, note: "Substitute: #" + ev.on + " for #" + off }, { id: t + "-c1-" + ev.pos, text: sc, c: "sc", note: "Score at change: " + sc }], board());
     } else if (ev.type === "back") {
-      var sb = TEAMS[t].lineup[ev.pos - 1], back = [4, 10, 8, 12, 6, 15][ev.pos - 1];
+      var sb = TEAMS[t].lineup[ev.pos - 1], back = ev.back;
       TEAMS[t].lineup[ev.pos - 1] = back; st.nsub[t]++;
       step("#" + back + " comes back for #" + sb + ". Circle " + sb + ": the substitute can't come back in this set. Write the score in the lower box, the substituting team first: " + sc + " (3.6c–d).",
         [{ id: t + "-sb-" + ev.pos, ring: 1, rc: "var(--pen)", rw: 24, note: "#" + back + " is back: circle " + sb }, { id: t + "-c2-" + ev.pos, text: sc, c: "sc", note: "Score at the return: " + sc }], board());
     } else if (ev.type === "san") {
       var r = ++st.san;
-      step("The 1st referee gives Tigers #" + ev.who + " a yellow-card warning for misconduct. In SANCTIONS write " + ev.who + " under W, then B, set 1 and the score " + st.A + ":" + st.B + " (3.8b).",
+      step("The 1st referee gives " + TEAMS[t].short + " #" + ev.who + " a yellow-card warning for misconduct. In SANCTIONS write " + ev.who + " under W, then B, set 1 and the score " + st.A + ":" + st.B + " (3.8b).",
         [{ id: "sn-" + r + "-W", text: ev.who, note: "Warning (W): player " + ev.who }, { id: "sn-" + r + "-T", text: t }, { id: "sn-" + r + "-S", text: "1" }, { id: "sn-" + r + "-SC", text: st.A + ":" + st.B, c: "sc", note: "Set and score at the sanction" }], board());
     } else if (ev.type === "ir") {
-      step("The Tigers coach asks for a third time-out: it is rejected as an improper request. Cross the B next to IMPROPER REQUEST (3.8a).",
+      step("The " + TEAMS[t].short + " coach asks for a third time-out: it is rejected as an improper request. Cross the B next to IMPROPER REQUEST (3.8a).",
         [{ id: "ir-B", text: "X", x: 1, note: "Improper request: cross B" }], board());
     }
   }
-  // end of the set: the Panthers win the last rally on their own serve
+  // end of the set: Cambridge win the last rally on their own serve
   var cxA = [], cxB = [];
   for (var q = st.A + 1; q %%VBLT%%= 48; q++) cxA.push("A-pt-" + q);
   for (var q2 = st.B + 1; q2 %%VBLT%%= 48; q2++) cxB.push("B-pt-" + q2);
-  st.sA = 1;
-  step("Set 1 over, " + st.A + "–" + st.B + " to the Panthers. Write the END time, cancel the unused numbers in both POINTS columns, and circle the final score, " + st.A + ", in the box of the last server, #" + server("A") + " (3.4d–f).",
-    [{ id: "B-time", text: "19:31", note: "END time: the whistle for the last point" }, { cx: cxA, note: "Cancel the unused points" }, { cx: cxB },
-     { id: box("A"), text: st.A, sco: 1, c: "sc", note: "Final score in the last server's box" }, { id: box("A"), sel: ".sco", ring: 1, rw: 26, note: "Circle the final score" }], board());
+  st.sB = 1;
+  step("Set 1 over, " + st.B + "–" + st.A + " to Cambridge. Write the END time, cancel the unused numbers in both POINTS columns, and circle the final score, " + st.B + ", in the box of the last server, #" + server("B") + " (3.4d–f).",
+    [{ id: "B-time", text: "14:23", note: "END time: the whistle for the last point" }, { cx: cxA, note: "Cancel the unused points" }, { cx: cxB },
+     { id: box("B"), text: st.B, sco: 1, c: "sc", note: "Final score in the last server's box" }, { id: box("B"), sel: ".sco", ring: 1, rw: 26, note: "Circle the final score" }], board());
   var s1A = st.A, s1B = st.B;
-  step("In RESULTS, fill in set 1 for each team: time-outs (T), substitutions (S), won (W: 1 or 0) and points (P), and the set duration in brackets: 27 minutes (4.1–4.6).",
+  step("In RESULTS, fill in set 1 for each team: time-outs (T), substitutions (S), won (W: 1 or 0) and points (P), and the set duration in brackets: 23 minutes (4.1–4.6).",
     [{ id: "rtA", text: TEAMS.A.box, note: "Results: team names" }, { id: "rtB", text: TEAMS.B.box },
-     { id: "rA-T-1", text: st.to.A, note: "Set 1: Panthers T, S, W, P" }, { id: "rA-S-1", text: st.nsub.A }, { id: "rA-W-1", text: "1" }, { id: "rA-P-1", text: s1A, c: "sc" },
-     { id: "rD-1", text: "27", note: "Set 1 lasted 27 minutes" },
-     { id: "rB-P-1", text: s1B, c: "sc", note: "Set 1: Tigers P, W, S, T" }, { id: "rB-W-1", text: "0" }, { id: "rB-S-1", text: st.nsub.B }, { id: "rB-T-1", text: st.to.B }], board());
-  st.sA = 3; st.A = 25; st.B = 23;
-  var r2 = { A: [1, 2, 1, 25], B: [2, 3, 0, 19], d: 24 }, r3 = { A: [2, 2, 1, 25], B: [2, 4, 0, 23], d: 29 };
+     { id: "rA-T-1", text: st.to.A, note: "Set 1: Nuneaton T, S, W, P" }, { id: "rA-S-1", text: st.nsub.A }, { id: "rA-W-1", text: "0" }, { id: "rA-P-1", text: s1A, c: "sc" },
+     { id: "rD-1", text: "23", note: "Set 1 lasted 23 minutes" },
+     { id: "rB-P-1", text: s1B, c: "sc", note: "Set 1: Cambridge P, W, S, T" }, { id: "rB-W-1", text: "1" }, { id: "rB-S-1", text: st.nsub.B }, { id: "rB-T-1", text: st.to.B }], board());
+  st.sA = 1; st.sB = 3; st.A = 23; st.B = 25;
+  var r2 = { A: [2, 1, 0, 13], B: [0, 2, 1, 25], d: 19 }, r3 = { A: [0, 2, 1, 27], B: [2, 4, 0, 25], d: 31 }, r4 = { A: [2, 2, 0, 23], B: [1, 5, 1, 25], d: 29 };
   function rrow(k, r, note) {
     return [{ id: "rA-T-" + k, text: r.A[0], note: note }, { id: "rA-S-" + k, text: r.A[1] }, { id: "rA-W-" + k, text: r.A[2] }, { id: "rA-P-" + k, text: r.A[3], c: "sc" },
       { id: "rD-" + k, text: r.d }, { id: "rB-P-" + k, text: r.B[3], c: "sc" }, { id: "rB-W-" + k, text: r.B[2] }, { id: "rB-S-" + k, text: r.B[1] }, { id: "rB-T-" + k, text: r.B[0] }];
   }
-  step("Sets 2 and 3 are scored the same way, each in its own set box. The Panthers win set 2, 25:19, and set 3, 25:23, so they win the match 3–0. Add both sets to the results.",
-    rrow(2, r2, "They played two more sets: set 2, Panthers 25:19").concat(rrow(3, r3, "Set 3, Panthers 25:23: match won 3–0")), board());
-  steps[steps.length - 1].setNo = 3;
-  step("Totals: add up each column, and the total set duration (27 + 24 + 29 = 80 minutes). Then the match starting and ending times, the total match duration, and the WINNER with the score in sets (4.2–4.9).",
-    [{ id: "rA-T-t", text: "5", note: "Totals for each team" }, { id: "rA-S-t", text: "5" }, { id: "rA-W-t", text: "3" }, { id: "rA-P-t", text: "75", c: "sc" },
-     { id: "rD-t", text: "80", note: "Total set duration" }, { id: "rB-P-t", text: "64", c: "sc" }, { id: "rB-W-t", text: "0" }, { id: "rB-S-t", text: "9" }, { id: "rB-T-t", text: "6" },
-     { id: "m-st", text: "19h 04", note: "Match start, end and duration" }, { id: "m-en", text: "20h 30" }, { id: "m-du", text: "1h 26" },
-     { id: "m-w", text: TEAMS.A.box, note: "WINNER: the team and the score in sets" }, { id: "m-ws", text: "3:0" }], board());
+  step("Sets 2 to 4 are scored the same way, each in its own set box. Cambridge win set 2, 25:13, Nuneaton win set 3, 27:25, and Cambridge win set 4, 25:23, so Cambridge win the match 3–1. Add the three sets to the results.",
+    rrow(2, r2, "Set 2: Cambridge 25:13").concat(rrow(3, r3, "Set 3: Nuneaton 27:25")).concat(rrow(4, r4, "Set 4: Cambridge 25:23, match won 3–1")), board());
+  steps[steps.length - 1].setNo = 4;
+  step("Totals: add up each column, and the total set duration (23 + 19 + 31 + 29 = 102 minutes). Then the match starting and ending times, the total match duration, and the WINNER with the score in sets (4.2–4.9).",
+    [{ id: "rA-T-t", text: "6", note: "Totals for each team" }, { id: "rA-S-t", text: "5" }, { id: "rA-W-t", text: "1" }, { id: "rA-P-t", text: "80", c: "sc" },
+     { id: "rD-t", text: "102", note: "Total set duration" }, { id: "rB-P-t", text: "100", c: "sc" }, { id: "rB-W-t", text: "3" }, { id: "rB-S-t", text: "12" }, { id: "rB-T-t", text: "4" },
+     { id: "m-st", text: "14h 00", note: "Match start, end and duration" }, { id: "m-en", text: "15h 42" }, { id: "m-du", text: "1h 42" },
+     { id: "m-w", text: TEAMS.B.box, note: "WINNER: the team and the score in sets" }, { id: "m-ws", text: "3:1" }], board());
   step("Approval: the officials' names and countries, then the signatures in order: scorer, assistant scorer, both team captains, the 2nd referee and finally the 1st referee (4.10).",
-    [{ id: "ap-r1-n", text: "R. Hale", note: "Referees, scorers: names and countries" }, { id: "ap-r1-c", text: "ENG" }, { id: "ap-r2-n", text: "T. Moss" }, { id: "ap-r2-c", text: "ENG" },
-     { id: "ap-sc-n", text: "A. Byrne" }, { id: "ap-sc-c", text: "ENG" }, { id: "ap-as-n", text: "L. Chen" }, { id: "ap-as-c", text: "ENG" },
-     { id: "ap-sc-s", text: "Byrne", note: "1. The scorer signs" }, { id: "ap-as-s", text: "Chen", note: "2. The assistant scorer" },
+    [{ id: "ap-r1-n", text: "C. Tate", note: "Referees, scorers: names and countries" }, { id: "ap-r1-c", text: "ENG" }, { id: "ap-r2-n", text: "A. Ward" }, { id: "ap-r2-c", text: "ENG" },
+     { id: "ap-sc-n", text: "V. Lane" }, { id: "ap-sc-c", text: "ENG" }, { id: "ap-as-n", text: "T. Bell" }, { id: "ap-as-c", text: "ENG" },
+     { id: "ap-sc-s", text: "Lane", note: "1. The scorer signs" }, { id: "ap-as-s", text: "Bell", note: "2. The assistant scorer" },
      { id: "ap-capA", text: TEAMS.A.capName, note: "3. Both team captains" }, { id: "ap-capB", text: TEAMS.B.capName },
-     { id: "ap-r2-s", text: "Moss", note: "4. The 2nd referee" }, { id: "ap-r1-s", text: "Hale", note: "5. Last, the 1st referee" }], board());
+     { id: "ap-r2-s", text: "Ward", note: "4. The 2nd referee" }, { id: "ap-r1-s", text: "Tate", note: "5. Last, the 1st referee" }], board());
 
   /* ---------- handwriting: a single-stroke cursive (Hershey) drawn with a pen ---------- */
   var G = {" ":[16,[]],"!":[10,[[5,-12,5,2],[5,7,4,8,5,9,6,8,5,7]]],"\"":[16,[[4,-12,4,-5],[12,-12,12,-5]]],"#":[21,[[11,-16,4,16],[17,-16,10,16],[4,-3,18,-3],[3,3,17,3]]],"$":[20,[[8,-16,8,13],[12,-16,12,13],[17,-9,15,-11,12,-12,8,-12,5,-11,3,-9,3,-7,4,-5,5,-4,7,-3,13,-1,15,0,16,1,17,3,17,6,15,8,12,9,8,9,5,8,3,6]]],"%":[24,[[21,-12,3,9],[8,-12,10,-10,10,-8,9,-6,7,-5,5,-5,3,-7,3,-9,4,-11,6,-12,8,-12,10,-11,13,-10,16,-10,19,-11,21,-12],[17,2,15,3,14,5,14,7,16,9,18,9,20,8,21,6,21,4,19,2,17,2]]],"&":[26,[[23,-3,23,-4,22,-5,21,-5,20,-4,19,-2,17,3,15,6,13,8,11,9,7,9,5,8,4,7,3,5,3,3,4,1,5,0,12,-4,13,-5,14,-7,14,-9,13,-11,11,-12,9,-11,8,-9,8,-7,9,-4,11,-1,16,6,18,8,20,9,22,9,23,8,23,7]]],"'":[4,[[2,-5,2,-1]]],"(":[14,[[11,-16,9,-14,7,-11,5,-7,4,-2,4,2,5,7,7,11,9,14,11,16]]],")":[14,[[3,-16,5,-14,7,-11,9,-7,10,-2,10,2,9,7,7,11,5,14,3,16]]],"*":[16,[[8,-6,8,6],[3,-3,13,3],[13,-3,3,3]]],"+":[26,[[13,-9,13,9],[4,0,22,0]]],",":[8,[[5,5,4,6,3,5,4,4,5,5,5,7,3,9]]],"-":[26,[[4,0,22,0]]],".":[8,[[4,4,3,5,4,6,5,5,4,4]]],"/":[22,[[20,-16,2,16]]],"0":[20,[[9,-12,6,-11,4,-8,3,-3,3,0,4,5,6,8,9,9,11,9,14,8,16,5,17,0,17,-3,16,-8,14,-11,11,-12,9,-12]]],"1":[20,[[6,-8,8,-9,11,-12,11,9]]],"2":[20,[[4,-7,4,-8,5,-10,6,-11,8,-12,12,-12,14,-11,15,-10,16,-8,16,-6,15,-4,13,-1,3,9,17,9]]],"3":[20,[[5,-12,16,-12,10,-4,13,-4,15,-3,16,-2,17,1,17,3,16,6,14,8,11,9,8,9,5,8,4,7,3,5]]],"4":[20,[[13,-12,3,2,18,2],[13,-12,13,9]]],"5":[20,[[15,-12,5,-12,4,-3,5,-4,8,-5,11,-5,14,-4,16,-2,17,1,17,3,16,6,14,8,11,9,8,9,5,8,4,7,3,5]]],"6":[20,[[16,-9,15,-11,12,-12,10,-12,7,-11,5,-8,4,-3,4,2,5,6,7,8,10,9,11,9,14,8,16,6,17,3,17,2,16,-1,14,-3,11,-4,10,-4,7,-3,5,-1,4,2]]],"7":[20,[[17,-12,7,9],[3,-12,17,-12]]],"8":[20,[[8,-12,5,-11,4,-9,4,-7,5,-5,7,-4,11,-3,14,-2,16,0,17,2,17,5,16,7,15,8,12,9,8,9,5,8,4,7,3,5,3,2,4,0,6,-2,9,-3,13,-4,15,-5,16,-7,16,-9,15,-11,12,-12,8,-12]]],"9":[20,[[16,-5,15,-2,13,0,10,1,9,1,6,0,4,-2,3,-5,3,-6,4,-9,6,-11,9,-12,10,-12,13,-11,15,-9,16,-5,16,0,15,5,13,8,10,9,8,9,5,8,4,6]]],":":[8,[[4,-3,3,-2,4,-1,5,-2,4,-3],[4,4,3,5,4,6,5,5,4,4]]],";":[8,[[4,-3,3,-2,4,-1,5,-2,4,-3],[5,5,4,6,3,5,4,4,5,5,5,7,3,9]]],"%%VBLT%%":[24,[[20,-9,4,0,20,9]]],"=":[26,[[4,-3,22,-3],[4,3,22,3]]],">":[24,[[4,-9,20,0,4,9]]],"?":[18,[[3,-7,3,-8,4,-10,5,-11,7,-12,11,-12,13,-11,14,-10,15,-8,15,-6,14,-4,13,-3,9,-1,9,2],[9,7,8,8,9,9,10,8,9,7]]],"@":[27,[[18,-4,17,-6,15,-7,12,-7,10,-6,9,-5,8,-2,8,1,9,3,11,4,14,4,16,3,17,1],[12,-7,10,-5,9,-2,9,1,10,3,11,4],[18,-7,17,1,17,3,19,4,21,4,23,2,24,-1,24,-3,23,-6,22,-8,20,-10,18,-11,15,-12,12,-12,9,-11,7,-10,5,-8,4,-6,3,-3,3,0,4,3,5,5,7,7,9,8,12,9,15,9,18,8,20,7,21,6],[19,-7,18,1,18,3,19,4]]],"A":[20,[[0,9,2,8,5,5,8,1,12,-6,15,-12,15,9,14,6,12,3,10,1,7,-1,5,-1,4,0,4,2,5,4,7,6,10,8,13,9,18,9]]],"B":[23,[[13,-10,14,-9,14,-6,13,-2,12,1,11,3,9,6,7,8,5,9,4,9,3,8,3,5,4,0,5,-3,6,-5,8,-8,10,-10,12,-11,15,-12,18,-12,20,-11,21,-9,21,-7,20,-5,19,-4,17,-3,14,-2],[13,-2,14,-2,17,-1,18,0,19,2,19,5,18,7,17,8,15,9,12,9,10,8,9,6]]],"C":[20,[[12,-6,12,-5,13,-4,15,-4,17,-5,18,-7,18,-9,17,-11,15,-12,12,-12,9,-11,7,-9,5,-6,4,-4,3,0,3,4,4,7,5,8,7,9,9,9,12,8,14,6,15,4]]],"D":[23,[[13,-12,11,-11,10,-9,9,-5,8,1,7,4,6,6,4,8,2,9,0,9,-1,8,-1,6,0,5,2,5,4,6,6,8,9,9,12,9,15,8,17,6,19,2,20,-3,20,-7,19,-10,18,-11,16,-12,13,-12,11,-10,11,-8,12,-5,14,-2,16,0,19,2,21,3]]],"E":[20,[[14,-8,14,-7,15,-6,17,-6,18,-7,18,-9,17,-11,14,-12,10,-12,7,-11,6,-9,6,-6,7,-4,8,-3,11,-2,8,-2,5,-1,4,0,3,2,3,5,4,7,5,8,8,9,11,9,14,8,16,6,17,4]]],"F":[20,[[10,-6,8,-6,6,-7,5,-9,6,-11,9,-12,12,-12,16,-11,19,-11,21,-12],[16,-11,14,-4,12,2,10,6,8,8,6,9,4,9,2,8,1,6,1,4,2,3,4,3,6,4],[9,-2,18,-2]]],"G":[23,[[0,9,2,8,6,4,9,-1,10,-4,11,-8,11,-11,10,-12,9,-12,8,-11,7,-9,7,-6,8,-4,10,-3,14,-3,17,-4,18,-5,19,-7,19,-1,18,4,17,6,15,8,12,9,8,9,5,8,3,6,2,4,2,2]]],"H":[24,[[7,-5,5,-6,4,-8,4,-9,5,-11,7,-12,8,-12,10,-11,11,-9,11,-7,10,-3,8,3,6,7,4,9,2,9,1,8,1,6],[7,0,16,-3,18,-4,21,-6,23,-8,24,-10,24,-11,23,-12,22,-12,20,-10,18,-6,16,0,15,5,15,8,16,9,17,9,19,8,20,7,22,4]]],"I":[17,[[14,4,12,2,10,-1,9,-3,8,-6,8,-9,9,-11,10,-12,12,-12,13,-11,14,-9,14,-6,13,-1,11,4,10,6,8,8,6,9,4,9,2,8,1,6,1,4,2,3,4,3,6,4]]],"J":[15,[[10,12,8,9,6,4,5,-2,5,-8,6,-11,8,-12,10,-12,11,-11,12,-8,12,-5,11,0,8,9,6,15,5,18,4,20,2,21,1,20,1,18,2,15,4,12,6,10,9,8,13,6]]],"K":[24,[[7,-5,5,-6,4,-8,4,-9,5,-11,7,-12,8,-12,10,-11,11,-9,11,-7,10,-3,8,3,6,7,4,9,2,9,1,8,1,6],[24,-9,24,-11,23,-12,22,-12,20,-11,18,-9,16,-6,14,-4,12,-3,10,-3],[12,-3,13,-1,13,6,14,8,15,9,16,9,18,8,19,7,21,4]]],"L":[19,[[4,0,6,0,10,-1,13,-3,15,-5,16,-7,16,-10,15,-12,13,-12,12,-11,11,-9,10,-4,9,1,8,4,7,6,5,8,3,9,1,9,0,8,0,6,1,5,3,5,5,6,8,8,11,9,13,9,16,8,18,6]]],"M":[33,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-7,8,-2,7,2,5,9],[7,2,10,-6,12,-10,13,-11,15,-12,16,-12,18,-11,19,-9,19,-7,18,-2,17,2,15,9],[17,2,20,-6,22,-10,23,-11,25,-12,26,-12,28,-11,29,-9,29,-7,28,-2,26,5,26,8,27,9,28,9,30,8,31,7,33,4]]],"N":[24,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-7,8,-2,7,2,5,9],[7,2,10,-6,12,-10,13,-11,15,-12,17,-12,19,-11,20,-9,20,-7,19,-2,17,5,17,8,18,9,19,9,21,8,22,7,24,4]]],"O":[21,[[12,-12,9,-11,7,-9,5,-6,4,-4,3,0,3,4,4,7,5,8,7,9,9,9,12,8,14,6,16,3,17,1,18,-3,18,-7,17,-10,16,-11,14,-12,12,-12,10,-10,10,-7,11,-4,13,-1,15,1,18,3,20,4]]],"P":[25,[[13,-10,14,-9,14,-6,13,-2,12,1,11,3,9,6,7,8,5,9,4,9,3,8,3,5,4,0,5,-3,6,-5,8,-8,10,-10,12,-11,15,-12,20,-12,22,-11,23,-10,24,-8,24,-5,23,-3,22,-2,20,-1,17,-1,15,-2,14,-3]]],"Q":[22,[[13,-6,12,-4,11,-3,9,-2,7,-2,6,-4,6,-6,7,-9,9,-11,12,-12,15,-12,17,-11,18,-9,18,-5,17,-2,15,1,11,5,8,7,6,8,3,9,1,9,0,8,0,6,1,5,3,5,5,6,8,8,11,9,14,9,17,8,19,6]]],"R":[25,[[13,-10,14,-9,14,-6,13,-2,12,1,11,3,9,6,7,8,5,9,4,9,3,8,3,5,4,0,5,-3,6,-5,8,-8,10,-10,12,-11,15,-12,19,-12,21,-11,22,-10,23,-8,23,-5,22,-3,21,-2,19,-1,16,-1,13,-2,14,-1,15,1,15,6,16,8,18,9,20,8,21,7,23,4]]],"S":[20,[[0,9,2,8,4,6,7,2,9,-1,11,-5,12,-8,12,-11,11,-12,10,-12,9,-11,8,-9,8,-7,9,-5,11,-3,14,-1,16,1,17,3,17,5,16,7,15,8,12,9,8,9,5,8,3,6,2,4,2,2]]],"T":[19,[[10,-6,8,-6,6,-7,5,-9,6,-11,9,-12,12,-12,16,-11,19,-11,21,-12],[16,-11,14,-4,12,2,10,6,8,8,6,9,4,9,2,8,1,6,1,4,2,3,4,3,6,4]]],"U":[24,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-7,8,-3,7,0,6,4,6,6,7,8,9,9,11,9,13,8,14,7,16,3,19,-5,21,-12],[19,-5,18,-1,17,5,17,8,18,9,19,9,21,8,22,7,24,4]]],"V":[23,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-7,8,-3,7,0,6,4,6,7,7,9,9,9,11,8,14,5,16,2,18,-2,19,-5,20,-9,20,-11,19,-12,18,-12,17,-11,16,-9,16,-7,17,-4,19,-2,21,-1]]],"W":[28,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-6,8,9],[18,-12,8,9],[18,-12,16,9],[30,-12,28,-11,25,-8,22,-4,19,2,16,9]]],"X":[24,[[8,-6,6,-6,5,-7,5,-9,6,-11,8,-12,10,-12,12,-11,13,-9,13,-6,11,3,11,6,12,8,14,9,16,9,18,8,19,6,19,4,18,3,16,3],[23,-9,23,-11,22,-12,20,-12,18,-11,16,-9,14,-6,10,3,8,6,6,8,4,9,2,9,1,8,1,6]]],"Y":[23,[[5,-5,3,-6,2,-8,2,-9,3,-11,5,-12,6,-12,8,-11,9,-9,9,-7,8,-3,7,0,6,4,6,6,7,8,8,9,10,9,12,8,14,6,16,3,17,1,19,-5],[21,-12,19,-5,16,5,14,11,12,16,10,20,8,21,7,20,7,18,8,15,10,12,13,9,16,7,21,4]]],"Z":[21,[[13,-6,12,-4,11,-3,9,-2,7,-2,6,-4,6,-6,7,-9,9,-11,12,-12,15,-12,17,-11,18,-9,18,-5,17,-2,15,2,12,5,8,8,6,9,3,9,2,8,2,6,3,5,6,5,8,6,9,7,10,9,10,12,9,15,8,17,6,20,4,21,3,20,3,18,4,15,6,12,9,9,12,7,18,4]]],"[":[14,[[4,-16,4,16],[5,-16,5,16],[4,-16,11,-16],[4,16,11,16]]],"\\":[14,[[0,-12,14,12]]],"]":[14,[[9,-16,9,16],[10,-16,10,16],[3,-16,10,-16],[3,16,10,16]]],"^":[16,[[8,-14,0,0],[8,-14,16,0]]],"_":[20,[[0,16,20,16]]],"`":[8,[[5,-7,3,-5,3,-3,4,-2,5,-3,4,-4,3,-3]]],"a":[16,[[9,3,8,1,6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,5,9,7,8,8,6,10,0,9,5,9,8,10,9,11,9,13,8,14,7,16,4]]],"b":[14,[[0,4,2,1,5,-4,6,-6,7,-9,7,-11,6,-12,4,-11,3,-9,2,-5,1,2,1,8,2,9,3,9,5,8,7,6,8,3,8,0,9,4,10,5,12,5,14,4]]],"c":[11,[[7,2,7,1,6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,6,9,9,7,11,4]]],"d":[16,[[9,3,8,1,6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,5,9,7,8,8,6,14,-12],[10,0,9,5,9,8,10,9,11,9,13,8,14,7,16,4]]],"e":[10,[[1,7,3,6,4,5,5,3,5,1,4,0,3,0,1,1,0,3,0,6,1,8,3,9,5,9,7,8,8,7,10,4]]],"f":[8,[[0,4,4,-1,6,-4,7,-6,8,-9,8,-11,7,-12,5,-11,4,-9,2,-1,-1,8,-4,15,-5,18,-5,20,-4,21,-2,20,-1,17,0,8,1,9,3,9,5,8,6,7,8,4]]],"g":[15,[[9,3,8,1,6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,5,9,7,8,8,7],[10,0,8,7,4,18,3,20,1,21,0,20,0,18,1,15,4,12,7,10,9,9,12,7,15,4]]],"h":[15,[[0,4,2,1,5,-4,6,-6,7,-9,7,-11,6,-12,4,-11,3,-9,2,-5,1,1,0,9],[0,9,1,6,2,4,4,1,6,0,8,0,9,1,9,3,8,6,8,8,9,9,10,9,12,8,13,7,15,4]]],"i":[7,[[3,-5,3,-4,4,-4,4,-5,3,-5],[0,4,2,0,0,6,0,8,1,9,2,9,4,8,5,7,7,4]]],"j":[7,[[3,-5,3,-4,4,-4,4,-5,3,-5],[0,4,2,0,-4,18,-5,20,-7,21,-8,20,-8,18,-7,15,-4,12,-1,10,1,9,4,7,7,4]]],"k":[14,[[0,4,2,1,5,-4,6,-6,7,-9,7,-11,6,-12,4,-11,3,-9,2,-5,1,1,0,9],[0,9,1,6,2,4,4,1,6,0,8,0,9,1,9,3,7,4,4,4],[4,4,6,5,7,8,8,9,9,9,11,8,12,7,14,4]]],"l":[8,[[0,4,2,1,5,-4,6,-6,7,-9,7,-11,6,-12,4,-11,3,-9,2,-5,1,2,1,8,2,9,3,9,5,8,6,7,8,4]]],"m":[25,[[0,4,2,1,4,0,5,1,5,2,4,6,3,9],[4,6,5,4,7,1,9,0,11,0,12,1,12,2,11,6,10,9],[11,6,12,4,14,1,16,0,18,0,19,1,19,3,18,6,18,8,19,9,20,9,22,8,23,7,25,4]]],"n":[18,[[0,4,2,1,4,0,5,1,5,2,4,6,3,9],[4,6,5,4,7,1,9,0,11,0,12,1,12,3,11,6,11,8,12,9,13,9,15,8,16,7,18,4]]],"o":[14,[[6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,5,9,7,8,8,7,9,5,9,3,8,1,6,0,5,1,5,3,6,5,8,6,11,6,13,5,14,4]]],"p":[15,[[0,4,2,1,3,-1,2,3,-4,21],[2,3,3,1,5,0,7,0,9,1,10,3,10,5,9,7,8,8,6,9],[2,8,4,9,7,9,10,8,12,7,15,4]]],"q":[15,[[9,3,8,1,6,0,4,0,2,1,1,2,0,4,0,6,1,8,3,9,5,9,7,8],[10,0,9,3,7,8,4,15,3,18,3,20,4,21,6,20,7,17,7,10,9,9,12,7,15,4]]],"r":[13,[[0,4,2,1,3,-1,3,1,6,1,7,2,7,4,6,7,6,8,7,9,8,9,10,8,11,7,13,4]]],"s":[11,[[0,4,2,1,3,-1,3,1,5,4,6,6,6,8,4,9],[0,8,2,9,6,9,8,8,9,7,11,4]]],"t":[9,[[0,4,2,1,4,-3],[7,-12,1,6,1,8,2,9,4,9,6,8,7,7,9,4],[1,-4,8,-4]]],"u":[15,[[0,4,2,0,0,6,0,8,1,9,3,9,5,8,7,6,9,3],[10,0,8,6,8,8,9,9,10,9,12,8,13,7,15,4]]],"v":[15,[[0,4,2,0,1,5,1,8,2,9,3,9,6,8,8,6,9,3,9,0],[9,0,10,4,11,5,13,5,15,4]]],"w":[21,[[3,0,1,2,0,5,0,7,1,9,3,9,5,8,7,6],[9,0,7,6,7,8,8,9,10,9,12,8,14,6,15,3,15,0],[15,0,16,4,17,5,19,5,21,4]]],"x":[16,[[0,4,2,1,4,0,6,0,7,1,7,8,8,9,11,9,14,7,16,4],[13,1,12,0,10,0,9,1,5,8,4,9,2,9,1,8]]],"y":[15,[[0,4,2,0,0,6,0,8,1,9,3,9,5,8,7,6,9,3],[10,0,4,18,3,20,1,21,0,20,0,18,1,15,4,12,7,10,9,9,12,7,15,4]]],"z":[14,[[0,4,2,1,4,0,6,0,8,2,8,4,7,6,5,8,2,9,4,10,5,12,5,15,4,18,3,20,1,21,0,20,0,18,1,15,4,12,7,10,11,7,14,4]]],"{":[14,[[9,-16,7,-15,6,-14,5,-12,5,-10,6,-8,7,-7,8,-5,8,-3,6,-1],[7,-15,6,-13,6,-11,7,-9,8,-8,9,-6,9,-4,8,-2,4,0,8,2,9,4,9,6,8,8,7,9,6,11,6,13,7,15],[6,1,8,3,8,5,7,7,6,8,5,10,5,12,6,14,7,15,9,16]]],"|":[8,[[4,-16,4,16]]],"}":[14,[[5,-16,7,-15,8,-14,9,-12,9,-10,8,-8,7,-7,6,-5,6,-3,8,-1],[7,-15,8,-13,8,-11,7,-9,6,-8,5,-6,5,-4,6,-2,10,0,6,2,5,4,5,6,6,8,7,9,8,11,8,13,7,15],[8,1,6,3,6,5,7,7,8,8,9,10,9,12,8,14,7,15,5,16]]],"~":[24,[[3,3,3,1,4,-2,6,-3,8,-3,10,-2,14,1,16,2,18,2,20,1,21,-1],[3,1,4,-1,6,-2,8,-2,10,-1,14,2,16,3,18,3,20,2,21,-1,21,-3]]],"\u007f":[16,[[0,-12,0,9,1,9,1,-12,2,-12,2,9,3,9,3,-12,4,-12,4,9,5,9,5,-12,6,-12,6,9,7,9,7,-12,8,-12,8,9,9,9,9,-12,10,-12,10,9,11,9,11,-12,12,-12,12,9,13,9,13,-12,14,-12,14,9,15,9,15,-12,16,-12,16,9]]]}, YMIN = -17, HH = 39;
@@ -4998,7 +5000,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     return document.getElementById("src-" + key).textContent.split("%%VBLT%%").join("<");
   }
   function show(key, scroll) {
-    document.querySelectorAll(".hcard").forEach(function (c) {
+    document.querySelectorAll(".hcard[data-key]").forEach(function (c) {
       c.setAttribute("aria-pressed", String(c.dataset.key === key));
     });
     if (!frames[key]) {
@@ -5015,7 +5017,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     if (history.replaceState) history.replaceState(null, "", "#" + key);
     if (scroll) stage.scrollIntoView({ behavior: "smooth", block: "start" });
   }
-  document.querySelectorAll(".hcard").forEach(function (c) {
+  document.querySelectorAll(".hcard[data-key]").forEach(function (c) {
     c.addEventListener("click", function () { show(c.dataset.key, true); });
   });
   window.addEventListener("message", function (e) {
