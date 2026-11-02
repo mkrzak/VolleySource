@@ -295,6 +295,7 @@
   #gMeta .venue:hover .maparrow{filter:brightness(1.1)}
   #gNotes:empty{display:none}
   #hSub:empty{display:none}
+  header a.hbtn{display:inline-block;margin-left:10px;background:#fff;color:#4c1d95;font-weight:700;font-size:13px;text-decoration:none;border-radius:999px;padding:6px 12px;box-shadow:0 2px 8px rgba(0,0,0,.15);opacity:1}
   .pinrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .pinrow input{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);width:140px}
   h3.sub{font-size:14px;margin:6px 0 10px;color:var(--ink)}
@@ -702,6 +703,7 @@ $("unlockForm").onsubmit = async (ev) => {
   if(!t){ t = await unseal(CONFIG.team, pw); r = "team"; }
   if(!t){ $("unlockMsg").textContent = "That password isn't right."; return; }
   TOKEN = t; ROLE = r;
+  if(r === "organiser" && location.hash !== "#organiser") location.hash = "#organiser";   // organiser password → organiser view
   $("unlockInput").value = ""; $("unlockMsg").textContent = "";
   await load();
 };
@@ -715,8 +717,17 @@ function renderHeader(){
   const side = $("hSide"); side.innerHTML = "";
   if(organiser){
     const b = document.createElement("span"); b.className="badge"; b.textContent="Organiser";
+    side.append(b);
+    if(ROLE === "organiser"){
+      const m = document.createElement("a"); m.href="#toolsCard"; m.textContent="⚙️ Manage games"; m.className="hbtn";
+      m.onclick = (e) => { e.preventDefault(); $("toolsCard").scrollIntoView({ behavior:"smooth" }); };
+      side.append(m);
+    }
     const a = document.createElement("a"); a.href="#"; a.textContent="Player view"; a.style.marginLeft="10px";
-    side.append(b,a);
+    side.append(a);
+  } else if(ROLE === "organiser"){
+    const a = document.createElement("a"); a.href="#organiser"; a.textContent="⚙️ Organiser view"; a.className="hbtn";
+    side.append(a);
   }
 }
 
