@@ -725,7 +725,7 @@ function renderList(){
     dt.append(dw, dn);
     const info = document.createElement("span"); info.className = "linfo";
     const lt = document.createElement("div"); lt.className = "lt"; lt.append(tagEl(g), document.createTextNode(dispTitle(g)));
-    const lm = document.createElement("div"); lm.className = "lm"; lm.textContent = [g.time, g.venue, g.req].filter(Boolean).join(" · ");
+    const lm = document.createElement("div"); lm.className = "lm"; lm.textContent = [g.time, g.venue].filter(Boolean).join(" · ");
     info.append(lt, lm);
     const k = document.createElement("span"); k.className = "lcnt " + (c.in >= nd ? "ok" : (g.date >= t ? "short" : "")); k.textContent = (c.in >= nd ? "✓ " : "") + c.in + "/" + nd;
     b.append(dt, info, k);
