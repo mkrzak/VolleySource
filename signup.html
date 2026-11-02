@@ -288,6 +288,12 @@
   #gameCard .players{grid-template-columns:1fr !important}
   @media (max-width:560px){ #gameCard{border-radius:0 !important;width:100vw} }
   @media (prefers-reduced-motion: reduce){ #gameCard,.scrim{transition:none} }
+  #gMeta{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+  #gMeta .when{font-size:17px;font-weight:600;color:var(--ink)}
+  #gMeta .venue{font-size:17px;font-weight:600;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap}
+  #gMeta .venue .maparrow{font-size:13px;font-weight:700;color:#fff;background:linear-gradient(120deg,#1d4ed8,#7c3aed);border-radius:999px;padding:3px 10px;margin-left:6px}
+  #gMeta .venue:hover .maparrow{filter:brightness(1.1)}
+  #gNotes:empty{display:none}
   .pinrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .pinrow input{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);width:140px}
   h3.sub{font-size:14px;margin:6px 0 10px;color:var(--ink)}
@@ -479,6 +485,17 @@ function counts(gid){
   c.none = PLAYERS.length - c.in - c.maybe - c.out; return c;
 }
 function shortLabel(g){ return (g.opponent||"Game").replace(/^(Panthers|Home|Away) vs\.? /i,""); }
+const VENUES = {
+  "nca":          { label: "North Cambridge Academy (NCA)", q: "North Cambridge Academy, Arbury Road, Cambridge CB4 2JF" },
+  "leys":         { label: "Leys Sports Complex", q: "Leys Sports Complex, Trumpington Road, Cambridge CB2 7AD" },
+  "netherhall":   { label: "Netherhall Sports Centre", q: "Netherhall Sports Centre, Queen Edith's Way, Cambridge CB1 8NN" },
+  "perse school": { label: "The Perse School", q: "The Perse School, Hills Road, Cambridge CB2 8QF" },
+  "bury":         { label: "Bury St Edmunds Leisure Centre", q: "Bury St Edmunds Leisure Centre, Beetons Way, Bury St Edmunds IP33 3TT" },
+};
+function venueInfo(name){
+  const v = VENUES[String(name).trim().toLowerCase()] || { label: name, q: name + ", Cambridge" };
+  return { label: v.label, url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(v.q) };
+}
 const dispTitle = g => String(g.opponent || "Game").replace(/^Ref:\s*/i, "");
 const TYPE_TAG = { home:"HOME", away:"AWAY", league:"LEAGUE", ref:"REF" };
 function tagEl(g){ const t = document.createElement("span"); t.className = "tag " + typeClass(g); t.textContent = TYPE_TAG[typeClass(g)]; return t; }
@@ -755,8 +772,18 @@ function renderGame(){
   $("gameCard").hidden = !g;
   if(!g) return;
   $("gTitle").replaceChildren(tagEl(g), document.createTextNode(dispTitle(g)));
-  $("gMeta").textContent = [fmtDate(g.date,true), g.time, g.venue].filter(Boolean).join(" · ");
-  $("gNotes").textContent = [g.req ? "Needed: "+g.req : "", g.notes].filter(Boolean).join(" · ");
+  const meta = $("gMeta"); meta.replaceChildren();
+  const when = document.createElement("div"); when.className = "when";
+  when.textContent = "🗓️ " + [fmtDate(g.date,true), g.time].filter(Boolean).join(" · ");
+  meta.appendChild(when);
+  if(g.venue){
+    const v = venueInfo(g.venue);
+    const a = document.createElement("a"); a.className = "venue"; a.href = v.url; a.target = "_blank"; a.rel = "noopener";
+    a.textContent = "📍 " + v.label; a.title = "Open in Google Maps";
+    const arrow = document.createElement("span"); arrow.className = "maparrow"; arrow.textContent = " Map ↗"; a.appendChild(arrow);
+    meta.appendChild(a);
+  }
+  $("gNotes").textContent = g.notes || "";
   const c = counts(g.id), nd = need(g), r = responses[g.id] || {};
   const refGame = isRef(g);
   document.querySelector("#gameCard .tally").style.display = refGame ? "none" : "";
