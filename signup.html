@@ -449,7 +449,7 @@
           <span class="warn" id="formMsg"></span></div>
       </form>
       <h3 class="sub">Squad</h3>
-      <p class="warn">One name per line, in the order they should appear. To rename someone, just edit their line – their ticks move with them.</p>
+      <p class="warn">One name per line – the page lists them alphabetically. To rename someone, just edit their line – their ticks move with them.</p>
       <textarea id="squadText" rows="8"></textarea>
       <div class="row2"><button class="primary" type="button" id="saveSquad">Save squad</button>
         <span class="warn" id="squadMsg"></span>
@@ -589,7 +589,7 @@ let renaming = false;
 async function migrateNames(data){
   if(renaming || !data) return;
   const needs = (data.players || []).some(n => RENAMES[n]) || (data.responses || []).some(r => RENAMES[r.player])
-    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names") || !(data.done || []).includes("refs-only") || !(data.done || []).includes("remove-siri") || !(data.done || []).includes("team-need-12") || !(data.done || []).includes("team-need-all");
+    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names") || !(data.done || []).includes("refs-only") || !(data.done || []).includes("remove-siri") || !(data.done || []).includes("team-need-12") || !(data.done || []).includes("team-need-all") || !(data.done || []).includes("league-need-all");
   if(!needs) return;
   renaming = true;
   try{ const { data: d } = await mutate(x => {
@@ -654,7 +654,11 @@ async function migrateNames(data){
       for(const g of (x.games || [])) if(/^(home|away)/i.test(g.type || "")) g.need = "all";
       x.done.push("team-need-all");
     }
-  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams); refs only; squad update; team games need the whole squad"); ingest(d); render(); }
+    if(!x.done.includes("league-need-all")){        // one-off: local league games also need the whole squad
+      for(const g of (x.games || [])) if(/^local/i.test(g.type || "")) g.need = "all";
+      x.done.push("league-need-all");
+    }
+  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams); refs only; squad update; team and league games need the whole squad"); ingest(d); render(); }
   catch(e){ /* someone else will retry on their next visit */ }
   finally{ renaming = false; }
 }
@@ -662,7 +666,7 @@ async function migrateNames(data){
 /* ---------- data ---------- */
 function ingest(data){
   if(!data) return;
-  PLAYERS = Array.isArray(data.players) ? data.players : PLAYERS;
+  PLAYERS = Array.isArray(data.players) ? [...data.players].sort((a,b) => a.localeCompare(b, "en", { sensitivity: "base" })) : PLAYERS;
   games = (data.games || []).filter(g => g.id && g.date);
   const r = {};
   for(const x of (data.responses || [])){
