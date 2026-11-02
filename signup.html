@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Game Sign-up · VolleySource</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f5f7; --card:#fff; --ink:#16181d; --muted:#6b7280; --line:#e5e7eb; --soft:#f9fafb;
+    --brand:#1d3f8f; --brand-2:#e8eefc;
+    --in:#16a34a; --in-bg:#dcfce7; --maybe:#d97706; --maybe-bg:#fef3c7; --out:#dc2626; --out-bg:#fee2e2;
+    --home:#1d4ed8; --away:#7c3aed; --league:#0d9488; --ref:#4b5563;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0f1115; --card:#181b22; --ink:#eef0f4; --muted:#9aa1ad; --line:#2a2f3a; --soft:#1d2129;
+      --brand:#8fb0ff; --brand-2:#1d2840;
+      --in-bg:#123222; --maybe-bg:#3a2a0c; --out-bg:#3b1515;
+      --home:#6b93ff; --away:#a78bfa; --league:#2dd4bf; --ref:#9ca3af; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px}
+  header{background:var(--brand);color:#fff;padding:20px 18px 16px}
+  @media (prefers-color-scheme: dark){ header{background:#1a2c5c} }
+  header .wrap{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+  header h1{font-family:"Barlow Condensed",sans-serif;font-size:30px;letter-spacing:.5px;margin:0;text-transform:uppercase}
+  header p{margin:4px 0 0;opacity:.85;font-size:14px}
+  header .badge{background:rgba(255,255,255,.18);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+  header a{color:#fff;font-size:13px;opacity:.9}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 10px;font-weight:600}
+  .status{font-size:13px;color:var(--muted);text-align:center;padding:6px}
+
+  /* calendar */
+  .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .cal-head .m{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:700}
+  .navbtn{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;width:38px;height:38px;cursor:pointer;font-size:18px}
+  .todaybtn{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:0 12px;height:38px;cursor:pointer;margin-right:6px}
+  .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .dow{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center;padding:2px 0 4px;font-weight:600}
+  .day{min-height:84px;border:1px solid var(--line);border-radius:10px;padding:4px;background:var(--card);display:flex;flex-direction:column;gap:3px;min-width:0}
+  .day.other{background:var(--soft);opacity:.55}
+  .day.today{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand) inset}
+  .day.click{cursor:pointer}
+  .day .n{font-size:12px;font-weight:600;color:var(--muted)}
+  .day.today .n{color:var(--brand)}
+  .ev{font:inherit;text-align:left;border:0;border-left:4px solid var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--ink);border-radius:6px;padding:3px 5px;cursor:pointer;font-size:11.5px;line-height:1.25;min-width:0;width:100%}
+  .ev .lbl{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ev .cnt{display:block;font-size:11px;color:var(--muted)}
+  .ev .cnt.short{color:var(--out);font-weight:600}
+  .ev .cnt.ok{color:var(--in);font-weight:600}
+  .ev.sel{outline:2px solid var(--c);outline-offset:1px}
+  .ev.home{--c:var(--home)} .ev.away{--c:var(--away)} .ev.league{--c:var(--league)} .ev.ref{--c:var(--ref)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted)}
+  .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px;background:var(--c)}
+  .legend .home{--c:var(--home)} .legend .away{--c:var(--away)} .legend .league{--c:var(--league)} .legend .ref{--c:var(--ref)}
+  @media (max-width:560px){
+    .day{min-height:62px;padding:3px}
+    .ev{padding:2px 3px;border-left-width:3px}
+    .ev .lbl{font-size:10px}
+    .ev .cnt{font-size:10px}
+  }
+
+  /* game detail */
+  .game-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+  .game-head .title{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:700;line-height:1.1}
+  .game-head .meta{color:var(--muted);margin-top:4px}
+  .game-head .notes{margin-top:6px;font-size:14px}
+  .tally{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 4px}
+  .tally div{border-radius:10px;padding:8px;text-align:center}
+  .tally b{display:block;font-size:22px;font-family:"Barlow Condensed",sans-serif}
+  .tally span{font-size:12px;color:var(--muted)}
+  .t-in{background:var(--in-bg)} .t-in b{color:var(--in)}
+  .t-maybe{background:var(--maybe-bg)} .t-maybe b{color:var(--maybe)}
+  .t-out{background:var(--out-bg)} .t-out b{color:var(--out)}
+  .t-none{background:var(--soft)}
+  .warn{font-size:13px;margin-top:8px;color:var(--muted)}
+  .warn.low{color:var(--out);font-weight:600}
+  .players{list-style:none;margin:12px 0 0;padding:0}
+  .player{display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+  .pname{font-weight:600;display:flex;align-items:center;gap:8px}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--line);flex:0 0 auto}
+  .dot.in{background:var(--in)} .dot.maybe{background:var(--maybe)} .dot.out{background:var(--out)}
+  .btns{display:flex;gap:6px}
+  .btns button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:6px 12px;cursor:pointer;min-width:58px}
+  .btns button[data-s=in].on{background:var(--in);border-color:var(--in);color:#fff}
+  .btns button[data-s=maybe].on{background:var(--maybe);border-color:var(--maybe);color:#fff}
+  .btns button[data-s=out].on{background:var(--out);border-color:var(--out);color:#fff}
+  .btns button:disabled{opacity:.5;cursor:default}
+  .note{grid-column:1 / -1;font:inherit;font-size:13px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;padding:6px 8px;width:100%}
+  .note::placeholder{color:var(--muted)}
+  .empty{color:var(--muted);text-align:center;padding:16px 8px}
+  @media (max-width:480px){ .btns button{min-width:0;padding:6px 10px} }
+
+  /* organiser */
+  .groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+  .grp{border-radius:10px;padding:10px;background:var(--soft)}
+  .grp h3{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+  .grp.in h3{color:var(--in)} .grp.maybe h3{color:var(--maybe)} .grp.out h3{color:var(--out)} .grp.none h3{color:var(--muted)}
+  .grp ul{margin:0;padding:0;list-style:none;font-size:14px;line-height:1.6}
+  .grp li small{color:var(--muted)}
+  .reminder{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .reminder textarea{width:100%;min-height:110px;font:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--soft);color:var(--ink)}
+  .primary{font:inherit;font-weight:600;background:var(--brand);color:#fff;border:0;border-radius:10px;padding:10px 14px;cursor:pointer}
+  @media (prefers-color-scheme: dark){ .primary{background:#3a63c9} }
+  .ghost{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:9px 12px;cursor:pointer}
+  .link{font:inherit;font-size:13px;background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+  .link.danger{color:var(--out)}
+  .confirm{display:none;gap:8px;align-items:center;font-size:13px;flex-wrap:wrap}
+  .confirm.show{display:flex}
+  .confirm button{font:inherit;font-size:13px;border-radius:8px;padding:4px 10px;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+  .confirm .yes{background:var(--out);color:#fff;border-color:var(--out)}
+  .tablewrap{overflow-x:auto}
+  table.matrix{border-collapse:separate;border-spacing:0;font-size:13px;width:100%}
+  .matrix th,.matrix td{padding:6px 6px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+  .matrix th:first-child,.matrix td:first-child{text-align:left;position:sticky;left:0;background:var(--card);font-weight:600;z-index:1}
+  .matrix thead th{font-size:11px;color:var(--muted);font-weight:600;vertical-align:bottom;cursor:pointer}
+  .matrix thead th .t{display:block;color:var(--ink);font-size:12px}
+  .matrix td.in{color:var(--in);font-weight:700} .matrix td.maybe{color:var(--maybe);font-weight:700} .matrix td.out{color:var(--out);font-weight:700}
+  .matrix td.none{color:var(--line)}
+  .matrix tfoot td{font-weight:700;border-bottom:0}
+  .matrix tfoot td.short{color:var(--out)} .matrix tfoot td.ok{color:var(--in)}
+  .matrix .selcol{background:var(--brand-2)}
+  form.add{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  form.add label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:4px}
+  form.add .full{grid-column:1 / -1}
+  form.add input,form.add select{font:inherit;color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:8px}
+  @media (max-width:480px){ form.add{grid-template-columns:1fr} }
+
+  /* ---- compact player view ---- */
+  body.compact header{padding:12px 14px 10px}
+  body.compact header h1{font-size:22px}
+  body.compact header p{font-size:12.5px;margin-top:2px}
+  body.compact main{padding:10px}
+  body.compact .card{padding:12px;margin-bottom:10px;border-radius:12px}
+  body.compact .cal-head{margin-bottom:6px}
+  body.compact .cal-head .m{font-size:20px}
+  body.compact .navbtn{width:32px;height:32px;font-size:16px}
+  body.compact .todaybtn{height:32px;padding:0 10px}
+  body.compact .grid{gap:3px}
+  body.compact .day{min-height:54px;padding:3px;border-radius:8px}
+  body.compact .legend{margin-top:6px;gap:10px;font-size:11px}
+  body.compact .game-head .title{font-size:21px}
+  body.compact .game-head .meta,body.compact .game-head .notes{font-size:13px;margin-top:2px}
+  body.compact .tally{display:flex;gap:6px;margin:8px 0 0;flex-wrap:wrap}
+  body.compact .tally div{display:flex;align-items:baseline;gap:4px;padding:3px 9px;border-radius:999px}
+  body.compact .tally b{display:inline;font-size:16px}
+  body.compact .warn{margin-top:6px;font-size:12.5px}
+  body.compact .players{margin-top:8px;display:grid;grid-template-columns:1fr;column-gap:18px}
+  @media (min-width:640px){ body.compact .players{grid-template-columns:1fr 1fr} }
+  body.compact .player{padding:5px 0;gap:4px 8px}
+  body.compact .pname{font-size:14px;gap:6px;min-width:0}
+  body.compact .pname .pn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  body.compact .btns{gap:4px}
+  body.compact .btns button{font-size:12px;padding:4px 9px;min-width:0}
+  body.compact .note{font-size:12px;padding:4px 6px}
+  @media (max-width:560px){ body.compact .day{min-height:44px} body.compact .day .n{font-size:11px} }
+  .pnote{display:block;font-size:11.5px;color:var(--muted);font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .notebtn{font:inherit;font-size:12px;border:0;background:none;color:var(--muted);cursor:pointer;padding:0 2px}
+
+  /* ---- colour pass ---- */
+  body{background:linear-gradient(180deg,#eef2ff 0,#fdf2f8 420px,var(--bg) 900px)}
+  @media (prefers-color-scheme: dark){ body{background:linear-gradient(180deg,#161a2e 0,#1f1424 420px,var(--bg) 900px)} }
+  header{background:linear-gradient(120deg,#1d3f8f 0%,#5b2bd6 55%,#e11d74 100%) !important;position:relative;overflow:hidden}
+  header::after{content:"🏐";position:absolute;right:14px;top:50%;transform:translateY(-50%) rotate(-15deg);font-size:64px;opacity:.18;pointer-events:none}
+  header .wrap{position:relative;z-index:1}
+  .card{box-shadow:0 1px 2px rgba(17,24,39,.04),0 4px 14px rgba(91,43,214,.06)}
+  #gameCard{background:linear-gradient(90deg,#2563eb,#7c3aed,#e11d74,#f59e0b) top/100% 5px no-repeat,var(--card);padding-top:20px}
+  .cal-head .m{background:linear-gradient(90deg,#1d4ed8,#7c3aed,#e11d74);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .dow:nth-child(6),.dow:nth-child(7){color:#e11d74}
+  .day:nth-child(7n+6),.day:nth-child(7n){background:color-mix(in srgb,#e11d74 4%,var(--card))}
+  .day.has{background:color-mix(in srgb,var(--first) 9%,var(--card));border-color:color-mix(in srgb,var(--first) 35%,var(--line))}
+  .day.today{border-color:#e11d74;box-shadow:0 0 0 1px #e11d74 inset}
+  .day.today .n{color:#fff;background:#e11d74;border-radius:999px;width:20px;height:20px;display:grid;place-items:center;font-size:11px}
+  .ev{background:var(--c);color:#fff;border-left:0;box-shadow:0 1px 3px color-mix(in srgb,var(--c) 45%,transparent)}
+  .ev .cnt{display:inline-block;margin-top:2px;background:rgba(255,255,255,.92);color:#374151;border-radius:999px;padding:0 6px;font-weight:700}
+  .ev .cnt.short{color:#dc2626} .ev .cnt.ok{color:#15803d}
+  .ev.sel{outline:2px solid var(--ink);outline-offset:1px}
+  .ev.home{--c:#2563eb} .ev.away{--c:#7c3aed} .ev.league{--c:#0d9488} .ev.ref{--c:#f59e0b}
+  .legend .home{--c:#2563eb} .legend .away{--c:#7c3aed} .legend .league{--c:#0d9488} .legend .ref{--c:#f59e0b}
+  .legend span::before{border-radius:50%}
+  .tally div{border:1px solid transparent}
+  .t-in{border-color:color-mix(in srgb,var(--in) 35%,transparent) !important}
+  .t-maybe{border-color:color-mix(in srgb,var(--maybe) 35%,transparent) !important}
+  .t-out{border-color:color-mix(in srgb,var(--out) 35%,transparent) !important}
+  .t-none{background:color-mix(in srgb,#7c3aed 10%,var(--card)) !important} .t-none b{color:#7c3aed}
+  .warn.ok{color:var(--in);font-weight:600}
+  .av{width:30px;height:30px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700;background:var(--pc);box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--ring,transparent)}
+  .av.in{--ring:var(--in)} .av.maybe{--ring:var(--maybe)} .av.out{--ring:var(--out)}
+  body.compact .av{width:26px;height:26px;font-size:11px}
+  .player{border-radius:10px}
+  .player.st-in{background:linear-gradient(90deg,color-mix(in srgb,var(--in) 9%,transparent),transparent 70%)}
+  .player.st-maybe{background:linear-gradient(90deg,color-mix(in srgb,var(--maybe) 10%,transparent),transparent 70%)}
+  .player.st-out{background:linear-gradient(90deg,color-mix(in srgb,var(--out) 8%,transparent),transparent 70%)}
+  .player{padding-left:4px !important;padding-right:4px !important}
+  .btns button[data-s=in]{background:var(--in-bg);color:var(--in);border-color:color-mix(in srgb,var(--in) 30%,transparent)}
+  .btns button[data-s=maybe]{background:var(--maybe-bg);color:var(--maybe);border-color:color-mix(in srgb,var(--maybe) 30%,transparent)}
+  .btns button[data-s=out]{background:var(--out-bg);color:var(--out);border-color:color-mix(in srgb,var(--out) 30%,transparent)}
+  .btns button.on{box-shadow:0 2px 6px rgba(0,0,0,.18)}
+  .grp.in{background:var(--in-bg)} .grp.maybe{background:var(--maybe-bg)} .grp.out{background:var(--out-bg)} .grp.none{background:color-mix(in srgb,#7c3aed 10%,var(--card))}
+  .grp.none h3{color:#7c3aed}
+  .primary{background:linear-gradient(120deg,#1d4ed8,#7c3aed) !important}
+  .matrix td.in{background:var(--in-bg)} .matrix td.maybe{background:var(--maybe-bg)} .matrix td.out{background:var(--out-bg)}
+  .matrix td.selcol.none,.matrix th.selcol{background:var(--brand-2)}
+  .matrix thead th .t{color:var(--hc,var(--ink))}
+  h2{color:#7c3aed}
+  header .wrap{flex-wrap:wrap}
+  header a.back{position:absolute;top:-10px;right:0;color:#fff;opacity:.85;font-size:12.5px;text-decoration:none}
+  header a.back:hover{opacity:1;text-decoration:underline}
+  header .wrap{padding-top:10px}
+  .sheetlink{display:inline-block;margin-top:10px;font-size:13px;color:#7c3aed}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div>
+      <h1 id="hTitle">Game Sign-up</h1>
+      <p id="hSub">Tap a game on the calendar, find your name, tap In / Maybe / Out.</p>
+    </div>
+    <div id="hSide"></div>
+    <a class="back" href="./">← VolleySource</a>
+  </div>
+</header>
+<main>
+  <div id="status" class="status">Loading…</div>
+
+  <section class="card">
+    <div class="cal-head">
+      <div class="m" id="calMonth"></div>
+      <div>
+        <button class="todaybtn" id="calToday" type="button">Today</button>
+        <button class="navbtn" id="calPrev" type="button" aria-label="Previous month">‹</button>
+        <button class="navbtn" id="calNext" type="button" aria-label="Next month">›</button>
+      </div>
+    </div>
+    <div class="grid" id="cal"></div>
+    <div class="legend">
+      <span class="home">Home</span><span class="away">Away</span><span class="league">Local league</span><span class="ref">Ref duty</span>
+    </div>
+  </section>
+
+  <section class="card" id="gameCard" hidden>
+    <div class="game-head">
+      <div>
+        <div class="title" id="gTitle"></div>
+        <div class="meta" id="gMeta"></div>
+        <div class="notes" id="gNotes"></div>
+      </div>
+    </div>
+    <div class="tally">
+      <div class="t-in"><b id="cIn">0</b><span>In</span></div>
+      <div class="t-maybe"><b id="cMaybe">0</b><span>Maybe</span></div>
+      <div class="t-out"><b id="cOut">0</b><span>Out</span></div>
+      <div class="t-none"><b id="cNone">0</b><span>No reply</span></div>
+    </div>
+    <div class="warn" id="warn"></div>
+
+    <div id="orgDetail" hidden>
+      <div class="groups" id="groups"></div>
+      <div class="reminder">
+        <button class="primary" id="copyBtn" type="button">Copy reminder message</button>
+        <span id="copyMsg" class="warn"></span>
+        <textarea id="remText" readonly hidden></textarea>
+      </div>
+      <a class="sheetlink" id="sheetLink" target="_blank" rel="noopener" hidden>Open the Google Sheet ↗</a>
+    </div>
+
+    <ul class="players" id="players"></ul>
+  </section>
+
+  <section class="card" id="matrixCard" hidden>
+    <h2 id="matrixTitle">Month at a glance</h2>
+    <div class="tablewrap"><table class="matrix" id="matrix"></table></div>
+  </section>
+
+</main>
+
+<script>
+/* ===== SETTINGS =====
+   API_URL: the Web app URL from Apps Script (Deploy → Manage deployments), ends in /exec
+   SHEET_URL: optional – link to the Google Sheet, shown in the organiser view */
+const API_URL = "PASTE_WEB_APP_URL_HERE";
+const SHEET_URL = "";
+/* ==================== */
+
+const DEFAULT_NEED = 6;
+const PCOL = ["#2563eb","#db2777","#7c3aed","#0d9488","#ea580c","#0891b2","#9333ea","#16a34a","#e11d48","#4f46e5","#ca8a04","#0284c7","#c026d3","#059669"];
+const TCOL = {home:"#2563eb",away:"#7c3aed",league:"#0d9488",ref:"#f59e0b"};
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const $ = id => document.getElementById(id);
+const configured = /^https:\/\/script\.google(usercontent)?\.com\//.test(API_URL);
+
+let PLAYERS = [], games = [], responses = {};
+let selected = null, viewY, viewM, monthPicked = false, openNote = null, loaded = false;
+let organiser = location.hash === "#organiser";
+let pending = 0;               // writes in flight; skip refreshes meanwhile
+const canWrite = true;
+
+const statusEl = $("status");
+function setStatus(t){ statusEl.textContent = t || ""; statusEl.hidden = !t; }
+function ymd(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+const todayStr = () => ymd(new Date());
+function parse(iso){ const [y,m,d] = iso.split("-").map(Number); return new Date(y,m-1,d); }
+function fmtDate(iso, long){ if(!iso) return ""; return parse(iso).toLocaleDateString("en-GB", long ? {weekday:"long",day:"numeric",month:"long"} : {weekday:"short",day:"numeric",month:"short"}); }
+function typeClass(g){ const t=(g.type||"").toLowerCase(); return t.startsWith("away")?"away":t.startsWith("local")?"league":t.startsWith("ref")?"ref":"home"; }
+const need = g => Number(g.need) || DEFAULT_NEED;
+function counts(gid){
+  const r = responses[gid] || {}; const c = {in:0,maybe:0,out:0};
+  for(const p of PLAYERS){ const s = r[slug(p)]?.status; if(c[s] !== undefined) c[s]++; }
+  c.none = PLAYERS.length - c.in - c.maybe - c.out; return c;
+}
+function shortLabel(g){ return (g.opponent||"Game").replace(/^Home vs /i,"").replace(/^Away vs /i,"@ "); }
+function pageUrl(){ return location.href.split("#")[0]; }
+
+{ const d = new Date(); viewY = d.getFullYear(); viewM = d.getMonth(); }
+try { selected = localStorage.getItem("vb-signup-game"); } catch(e){}
+
+function select(id){ selected = id; openNote = null; try{ localStorage.setItem("vb-signup-game", id); }catch(e){} render(); }
+
+/* ---------- data ---------- */
+function ingest(data){
+  if(!data || data.error) return;
+  PLAYERS = Array.isArray(data.players) ? data.players : PLAYERS;
+  games = (data.games || []).filter(g => g.id && g.date);
+  const r = {};
+  for(const x of (data.responses || [])){
+    if(!x.game || !x.player) continue;
+    (r[x.game] = r[x.game] || {})[slug(x.player)] = { status: x.status || null, note: x.note || "" };
+  }
+  responses = r;
+  if(!loaded){ loaded = true; pickDefaultGame(); }
+  else if(!games.find(g => g.id === selected)) pickDefaultGame();
+}
+async function load(){
+  if(!configured){ setStatus("Not connected yet – paste the Google Apps Script web app URL into API_URL in signup.html."); render(); return; }
+  if(pending) return;
+  try{
+    const res = await fetch(API_URL, { cache: "no-store" });
+    const data = await res.json();
+    if(pending) return;               // a write started meanwhile; its answer wins
+    ingest(data); setStatus(""); render();
+  }catch(e){
+    setStatus(loaded ? "Couldn't refresh – showing the last loaded list." : "Couldn't load the games. Check your connection and reload.");
+    render();
+  }
+}
+const writing = {};
+async function saveResponse(gameId, player, patch){
+  if(!configured) return;
+  const key = slug(player), id = gameId + "__" + key;
+  const prev = (responses[gameId]||{})[key] || {};
+  const next = { status: prev.status || null, note: prev.note || "", ...patch };
+  if(next.status === prev.status && (next.note||"") === (prev.note||"")) return;
+  responses[gameId] = { ...(responses[gameId]||{}), [key]: next }; render();
+  pending++;
+  while(writing[id]) await writing[id];
+  const p = (async () => {
+    try{
+      const res = await fetch(API_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ game: gameId, player, status: next.status || "", note: next.note || "" }) });
+      const data = await res.json();
+      if(data.error) throw new Error(data.error);
+      if(pending === 1) ingest(data);
+      setStatus("");
+    }catch(e){
+      setStatus("Couldn't save " + player + "'s reply – please try again.");
+      responses[gameId] = { ...(responses[gameId]||{}), [key]: prev };
+    }finally{ pending--; render(); }
+  })();
+  writing[id] = p; await p; if(writing[id]===p) delete writing[id];
+}
+
+/* ---------- views ---------- */
+function renderHeader(){
+  $("hTitle").textContent = organiser ? "Organiser view" : "Game Sign-up";
+  $("hSub").textContent = organiser ? "Who's in for each game, who hasn't replied, and reminders to send."
+                                    : "Tap a game, then ✓ In / ? Maybe / ✗ Out next to your name.";
+  const side = $("hSide"); side.innerHTML = "";
+  if(organiser){
+    const b = document.createElement("span"); b.className="badge"; b.textContent="Organiser";
+    const a = document.createElement("a"); a.href="#"; a.textContent="Player view"; a.style.marginLeft="10px";
+    side.append(b,a);
+  }
+}
+
+function renderCalendar(){
+  const first = new Date(viewY, viewM, 1);
+  $("calMonth").textContent = first.toLocaleDateString("en-GB",{month:"long",year:"numeric"});
+  const cal = $("cal"); cal.innerHTML = "";
+  for(const d of ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]){ const e=document.createElement("div"); e.className="dow"; e.textContent=d; cal.appendChild(e); }
+  const offset = (first.getDay()+6)%7;
+  const byDate = {};
+  for(const g of games){ (byDate[g.date] = byDate[g.date] || []).push(g); }
+  const t = todayStr();
+  const cells = Math.ceil((offset + new Date(viewY, viewM+1, 0).getDate())/7)*7;
+  for(let i=0;i<cells;i++){
+    const d = new Date(viewY, viewM, 1-offset+i);
+    const iso = ymd(d);
+    const cell = document.createElement("div");
+    cell.className = "day" + (d.getMonth()!==viewM ? " other" : "") + (iso===t ? " today" : "");
+    const n = document.createElement("div"); n.className="n"; n.textContent = d.getDate(); cell.appendChild(n);
+    const list = (byDate[iso]||[]).slice().sort((a,b)=>String(a.time||"").localeCompare(String(b.time||"")));
+    if(list.length){ cell.classList.add("has"); cell.style.setProperty("--first", TCOL[typeClass(list[0])]); }
+    for(const g of list){
+      const c = counts(g.id), nd = need(g);
+      const b = document.createElement("button"); b.type="button";
+      b.className = "ev " + typeClass(g) + (g.id===selected ? " sel" : "");
+      b.title = [g.opponent, g.time, g.venue].filter(Boolean).join(" · ");
+      const l = document.createElement("span"); l.className="lbl"; l.textContent = shortLabel(g);
+      const k = document.createElement("span"); k.className = "cnt " + (c.in>=nd ? "ok" : (iso>=t ? "short" : "")); k.textContent = c.in + "/" + nd;
+      b.append(l,k);
+      b.onclick = () => { select(g.id); $("gameCard").scrollIntoView({behavior:"smooth", block:"start"}); };
+      cell.appendChild(b);
+    }
+    cal.appendChild(cell);
+  }
+}
+
+function renderGame(){
+  const g = games.find(x => x.id === selected);
+  $("gameCard").hidden = !g;
+  if(!g) return;
+  $("gTitle").textContent = g.opponent || "Game";
+  $("gMeta").textContent = [fmtDate(g.date,true), g.time, g.venue].filter(Boolean).join(" · ");
+  $("gNotes").textContent = [g.type, g.req ? "Needed: "+g.req : "", g.notes].filter(Boolean).join(" · ");
+  const c = counts(g.id), nd = need(g), r = responses[g.id] || {};
+  $("cIn").textContent=c.in; $("cMaybe").textContent=c.maybe; $("cOut").textContent=c.out; $("cNone").textContent=c.none;
+  const w = $("warn");
+  if(c.in < nd){ w.className="warn low"; w.textContent = `Need ${nd - c.in} more (${nd} wanted).`; }
+  else { w.className="warn ok"; w.textContent = `✓ ${c.in} in — ${nd} wanted, all covered.`; }
+
+  $("orgDetail").hidden = !organiser;
+  if(organiser){
+    const gr = $("groups"); gr.innerHTML = "";
+    for(const [s,label] of [["in","In"],["maybe","Maybe"],["out","Out"],["none","No reply"]]){
+      const box = document.createElement("div"); box.className = "grp " + s;
+      const h = document.createElement("h3"); h.textContent = label + " (" + c[s] + ")";
+      const ul = document.createElement("ul");
+      for(const p of PLAYERS){
+        const x = r[slug(p)] || {};
+        if((x.status || "none") !== s) continue;
+        const li = document.createElement("li"); li.textContent = p;
+        if(x.note){ const sm=document.createElement("small"); sm.textContent = " — " + x.note; li.appendChild(sm); }
+        ul.appendChild(li);
+      }
+      if(!ul.children.length){ const li=document.createElement("li"); li.textContent="—"; li.style.color="var(--muted)"; ul.appendChild(li); }
+      box.append(h,ul); gr.appendChild(box);
+    }
+  }
+
+  const ul = $("players"); ul.innerHTML = "";
+  for(const p of PLAYERS){
+    const key = slug(p), cur = r[key] || {};
+    const li = document.createElement("li"); li.className="player";
+    if(cur.status) li.classList.add("st-"+cur.status);
+    const name = document.createElement("div"); name.className="pname";
+    const av = document.createElement("span"); av.className = "av " + (cur.status||"");
+    av.style.setProperty("--pc", PCOL[PLAYERS.indexOf(p) % PCOL.length]);
+    av.textContent = p.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase();
+    const nmWrap = document.createElement("span"); nmWrap.style.minWidth = "0";
+    const nm = document.createElement("span"); nm.className="pn"; nm.textContent = p; nmWrap.appendChild(nm);
+    if(cur.note){ const pn=document.createElement("span"); pn.className="pnote"; pn.textContent=cur.note; nmWrap.appendChild(pn); }
+    name.append(av,nmWrap);
+    const btns = document.createElement("div"); btns.className="btns";
+    if(cur.status){
+      const nb = document.createElement("button"); nb.type="button"; nb.className="notebtn";
+      nb.textContent = "✎"; nb.title = "Add or edit a note";
+      nb.onclick = () => { openNote = openNote === key ? null : key; renderGame(); };
+      btns.appendChild(nb);
+    }
+    for(const [s,label] of [["in","✓ In"],["maybe","? Maybe"],["out","✗ Out"]]){
+      const b = document.createElement("button"); b.type="button"; b.dataset.s=s; b.textContent=label;
+      if(cur.status===s) b.classList.add("on");
+      b.disabled = !configured;
+      b.onclick = () => saveResponse(g.id, p, { status: cur.status===s ? null : s, ...(cur.status===s ? {note:""} : {}) });
+      btns.appendChild(b);
+    }
+    li.append(name, btns);
+    if(openNote === key){
+      const note = document.createElement("input"); note.className="note"; note.maxLength=120;
+      note.placeholder = "Note (e.g. arriving late) — press Enter"; note.value = cur.note || "";
+      let finished = false;
+      const commit = () => { if(finished) return; finished = true; openNote = null; saveResponse(g.id, p, { note: note.value.trim() }); renderGame(); };
+      note.onkeydown = e => { if(e.key==="Enter"){ e.preventDefault(); commit(); } if(e.key==="Escape"){ finished = true; openNote=null; renderGame(); } };
+      note.onblur = commit;
+      li.appendChild(note); setTimeout(() => note.focus(), 0);
+    }
+    ul.appendChild(li);
+  }
+}
+
+function renderMatrix(){
+  $("matrixCard").hidden = !organiser;
+  if(!organiser) return;
+  const first = ymd(new Date(viewY, viewM, 1)), last = ymd(new Date(viewY, viewM+1, 0));
+  const list = games.filter(g => g.date >= first && g.date <= last).sort((a,b)=>(a.date+(a.time||"")).localeCompare(b.date+(b.time||"")));
+  $("matrixTitle").textContent = new Date(viewY,viewM,1).toLocaleDateString("en-GB",{month:"long"}) + " at a glance";
+  const tb = $("matrix"); tb.innerHTML = "";
+  if(!list.length){ tb.innerHTML = '<tbody><tr><td class="empty" style="position:static">No games this month.</td></tr></tbody>'; return; }
+  const thead = document.createElement("thead"), hr = document.createElement("tr");
+  hr.appendChild(document.createElement("th"));
+  for(const g of list){
+    const th = document.createElement("th"); if(g.id===selected) th.className="selcol";
+    th.textContent = fmtDate(g.date);
+    const s = document.createElement("span"); s.className="t"; s.textContent = shortLabel(g); s.style.setProperty("--hc", TCOL[typeClass(g)]); th.appendChild(s);
+    th.onclick = () => select(g.id);
+    hr.appendChild(th);
+  }
+  thead.appendChild(hr); tb.appendChild(thead);
+  const body = document.createElement("tbody"), SYM = {in:"✓", maybe:"?", out:"✗"};
+  for(const p of PLAYERS){
+    const tr = document.createElement("tr");
+    const td0 = document.createElement("td"); td0.textContent = p; tr.appendChild(td0);
+    for(const g of list){
+      const x = (responses[g.id]||{})[slug(p)] || {};
+      const td = document.createElement("td"); td.className = (x.status||"none") + (g.id===selected ? " selcol" : "");
+      td.textContent = SYM[x.status] || "·"; if(x.note) td.title = x.note;
+      tr.appendChild(td);
+    }
+    body.appendChild(tr);
+  }
+  tb.appendChild(body);
+  const tf = document.createElement("tfoot"), fr = document.createElement("tr");
+  const f0 = document.createElement("td"); f0.textContent = "In / needed"; fr.appendChild(f0);
+  for(const g of list){
+    const c = counts(g.id), nd = need(g);
+    const td = document.createElement("td"); td.className = (c.in>=nd ? "ok" : "short") + (g.id===selected ? " selcol" : "");
+    td.textContent = c.in + "/" + nd; fr.appendChild(td);
+  }
+  tf.appendChild(fr); tb.appendChild(tf);
+}
+
+function render(){
+  document.body.classList.toggle("compact", !organiser);
+  renderHeader(); renderCalendar(); renderGame(); renderMatrix();
+  const sl = $("sheetLink"); if(sl){ sl.hidden = !(organiser && SHEET_URL); sl.href = SHEET_URL || "#"; }
+}
+
+function reminderText(g){
+  const c = counts(g.id), nd = need(g), r = responses[g.id] || {};
+  const pick = s => PLAYERS.filter(p => (r[slug(p)]?.status || "none") === s);
+  const lines = [`🏐 ${g.opponent} — ${fmtDate(g.date,true)}${g.time ? ", "+g.time : ""}${g.venue ? " @ "+g.venue : ""}`];
+  if(g.req) lines.push(`Needed: ${g.req}`);
+  lines.push(`In so far (${c.in}/${nd}): ${pick("in").join(", ") || "nobody yet"}`);
+  if(c.maybe) lines.push(`Maybe: ${pick("maybe").join(", ")}`);
+  if(c.none) lines.push(`Still waiting to hear from: ${pick("none").join(", ")}`);
+  lines.push(c.in < nd ? `We need ${nd - c.in} more — please sign up here:` : `We're covered — update here if anything changes:`);
+  lines.push(pageUrl());
+  return lines.join("\n");
+}
+$("copyBtn").onclick = async () => {
+  const g = games.find(x => x.id === selected); if(!g) return;
+  const text = reminderText(g), ta = $("remText");
+  ta.value = text; ta.hidden = false;
+  try{ await navigator.clipboard.writeText(text); $("copyMsg").textContent = "Copied — paste it into the team chat."; }
+  catch(e){ ta.select(); $("copyMsg").textContent = "Select the text below and copy it."; }
+};
+
+function pickDefaultGame(){
+  if(games.find(g => g.id === selected)) return;
+  const t = todayStr();
+  const next = games.filter(g => g.date >= t).sort((a,b)=>(a.date+(a.time||"")).localeCompare(b.date+(b.time||"")))[0];
+  selected = next ? next.id : null;
+  if(next && !monthPicked){ const d = parse(next.date); viewY = d.getFullYear(); viewM = d.getMonth(); }
+}
+
+$("calPrev").onclick = () => { viewM--; if(viewM<0){viewM=11;viewY--;} monthPicked=true; render(); };
+$("calNext").onclick = () => { viewM++; if(viewM>11){viewM=0;viewY++;} monthPicked=true; render(); };
+$("calToday").onclick = () => { const d=new Date(); viewY=d.getFullYear(); viewM=d.getMonth(); monthPicked=true; render(); };
+window.addEventListener("hashchange", () => { organiser = location.hash === "#organiser"; render(); window.scrollTo(0,0); });
+document.addEventListener("visibilitychange", () => { if(!document.hidden) load(); });
+setInterval(() => { if(!document.hidden && openNote === null) load(); }, 30000);
+
+render();
+load();
+</script>
+</body>
+</html>
