@@ -221,6 +221,38 @@
     .groups{grid-template-columns:1fr 1fr}
     .cal-head{flex-wrap:wrap;gap:8px}
   }
+  body.locked #calCard, body.locked #gameCard, body.locked #matrixCard, body.locked #toolsCard{display:none !important}
+  .gate{text-align:center;max-width:460px;margin:24px auto}
+  .gate .pinrow{justify-content:center}
+  .gate-icon{font-size:34px}
+  .gate-title{font-size:20px !important;text-transform:none !important;letter-spacing:0 !important;color:var(--ink) !important;margin:6px 0 8px !important}
+  .lockline{text-align:center;font-size:12.5px;margin:4px 0 20px}
+  .lockline a{color:var(--muted)}
+  .viewbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+  .seg{display:inline-flex;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:3px}
+  .seg button{font:inherit;font-size:13px;font-weight:600;border:0;background:none;color:var(--muted);padding:6px 14px;border-radius:999px;cursor:pointer}
+  .seg button.on{background:linear-gradient(120deg,#1d4ed8,#7c3aed);color:#fff;box-shadow:0 2px 6px rgba(91,43,214,.25)}
+  .pastchk{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer}
+  .lmonth{font-family:"Barlow Condensed",sans-serif;font-size:19px;font-weight:700;margin:14px 0 6px;background:linear-gradient(90deg,#1d4ed8,#7c3aed,#e11d74);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lmonth:first-child{margin-top:0}
+  .lrow{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;color:var(--ink);
+    background:color-mix(in srgb,var(--c) 7%,var(--card));border:1px solid color-mix(in srgb,var(--c) 25%,var(--line));border-left:5px solid var(--c);
+    border-radius:12px;padding:9px 12px;margin-bottom:7px;cursor:pointer}
+  .lrow.home{--c:#2563eb} .lrow.away{--c:#7c3aed} .lrow.league{--c:#0d9488} .lrow.ref{--c:#f59e0b}
+  .lrow.sel{box-shadow:0 0 0 2px var(--c)}
+  .lrow.past{opacity:.6}
+  .ldate{text-align:center;line-height:1.05}
+  .ldate .dw{font-size:11px;text-transform:uppercase;color:var(--muted);font-weight:600;display:block}
+  .ldate .dn{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:700;color:var(--c);display:block}
+  .linfo{min-width:0}
+  .linfo .lt{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .linfo .lm{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lcnt{font-weight:700;font-size:13px;border-radius:999px;padding:3px 9px;background:var(--card);border:1px solid var(--line);white-space:nowrap}
+  .lcnt.ok{color:#15803d;border-color:color-mix(in srgb,#16a34a 40%,transparent);background:var(--in-bg)}
+  .lcnt.short{color:#dc2626;border-color:color-mix(in srgb,#dc2626 35%,transparent);background:var(--out-bg)}
+  .lempty{color:var(--muted);text-align:center;padding:18px 8px}
+  body.compact .lrow{padding:7px 10px;gap:10px;grid-template-columns:44px 1fr auto}
+  body.compact .ldate .dn{font-size:21px}
   .pinrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .pinrow input{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);width:140px}
   h3.sub{font-size:14px;margin:6px 0 10px;color:var(--ink)}
@@ -246,9 +278,42 @@
   </div>
 </header>
 <main>
-  <div id="status" class="status">Loading…</div>
+  <div id="status" class="status" hidden></div>
 
-  <section class="card">
+  <section class="card gate" id="unlockCard" hidden>
+    <div class="gate-icon">🔒</div>
+    <h2 class="gate-title">Team members only</h2>
+    <p class="warn">Enter the team password to see the games and tick your availability. You only need to do this once on each phone or computer.</p>
+    <form id="unlockForm" class="pinrow">
+      <input type="password" id="unlockInput" placeholder="Password" autocomplete="current-password" required>
+      <button class="primary" type="submit">Unlock</button>
+    </form>
+    <p class="warn low" id="unlockMsg"></p>
+  </section>
+
+  <section class="card" id="setupCard" hidden>
+    <h2>One-time setup (organiser)</h2>
+    <p class="warn">Fill this in once. The GitHub key stays in this browser; only a locked copy comes out, which only the two passwords can open.</p>
+    <form class="add" id="setupForm" autocomplete="off">
+      <label class="full">GitHub repository for the sign-up data<input name="repo" value="mkrzak/panthers-signups" required></label>
+      <label class="full">GitHub token (fine-grained, Contents: Read and write)<input name="token" type="password" required autocomplete="off"></label>
+      <label>Team password (give to players)<input name="team" type="text" required autocomplete="off"></label>
+      <label>Organiser password (keep to yourself)<input name="org" type="text" required autocomplete="off"></label>
+      <div class="full"><button class="primary" type="submit">Set up</button></div>
+    </form>
+    <p class="warn" id="setupMsg"></p>
+    <textarea id="setupOut" readonly hidden rows="5" style="width:100%;font:12px ui-monospace,Menlo,monospace;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--soft);color:var(--ink)"></textarea>
+  </section>
+
+  <section class="card" id="calCard">
+    <div class="viewbar">
+      <div class="seg" role="tablist" aria-label="View">
+        <button type="button" id="vCal" role="tab">📅 Calendar</button>
+        <button type="button" id="vList" role="tab">☰ List</button>
+      </div>
+      <label class="pastchk" id="pastWrap"><input type="checkbox" id="showPast"> Show past games</label>
+    </div>
+    <div id="calView">
     <div class="cal-head">
       <div class="m" id="calMonth"></div>
       <div>
@@ -258,6 +323,8 @@
       </div>
     </div>
     <div class="grid" id="cal"></div>
+    </div>
+    <div id="listView" hidden></div>
     <div class="legend">
       <span class="home">Home</span><span class="away">Away</span><span class="league">Local league</span><span class="ref">Ref duty</span>
     </div>
@@ -307,12 +374,8 @@
   <section class="card" id="toolsCard" hidden>
     <h2>Organiser tools</h2>
     <div id="lockBox">
-      <p class="warn">Enter the organiser PIN to add, edit or delete games and change the squad. It's remembered on this device.</p>
-      <form id="pinForm" class="pinrow">
-        <input type="password" id="pinInput" placeholder="PIN" autocomplete="current-password" required>
-        <button class="primary" type="submit">Unlock</button>
-        <span class="warn" id="pinMsg"></span>
-      </form>
+      <p class="warn">You're signed in with the team password. To add, edit or delete games or change the squad, sign in again with the organiser password.</p>
+      <button class="ghost" type="button" id="switchLogin">Sign in as organiser</button>
     </div>
     <div id="toolsBox" hidden>
       <h3 class="sub" id="formTitle">Add a game</h3>
@@ -335,25 +398,25 @@
       <textarea id="squadText" rows="8"></textarea>
       <div class="row2"><button class="primary" type="button" id="saveSquad">Save squad</button>
         <span class="warn" id="squadMsg"></span>
-        <button class="link" type="button" id="lockBtn" style="margin-left:auto">Lock</button></div>
+</div>
     </div>
   </section>
+  <p class="lockline"><a href="#" id="lockLink" hidden>Lock this device</a></p>
 </main>
 
 <script>
-/* ===== SETTINGS =====
-   API_URL: your Cloudflare Worker address, e.g. https://panthers-signup.yourname.workers.dev */
-const API_URL = "PASTE_WORKER_URL_HERE";
-/* ==================== */
+/* ===== SETTINGS (filled in by the setup screen) ===== */
+const CONFIG = {"repo":"mkrzak/panthers-signups","path":"data.json","team":{"s":"0YmtbjfYmCksScfHy5W7fg==","i":"/lAy1dsH9p5s2fqn","c":"Cap5lqSk8O5cAyYky75sis+1QF/PDN5wIOHv4GU5KgHwwA5HXJpa0UajYMZORvHhOGEBl2XMtLxaQYL5keyyJs3PiZZyJbqgh7gIq6+KRKnYG05/LGIXjAGOfn3Xn2dIFRQiioLnlA9pl/4Tqg=="},"organiser":{"s":"etINNWxVxvopM+wIcxbmaA==","i":"TRXqiwue1hrxru5N","c":"fLpUTmn07LCYOe8T8ckpTwoexkN05BNRArUem0F68FVgEJsbeD9qSIywmI/btlEhRxnNxKwM9oQQ/lMk+r4pl8sUcQVh7FsThvNjI+3jb11GsELOy8LgLBXZd0zi8jCMipBWHna1NmxMZXVokQ=="}};
+/* ==================================================== */
 
 const DEFAULT_NEED = 6;
 const PCOL = ["#2563eb","#db2777","#7c3aed","#0d9488","#ea580c","#0891b2","#9333ea","#16a34a","#e11d48","#4f46e5","#ca8a04","#0284c7","#c026d3","#059669"];
 const TCOL = {home:"#2563eb",away:"#7c3aed",league:"#0d9488",ref:"#f59e0b"};
 const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const $ = id => document.getElementById(id);
-const API = API_URL.replace(/\/+$/,"");
-const configured = /^https:\/\/[^\s"]+$/.test(API) && !/PASTE_/.test(API);
-let pin = null; try { pin = localStorage.getItem("vb-signup-pin"); } catch(e){}
+const configured = !!(CONFIG.repo && CONFIG.team && CONFIG.organiser);
+let TOKEN = null, ROLE = null;
+try { const a = JSON.parse(localStorage.getItem("vb-signup-auth") || "null"); if(a && a.t && a.r && a.repo === CONFIG.repo){ TOKEN = a.t; ROLE = a.r; } } catch(e){}
 
 let PLAYERS = [], games = [], responses = {};
 let selected = null, viewY, viewM, monthPicked = false, openNote = null, loaded = false;
@@ -380,11 +443,69 @@ function pageUrl(){ return location.href.split("#")[0]; }
 { const d = new Date(); viewY = d.getFullYear(); viewM = d.getMonth(); }
 try { selected = localStorage.getItem("vb-signup-game"); } catch(e){}
 
+let viewMode = "cal", showPast = false;
+try { if(localStorage.getItem("vb-signup-view") === "list") viewMode = "list"; } catch(e){}
+function setView(m){ viewMode = m; try{ localStorage.setItem("vb-signup-view", m); }catch(e){} render(); }
 function select(id){ selected = id; openNote = null; try{ localStorage.setItem("vb-signup-game", id); }catch(e){} render(); }
+
+/* ---------- crypto: the GitHub key is stored encrypted with each password ---------- */
+const enc = new TextEncoder(), dec = new TextDecoder();
+const toB64 = u8 => { let s=""; u8.forEach(b => s += String.fromCharCode(b)); return btoa(s); };
+const fromB64 = b => Uint8Array.from(atob(b), c => c.charCodeAt(0));
+async function keyFrom(pw, salt){
+  const base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name:"PBKDF2", salt, iterations: 250000, hash:"SHA-256" }, base, { name:"AES-GCM", length:256 }, false, ["encrypt","decrypt"]);
+}
+async function seal(secret, pw){
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name:"AES-GCM", iv }, await keyFrom(pw, salt), enc.encode(secret)));
+  return { s: toB64(salt), i: toB64(iv), c: toB64(ct) };
+}
+async function unseal(box, pw){
+  try{ return dec.decode(await crypto.subtle.decrypt({ name:"AES-GCM", iv: fromB64(box.i) }, await keyFrom(pw, fromB64(box.s)), fromB64(box.c))); }
+  catch(e){ return null; }
+}
+
+/* ---------- GitHub storage (data.json in a private repo) ---------- */
+let fileSha = null, etag = null, raw = null;
+const b64utf8 = str => toB64(enc.encode(str));
+const utf8b64 = b => dec.decode(fromB64(b.replace(/\s/g,"")));
+function ghUrl(repo, path){ return `https://api.github.com/repos/${repo}/contents/${path.split("/").map(encodeURIComponent).join("/")}`; }
+function ghHeaders(token, extra){ return { Authorization: "Bearer " + token, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", ...(extra||{}) }; }
+class AuthError extends Error {}
+async function fetchFile(conditional){
+  const r = await fetch(ghUrl(CONFIG.repo, CONFIG.path), { cache: "no-store",
+    headers: ghHeaders(TOKEN, conditional && etag ? { "If-None-Match": etag } : {}) });
+  if(r.status === 304) return null;
+  if(r.status === 401 || r.status === 403) throw new AuthError("The sign-up key isn't working (it may have expired). Please tell the organiser.");
+  if(!r.ok) throw new Error("GitHub said " + r.status);
+  const j = await r.json();
+  etag = r.headers.get("ETag"); fileSha = j.sha; raw = JSON.parse(utf8b64(j.content));
+  return raw;
+}
+let queue = Promise.resolve();
+function mutate(fn, message){
+  const job = queue.then(async () => {
+    for(let attempt = 0; attempt < 6; attempt++){
+      if(!raw || attempt > 0) await fetchFile(false);
+      const next = JSON.parse(JSON.stringify(raw));
+      const extra = fn(next);
+      const r = await fetch(ghUrl(CONFIG.repo, CONFIG.path), { method: "PUT", headers: ghHeaders(TOKEN, { "Content-Type": "application/json" }),
+        body: JSON.stringify({ message, content: b64utf8(JSON.stringify(next, null, 1) + "\n"), sha: fileSha }) });
+      if(r.ok){ const j = await r.json(); fileSha = j.content.sha; etag = null; raw = next; return { data: next, extra }; }
+      if(r.status === 401 || r.status === 403) throw new AuthError("The sign-up key isn't working (it may have expired). Please tell the organiser.");
+      if(r.status === 409 || r.status === 422){ await new Promise(res => setTimeout(res, 300 + attempt * 400 + Math.random() * 400)); continue; }
+      throw new Error("GitHub said " + r.status);
+    }
+    throw new Error("Too many people saving at once – please try again.");
+  });
+  queue = job.catch(() => {});
+  return job;
+}
 
 /* ---------- data ---------- */
 function ingest(data){
-  if(!data || data.error) return;
+  if(!data) return;
   PLAYERS = Array.isArray(data.players) ? data.players : PLAYERS;
   games = (data.games || []).filter(g => g.id && g.date);
   const r = {};
@@ -396,22 +517,27 @@ function ingest(data){
   if(!loaded){ loaded = true; pickDefaultGame(); }
   else if(!games.find(g => g.id === selected)) pickDefaultGame();
 }
+function authFailed(e){
+  if(e instanceof AuthError){ lockDevice(); setStatus(e.message); return true; }
+  return false;
+}
 async function load(){
-  if(!configured){ setStatus("Not connected yet – put the Cloudflare Worker address into API_URL in signup.html."); render(); return; }
+  if(!configured || !TOKEN) { render(); return; }
   if(pending) return;
   try{
-    const res = await fetch(API, { cache: "no-store" });
-    const data = await res.json();
-    if(pending) return;               // a write started meanwhile; its answer wins
-    ingest(data); setStatus(""); render();
+    const data = await fetchFile(loaded);
+    if(pending) return;
+    if(data) ingest(data);
+    setStatus(""); render();
   }catch(e){
+    if(authFailed(e)) return;
     setStatus(loaded ? "Couldn't refresh – showing the last loaded list." : "Couldn't load the games. Check your connection and reload.");
     render();
   }
 }
 const writing = {};
 async function saveResponse(gameId, player, patch){
-  if(!configured) return;
+  if(!TOKEN) return;
   const key = slug(player), id = gameId + "__" + key;
   const prev = (responses[gameId]||{})[key] || {};
   const next = { status: prev.status || null, note: prev.note || "", ...patch };
@@ -421,19 +547,41 @@ async function saveResponse(gameId, player, patch){
   while(writing[id]) await writing[id];
   const p = (async () => {
     try{
-      const res = await fetch(API + "/response", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ game: gameId, player, status: next.status || "", note: next.note || "" }) });
-      const data = await res.json();
-      if(data.error) throw new Error(data.error);
+      const g = games.find(x => x.id === gameId);
+      const { data } = await mutate(d => {
+        d.responses = (d.responses || []).filter(x => !(x.game === gameId && x.player === player));
+        if(next.status || next.note) d.responses.push({ game: gameId, player, status: next.status || "", note: next.note || "", updated: new Date().toISOString() });
+      }, `${player}: ${next.status || "cleared"} – ${g ? g.opponent + " " + g.date : gameId}`);
       if(pending === 1) ingest(data);
       setStatus("");
     }catch(e){
+      if(authFailed(e)) return;
       setStatus("Couldn't save " + player + "'s reply – please try again.");
       responses[gameId] = { ...(responses[gameId]||{}), [key]: prev };
     }finally{ pending--; render(); }
   })();
   writing[id] = p; await p; if(writing[id]===p) delete writing[id];
 }
+
+/* ---------- unlock ---------- */
+function lockDevice(){
+  TOKEN = null; ROLE = null; loaded = false; raw = null; fileSha = null; etag = null;
+  try{ localStorage.removeItem("vb-signup-auth"); }catch(e){}
+  render();
+}
+$("unlockForm").onsubmit = async (ev) => {
+  ev.preventDefault();
+  const pw = $("unlockInput").value; if(!pw) return;
+  $("unlockMsg").textContent = "Checking…";
+  let t = await unseal(CONFIG.organiser, pw), r = "organiser";
+  if(!t){ t = await unseal(CONFIG.team, pw); r = "team"; }
+  if(!t){ $("unlockMsg").textContent = "That password isn't right."; return; }
+  TOKEN = t; ROLE = r;
+  try{ localStorage.setItem("vb-signup-auth", JSON.stringify({ t, r, repo: CONFIG.repo })); }catch(e){}
+  $("unlockInput").value = ""; $("unlockMsg").textContent = "";
+  await load();
+};
+$("lockLink").onclick = (e) => { e.preventDefault(); lockDevice(); };
 
 /* ---------- views ---------- */
 function renderHeader(){
@@ -445,6 +593,34 @@ function renderHeader(){
     const b = document.createElement("span"); b.className="badge"; b.textContent="Organiser";
     const a = document.createElement("a"); a.href="#"; a.textContent="Player view"; a.style.marginLeft="10px";
     side.append(b,a);
+  }
+}
+
+function renderList(){
+  const box = $("listView"); box.innerHTML = "";
+  const t = todayStr();
+  const list = games.filter(g => showPast || g.date >= t)
+    .sort((a,b) => (a.date + (a.time||"")).localeCompare(b.date + (b.time||"")));
+  if(!list.length){ const p = document.createElement("div"); p.className = "lempty"; p.textContent = showPast ? "No games yet." : "No upcoming games."; box.appendChild(p); return; }
+  let month = "";
+  for(const g of list){
+    const d = parse(g.date), m = d.toLocaleDateString("en-GB",{month:"long",year:"numeric"});
+    if(m !== month){ month = m; const h = document.createElement("div"); h.className = "lmonth"; h.textContent = m; box.appendChild(h); }
+    const c = counts(g.id), nd = need(g);
+    const b = document.createElement("button"); b.type = "button";
+    b.className = "lrow " + typeClass(g) + (g.id === selected ? " sel" : "") + (g.date < t ? " past" : "");
+    const dt = document.createElement("span"); dt.className = "ldate";
+    const dw = document.createElement("span"); dw.className = "dw"; dw.textContent = d.toLocaleDateString("en-GB",{weekday:"short"});
+    const dn = document.createElement("span"); dn.className = "dn"; dn.textContent = d.getDate();
+    dt.append(dw, dn);
+    const info = document.createElement("span"); info.className = "linfo";
+    const lt = document.createElement("div"); lt.className = "lt"; lt.textContent = g.opponent || "Game";
+    const lm = document.createElement("div"); lm.className = "lm"; lm.textContent = [g.time, g.venue, g.req].filter(Boolean).join(" · ");
+    info.append(lt, lm);
+    const k = document.createElement("span"); k.className = "lcnt " + (c.in >= nd ? "ok" : (g.date >= t ? "short" : "")); k.textContent = (c.in >= nd ? "✓ " : "") + c.in + "/" + nd;
+    b.append(dt, info, k);
+    b.onclick = () => { viewY = d.getFullYear(); viewM = d.getMonth(); monthPicked = true; select(g.id); $("gameCard").scrollIntoView({behavior:"smooth", block:"start"}); };
+    box.appendChild(b);
   }
 }
 
@@ -596,8 +772,18 @@ function renderMatrix(){
 }
 
 function render(){
+  const setupMode = !configured || location.hash === "#setup";
+  const unlocked = configured && !!TOKEN && !setupMode;
+  document.body.classList.toggle("locked", !unlocked);
+  $("setupCard").hidden = !setupMode;
+  $("unlockCard").hidden = setupMode || unlocked;
+  $("lockLink").hidden = !unlocked;
   document.body.classList.toggle("compact", !organiser);
-  renderHeader(); renderCalendar(); renderGame(); renderMatrix();
+  const isList = viewMode === "list";
+  $("calView").hidden = isList; $("listView").hidden = !isList; $("pastWrap").hidden = !isList;
+  $("vCal").classList.toggle("on", !isList); $("vList").classList.toggle("on", isList);
+  $("vCal").setAttribute("aria-selected", String(!isList)); $("vList").setAttribute("aria-selected", String(isList));
+  renderHeader(); if(isList) renderList(); else renderCalendar(); renderGame(); renderMatrix();
   renderTools();
 }
 
@@ -629,6 +815,9 @@ function pickDefaultGame(){
   if(next && !monthPicked){ const d = parse(next.date); viewY = d.getFullYear(); viewM = d.getMonth(); }
 }
 
+$("vCal").onclick = () => setView("cal");
+$("vList").onclick = () => setView("list");
+$("showPast").onchange = (e) => { showPast = e.target.checked; render(); };
 $("calPrev").onclick = () => { viewM--; if(viewM<0){viewM=11;viewY--;} monthPicked=true; render(); };
 $("calNext").onclick = () => { viewM++; if(viewM>11){viewM=0;viewY++;} monthPicked=true; render(); };
 $("calToday").onclick = () => { const d=new Date(); viewY=d.getFullYear(); viewM=d.getMonth(); monthPicked=true; render(); };
@@ -636,36 +825,18 @@ window.addEventListener("hashchange", () => { organiser = location.hash === "#or
 document.addEventListener("visibilitychange", () => { if(!document.hidden) load(); });
 setInterval(() => { if(!document.hidden && openNote === null) load(); }, 30000);
 
-/* ---------- organiser tools (PIN protected) ---------- */
-async function adminCall(body){
-  const res = await fetch(API + "/admin", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-    body: JSON.stringify({ pin, ...body }) });
-  const data = await res.json().catch(() => ({ error: "Server error" }));
-  if(res.status === 403){ setPin(null); throw new Error("Wrong PIN – unlock again."); }
-  if(data.error) throw new Error(data.error);
-  return data;
-}
-function setPin(p){ pin = p; try{ p ? localStorage.setItem("vb-signup-pin", p) : localStorage.removeItem("vb-signup-pin"); }catch(e){} render(); }
+/* ---------- organiser tools (organiser password) ---------- */
 let squadDirty = false;
 function renderTools(){
-  $("toolsCard").hidden = !organiser;
-  $("adminGame").hidden = !(organiser && pin);
+  const isOrg = ROLE === "organiser";
+  $("toolsCard").hidden = !organiser || !TOKEN;
+  $("adminGame").hidden = !(organiser && isOrg);
   if(!organiser) return;
-  $("lockBox").hidden = !!pin; $("toolsBox").hidden = !pin;
-  if(pin && !squadDirty && document.activeElement !== $("squadText")) $("squadText").value = PLAYERS.join("\n");
+  $("lockBox").hidden = isOrg; $("toolsBox").hidden = !isOrg;
+  if(isOrg && !squadDirty && document.activeElement !== $("squadText")) $("squadText").value = PLAYERS.join("\n");
 }
 $("squadText").oninput = () => { squadDirty = true; };
-$("pinForm").onsubmit = async (ev) => {
-  ev.preventDefault(); const p = $("pinInput").value.trim(); if(!p) return;
-  $("pinMsg").textContent = "Checking…";
-  try{
-    const res = await fetch(API + "/admin", { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body: JSON.stringify({ pin: p, action: "check" }) });
-    if(res.status === 403){ $("pinMsg").textContent = "Wrong PIN."; return; }
-    const d = await res.json(); if(d.error) throw new Error(d.error);
-    $("pinMsg").textContent = ""; $("pinInput").value = ""; setPin(p);
-  }catch(e){ $("pinMsg").textContent = e.message || "Couldn't check the PIN."; }
-};
-$("lockBtn").onclick = () => setPin(null);
+$("switchLogin").onclick = () => { lockDevice(); };
 function resetForm(){
   const f = $("addForm"); f.reset(); f.id.value = ""; f.need.value = 6;
   $("formTitle").textContent = "Add a game"; $("saveGameBtn").textContent = "Add game"; $("cancelEdit").hidden = true;
@@ -682,29 +853,74 @@ $("editBtn").onclick = () => {
 };
 $("addForm").onsubmit = async (ev) => {
   ev.preventDefault();
-  const f = new FormData(ev.target), game = Object.fromEntries(f.entries());
-  game.need = Number(game.need) || DEFAULT_NEED;
+  const g = Object.fromEntries(new FormData(ev.target).entries());
+  g.need = Math.max(1, Math.min(30, Number(g.need) || DEFAULT_NEED));
+  for(const k of Object.keys(g)) if(typeof g[k] === "string") g[k] = g[k].trim();
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(g.date) || !g.opponent){ $("formMsg").textContent = "A game needs a date and a title."; return; }
+  if(!g.id) g.id = g.date + "-" + Math.random().toString(36).slice(2, 8);
   $("formMsg").textContent = "Saving…";
   try{
-    const d = await adminCall({ action: "saveGame", game });
-    ingest(d); resetForm(); $("formMsg").textContent = "Saved.";
-    const dt = parse(game.date); viewY = dt.getFullYear(); viewM = dt.getMonth(); monthPicked = true;
-    select(d.savedId);
-  }catch(e){ $("formMsg").textContent = e.message; }
+    const { data } = await mutate(d => {
+      d.games = (d.games || []).filter(x => x.id !== g.id); d.games.push(g);
+      d.games.sort((a,b) => (a.date + (a.time||"")).localeCompare(b.date + (b.time||"")));
+    }, `Game saved: ${g.opponent} ${g.date}`);
+    ingest(data); resetForm(); $("formMsg").textContent = "Saved.";
+    const dt = parse(g.date); viewY = dt.getFullYear(); viewM = dt.getMonth(); monthPicked = true;
+    select(g.id);
+  }catch(e){ if(!authFailed(e)) $("formMsg").textContent = e.message; }
 };
 $("delBtn").onclick = () => { $("delBtn").hidden = true; $("delConfirm").classList.add("show"); };
 $("delNo").onclick = () => { $("delBtn").hidden = false; $("delConfirm").classList.remove("show"); };
 $("delYes").onclick = async () => {
   $("delBtn").hidden = false; $("delConfirm").classList.remove("show");
   const id = selected; if(!id) return;
-  try{ const d = await adminCall({ action: "deleteGame", id }); ingest(d); render(); setStatus(""); }
-  catch(e){ setStatus("Couldn't delete: " + e.message); }
+  const g = games.find(x => x.id === id);
+  try{
+    const { data } = await mutate(d => {
+      d.games = (d.games || []).filter(x => x.id !== id);
+      d.responses = (d.responses || []).filter(x => x.game !== id);
+    }, `Game deleted: ${g ? g.opponent + " " + g.date : id}`);
+    ingest(data); render(); setStatus("");
+  }catch(e){ if(!authFailed(e)) setStatus("Couldn't delete: " + e.message); }
 };
 $("saveSquad").onclick = async () => {
-  const players = $("squadText").value.split("\n").map(x => x.trim()).filter(Boolean);
+  const players = [...new Set($("squadText").value.split("\n").map(x => x.trim()).filter(Boolean))];
+  if(!players.length){ $("squadMsg").textContent = "The squad can't be empty."; return; }
   $("squadMsg").textContent = "Saving…";
-  try{ const d = await adminCall({ action: "setPlayers", players }); squadDirty = false; ingest(d); render(); $("squadMsg").textContent = "Saved."; }
-  catch(e){ $("squadMsg").textContent = e.message; }
+  try{
+    const { data } = await mutate(d => { d.players = players; }, "Squad updated");
+    squadDirty = false; ingest(data); render(); $("squadMsg").textContent = "Saved.";
+  }catch(e){ if(!authFailed(e)) $("squadMsg").textContent = e.message; }
+};
+
+/* ---------- one-time setup ---------- */
+$("setupForm").onsubmit = async (ev) => {
+  ev.preventDefault();
+  const f = ev.target, out = $("setupOut"), msg = $("setupMsg");
+  const repo = f.repo.value.trim().replace(/^https:\/\/github\.com\//, "").replace(/\/+$/, "");
+  const token = f.token.value.trim(), team = f.team.value, org = f.org.value;
+  if(!/^[\w.-]+\/[\w.-]+$/.test(repo)){ msg.textContent = "Repository should look like yourname/panthers-signups."; return; }
+  if(team.length < 6 || org.length < 6){ msg.textContent = "Use passwords of at least 6 characters."; return; }
+  if(team === org){ msg.textContent = "The team and organiser passwords must be different."; return; }
+  msg.textContent = "Checking the key and the repository…"; out.hidden = true;
+  try{
+    const url = ghUrl(repo, "data.json");
+    let r = await fetch(url, { cache: "no-store", headers: ghHeaders(token) });
+    if(r.status === 401){ msg.textContent = "GitHub didn't accept the token."; return; }
+    if(r.status === 404){
+      if(typeof SEED === "undefined"){ msg.textContent = "data.json is missing from the repository."; return; }
+      msg.textContent = "Creating data.json with this season's fixtures…";
+      const put = await fetch(url, { method: "PUT", headers: ghHeaders(token, { "Content-Type": "application/json" }),
+        body: JSON.stringify({ message: "Create sign-up data", content: b64utf8(JSON.stringify(SEED, null, 1) + "\n") }) });
+      if(!put.ok){ msg.textContent = put.status === 404 || put.status === 403
+          ? "GitHub refused to write. Check the repository name and that the token has Contents: Read and write on it."
+          : "GitHub said " + put.status + " when creating data.json."; return; }
+    } else if(!r.ok){ msg.textContent = "GitHub said " + r.status + ". Check the repository name and the token's access."; return; }
+    const cfg = { repo, path: "data.json", team: await seal(token, team), organiser: await seal(token, org) };
+    out.value = "const CONFIG = " + JSON.stringify(cfg) + ";";
+    out.hidden = false; out.select();
+    msg.textContent = "Done. Copy the line below and send it to Claude (or paste it over the CONFIG line in signup.html). It contains the key only in locked form.";
+  }catch(e){ msg.textContent = "Couldn't reach GitHub: " + e.message; }
 };
 
 render();
