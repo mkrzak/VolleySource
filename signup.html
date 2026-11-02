@@ -211,6 +211,27 @@
   header a.back:hover{opacity:1;text-decoration:underline}
   header .wrap{padding-top:10px}
   .sheetlink{display:inline-block;margin-top:10px;font-size:13px;color:#7c3aed}
+  @media (max-width:560px){
+    .player{gap:4px 8px}
+    .btns{gap:4px}
+    .btns button{font-size:12px !important;padding:4px 8px !important;min-width:0 !important;white-space:nowrap}
+    .av{width:26px;height:26px;font-size:11px}
+    .pname{font-size:14px;min-width:0}
+    .pname .pn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+    .groups{grid-template-columns:1fr 1fr}
+    .cal-head{flex-wrap:wrap;gap:8px}
+  }
+  .pinrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .pinrow input{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);width:140px}
+  h3.sub{font-size:14px;margin:6px 0 10px;color:var(--ink)}
+  #toolsBox h3.sub:not(:first-child){margin-top:22px}
+  #squadText{width:100%;font:inherit;font-size:14px;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--soft);color:var(--ink)}
+  .row2{display:flex;gap:10px;align-items:center;margin-top:8px}
+  form.add{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  form.add label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:4px}
+  form.add .full{grid-column:1 / -1}
+  form.add input,form.add select{font:inherit;color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:8px}
+  @media (max-width:480px){ form.add{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
@@ -249,6 +270,14 @@
         <div class="meta" id="gMeta"></div>
         <div class="notes" id="gNotes"></div>
       </div>
+      <div id="adminGame" hidden>
+        <button class="link" id="editBtn" type="button">Edit game</button> ·
+        <button class="link danger" id="delBtn" type="button">Delete game</button>
+        <div class="confirm" id="delConfirm">Delete this game and its replies?
+          <button class="yes" id="delYes" type="button">Delete</button>
+          <button id="delNo" type="button">Cancel</button>
+        </div>
+      </div>
     </div>
     <div class="tally">
       <div class="t-in"><b id="cIn">0</b><span>In</span></div>
@@ -265,7 +294,6 @@
         <span id="copyMsg" class="warn"></span>
         <textarea id="remText" readonly hidden></textarea>
       </div>
-      <a class="sheetlink" id="sheetLink" target="_blank" rel="noopener" hidden>Open the Google Sheet ↗</a>
     </div>
 
     <ul class="players" id="players"></ul>
@@ -276,14 +304,46 @@
     <div class="tablewrap"><table class="matrix" id="matrix"></table></div>
   </section>
 
+  <section class="card" id="toolsCard" hidden>
+    <h2>Organiser tools</h2>
+    <div id="lockBox">
+      <p class="warn">Enter the organiser PIN to add, edit or delete games and change the squad. It's remembered on this device.</p>
+      <form id="pinForm" class="pinrow">
+        <input type="password" id="pinInput" placeholder="PIN" autocomplete="current-password" required>
+        <button class="primary" type="submit">Unlock</button>
+        <span class="warn" id="pinMsg"></span>
+      </form>
+    </div>
+    <div id="toolsBox" hidden>
+      <h3 class="sub" id="formTitle">Add a game</h3>
+      <form class="add" id="addForm">
+        <input type="hidden" name="id">
+        <label>Date<input type="date" name="date" required></label>
+        <label>Time<input name="time" placeholder="19:00" maxlength="20"></label>
+        <label class="full">Title<input name="opponent" placeholder="e.g. Home vs Tigers" required maxlength="80"></label>
+        <label>Venue<input name="venue" placeholder="e.g. NCA" maxlength="80"></label>
+        <label>Type<select name="type"><option>Home</option><option>Away</option><option>Local league</option><option>Ref</option></select></label>
+        <label>Needed<input name="req" placeholder="team (+scorer)" maxlength="40"></label>
+        <label>Players needed<input type="number" name="need" min="1" max="30" value="6"></label>
+        <label class="full">Notes<input name="notes" placeholder="Meet time, kit colour…" maxlength="200"></label>
+        <div class="full"><button class="primary" type="submit" id="saveGameBtn">Add game</button>
+          <button class="ghost" type="button" id="cancelEdit" hidden>Cancel edit</button>
+          <span class="warn" id="formMsg"></span></div>
+      </form>
+      <h3 class="sub">Squad</h3>
+      <p class="warn">One name per line, in the order they should appear.</p>
+      <textarea id="squadText" rows="8"></textarea>
+      <div class="row2"><button class="primary" type="button" id="saveSquad">Save squad</button>
+        <span class="warn" id="squadMsg"></span>
+        <button class="link" type="button" id="lockBtn" style="margin-left:auto">Lock</button></div>
+    </div>
+  </section>
 </main>
 
 <script>
 /* ===== SETTINGS =====
-   API_URL: the Web app URL from Apps Script (Deploy → Manage deployments), ends in /exec
-   SHEET_URL: optional – link to the Google Sheet, shown in the organiser view */
-const API_URL = "PASTE_WEB_APP_URL_HERE";
-const SHEET_URL = "";
+   API_URL: your Cloudflare Worker address, e.g. https://panthers-signup.yourname.workers.dev */
+const API_URL = "PASTE_WORKER_URL_HERE";
 /* ==================== */
 
 const DEFAULT_NEED = 6;
@@ -291,7 +351,9 @@ const PCOL = ["#2563eb","#db2777","#7c3aed","#0d9488","#ea580c","#0891b2","#9333
 const TCOL = {home:"#2563eb",away:"#7c3aed",league:"#0d9488",ref:"#f59e0b"};
 const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const $ = id => document.getElementById(id);
-const configured = /^https:\/\/script\.google(usercontent)?\.com\//.test(API_URL);
+const API = API_URL.replace(/\/+$/,"");
+const configured = /^https:\/\/[^\s"]+$/.test(API) && !/PASTE_/.test(API);
+let pin = null; try { pin = localStorage.getItem("vb-signup-pin"); } catch(e){}
 
 let PLAYERS = [], games = [], responses = {};
 let selected = null, viewY, viewM, monthPicked = false, openNote = null, loaded = false;
@@ -335,10 +397,10 @@ function ingest(data){
   else if(!games.find(g => g.id === selected)) pickDefaultGame();
 }
 async function load(){
-  if(!configured){ setStatus("Not connected yet – paste the Google Apps Script web app URL into API_URL in signup.html."); render(); return; }
+  if(!configured){ setStatus("Not connected yet – put the Cloudflare Worker address into API_URL in signup.html."); render(); return; }
   if(pending) return;
   try{
-    const res = await fetch(API_URL, { cache: "no-store" });
+    const res = await fetch(API, { cache: "no-store" });
     const data = await res.json();
     if(pending) return;               // a write started meanwhile; its answer wins
     ingest(data); setStatus(""); render();
@@ -359,7 +421,7 @@ async function saveResponse(gameId, player, patch){
   while(writing[id]) await writing[id];
   const p = (async () => {
     try{
-      const res = await fetch(API_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
+      const res = await fetch(API + "/response", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({ game: gameId, player, status: next.status || "", note: next.note || "" }) });
       const data = await res.json();
       if(data.error) throw new Error(data.error);
@@ -536,7 +598,7 @@ function renderMatrix(){
 function render(){
   document.body.classList.toggle("compact", !organiser);
   renderHeader(); renderCalendar(); renderGame(); renderMatrix();
-  const sl = $("sheetLink"); if(sl){ sl.hidden = !(organiser && SHEET_URL); sl.href = SHEET_URL || "#"; }
+  renderTools();
 }
 
 function reminderText(g){
@@ -573,6 +635,77 @@ $("calToday").onclick = () => { const d=new Date(); viewY=d.getFullYear(); viewM
 window.addEventListener("hashchange", () => { organiser = location.hash === "#organiser"; render(); window.scrollTo(0,0); });
 document.addEventListener("visibilitychange", () => { if(!document.hidden) load(); });
 setInterval(() => { if(!document.hidden && openNote === null) load(); }, 30000);
+
+/* ---------- organiser tools (PIN protected) ---------- */
+async function adminCall(body){
+  const res = await fetch(API + "/admin", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify({ pin, ...body }) });
+  const data = await res.json().catch(() => ({ error: "Server error" }));
+  if(res.status === 403){ setPin(null); throw new Error("Wrong PIN – unlock again."); }
+  if(data.error) throw new Error(data.error);
+  return data;
+}
+function setPin(p){ pin = p; try{ p ? localStorage.setItem("vb-signup-pin", p) : localStorage.removeItem("vb-signup-pin"); }catch(e){} render(); }
+let squadDirty = false;
+function renderTools(){
+  $("toolsCard").hidden = !organiser;
+  $("adminGame").hidden = !(organiser && pin);
+  if(!organiser) return;
+  $("lockBox").hidden = !!pin; $("toolsBox").hidden = !pin;
+  if(pin && !squadDirty && document.activeElement !== $("squadText")) $("squadText").value = PLAYERS.join("\n");
+}
+$("squadText").oninput = () => { squadDirty = true; };
+$("pinForm").onsubmit = async (ev) => {
+  ev.preventDefault(); const p = $("pinInput").value.trim(); if(!p) return;
+  $("pinMsg").textContent = "Checking…";
+  try{
+    const res = await fetch(API + "/admin", { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body: JSON.stringify({ pin: p, action: "check" }) });
+    if(res.status === 403){ $("pinMsg").textContent = "Wrong PIN."; return; }
+    const d = await res.json(); if(d.error) throw new Error(d.error);
+    $("pinMsg").textContent = ""; $("pinInput").value = ""; setPin(p);
+  }catch(e){ $("pinMsg").textContent = e.message || "Couldn't check the PIN."; }
+};
+$("lockBtn").onclick = () => setPin(null);
+function resetForm(){
+  const f = $("addForm"); f.reset(); f.id.value = ""; f.need.value = 6;
+  $("formTitle").textContent = "Add a game"; $("saveGameBtn").textContent = "Add game"; $("cancelEdit").hidden = true;
+}
+$("cancelEdit").onclick = () => { resetForm(); $("formMsg").textContent = ""; };
+$("editBtn").onclick = () => {
+  const g = games.find(x => x.id === selected); if(!g) return;
+  const f = $("addForm");
+  for(const k of ["id","date","time","opponent","venue","req","notes"]) f[k].value = g[k] || "";
+  f.need.value = need(g);
+  f.type.value = ["Home","Away","Local league","Ref"].find(t => t.toLowerCase() === String(g.type||"").toLowerCase()) || "Home";
+  $("formTitle").textContent = "Edit game"; $("saveGameBtn").textContent = "Save changes"; $("cancelEdit").hidden = false;
+  $("toolsCard").scrollIntoView({ behavior: "smooth" });
+};
+$("addForm").onsubmit = async (ev) => {
+  ev.preventDefault();
+  const f = new FormData(ev.target), game = Object.fromEntries(f.entries());
+  game.need = Number(game.need) || DEFAULT_NEED;
+  $("formMsg").textContent = "Saving…";
+  try{
+    const d = await adminCall({ action: "saveGame", game });
+    ingest(d); resetForm(); $("formMsg").textContent = "Saved.";
+    const dt = parse(game.date); viewY = dt.getFullYear(); viewM = dt.getMonth(); monthPicked = true;
+    select(d.savedId);
+  }catch(e){ $("formMsg").textContent = e.message; }
+};
+$("delBtn").onclick = () => { $("delBtn").hidden = true; $("delConfirm").classList.add("show"); };
+$("delNo").onclick = () => { $("delBtn").hidden = false; $("delConfirm").classList.remove("show"); };
+$("delYes").onclick = async () => {
+  $("delBtn").hidden = false; $("delConfirm").classList.remove("show");
+  const id = selected; if(!id) return;
+  try{ const d = await adminCall({ action: "deleteGame", id }); ingest(d); render(); setStatus(""); }
+  catch(e){ setStatus("Couldn't delete: " + e.message); }
+};
+$("saveSquad").onclick = async () => {
+  const players = $("squadText").value.split("\n").map(x => x.trim()).filter(Boolean);
+  $("squadMsg").textContent = "Saving…";
+  try{ const d = await adminCall({ action: "setPlayers", players }); squadDirty = false; ingest(d); render(); $("squadMsg").textContent = "Saved."; }
+  catch(e){ $("squadMsg").textContent = e.message; }
+};
 
 render();
 load();
