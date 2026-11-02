@@ -394,7 +394,7 @@
           <span class="warn" id="formMsg"></span></div>
       </form>
       <h3 class="sub">Squad</h3>
-      <p class="warn">One name per line, in the order they should appear.</p>
+      <p class="warn">One name per line, in the order they should appear. To rename someone, just edit their line – their ticks move with them.</p>
       <textarea id="squadText" rows="8"></textarea>
       <div class="row2"><button class="primary" type="button" id="saveSquad">Save squad</button>
         <span class="warn" id="squadMsg"></span>
@@ -503,6 +503,26 @@ function mutate(fn, message){
   return job;
 }
 
+/* ---------- renames ---------- */
+const RENAMES = { "Adriana Jr": "Adriana", "Rochelle Jr": "Rochelle", "Fede": "Federica" };   // one-off: old name → new name
+function applyRenames(d, map){
+  let changed = false;
+  d.players = (d.players || []).map(n => { if(map[n] && map[n] !== n){ changed = true; return map[n]; } return n; });
+  d.players = [...new Set(d.players)];
+  for(const r of (d.responses || [])) if(map[r.player] && map[r.player] !== r.player){ r.player = map[r.player]; changed = true; }
+  return changed;
+}
+let renaming = false;
+async function migrateNames(data){
+  if(renaming || !data) return;
+  const needs = (data.players || []).some(n => RENAMES[n]) || (data.responses || []).some(r => RENAMES[r.player]);
+  if(!needs) return;
+  renaming = true;
+  try{ const { data: d } = await mutate(x => { applyRenames(x, RENAMES); }, "Rename players: " + Object.entries(RENAMES).map(([a,b]) => a + " → " + b).join(", ")); ingest(d); render(); }
+  catch(e){ /* someone else will retry on their next visit */ }
+  finally{ renaming = false; }
+}
+
 /* ---------- data ---------- */
 function ingest(data){
   if(!data) return;
@@ -527,7 +547,7 @@ async function load(){
   try{
     const data = await fetchFile(loaded);
     if(pending) return;
-    if(data) ingest(data);
+    if(data){ ingest(data); migrateNames(data); }
     setStatus(""); render();
   }catch(e){
     if(authFailed(e)) return;
@@ -888,7 +908,12 @@ $("saveSquad").onclick = async () => {
   if(!players.length){ $("squadMsg").textContent = "The squad can't be empty."; return; }
   $("squadMsg").textContent = "Saving…";
   try{
-    const { data } = await mutate(d => { d.players = players; }, "Squad updated");
+    const before = PLAYERS.slice(), map = {};
+    if(before.length === players.length) before.forEach((n, i) => { if(n !== players[i] && !players.includes(n)) map[n] = players[i]; });
+    const { data } = await mutate(d => {
+      if(Object.keys(map).length) applyRenames(d, map);
+      d.players = players;
+    }, Object.keys(map).length ? "Squad updated (renamed " + Object.entries(map).map(([a,b]) => a + " → " + b).join(", ") + ")" : "Squad updated");
     squadDirty = false; ingest(data); render(); $("squadMsg").textContent = "Saved.";
   }catch(e){ if(!authFailed(e)) $("squadMsg").textContent = e.message; }
 };
