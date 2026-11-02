@@ -585,7 +585,7 @@ let renaming = false;
 async function migrateNames(data){
   if(renaming || !data) return;
   const needs = (data.players || []).some(n => RENAMES[n]) || (data.responses || []).some(r => RENAMES[r.player])
-    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names") || !(data.done || []).includes("refs-only");
+    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names") || !(data.done || []).includes("refs-only") || !(data.done || []).includes("remove-siri");
   if(!needs) return;
   renaming = true;
   try{ const { data: d } = await mutate(x => {
@@ -637,7 +637,12 @@ async function migrateNames(data){
       x.responses = (x.responses || []).filter(r => !(refIds.has(r.game) && /^scorer/.test(r.status || "")));
       x.done.push("refs-only");
     }
-  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams); refs only"); ingest(d); render(); }
+    if(!x.done.includes("remove-siri")){            // one-off: Siri is no longer in the squad
+      x.players = (x.players || []).filter(n => n !== "Siri");
+      x.responses = (x.responses || []).filter(r => r.player !== "Siri");
+      x.done.push("remove-siri");
+    }
+  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams); refs only; squad update"); ingest(d); render(); }
   catch(e){ /* someone else will retry on their next visit */ }
   finally{ renaming = false; }
 }
