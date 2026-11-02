@@ -482,9 +482,9 @@ const todayStr = () => ymd(new Date());
 function parse(iso){ const [y,m,d] = iso.split("-").map(Number); return new Date(y,m-1,d); }
 function fmtDate(iso, long){ if(!iso) return ""; return parse(iso).toLocaleDateString("en-GB", long ? {weekday:"long",day:"numeric",month:"long"} : {weekday:"short",day:"numeric",month:"short"}); }
 function typeClass(g){ const t=(g.type||"").toLowerCase(); return t.startsWith("away")?"away":t.startsWith("local")?"league":t.startsWith("ref")?"ref":"home"; }
-const DUTIES = [["ref1","1st ref"],["ref2","2nd ref"],["scorer1","Scorer"],["scorer2","Scorer"]];
+const DUTIES = [["ref1","1st ref"],["ref2","2nd ref"]];
 const DUTY = Object.fromEntries(DUTIES);
-const DUTY_SHORT = { ref1:"R1", ref2:"R2", scorer1:"Sc", scorer2:"Sc" };
+const DUTY_SHORT = { ref1:"R1", ref2:"R2" };
 const isRef = g => typeClass(g) === "ref";
 const need = g => isRef(g) ? DUTIES.length : (Number(g.need) || DEFAULT_NEED);
 function counts(gid){
@@ -585,7 +585,7 @@ let renaming = false;
 async function migrateNames(data){
   if(renaming || !data) return;
   const needs = (data.players || []).some(n => RENAMES[n]) || (data.responses || []).some(r => RENAMES[r.player])
-    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names");
+    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names") || !(data.done || []).includes("refs-only");
   if(!needs) return;
   renaming = true;
   try{ const { data: d } = await mutate(x => {
@@ -597,7 +597,7 @@ async function migrateNames(data){
     }
     if(!x.done.includes("ref-duties")){             // one-off: ref games use duties instead of In/Maybe/Out
       const refIds = new Set((x.games || []).filter(g => /^ref/i.test(g.type || "")).map(g => g.id));
-      for(const g of (x.games || [])) if(refIds.has(g.id)){ g.req = "1st ref, 2nd ref, 2 scorers"; g.need = 4; }
+      for(const g of (x.games || [])) if(refIds.has(g.id)){ g.req = "1st ref, 2nd ref"; g.need = DUTIES.length; }
       const keep = [], used = {};
       for(const rsp of (x.responses || [])){
         if(!refIds.has(rsp.game)){ keep.push(rsp); continue; }
@@ -631,7 +631,13 @@ async function migrateNames(data){
         .replace(/(?<!CVC )\bPanthers\b/g, "CVC Panthers");
       x.done.push("cvc-names");
     }
-  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams)"); ingest(d); render(); }
+    if(!x.done.includes("refs-only")){              // one-off: ref games need only 1st and 2nd ref (no scorers)
+      const refIds = new Set((x.games || []).filter(g => /^ref/i.test(g.type || "")).map(g => g.id));
+      for(const g of (x.games || [])) if(refIds.has(g.id)){ g.req = "1st ref, 2nd ref"; g.need = DUTIES.length; }
+      x.responses = (x.responses || []).filter(r => !(refIds.has(r.game) && /^scorer/.test(r.status || "")));
+      x.done.push("refs-only");
+    }
+  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams); refs only"); ingest(d); render(); }
   catch(e){ /* someone else will retry on their next visit */ }
   finally{ renaming = false; }
 }
