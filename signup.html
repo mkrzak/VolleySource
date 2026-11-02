@@ -299,6 +299,9 @@
   .pwwrap{position:relative;display:inline-block}
   .pwwrap input{padding-right:40px !important;width:180px !important}
   .pweye{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;font-size:17px;cursor:pointer;padding:4px 6px;line-height:1}
+  .needrow{display:flex;gap:10px;align-items:center}
+  .needrow input[type=number]{width:80px}
+  .allchk{display:flex;gap:6px;align-items:center;font-size:13.5px;color:var(--ink);white-space:nowrap}
   .pinrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .pinrow input{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);width:140px}
   h3.sub{font-size:14px;margin:6px 0 10px;color:var(--ink)}
@@ -438,7 +441,8 @@
         <label>Venue<input name="venue" placeholder="e.g. NCA" maxlength="80"></label>
         <label>Type<select name="type"><option>Home</option><option>Away</option><option>Local league</option><option>Ref</option></select></label>
         <label>Needed<input name="req" placeholder="team (+scorer)" maxlength="40"></label>
-        <label>Players needed<input type="number" name="need" min="1" max="30" value="9"></label>
+        <label>Players needed<span class="needrow"><input type="number" name="need" min="1" max="30" value="12" disabled>
+          <span class="allchk"><input type="checkbox" name="whole" checked> Whole squad</span></span></label>
         <label class="full">Notes<input name="notes" placeholder="Meet time, kit colour…" maxlength="200"></label>
         <div class="full"><button class="primary" type="submit" id="saveGameBtn">Add game</button>
           <button class="ghost" type="button" id="cancelEdit" hidden>Cancel edit</button>
@@ -460,7 +464,7 @@
 const CONFIG = {"repo":"mkrzak/panthers-signups","path":"data.json","team":{"s":"0YmtbjfYmCksScfHy5W7fg==","i":"/lAy1dsH9p5s2fqn","c":"Cap5lqSk8O5cAyYky75sis+1QF/PDN5wIOHv4GU5KgHwwA5HXJpa0UajYMZORvHhOGEBl2XMtLxaQYL5keyyJs3PiZZyJbqgh7gIq6+KRKnYG05/LGIXjAGOfn3Xn2dIFRQiioLnlA9pl/4Tqg=="},"organiser":{"s":"etINNWxVxvopM+wIcxbmaA==","i":"TRXqiwue1hrxru5N","c":"fLpUTmn07LCYOe8T8ckpTwoexkN05BNRArUem0F68FVgEJsbeD9qSIywmI/btlEhRxnNxKwM9oQQ/lMk+r4pl8sUcQVh7FsThvNjI+3jb11GsELOy8LgLBXZd0zi8jCMipBWHna1NmxMZXVokQ=="}};
 /* ==================================================== */
 
-const DEFAULT_NEED = 9;
+const DEFAULT_NEED = 12;
 const PCOL = ["#2563eb","#db2777","#7c3aed","#0d9488","#ea580c","#0891b2","#9333ea","#16a34a","#e11d48","#4f46e5","#ca8a04","#0284c7","#c026d3","#059669"];
 const TCOL = {home:"#2563eb",away:"#e11d48",league:"#0d9488",ref:"#f59e0b"};
 const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -486,7 +490,7 @@ const DUTIES = [["ref1","1st ref"],["ref2","2nd ref"]];
 const DUTY = Object.fromEntries(DUTIES);
 const DUTY_SHORT = { ref1:"R1", ref2:"R2" };
 const isRef = g => typeClass(g) === "ref";
-const need = g => isRef(g) ? DUTIES.length : (Number(g.need) || DEFAULT_NEED);
+const need = g => isRef(g) ? DUTIES.length : g.need === "all" ? (PLAYERS.length || DEFAULT_NEED) : (Number(g.need) || DEFAULT_NEED);
 function counts(gid){
   const r = responses[gid] || {}; const c = {in:0,maybe:0,out:0};
   for(const p of PLAYERS){ const s = r[slug(p)]?.status; if(DUTY[s]) c.in++; else if(c[s] !== undefined) c[s]++; }
@@ -585,7 +589,7 @@ let renaming = false;
 async function migrateNames(data){
   if(renaming || !data) return;
   const needs = (data.players || []).some(n => RENAMES[n]) || (data.responses || []).some(r => RENAMES[r.player])
-    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names") || !(data.done || []).includes("refs-only") || !(data.done || []).includes("remove-siri");
+    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names") || !(data.done || []).includes("refs-only") || !(data.done || []).includes("remove-siri") || !(data.done || []).includes("team-need-12") || !(data.done || []).includes("team-need-all");
   if(!needs) return;
   renaming = true;
   try{ const { data: d } = await mutate(x => {
@@ -642,7 +646,15 @@ async function migrateNames(data){
       x.responses = (x.responses || []).filter(r => r.player !== "Siri");
       x.done.push("remove-siri");
     }
-  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams); refs only; squad update"); ingest(d); render(); }
+    if(!x.done.includes("team-need-12")){           // one-off: full-team games need 12 players
+      for(const g of (x.games || [])) if(/^(home|away)/i.test(g.type || "")) g.need = 12;
+      x.done.push("team-need-12");
+    }
+    if(!x.done.includes("team-need-all")){          // one-off: full-team games need the whole squad
+      for(const g of (x.games || [])) if(/^(home|away)/i.test(g.type || "")) g.need = "all";
+      x.done.push("team-need-all");
+    }
+  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams); refs only; squad update; team games need the whole squad"); ingest(d); render(); }
   catch(e){ /* someone else will retry on their next visit */ }
   finally{ renaming = false; }
 }
@@ -1067,19 +1079,21 @@ function renderTools(){
   if(!organiser) return;
   $("lockBox").hidden = isOrg; $("toolsBox").hidden = !isOrg;
   if(isOrg && !squadDirty && document.activeElement !== $("squadText")) $("squadText").value = PLAYERS.join("\n");
+  { const f = $("addForm"); if(f.whole.checked) f.need.value = PLAYERS.length || DEFAULT_NEED; }
 }
 $("squadText").oninput = () => { squadDirty = true; };
 $("switchLogin").onclick = () => { lockDevice(); };
 function resetForm(){
-  const f = $("addForm"); f.reset(); f.id.value = ""; f.need.value = DEFAULT_NEED;
+  const f = $("addForm"); f.reset(); f.id.value = ""; f.whole.checked = true; f.need.value = PLAYERS.length || DEFAULT_NEED; f.need.disabled = true;
   $("formTitle").textContent = "Add a game"; $("saveGameBtn").textContent = "Add game"; $("cancelEdit").hidden = true;
 }
+$("addForm").whole.onchange = (e) => { const f = $("addForm"); f.need.disabled = e.target.checked; if(e.target.checked) f.need.value = PLAYERS.length || DEFAULT_NEED; };
 $("cancelEdit").onclick = () => { resetForm(); $("formMsg").textContent = ""; };
 $("editBtn").onclick = () => {
   const g = games.find(x => x.id === selected); if(!g) return;
   const f = $("addForm");
   for(const k of ["id","date","time","opponent","venue","req","notes"]) f[k].value = g[k] || "";
-  f.need.value = need(g);
+  f.whole.checked = g.need === "all"; f.need.disabled = f.whole.checked; f.need.value = need(g);
   f.type.value = ["Home","Away","Local league","Ref"].find(t => t.toLowerCase() === String(g.type||"").toLowerCase()) || "Home";
   $("formTitle").textContent = "Edit game"; $("saveGameBtn").textContent = "Save changes"; $("cancelEdit").hidden = false;
   closeDrawer(); $("toolsCard").scrollIntoView({ behavior: "smooth" });
@@ -1087,7 +1101,8 @@ $("editBtn").onclick = () => {
 $("addForm").onsubmit = async (ev) => {
   ev.preventDefault();
   const g = Object.fromEntries(new FormData(ev.target).entries());
-  g.need = Math.max(1, Math.min(30, Number(g.need) || DEFAULT_NEED));
+  g.need = ev.target.whole.checked ? "all" : Math.max(1, Math.min(30, Number(ev.target.need.value) || DEFAULT_NEED));
+  delete g.whole;
   for(const k of Object.keys(g)) if(typeof g[k] === "string") g[k] = g[k].trim();
   if(!/^\d{4}-\d{2}-\d{2}$/.test(g.date) || !g.opponent){ $("formMsg").textContent = "A game needs a date and a title."; return; }
   if(!g.id) g.id = g.date + "-" + Math.random().toString(36).slice(2, 8);
