@@ -296,6 +296,9 @@
   #gNotes:empty{display:none}
   #hSub:empty{display:none}
   header a.hbtn{display:inline-block;margin-left:10px;background:#fff;color:#4c1d95;font-weight:700;font-size:13px;text-decoration:none;border-radius:999px;padding:6px 12px;box-shadow:0 2px 8px rgba(0,0,0,.15);opacity:1}
+  .pwwrap{position:relative;display:inline-block}
+  .pwwrap input{padding-right:40px !important;width:180px !important}
+  .pweye{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;font-size:17px;cursor:pointer;padding:4px 6px;line-height:1}
   .pinrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .pinrow input{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);width:140px}
   h3.sub{font-size:14px;margin:6px 0 10px;color:var(--ink)}
@@ -328,7 +331,10 @@
     <h2 class="gate-title">Team members only</h2>
     <p class="warn">Enter the team password to see the games and tick your availability.</p>
     <form id="unlockForm" class="pinrow">
-      <input type="password" id="unlockInput" placeholder="Password" autocomplete="current-password" required>
+      <span class="pwwrap">
+        <input type="password" id="unlockInput" placeholder="Password" autocomplete="current-password" required>
+        <button type="button" class="pweye" id="pwEye" aria-label="Show password" aria-pressed="false">👁️</button>
+      </span>
       <button class="primary" type="submit">Unlock</button>
     </form>
     <p class="warn low" id="unlockMsg"></p>
@@ -704,8 +710,16 @@ $("unlockForm").onsubmit = async (ev) => {
   if(!t){ $("unlockMsg").textContent = "That password isn't right."; return; }
   TOKEN = t; ROLE = r;
   if(r === "organiser" && location.hash !== "#organiser") location.hash = "#organiser";   // organiser password → organiser view
-  $("unlockInput").value = ""; $("unlockMsg").textContent = "";
+  $("unlockInput").value = ""; $("unlockInput").type = "password"; $("pwEye").textContent = "👁️"; $("unlockMsg").textContent = "";
   await load();
+};
+$("pwEye").onclick = () => {
+  const i = $("unlockInput"), show = i.type === "password";
+  i.type = show ? "text" : "password";
+  $("pwEye").textContent = show ? "🙈" : "👁️";
+  $("pwEye").setAttribute("aria-label", show ? "Hide password" : "Show password");
+  $("pwEye").setAttribute("aria-pressed", String(show));
+  i.focus();
 };
 $("lockLink").onclick = (e) => { e.preventDefault(); lockDevice(); };
 
