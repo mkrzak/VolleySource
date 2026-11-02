@@ -253,6 +253,28 @@
   .lempty{color:var(--muted);text-align:center;padding:18px 8px}
   body.compact .lrow{padding:7px 10px;gap:10px;grid-template-columns:44px 1fr auto}
   body.compact .ldate .dn{font-size:21px}
+  .duty{display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:center;padding:8px 10px;margin-bottom:7px;border-radius:12px;
+    border:1px solid color-mix(in srgb,#f59e0b 35%,var(--line));border-left:5px solid #f59e0b;background:color-mix(in srgb,#f59e0b 7%,var(--card))}
+  .duty.taken{border-left-color:var(--in);background:color-mix(in srgb,var(--in) 8%,var(--card));border-color:color-mix(in srgb,var(--in) 30%,var(--line))}
+  .dlabel{font-weight:700}
+  .dsel{font:inherit;font-size:15px;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:100%}
+  .duty.taken .dsel{font-weight:700;color:#15803d}
+  .tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;color:#fff;background:var(--c);border-radius:6px;padding:2px 6px;margin-right:7px;vertical-align:2px;font-family:Inter,system-ui,sans-serif}
+  .tag.home{--c:#2563eb} .tag.away{--c:#e11d48} .tag.league{--c:#0d9488} .tag.ref{--c:#f59e0b}
+  .game-head .title .tag{font-size:12px;vertical-align:4px}
+  .ev.away{--c:#e11d48} .legend .away{--c:#e11d48} .lrow.away{--c:#e11d48}
+  /* full-colour list tiles */
+  .lrow{background:linear-gradient(135deg,var(--c) 0%,color-mix(in srgb,var(--c) 78%,#000) 100%) !important;color:#fff !important;
+    border:0 !important;border-left:0 !important;box-shadow:0 2px 8px color-mix(in srgb,var(--c) 35%,transparent)}
+  .lrow .ldate .dw{color:rgba(255,255,255,.85)}
+  .lrow .ldate .dn{color:#fff}
+  .lrow .ldate{background:rgba(255,255,255,.16);border-radius:10px;padding:4px 0}
+  .lrow .linfo .lm{color:rgba(255,255,255,.88)}
+  .lrow .tag{background:#fff;color:var(--c)}
+  .lrow .lcnt{background:#fff !important;border:0 !important;color:#374151}
+  .lrow .lcnt.ok{color:#15803d} .lrow .lcnt.short{color:#dc2626}
+  .lrow.sel{box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--c) !important}
+  .lrow.past{opacity:.5}
   .pinrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .pinrow input{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);width:140px}
   h3.sub{font-size:14px;margin:6px 0 10px;color:var(--ink)}
@@ -308,8 +330,8 @@
   <section class="card" id="calCard">
     <div class="viewbar">
       <div class="seg" role="tablist" aria-label="View">
-        <button type="button" id="vCal" role="tab">📅 Calendar</button>
         <button type="button" id="vList" role="tab">☰ List</button>
+        <button type="button" id="vCal" role="tab">📅 Calendar</button>
       </div>
       <label class="pastchk" id="pastWrap"><input type="checkbox" id="showPast"> Show past games</label>
     </div>
@@ -383,11 +405,11 @@
         <input type="hidden" name="id">
         <label>Date<input type="date" name="date" required></label>
         <label>Time<input name="time" placeholder="19:00" maxlength="20"></label>
-        <label class="full">Title<input name="opponent" placeholder="e.g. Home vs Tigers" required maxlength="80"></label>
+        <label class="full">Title<input name="opponent" placeholder="e.g. Panthers vs Tigers" required maxlength="80"></label>
         <label>Venue<input name="venue" placeholder="e.g. NCA" maxlength="80"></label>
         <label>Type<select name="type"><option>Home</option><option>Away</option><option>Local league</option><option>Ref</option></select></label>
         <label>Needed<input name="req" placeholder="team (+scorer)" maxlength="40"></label>
-        <label>Players needed<input type="number" name="need" min="1" max="30" value="6"></label>
+        <label>Players needed<input type="number" name="need" min="1" max="30" value="9"></label>
         <label class="full">Notes<input name="notes" placeholder="Meet time, kit colour…" maxlength="200"></label>
         <div class="full"><button class="primary" type="submit" id="saveGameBtn">Add game</button>
           <button class="ghost" type="button" id="cancelEdit" hidden>Cancel edit</button>
@@ -409,9 +431,9 @@
 const CONFIG = {"repo":"mkrzak/panthers-signups","path":"data.json","team":{"s":"0YmtbjfYmCksScfHy5W7fg==","i":"/lAy1dsH9p5s2fqn","c":"Cap5lqSk8O5cAyYky75sis+1QF/PDN5wIOHv4GU5KgHwwA5HXJpa0UajYMZORvHhOGEBl2XMtLxaQYL5keyyJs3PiZZyJbqgh7gIq6+KRKnYG05/LGIXjAGOfn3Xn2dIFRQiioLnlA9pl/4Tqg=="},"organiser":{"s":"etINNWxVxvopM+wIcxbmaA==","i":"TRXqiwue1hrxru5N","c":"fLpUTmn07LCYOe8T8ckpTwoexkN05BNRArUem0F68FVgEJsbeD9qSIywmI/btlEhRxnNxKwM9oQQ/lMk+r4pl8sUcQVh7FsThvNjI+3jb11GsELOy8LgLBXZd0zi8jCMipBWHna1NmxMZXVokQ=="}};
 /* ==================================================== */
 
-const DEFAULT_NEED = 6;
+const DEFAULT_NEED = 9;
 const PCOL = ["#2563eb","#db2777","#7c3aed","#0d9488","#ea580c","#0891b2","#9333ea","#16a34a","#e11d48","#4f46e5","#ca8a04","#0284c7","#c026d3","#059669"];
-const TCOL = {home:"#2563eb",away:"#7c3aed",league:"#0d9488",ref:"#f59e0b"};
+const TCOL = {home:"#2563eb",away:"#e11d48",league:"#0d9488",ref:"#f59e0b"};
 const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const $ = id => document.getElementById(id);
 const configured = !!(CONFIG.repo && CONFIG.team && CONFIG.organiser);
@@ -431,21 +453,28 @@ const todayStr = () => ymd(new Date());
 function parse(iso){ const [y,m,d] = iso.split("-").map(Number); return new Date(y,m-1,d); }
 function fmtDate(iso, long){ if(!iso) return ""; return parse(iso).toLocaleDateString("en-GB", long ? {weekday:"long",day:"numeric",month:"long"} : {weekday:"short",day:"numeric",month:"short"}); }
 function typeClass(g){ const t=(g.type||"").toLowerCase(); return t.startsWith("away")?"away":t.startsWith("local")?"league":t.startsWith("ref")?"ref":"home"; }
-const need = g => Number(g.need) || DEFAULT_NEED;
+const DUTIES = [["ref1","1st ref"],["ref2","2nd ref"],["scorer1","Scorer"],["scorer2","Scorer"]];
+const DUTY = Object.fromEntries(DUTIES);
+const DUTY_SHORT = { ref1:"R1", ref2:"R2", scorer1:"Sc", scorer2:"Sc" };
+const isRef = g => typeClass(g) === "ref";
+const need = g => isRef(g) ? DUTIES.length : (Number(g.need) || DEFAULT_NEED);
 function counts(gid){
   const r = responses[gid] || {}; const c = {in:0,maybe:0,out:0};
-  for(const p of PLAYERS){ const s = r[slug(p)]?.status; if(c[s] !== undefined) c[s]++; }
+  for(const p of PLAYERS){ const s = r[slug(p)]?.status; if(DUTY[s]) c.in++; else if(c[s] !== undefined) c[s]++; }
   c.none = PLAYERS.length - c.in - c.maybe - c.out; return c;
 }
-function shortLabel(g){ return (g.opponent||"Game").replace(/^Home vs /i,"").replace(/^Away vs /i,"@ "); }
+function shortLabel(g){ return (g.opponent||"Game").replace(/^(Panthers|Home|Away) vs\.? /i,""); }
+const dispTitle = g => String(g.opponent || "Game").replace(/^Ref:\s*/i, "");
+const TYPE_TAG = { home:"HOME", away:"AWAY", league:"LEAGUE", ref:"REF" };
+function tagEl(g){ const t = document.createElement("span"); t.className = "tag " + typeClass(g); t.textContent = TYPE_TAG[typeClass(g)]; return t; }
 function pageUrl(){ return location.href.split("#")[0]; }
 
 { const d = new Date(); viewY = d.getFullYear(); viewM = d.getMonth(); }
 try { selected = localStorage.getItem("vb-signup-game"); } catch(e){}
 
-let viewMode = "cal", showPast = false;
-try { if(localStorage.getItem("vb-signup-view") === "list") viewMode = "list"; } catch(e){}
-function setView(m){ viewMode = m; try{ localStorage.setItem("vb-signup-view", m); }catch(e){} render(); }
+let viewMode = "list", showPast = false;
+try { if(localStorage.getItem("vb-signup-view2") === "cal") viewMode = "cal"; } catch(e){}
+function setView(m){ viewMode = m; try{ localStorage.setItem("vb-signup-view2", m); }catch(e){} render(); }
 function select(id){ selected = id; openNote = null; try{ localStorage.setItem("vb-signup-game", id); }catch(e){} render(); }
 
 /* ---------- crypto: the GitHub key is stored encrypted with each password ---------- */
@@ -515,10 +544,39 @@ function applyRenames(d, map){
 let renaming = false;
 async function migrateNames(data){
   if(renaming || !data) return;
-  const needs = (data.players || []).some(n => RENAMES[n]) || (data.responses || []).some(r => RENAMES[r.player]);
+  const needs = (data.players || []).some(n => RENAMES[n]) || (data.responses || []).some(r => RENAMES[r.player])
+    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles");
   if(!needs) return;
   renaming = true;
-  try{ const { data: d } = await mutate(x => { applyRenames(x, RENAMES); }, "Rename players: " + Object.entries(RENAMES).map(([a,b]) => a + " → " + b).join(", ")); ingest(d); render(); }
+  try{ const { data: d } = await mutate(x => {
+    applyRenames(x, RENAMES);
+    x.done = x.done || [];
+    if(!x.done.includes("team-need-9")){            // one-off: full-team games need 9 players
+      for(const g of (x.games || [])) if(/^(home|away)/i.test(g.type || "")) g.need = 9;
+      x.done.push("team-need-9");
+    }
+    if(!x.done.includes("ref-duties")){             // one-off: ref games use duties instead of In/Maybe/Out
+      const refIds = new Set((x.games || []).filter(g => /^ref/i.test(g.type || "")).map(g => g.id));
+      for(const g of (x.games || [])) if(refIds.has(g.id)){ g.req = "1st ref, 2nd ref, 2 scorers"; g.need = 4; }
+      const keep = [], used = {};
+      for(const rsp of (x.responses || [])){
+        if(!refIds.has(rsp.game)){ keep.push(rsp); continue; }
+        if(rsp.status !== "in") continue;
+        const taken = used[rsp.game] = used[rsp.game] || new Set();
+        const slot = DUTIES.map(d => d[0]).find(k => !taken.has(k));
+        if(slot){ taken.add(slot); keep.push({ ...rsp, status: slot }); }
+      }
+      x.responses = keep; x.done.push("ref-duties");
+    }
+    if(!x.done.includes("juniors")){                // one-off: "Junior" → "Juniors" in game titles
+      for(const g of (x.games || [])) g.opponent = String(g.opponent || "").replace(/\bJunior\b(?!s)/g, "Juniors");
+      x.done.push("juniors");
+    }
+    if(!x.done.includes("panthers-titles")){        // one-off: "Home vs X" / "Away vs X" → "Panthers vs X"
+      for(const g of (x.games || [])) g.opponent = String(g.opponent || "").replace(/^(home|away)\s+vs\.?\s+/i, "Panthers vs ");
+      x.done.push("panthers-titles");
+    }
+  }, "Update squad names, team minimum (9), ref duties, Juniors and game titles"); ingest(d); render(); }
   catch(e){ /* someone else will retry on their next visit */ }
   finally{ renaming = false; }
 }
@@ -634,7 +692,7 @@ function renderList(){
     const dn = document.createElement("span"); dn.className = "dn"; dn.textContent = d.getDate();
     dt.append(dw, dn);
     const info = document.createElement("span"); info.className = "linfo";
-    const lt = document.createElement("div"); lt.className = "lt"; lt.textContent = g.opponent || "Game";
+    const lt = document.createElement("div"); lt.className = "lt"; lt.append(tagEl(g), document.createTextNode(dispTitle(g)));
     const lm = document.createElement("div"); lm.className = "lm"; lm.textContent = [g.time, g.venue, g.req].filter(Boolean).join(" · ");
     info.append(lt, lm);
     const k = document.createElement("span"); k.className = "lcnt " + (c.in >= nd ? "ok" : (g.date >= t ? "short" : "")); k.textContent = (c.in >= nd ? "✓ " : "") + c.in + "/" + nd;
@@ -681,10 +739,14 @@ function renderGame(){
   const g = games.find(x => x.id === selected);
   $("gameCard").hidden = !g;
   if(!g) return;
-  $("gTitle").textContent = g.opponent || "Game";
+  $("gTitle").replaceChildren(tagEl(g), document.createTextNode(dispTitle(g)));
   $("gMeta").textContent = [fmtDate(g.date,true), g.time, g.venue].filter(Boolean).join(" · ");
-  $("gNotes").textContent = [g.type, g.req ? "Needed: "+g.req : "", g.notes].filter(Boolean).join(" · ");
+  $("gNotes").textContent = [g.req ? "Needed: "+g.req : "", g.notes].filter(Boolean).join(" · ");
   const c = counts(g.id), nd = need(g), r = responses[g.id] || {};
+  const refGame = isRef(g);
+  document.querySelector("#gameCard .tally").style.display = refGame ? "none" : "";
+  if(refGame){ renderDuties(g, r); return; }
+  $("players").hidden = false; $("groups").hidden = false;
   $("cIn").textContent=c.in; $("cMaybe").textContent=c.maybe; $("cOut").textContent=c.out; $("cNone").textContent=c.none;
   const w = $("warn");
   if(c.in < nd){ w.className="warn low"; w.textContent = `Need ${nd - c.in} more (${nd} wanted).`; }
@@ -750,6 +812,49 @@ function renderGame(){
   }
 }
 
+function dutyHolder(r, key){ const p = PLAYERS.find(n => r[slug(n)]?.status === key); return p || ""; }
+function renderDuties(g, r){
+  const filled = DUTIES.filter(([k]) => dutyHolder(r, k)).length;
+  const w = $("warn");
+  if(filled < DUTIES.length){ w.className = "warn low"; w.textContent = `${DUTIES.length - filled} of ${DUTIES.length} duties still free — pick one below.`; }
+  else { w.className = "warn ok"; w.textContent = "✓ All duties covered."; }
+  $("orgDetail").hidden = !organiser; $("groups").hidden = true;
+  const ul = $("players"); ul.innerHTML = ""; ul.hidden = false;
+  for(const [key, label] of DUTIES){
+    const holder = dutyHolder(r, key);
+    const li = document.createElement("li"); li.className = "duty" + (holder ? " taken" : "");
+    const lab = document.createElement("span"); lab.className = "dlabel"; lab.textContent = label;
+    const sel = document.createElement("select"); sel.className = "dsel"; sel.setAttribute("aria-label", label);
+    const free = document.createElement("option"); free.value = ""; free.textContent = holder ? "— free this up —" : "Tap to pick your name…"; sel.appendChild(free);
+    for(const p of PLAYERS){
+      const o = document.createElement("option"); o.value = p;
+      const other = r[slug(p)]?.status; o.textContent = p + (other && DUTY[other] && other !== key ? " (" + DUTY[other] + ")" : "");
+      if(p === holder) o.selected = true;
+      sel.appendChild(o);
+    }
+    sel.disabled = !configured || !TOKEN;
+    sel.onchange = () => assignDuty(g, key, sel.value);
+    li.append(lab, sel); ul.appendChild(li);
+  }
+}
+let dutyBusy = false;
+async function assignDuty(g, key, player){
+  const r = { ...(responses[g.id] || {}) };
+  for(const k of Object.keys(r)) if(r[k]?.status === key || (player && k === slug(player))) delete r[k];
+  if(player) r[slug(player)] = { status: key, note: "" };
+  responses[g.id] = r; render();
+  pending++;
+  try{
+    const { data } = await mutate(d => {
+      d.responses = (d.responses || []).filter(x => !(x.game === g.id && (x.status === key || (player && x.player === player))));
+      if(player) d.responses.push({ game: g.id, player, status: key, note: "", updated: new Date().toISOString() });
+    }, player ? `${player}: ${DUTY[key]} – ${g.opponent} ${g.date}` : `${DUTY[key]} freed – ${g.opponent} ${g.date}`);
+    if(pending === 1) ingest(data);
+    setStatus("");
+  }catch(e){ if(!authFailed(e)){ setStatus("Couldn't save – please try again."); load(); } }
+  finally{ pending--; render(); }
+}
+
 function renderMatrix(){
   $("matrixCard").hidden = !organiser;
   if(!organiser) return;
@@ -768,13 +873,13 @@ function renderMatrix(){
     hr.appendChild(th);
   }
   thead.appendChild(hr); tb.appendChild(thead);
-  const body = document.createElement("tbody"), SYM = {in:"✓", maybe:"?", out:"✗"};
+  const body = document.createElement("tbody"), SYM = {in:"✓", maybe:"?", out:"✗", ...DUTY_SHORT};
   for(const p of PLAYERS){
     const tr = document.createElement("tr");
     const td0 = document.createElement("td"); td0.textContent = p; tr.appendChild(td0);
     for(const g of list){
       const x = (responses[g.id]||{})[slug(p)] || {};
-      const td = document.createElement("td"); td.className = (x.status||"none") + (g.id===selected ? " selcol" : "");
+      const td = document.createElement("td"); td.className = (DUTY[x.status] ? "in" : (x.status||"none")) + (g.id===selected ? " selcol" : "");
       td.textContent = SYM[x.status] || "·"; if(x.note) td.title = x.note;
       tr.appendChild(td);
     }
@@ -809,8 +914,16 @@ function render(){
 
 function reminderText(g){
   const c = counts(g.id), nd = need(g), r = responses[g.id] || {};
+  if(isRef(g)){
+    const lines = [`🟨 ${g.opponent} — ${fmtDate(g.date,true)}${g.time ? ", "+g.time : ""}${g.venue ? " @ "+g.venue : ""}`];
+    for(const [k, label] of DUTIES) lines.push(`${label}: ${dutyHolder(r, k) || "FREE"}`);
+    lines.push(c.in < nd ? "Please pick a free duty here:" : "All covered — thank you! Changes here:");
+    lines.push(pageUrl());
+    return lines.join("\n");
+  }
   const pick = s => PLAYERS.filter(p => (r[slug(p)]?.status || "none") === s);
-  const lines = [`🏐 ${g.opponent} — ${fmtDate(g.date,true)}${g.time ? ", "+g.time : ""}${g.venue ? " @ "+g.venue : ""}`];
+  const where = { home:" (Home)", away:" (Away)", league:" (Local league)" }[typeClass(g)] || "";
+  const lines = [`🏐 ${g.opponent}${where} — ${fmtDate(g.date,true)}${g.time ? ", "+g.time : ""}${g.venue ? " @ "+g.venue : ""}`];
   if(g.req) lines.push(`Needed: ${g.req}`);
   lines.push(`In so far (${c.in}/${nd}): ${pick("in").join(", ") || "nobody yet"}`);
   if(c.maybe) lines.push(`Maybe: ${pick("maybe").join(", ")}`);
@@ -858,7 +971,7 @@ function renderTools(){
 $("squadText").oninput = () => { squadDirty = true; };
 $("switchLogin").onclick = () => { lockDevice(); };
 function resetForm(){
-  const f = $("addForm"); f.reset(); f.id.value = ""; f.need.value = 6;
+  const f = $("addForm"); f.reset(); f.id.value = ""; f.need.value = DEFAULT_NEED;
   $("formTitle").textContent = "Add a game"; $("saveGameBtn").textContent = "Add game"; $("cancelEdit").hidden = true;
 }
 $("cancelEdit").onclick = () => { resetForm(); $("formMsg").textContent = ""; };
