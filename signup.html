@@ -275,6 +275,19 @@
   .lrow .lcnt.ok{color:#15803d} .lrow .lcnt.short{color:#dc2626}
   .lrow.sel{box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--c) !important}
   .lrow.past{opacity:.5}
+  /* game details slide in from the side */
+  #gameCard{position:fixed;top:0;right:0;bottom:0;width:min(480px,100vw);margin:0 !important;border-radius:18px 0 0 18px !important;
+    overflow-y:auto;overscroll-behavior:contain;z-index:60;transform:translateX(105%);transition:transform .25s ease;
+    box-shadow:-10px 0 30px rgba(17,24,39,.25);padding-top:26px !important;visibility:hidden}
+  body.drawer-open #gameCard{transform:none;visibility:visible}
+  .scrim{position:fixed;inset:0;background:rgba(15,17,21,.4);z-index:55;opacity:0;pointer-events:none;transition:opacity .2s}
+  body.drawer-open .scrim{opacity:1;pointer-events:auto}
+  body.drawer-open{overflow:hidden}
+  .closeDrawer{position:sticky;top:0;float:right;margin:-14px -4px 0 8px;z-index:2;font:inherit;font-size:16px;font-weight:700;width:36px;height:36px;border-radius:50%;
+    border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+  #gameCard .players{grid-template-columns:1fr !important}
+  @media (max-width:560px){ #gameCard{border-radius:0 !important;width:100vw} }
+  @media (prefers-reduced-motion: reduce){ #gameCard,.scrim{transition:none} }
   .pinrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .pinrow input{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);width:140px}
   h3.sub{font-size:14px;margin:6px 0 10px;color:var(--ink)}
@@ -352,7 +365,9 @@
     </div>
   </section>
 
-  <section class="card" id="gameCard" hidden>
+  <div id="scrim" class="scrim"></div>
+  <section class="card" id="gameCard" hidden role="dialog" aria-modal="true" aria-labelledby="gTitle">
+    <button type="button" class="closeDrawer" id="closeDrawer" aria-label="Close">✕</button>
     <div class="game-head">
       <div>
         <div class="title" id="gTitle"></div>
@@ -697,7 +712,7 @@ function renderList(){
     info.append(lt, lm);
     const k = document.createElement("span"); k.className = "lcnt " + (c.in >= nd ? "ok" : (g.date >= t ? "short" : "")); k.textContent = (c.in >= nd ? "✓ " : "") + c.in + "/" + nd;
     b.append(dt, info, k);
-    b.onclick = () => { viewY = d.getFullYear(); viewM = d.getMonth(); monthPicked = true; select(g.id); $("gameCard").scrollIntoView({behavior:"smooth", block:"start"}); };
+    b.onclick = () => { viewY = d.getFullYear(); viewM = d.getMonth(); monthPicked = true; select(g.id); openDrawer(); };
     box.appendChild(b);
   }
 }
@@ -728,7 +743,7 @@ function renderCalendar(){
       const l = document.createElement("span"); l.className="lbl"; l.textContent = shortLabel(g);
       const k = document.createElement("span"); k.className = "cnt " + (c.in>=nd ? "ok" : (iso>=t ? "short" : "")); k.textContent = c.in + "/" + nd;
       b.append(l,k);
-      b.onclick = () => { select(g.id); $("gameCard").scrollIntoView({behavior:"smooth", block:"start"}); };
+      b.onclick = () => { select(g.id); openDrawer(); };
       cell.appendChild(b);
     }
     cal.appendChild(cell);
@@ -869,7 +884,7 @@ function renderMatrix(){
     const th = document.createElement("th"); if(g.id===selected) th.className="selcol";
     th.textContent = fmtDate(g.date);
     const s = document.createElement("span"); s.className="t"; s.textContent = shortLabel(g); s.style.setProperty("--hc", TCOL[typeClass(g)]); th.appendChild(s);
-    th.onclick = () => select(g.id);
+    th.onclick = () => { select(g.id); openDrawer(); };
     hr.appendChild(th);
   }
   thead.appendChild(hr); tb.appendChild(thead);
@@ -948,6 +963,14 @@ function pickDefaultGame(){
   if(next && !monthPicked){ const d = parse(next.date); viewY = d.getFullYear(); viewM = d.getMonth(); }
 }
 
+function openDrawer(){
+  document.body.classList.add("drawer-open");
+  const c = $("gameCard"); c.scrollTop = 0; setTimeout(() => $("closeDrawer").focus({ preventScroll: true }), 50);
+}
+function closeDrawer(){ document.body.classList.remove("drawer-open"); openNote = null; }
+$("closeDrawer").onclick = closeDrawer;
+$("scrim").onclick = closeDrawer;
+document.addEventListener("keydown", e => { if(e.key === "Escape" && document.body.classList.contains("drawer-open")) closeDrawer(); });
 $("vCal").onclick = () => setView("cal");
 $("vList").onclick = () => setView("list");
 $("showPast").onchange = (e) => { showPast = e.target.checked; render(); };
@@ -982,7 +1005,7 @@ $("editBtn").onclick = () => {
   f.need.value = need(g);
   f.type.value = ["Home","Away","Local league","Ref"].find(t => t.toLowerCase() === String(g.type||"").toLowerCase()) || "Home";
   $("formTitle").textContent = "Edit game"; $("saveGameBtn").textContent = "Save changes"; $("cancelEdit").hidden = false;
-  $("toolsCard").scrollIntoView({ behavior: "smooth" });
+  closeDrawer(); $("toolsCard").scrollIntoView({ behavior: "smooth" });
 };
 $("addForm").onsubmit = async (ev) => {
   ev.preventDefault();
@@ -1005,6 +1028,7 @@ $("addForm").onsubmit = async (ev) => {
 $("delBtn").onclick = () => { $("delBtn").hidden = true; $("delConfirm").classList.add("show"); };
 $("delNo").onclick = () => { $("delBtn").hidden = false; $("delConfirm").classList.remove("show"); };
 $("delYes").onclick = async () => {
+  closeDrawer();
   $("delBtn").hidden = false; $("delConfirm").classList.remove("show");
   const id = selected; if(!id) return;
   const g = games.find(x => x.id === id);
