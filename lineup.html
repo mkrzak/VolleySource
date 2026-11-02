@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Game Line-up · VolleySource</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fafafa;--card:#fff;--ink:#111827;--muted:#6b7280;--faint:#9ca3af;--line:#e5e7eb;--soft:#f3f4f6;--accent:#4f46e5;
+    --S:#1E6EDB;--OH:#F08A28;--M:#7B4FD8;--OPP:#D63A3B;--L:#1EA36A;--court:#f1f5f9;--front:#e2e8f0}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);font-size:14px;background:var(--bg)}
+  header{max-width:1240px;margin:0 auto;padding:18px 16px 6px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  header h1{font-size:20px;font-weight:800;margin:0;letter-spacing:-.01em}
+  header a{color:var(--muted);font-size:13px;text-decoration:none}
+  header a:hover{color:var(--ink)}
+  main{max-width:1240px;margin:0 auto;padding:8px 16px 40px}
+  .status{font-size:13px;color:var(--muted);text-align:center;padding:6px}
+  .colh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .btn{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:7px 11px;cursor:pointer}
+  .btn:hover{border-color:#cbd5e1}
+  .btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .link{font:inherit;font-size:12px;border:0;background:none;color:var(--muted);cursor:pointer;padding:0}
+  .link:hover{color:var(--ink)}
+
+  /* login */
+  .gate{max-width:360px;margin:60px auto;text-align:center}
+  .gate h2{font-size:17px;margin:0 0 6px}
+  .gate p{color:var(--muted);margin:0 0 14px}
+  .pinrow{display:flex;gap:8px;justify-content:center}
+  .pwwrap{position:relative;flex:1}
+  .pwwrap input{font:inherit;width:100%;padding:9px 38px 9px 11px;border:1px solid var(--line);border-radius:8px;background:#fff}
+  .pweye{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;font-size:16px;cursor:pointer;padding:4px 6px}
+  .err{color:#dc2626;font-size:13px;min-height:18px;margin-top:8px}
+
+  /* three columns */
+  .cols{display:grid;grid-template-columns:250px 260px minmax(0,1fr);gap:14px;align-items:start}
+  @media (max-width:980px){ .cols{grid-template-columns:250px minmax(0,1fr)} .colC{grid-column:1 / -1} }
+  @media (max-width:600px){ .cols{grid-template-columns:1fr} }
+
+  /* players (left) */
+  .plist{display:flex;flex-direction:column;gap:3px;max-height:70vh;overflow:auto}
+  @media (max-width:600px){ .plist{flex-direction:row;flex-wrap:wrap;max-height:none} }
+  .pl{font:inherit;display:flex;justify-content:space-between;align-items:center;gap:6px;text-align:left;border:1px solid transparent;background:none;
+    padding:7px 9px;border-radius:8px;cursor:grab;color:var(--ink)}
+  .pl:hover{background:var(--soft)}
+  .pl.picked{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,#fff)}
+  .pl.used{color:var(--faint)}
+  .pl .ptag{font-size:10.5px;font-weight:800;color:#fff;border-radius:5px;padding:2px 5px}
+  @media (max-width:600px){ .pl{border-color:var(--line);padding:6px 9px} }
+
+  /* positions (middle) */
+  .pos{display:grid;grid-template-columns:40px 1fr 18px;gap:8px;align-items:center;padding:7px 8px;border-radius:9px;border:1px dashed var(--line);margin-bottom:6px;cursor:pointer;min-height:44px}
+  .pos.filled{border-style:solid;background:#fff}
+  .pos.target{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,#fff)}
+  .pos.dragover{border-color:var(--accent);border-style:solid;background:color-mix(in srgb,var(--accent) 12%,#fff)}
+  .badge{font-size:11px;font-weight:800;color:#fff;border-radius:6px;text-align:center;padding:4px 0}
+  .pname{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pname.empty{color:var(--faint);font-weight:500}
+  .pname small{display:block;font-size:11px;color:var(--faint);font-weight:500}
+  .num{font:inherit;font-size:13px;font-weight:700;padding:5px 4px;border:1px solid var(--line);border-radius:7px;background:#fff;width:100%}
+  .num:disabled{opacity:.35}
+  .prow{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:6px;align-items:center}
+  .prow .pl{min-width:0}
+  .prow .pl span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .prow .num{padding:4px 2px;font-size:12.5px}
+  .prow.dup .num{border-color:#f59e0b;background:#fffbeb}
+  .dupnote{font-size:11.5px;color:#b45309;font-weight:600;margin-top:6px}
+  @media (max-width:600px){ .plist{flex-direction:column !important} .prow .pl{border-color:transparent !important} }
+  .x{border:0;background:none;color:var(--faint);cursor:pointer;font-size:15px;padding:0}
+  .x:hover{color:#dc2626}
+  .dupwarn{grid-column:2 / -1;font-size:11.5px;color:#b45309;font-weight:600}
+  .actions{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+  .saved{font-size:12.5px;color:#15803d;font-weight:600}
+  .tip{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.45}
+
+  /* rotation (right) */
+  .bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+  .seg button{font:inherit;font-size:12.5px;font-weight:600;border:0;border-right:1px solid var(--line);background:none;color:var(--muted);padding:6px 10px;cursor:pointer}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--ink);color:#fff}
+  .sub{font-size:12px;color:var(--muted)}
+  svg.court{width:100%;max-width:440px;display:block;margin:0 auto;height:auto}
+  .note{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.45;text-align:center}
+  .sheet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
+  @media (max-width:600px){ .sheet{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  .mini{border:1px solid var(--line);border-radius:10px;padding:6px;background:#fff;cursor:pointer}
+  .mini:hover{border-color:#cbd5e1}
+  .mini.on{border-color:var(--ink)}
+  .mini h4{margin:0 0 4px;font-size:12px;font-weight:700;display:flex;justify-content:space-between}
+  .mini h4 span{color:var(--faint);font-weight:500}
+  [hidden]{display:none !important}
+  @media print{
+    header a,.noprint,#loginCard{display:none !important}
+    body{background:#fff} .cols{grid-template-columns:1fr} .panel{border:0;padding:0}
+    .colA,.colB{display:none} .sheet{grid-template-columns:repeat(3,1fr)} .mini{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Game Line-up</h1>
+  <a href="./">← VolleySource</a>
+</header>
+<main>
+  <div class="status" id="status" hidden></div>
+
+  <section class="gate" id="loginCard">
+    <h2>🔒 Organiser only</h2>
+    <p>Enter the organiser password.</p>
+    <form id="loginForm" class="pinrow">
+      <span class="pwwrap">
+        <input type="password" id="pw" placeholder="Password" autocomplete="current-password" required>
+        <button type="button" class="pweye" id="pwEye" aria-label="Show password">👁️</button>
+      </span>
+      <button class="btn dark" type="submit">Unlock</button>
+    </form>
+    <div class="err" id="loginMsg"></div>
+  </section>
+
+  <div class="cols" id="app" hidden>
+    <section class="panel colA noprint">
+      <div class="colh">Players <span id="pcount"></span></div>
+      <div class="plist" id="plist"></div>
+    </section>
+
+    <section class="panel colB noprint">
+      <div class="colh">Positions <button class="link" id="clearBtn" type="button">Clear all</button></div>
+      <div id="slots"></div>
+      <div class="actions">
+        <button class="btn dark" id="saveBtn" type="button">Save line-up</button>
+        <span class="saved" id="savedMsg"></span>
+      </div>
+      <div class="tip">Pick each player's shirt number in the list. Then tap a player and a position – or drag the name across. The Libero comes on for whichever middle is in the back row.</div>
+    </section>
+
+    <section class="panel colC">
+      <div class="colh">Rotation <button class="link noprint" type="button" id="printBtn">Print</button></div>
+      <div class="bar noprint">
+        <div class="seg" id="rotbar"></div>
+        <div class="seg" id="viewSeg">
+          <button type="button" data-v="base">Rotation</button>
+          <button type="button" data-v="recv">Serve receive</button>
+        </div>
+      </div>
+      <div class="sub" id="courtTitle"></div>
+      <svg class="court" id="court" viewBox="0 0 245 276" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="note" id="courtNote"></div>
+    </section>
+  </div>
+</main>
+<script>
+/* ===== SETTINGS: same locked key as the Game Sign-up page (filled in on install) ===== */
+const CONFIG = {"repo":"mkrzak/panthers-signups","path":"data.json","team":{"s":"0YmtbjfYmCksScfHy5W7fg==","i":"/lAy1dsH9p5s2fqn","c":"Cap5lqSk8O5cAyYky75sis+1QF/PDN5wIOHv4GU5KgHwwA5HXJpa0UajYMZORvHhOGEBl2XMtLxaQYL5keyyJs3PiZZyJbqgh7gIq6+KRKnYG05/LGIXjAGOfn3Xn2dIFRQiioLnlA9pl/4Tqg=="},"organiser":{"s":"etINNWxVxvopM+wIcxbmaA==","i":"TRXqiwue1hrxru5N","c":"fLpUTmn07LCYOe8T8ckpTwoexkN05BNRArUem0F68FVgEJsbeD9qSIywmI/btlEhRxnNxKwM9oQQ/lMk+r4pl8sUcQVh7FsThvNjI+3jb11GsELOy8LgLBXZd0zi8jCMipBWHna1NmxMZXVokQ=="}};
+/* ===================================================================================== */
+/* ---------- crypto: the GitHub key is stored encrypted with each password ---------- */
+const enc = new TextEncoder(), dec = new TextDecoder();
+const toB64 = u8 => { let s=""; u8.forEach(b => s += String.fromCharCode(b)); return btoa(s); };
+const fromB64 = b => Uint8Array.from(atob(b), c => c.charCodeAt(0));
+async function keyFrom(pw, salt){
+  const base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name:"PBKDF2", salt, iterations: 250000, hash:"SHA-256" }, base, { name:"AES-GCM", length:256 }, false, ["encrypt","decrypt"]);
+}
+async function seal(secret, pw){
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name:"AES-GCM", iv }, await keyFrom(pw, salt), enc.encode(secret)));
+  return { s: toB64(salt), i: toB64(iv), c: toB64(ct) };
+}
+async function unseal(box, pw){
+  try{ return dec.decode(await crypto.subtle.decrypt({ name:"AES-GCM", iv: fromB64(box.i) }, await keyFrom(pw, fromB64(box.s)), fromB64(box.c))); }
+  catch(e){ return null; }
+}
+
+/* ---------- GitHub storage (data.json in a private repo) ---------- */
+let fileSha = null, etag = null, raw = null;
+const b64utf8 = str => toB64(enc.encode(str));
+const utf8b64 = b => dec.decode(fromB64(b.replace(/\s/g,"")));
+function ghUrl(repo, path){ return `https://api.github.com/repos/${repo}/contents/${path.split("/").map(encodeURIComponent).join("/")}`; }
+function ghHeaders(token, extra){ return { Authorization: "Bearer " + token, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", ...(extra||{}) }; }
+class AuthError extends Error {}
+async function fetchFile(conditional){
+  const r = await fetch(ghUrl(CONFIG.repo, CONFIG.path), { cache: "no-store",
+    headers: ghHeaders(TOKEN, conditional && etag ? { "If-None-Match": etag } : {}) });
+  if(r.status === 304) return null;
+  if(r.status === 401 || r.status === 403) throw new AuthError("The sign-up key isn't working (it may have expired). Please tell the organiser.");
+  if(!r.ok) throw new Error("GitHub said " + r.status);
+  const j = await r.json();
+  etag = r.headers.get("ETag"); fileSha = j.sha; raw = JSON.parse(utf8b64(j.content));
+  return raw;
+}
+let queue = Promise.resolve();
+function mutate(fn, message){
+  const job = queue.then(async () => {
+    for(let attempt = 0; attempt < 6; attempt++){
+      if(!raw || attempt > 0) await fetchFile(false);
+      const next = JSON.parse(JSON.stringify(raw));
+      const extra = fn(next);
+      const r = await fetch(ghUrl(CONFIG.repo, CONFIG.path), { method: "PUT", headers: ghHeaders(TOKEN, { "Content-Type": "application/json" }),
+        body: JSON.stringify({ message, content: b64utf8(JSON.stringify(next, null, 1) + "\n"), sha: fileSha }) });
+      if(r.ok){ const j = await r.json(); fileSha = j.content.sha; etag = null; raw = next; return { data: next, extra }; }
+      if(r.status === 401 || r.status === 403) throw new AuthError("The sign-up key isn't working (it may have expired). Please tell the organiser.");
+      if(r.status === 409 || r.status === 422){ await new Promise(res => setTimeout(res, 300 + attempt * 400 + Math.random() * 400)); continue; }
+      throw new Error("GitHub said " + r.status);
+    }
+    throw new Error("Too many people saving at once – please try again.");
+  });
+  queue = job.catch(() => {});
+  return job;
+}
+
+
+const $ = id => document.getElementById(id);
+const statusEl = $("status");
+function setStatus(t){ statusEl.textContent = t || ""; statusEl.hidden = !t; }
+let TOKEN = null, PLAYERS = [];
+
+/* ---------- positions ---------- */
+const ROLES = [
+  { k:"S",   label:"Setter (S)",     tag:"S",   c:"var(--S)",   hex:"#1E6EDB" },
+  { k:"OH1", label:"Outside 1 (OH1)",tag:"OH1", c:"var(--OH)",  hex:"#F08A28" },
+  { k:"OH2", label:"Outside 2 (OH2)",tag:"OH2", c:"var(--OH)",  hex:"#F08A28" },
+  { k:"OPP", label:"Opposite (OPP)", tag:"OPP", c:"var(--OPP)", hex:"#D63A3B" },
+  { k:"M1",  label:"Middle 1 (M1)",  tag:"M1",  c:"var(--M)",   hex:"#7B4FD8" },
+  { k:"M2",  label:"Middle 2 (M2)",  tag:"M2",  c:"var(--M)",   hex:"#7B4FD8" },
+  { k:"L",   label:"Libero (L)",     tag:"L",   c:"var(--L)",   hex:"#1EA36A" },
+];
+const ROLE = Object.fromEntries(ROLES.map(r => [r.k, r]));
+const SHIRTS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,25,26];
+// numbers from the Panthers team-shirts list, offered as a starting point (can be changed)
+const SHIRT_DEFAULT = { Rachel:3, Divina:4, Federica:6, Meg:7, Cay:8, Nhenze:9, Nikii:11, Nikki:11, Rochelle:12, Claudia:13 };
+
+/* rotation 1 = setter in position 1; order round the court as on the 5:1 Receive page */
+const ROT1 = { S:1, OH1:2, M1:3, OPP:4, OH2:5, M2:6 };
+const posOf = (role, n) => ((ROT1[role] - 1 + n - 1) % 6) + 1;
+const FRONT = new Set([2,3,4]);
+/* base spots (zone centres) on a 225 x 225 court, net at the top */
+const ZONE = { 4:[37.5,40], 3:[112.5,40], 2:[187.5,40], 5:[37.5,152], 6:[112.5,152], 1:[187.5,152] };
+
+/* defensive shapes from the 5:1 Defence page (225 x 225 court, net at y = 5; third value 1 = blocking) */
+const MID = { LF:[57,82], MF:[114,14,1], RF:[165,82], LB:[50,156], MB:[112,192], RB:[176,154], att:112.5 };
+const SHAPES = {
+  per: { out:{ att:205, LF:[22,77], MF:[158,14,1], RF:[196,14,1], LB:[23,150], MB:[108,203], RB:[203,150] }, mid:MID,
+         opp:{ att:20,  LF:[27,14,1], MF:[65,14,1], RF:[203,77], LB:[22,150], MB:[117,203], RB:[202,150] } },
+  rot: { out:{ att:205, LF:[22,77], MF:[158,14,1], RF:[196,14,1], LB:[22,205], MB:[201,205], RB:[205,77] }, mid:MID,
+         opp:{ att:20,  LF:[27,14,1], MF:[65,14,1], RF:[203,77], LB:[20,77], MB:[24,205], RB:[203,205] } },
+  ctr: { out:{ att:205, LF:[86,77], MF:[158,14,1], RF:[196,14,1], LB:[23,77], MB:[22,203], RB:[203,203] }, mid:MID,
+         opp:{ att:20,  LF:[27,14,1], MF:[65,14,1], RF:[139,77], LB:[22,203], MB:[203,203], RB:[202,77] } },
+};
+const RECV = {"1": {"1": [204.9, 150.3], "2": [177.3, 140.2], "3": [84.9, 62.9], "4": [19.7, 87.8], "5": [39.4, 147.8], "6": [112.2, 172.3]}, "2": {"1": [185.1, 145.0], "2": [150.0, 20.7], "3": [42.4, 132.7], "4": [39.8, 64.4], "5": [77.3, 190.0], "6": [108.0, 159.7]}, "3": {"1": [179.3, 147.6], "2": [163.6, 62.9], "3": [150.0, 20.7], "4": [37.7, 133.9], "5": [105.4, 163.0], "6": [147.4, 187.7]}, "4": {"1": [212.9, 187.2], "2": [48.2, 135.8], "3": [28.9, 62.9], "4": [19.3, 20.7], "5": [112.6, 167.4], "6": [178.4, 147.1]}, "5": {"1": [183.1, 144.0], "2": [193.6, 60.7], "3": [42.4, 132.7], "4": [17.0, 60.7], "5": [100.8, 64.4], "6": [112.3, 162.5]}, "6": {"1": [184.6, 147.6], "2": [186.3, 62.9], "3": [172.4, 21.9], "4": [37.1, 135.3], "5": [106.5, 173.7], "6": [158.3, 44.4]}};   // serve-receive spots per rotation (by position), from the 5:1 Receive page
+const SYSNAME = { per:"Perimeter", rot:"Anti-clockwise", ctr:"Clockwise" };
+const ATTNAME = { out:"their outside", mid:"their middle", opp:"their opposite" };
+
+let shirts = {}, lineup = {}, rotation = 1, view = "base", sys = "per", attack = "out", dirty = false;
+
+/* who is on court in rotation n: position -> role (libero in for the back-row middle) */
+function onCourt(n){
+  const at = {};
+  for(const r of Object.keys(ROT1)){
+    let role = r; const p = posOf(r, n);
+    if((r === "M1" || r === "M2") && !FRONT.has(p) && lineup.L?.name) role = "L";
+    at[p] = { role, base: r };
+  }
+  return at;
+}
+/* defensive slots for rotation n, following the team's system */
+function defSlots(n){
+  const at = onCourt(n), front = [2,3,4].map(p => at[p]), back = [1,5,6].map(p => at[p]);
+  const fr = k => front.find(x => x.base === k), bk = k => back.find(x => x.base === k);
+  const frontM = front.find(x => x.base[0] === "M"), frontOH = front.find(x => x.base.startsWith("OH"));
+  const backOH = back.find(x => x.base.startsWith("OH")), backM = back.find(x => x.base[0] === "M");
+  const sFront = !!fr("S");
+  let RF, LF;
+  if(sFront){ RF = fr("S"); LF = frontOH; }
+  else if(n === 1){ RF = frontOH; LF = fr("OPP"); }          // rotation 1: opposite on the left, OH1 blocks right
+  else { RF = fr("OPP"); LF = frontOH; }
+  return { LF, MF: frontM, RF, LB: backM, MB: backOH, RB: sFront ? bk("OPP") : bk("S") };
+}
+
+/* ---------- drawing ---------- */
+const NS = "http://www.w3.org/2000/svg";
+function el(name, attrs, parent, text){
+  const e = document.createElementNS(NS, name);
+  for(const k in attrs) e.setAttribute(k, attrs[k]);
+  if(text != null) e.textContent = text;
+  if(parent) parent.appendChild(e);
+  return e;
+}
+function shortName(n){ return n.length > 11 ? n.slice(0, 10) + "…" : n; }
+function drawCourt(svg, n, mode, opts){
+  opts = opts || {};
+  const X = 10, Y = 22, big = !opts.mini;
+  svg.innerHTML = "";
+  el("rect", { x:X, y:2, width:225, height:16, fill:"#fef2f2", rx:3 }, svg);
+  el("text", { x:X+112.5, y:13, "text-anchor":"middle", "font-size":8, "font-weight":700, fill:"#9b2c2c", "letter-spacing":"1" }, svg, "OPPONENTS");
+  el("rect", { x:X, y:Y, width:225, height:225, fill:"var(--court)", stroke:"#94a3b8", "stroke-width":1.5, rx:2 }, svg);
+  el("rect", { x:X, y:Y, width:225, height:75, fill:"var(--front)" }, svg);
+  el("line", { x1:X, y1:Y+75, x2:X+225, y2:Y+75, stroke:"#94a3b8", "stroke-width":1 }, svg);
+  el("rect", { x:X-4, y:Y-3, width:233, height:3, fill:"#111827" }, svg);
+  if(mode === "base" || mode === "recv") for(const [z,[zx,zy]] of Object.entries(ZONE)) if(mode === "base")
+    el("text", { x:X+zx-32, y:Y+zy-24, "font-size":9, fill:"#8aa0b6", "font-weight":700 }, svg, z);
+
+  const at = onCourt(n);
+  let spots = [];
+  if(mode === "base" || mode === "recv"){
+    for(const p of [1,2,3,4,5,6]){
+      const [x, y] = mode === "recv" ? RECV[n][p] : ZONE[p];
+      spots.push({ role: at[p].role, base: at[p].base, x, y, pos: p });
+    }
+    if(mode === "recv"){   // the server, on their side
+      el("circle", { cx:X+190, cy:9, r:6, fill:"#D63A3B" }, svg);
+      el("text", { x:X+190, y:11.6, "text-anchor":"middle", "font-size":7, "font-weight":800, fill:"#fff" }, svg, "SV");
+    }
+  } else {
+    const shape = SHAPES[sys][attack], who = defSlots(n);
+    for(const sl of ["LF","MF","RF","LB","MB","RB"]){
+      const w = who[sl]; if(!w) continue;
+      spots.push({ role: w.role, base: w.base, x: shape[sl][0], y: shape[sl][1] - 5 + (shape[sl][2] ? 6 : 0), block: !!shape[sl][2], slot: sl });
+    }
+    // their attacker
+    const ax = shape.att;
+    el("circle", { cx:X+ax, cy:9, r:6, fill:"#D63A3B" }, svg);
+    el("text", { x:X+ax, y:11.6, "text-anchor":"middle", "font-size":7, "font-weight":800, fill:"#fff" }, svg, "A");
+    // block
+    const blockers = spots.filter(s => s.block);
+    if(blockers.length){
+      const xs = blockers.map(s => s.x);
+      el("rect", { x:X+Math.min(...xs)-12, y:Y-3, width:Math.max(...xs)-Math.min(...xs)+24, height:5, rx:2.5, fill:"#16283C", opacity:.85 }, svg);
+    }
+  }
+  const r = big ? 15 : 14;
+  for(const s of spots){
+    const info = ROLE[s.role], pl = lineup[s.role] || {};
+    const cx = X + s.x, cy = Y + s.y;
+    const g = el("g", {}, svg);
+    el("circle", { cx, cy, r, fill: info.hex, stroke:"#fff", "stroke-width":2.5 }, g);
+    const shirt = pl.name ? shirts[pl.name] : "";
+    if(shirt != null && shirt !== ""){
+      el("text", { x:cx, y:cy+1.5, "text-anchor":"middle", "font-size": big ? 13 : 12.5, "font-weight":800, fill:"#fff" }, g, String(shirt));
+      el("text", { x:cx, y:cy+9.5, "text-anchor":"middle", "font-size":6, "font-weight":700, fill:"#fff", opacity:.9 }, g, info.tag);
+    } else {
+      el("text", { x:cx, y:cy+3.5, "text-anchor":"middle", "font-size":9, "font-weight":800, fill:"#fff" }, g, info.tag);
+    }
+    const nm = pl.name ? shortName(pl.name) : "—";
+    const ty = cy + r + 10;
+    const tw = nm.length * (big ? 5.6 : 5.4) + 8;
+    el("rect", { x:cx - tw/2, y:ty - 8.5, width:tw, height:11.5, rx:5.5, fill:"#fff", opacity:.92 }, g);
+    el("text", { x:cx, y:ty, "text-anchor":"middle", "font-size": big ? 9.5 : 9.2, "font-weight":700, fill:"#16181d" }, g, nm);
+    if(s.role === "L" && big){
+      el("text", { x:cx, y:ty+10, "text-anchor":"middle", "font-size":7, fill:"#15803d", "font-weight":700 }, g, "in for " + s.base);
+    }
+  }
+}
+
+/* ---------- UI ---------- */
+let picked = null;          // player tapped in the list, waiting for a position
+function roleOf(name){ return ROLES.find(r => lineup[r.k]?.name === name); }
+function assign(roleK, name){
+  const prev = roleOf(name); if(prev) delete lineup[prev.k];          // one position per player
+  lineup[roleK] = { name };
+  picked = null; changed();
+}
+function renderPlayers(){
+  const box = $("plist"); box.innerHTML = "";
+  $("pcount").textContent = PLAYERS.length;
+  const counts = {};
+  for(const p of PLAYERS){ const n = shirts[p]; if(n !== "" && n != null) counts[n] = (counts[n] || 0) + 1; }
+  const playing = new Set(ROLES.map(r => lineup[r.k]?.name).filter(Boolean));
+  let dupMsg = "";
+  for(const p of PLAYERS){
+    const r = roleOf(p), n = shirts[p];
+    const row = document.createElement("div"); row.className = "prow";
+    const b = document.createElement("button"); b.type = "button"; b.className = "pl" + (picked === p ? " picked" : "") + (r ? " used" : "");
+    b.draggable = true;
+    const nm = document.createElement("span"); nm.textContent = p; b.appendChild(nm);
+    if(r){ const t = document.createElement("span"); t.className = "ptag"; t.style.background = r.hex; t.textContent = r.tag; b.appendChild(t); }
+    b.onclick = () => { picked = picked === p ? null : p; render(); };
+    b.ondragstart = (e) => { e.dataTransfer.setData("text/plain", p); e.dataTransfer.effectAllowed = "move"; };
+    const sel = document.createElement("select"); sel.className = "num"; sel.setAttribute("aria-label", p + " shirt number");
+    const o0 = document.createElement("option"); o0.value = ""; o0.textContent = "–"; sel.appendChild(o0);
+    for(const v of SHIRTS){ const o = document.createElement("option"); o.value = v; o.textContent = String(v); if(String(n) === String(v)) o.selected = true; sel.appendChild(o); }
+    sel.onchange = () => { shirts[p] = sel.value === "" ? "" : Number(sel.value); changed(); };
+    // two players on court with the same number would clash
+    const clash = n !== "" && n != null && playing.has(p) && PLAYERS.some(q => q !== p && playing.has(q) && String(shirts[q]) === String(n));
+    if(clash){ row.classList.add("dup"); dupMsg = "⚠️ Two players in the line-up have number " + n + "."; }
+    row.append(b, sel); box.appendChild(row);
+  }
+  let note = $("dupnote");
+  if(!note){ note = document.createElement("div"); note.id = "dupnote"; note.className = "dupnote"; box.after(note); }
+  note.textContent = dupMsg; note.hidden = !dupMsg;
+}
+function renderSlots(){
+  const box = $("slots"); box.innerHTML = "";
+  for(const r of ROLES){
+    const cur = lineup[r.k];
+    const row = document.createElement("div"); row.className = "pos" + (cur ? " filled" : "") + (picked ? " target" : "");
+    const badge = document.createElement("span"); badge.className = "badge"; badge.style.background = r.hex; badge.textContent = r.tag;
+    const nm = document.createElement("span"); nm.className = "pname" + (cur ? "" : " empty");
+    nm.textContent = cur ? cur.name : (picked ? "Put " + picked + " here" : r.label.replace(/ \(.*\)/, ""));
+    if(cur){ const sm = document.createElement("small"); sm.textContent = r.label.replace(/ \(.*\)/, ""); nm.appendChild(sm); }
+    const x = document.createElement("button"); x.type = "button"; x.className = "x"; x.textContent = cur ? "×" : ""; x.title = "Remove";
+    x.onclick = (e) => { e.stopPropagation(); delete lineup[r.k]; changed(); };
+    if(cur && shirts[cur.name] !== "" && shirts[cur.name] != null){ const sm2 = nm.querySelector("small"); if(sm2) sm2.textContent += " · #" + shirts[cur.name]; }
+    row.append(badge, nm, x);
+    row.onclick = () => { if(picked) assign(r.k, picked); };
+    row.ondragover = (e) => { e.preventDefault(); row.classList.add("dragover"); };
+    row.ondragleave = () => row.classList.remove("dragover");
+    row.ondrop = (e) => { e.preventDefault(); const p = e.dataTransfer.getData("text/plain"); if(PLAYERS.includes(p)) assign(r.k, p); };
+    box.appendChild(row);
+  }
+}
+function renderControls(){
+  const rb = $("rotbar"); rb.innerHTML = "";
+  for(let n = 1; n <= 6; n++){
+    const b = document.createElement("button"); b.type = "button"; b.className = n === rotation ? "on" : ""; b.textContent = "R" + n;
+    b.title = "Rotation " + n + ": setter in position " + n;
+    b.onclick = () => { rotation = n; render(); };
+    rb.appendChild(b);
+  }
+  document.querySelectorAll("#viewSeg button").forEach(b => b.classList.toggle("on", b.dataset.v === view));
+
+}
+function renderCourt(){
+  drawCourt($("court"), rotation, view);
+  $("courtTitle").textContent = view === "base"
+    ? `Rotation ${rotation} · setter in position ${rotation} (${FRONT.has(rotation) ? "front" : "back"} row)`
+    : `Serve receive · rotation ${rotation} · setter in position ${rotation}`;
+  const at = onCourt(rotation);
+  const backM = [1,5,6].map(p => at[p]).find(x => x.base[0] === "M");
+  let note;
+  if(view === "base"){
+    note = lineup.L?.name ? `${lineup.L.name} (L) is in for ${lineup[backM.base]?.name || backM.base} (${backM.base}).` : "No Libero picked – both middles stay on.";
+  } else {
+    const nm = k => lineup[k]?.name || k;
+    note = `${nm("OH1")}, ${nm("OH2")} and ${lineup.L?.name || "the Libero"} pass · ${nm("OPP")} (opposite) doesn't pass · setter ${nm("S")} releases to the net.`;
+  }
+  $("courtNote").textContent = note;
+}
+function renderSheet(){
+  const sh = $("sheet"); sh.innerHTML = "";
+  for(let i = 0; i < 6; i++){
+    const n = ((rotation - 1 - i + 6) % 6) + 1;          // the order the team rotates: N, N-1, …
+    const box = document.createElement("div"); box.className = "mini" + (i === 0 ? " on" : "");
+    const h = document.createElement("h4"); h.textContent = "R" + n;
+    const sp = document.createElement("span"); sp.textContent = "setter in " + n; h.appendChild(sp);
+    const svg = document.createElementNS(NS, "svg"); svg.setAttribute("viewBox", "0 0 245 276"); svg.setAttribute("class", "court");
+    box.append(h, svg); sh.appendChild(box);
+    box.onclick = () => { rotation = n; render(); window.scrollTo({ top: $("court").getBoundingClientRect().top + scrollY - 80, behavior: "smooth" }); };
+    drawCourt(svg, n, "base", { mini: true });
+  }
+}
+function render(){ renderPlayers(); renderSlots(); renderControls(); renderCourt(); }
+function changed(){ dirty = true; $("savedMsg").textContent = ""; render(); }
+
+document.querySelectorAll("#viewSeg button").forEach(b => b.onclick = () => { view = b.dataset.v; render(); });
+$("printBtn").onclick = () => window.print();
+$("clearBtn").onclick = () => { lineup = {}; picked = null; changed(); };
+$("saveBtn").onclick = async () => {
+  $("savedMsg").textContent = "Saving…";
+  try{
+    await mutate(d => { d.lineup = { players: lineup, shirts, rotation, updated: new Date().toISOString() }; }, "Line-up saved");
+    dirty = false; $("savedMsg").textContent = "✓ Saved";
+  }catch(e){ $("savedMsg").textContent = ""; setStatus("Couldn't save: " + e.message); }
+};
+window.addEventListener("beforeunload", e => { if(dirty){ e.preventDefault(); e.returnValue = ""; } });
+
+/* ---------- login (organiser password only) ---------- */
+$("pwEye").onclick = () => {
+  const i = $("pw"), show = i.type === "password";
+  i.type = show ? "text" : "password"; $("pwEye").textContent = show ? "🙈" : "👁️"; i.focus();
+};
+$("loginForm").onsubmit = async (ev) => {
+  ev.preventDefault();
+  const pw = $("pw").value; if(!pw) return;
+  $("loginMsg").textContent = "Checking…";
+  const t = await unseal(CONFIG.organiser, pw);
+  if(!t){ $("loginMsg").textContent = (await unseal(CONFIG.team, pw)) ? "That's the team password – this page needs the organiser password." : "That password isn't right."; return; }
+  TOKEN = t; $("pw").value = ""; $("pw").type = "password"; $("pwEye").textContent = "👁️";
+  try{
+    const data = await fetchFile(false);
+    PLAYERS = [...(data.players || [])].sort((a,b) => a.localeCompare(b, "en", { sensitivity:"base" }));
+    shirts = {};
+    const saved = (data.lineup && data.lineup.shirts) || {};
+    for(const p of PLAYERS) shirts[p] = saved[p] !== undefined ? saved[p] : (SHIRT_DEFAULT[p] ?? "");
+    if(data.lineup && data.lineup.players){
+      lineup = {};
+      for(const [k, v] of Object.entries(data.lineup.players)) if(ROLE[k] && v && PLAYERS.includes(v.name)){
+        lineup[k] = { name: v.name };
+        if(v.num !== undefined && v.num !== "" && shirts[v.name] === undefined) shirts[v.name] = v.num;   // numbers saved by the earlier version
+      }
+      rotation = Number(data.lineup.rotation) || 1;
+    }
+    $("loginMsg").textContent = ""; $("loginCard").hidden = true; $("app").hidden = false; setStatus("");
+    render();
+  }catch(e){
+    TOKEN = null;
+    $("loginMsg").textContent = e instanceof AuthError ? e.message : "Couldn't load the squad – check your connection.";
+  }
+};
+</script>
+</body>
+</html>
