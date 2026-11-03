@@ -93,6 +93,8 @@
   .mini h4{margin:0 0 4px;font-size:12px;font-weight:700;display:flex;justify-content:space-between}
   .mini h4 span{color:var(--faint);font-weight:500}
   [hidden]{display:none !important}
+  .demo{max-width:760px;margin:0 auto 14px;text-align:center;font-size:13.5px;font-weight:600;background:#fef3c7;color:#92400e;border:1px solid #fde68a;border-radius:10px;padding:10px 14px}
+  .gate.withdemo{margin:24px auto 18px}
   @media print{
     header a,.noprint,#loginCard{display:none !important}
     body{background:#fff} .cols{grid-template-columns:1fr} .panel{border:0;padding:0}
@@ -120,6 +122,7 @@
     </form>
     <div class="err" id="loginMsg"></div>
   </section>
+  <div class="demo" id="demoBanner" hidden>👀 Preview with example names. Try it out – nothing is saved. Unlock above to use the real squad and save the line-up.</div>
 
   <div class="cols" id="app" hidden>
     <section class="panel colA noprint">
@@ -458,13 +461,14 @@ document.querySelectorAll("#viewSeg button").forEach(b => b.onclick = () => { vi
 $("printBtn").onclick = () => window.print();
 $("clearBtn").onclick = () => { lineup = {}; picked = null; changed(); };
 $("saveBtn").onclick = async () => {
+  if(!TOKEN){ setStatus("This is only a preview – enter the organiser password above to save a line-up."); window.scrollTo({ top: 0, behavior: "smooth" }); try{ $("pw").focus({ preventScroll: true }); }catch(e){} return; }
   $("savedMsg").textContent = "Saving…";
   try{
     await mutate(d => { d.lineup = { players: lineup, shirts, rotation, updated: new Date().toISOString() }; }, "Line-up saved");
     dirty = false; $("savedMsg").textContent = "✓ Saved";
   }catch(e){ $("savedMsg").textContent = ""; setStatus("Couldn't save: " + e.message); }
 };
-window.addEventListener("beforeunload", e => { if(dirty){ e.preventDefault(); e.returnValue = ""; } });
+window.addEventListener("beforeunload", e => { if(dirty && TOKEN){ e.preventDefault(); e.returnValue = ""; } });
 
 /* ---------- login (organiser password only) ---------- */
 $("pwEye").onclick = () => {
@@ -481,7 +485,7 @@ $("loginForm").onsubmit = async (ev) => {
   try{
     const data = await fetchFile(false);
     PLAYERS = [...(data.players || [])].sort((a,b) => a.localeCompare(b, "en", { sensitivity:"base" }));
-    shirts = {};
+    shirts = {}; lineup = {}; picked = null; dirty = false; rotation = 1;
     const saved = (data.lineup && data.lineup.shirts) || {};
     for(const p of PLAYERS) shirts[p] = saved[p] !== undefined ? saved[p] : (SHIRT_DEFAULT[p] ?? "");
     if(data.lineup && data.lineup.players){
@@ -492,13 +496,22 @@ $("loginForm").onsubmit = async (ev) => {
       }
       rotation = Number(data.lineup.rotation) || 1;
     }
-    $("loginMsg").textContent = ""; $("loginCard").hidden = true; $("app").hidden = false; setStatus("");
+    $("loginMsg").textContent = ""; $("loginCard").hidden = true; $("demoBanner").hidden = true; $("app").hidden = false; setStatus("");
     render();
   }catch(e){
     TOKEN = null;
     $("loginMsg").textContent = e instanceof AuthError ? e.message : "Couldn't load the squad – check your connection.";
   }
 };
+
+/* ---------- preview before unlocking: example names, nothing saved ---------- */
+(function showDemo(){
+  PLAYERS = ["Alex","Bea","Cat","Dana","Ella","Fran","Gina","Hana","Isla","Jo"];
+  shirts = { Alex:3, Bea:4, Cat:6, Dana:7, Ella:8, Fran:9, Gina:11, Hana:12, Isla:13, Jo:14 };
+  lineup = { S:{ name:"Bea" }, OH1:{ name:"Dana" }, OH2:{ name:"Gina" }, OPP:{ name:"Alex" }, M1:{ name:"Ella" }, M2:{ name:"Isla" }, L:{ name:"Cat" } };
+  $("loginCard").classList.add("withdemo"); $("demoBanner").hidden = false; $("app").hidden = false;
+  render();
+})();
 </script>
 </body>
 </html>

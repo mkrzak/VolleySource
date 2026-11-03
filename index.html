@@ -39,6 +39,19 @@
     .htitle{font-size:20px} .hdesc{font-size:13px}
     .hcard[aria-pressed="true"]::after{display:none}
   }
+  /* colour groups: training, 5:1 systems, scoresheets, rules, fixtures */
+  .hcard[class*="g-"]{border-left:6px solid var(--g);background:linear-gradient(135deg,var(--gs) 0%,#fff 75%)}
+  .hcard[class*="g-"] .htitle{color:var(--gd)}
+  .hcard[class*="g-"]:hover{border-color:var(--g)}
+  .hcard[class*="g-"][aria-pressed="true"]{background:var(--g);border-color:var(--g);color:#fff}
+  .hcard[class*="g-"][aria-pressed="true"] .htitle{color:#fff}
+  .hcard[class*="g-"][aria-pressed="true"] .hdesc{color:rgba(255,255,255,.88)}
+  .hcard[class*="g-"][aria-pressed="true"]::after{border-top-color:var(--g)}
+  .g-train{--g:#16a34a;--gs:#e8f7ee;--gd:#166534}
+  .g-sys{--g:#7c3aed;--gs:#f1ebfe;--gd:#5b21b6}
+  .g-sheet{--g:#2563eb;--gs:#e8effd;--gd:#1e40af}
+  .g-rule{--g:#dc2626;--gs:#fdeaea;--gd:#991b1b}
+  .g-fix{--g:#0d9488;--gs:#e2f5f3;--gd:#115e59}
   .hcard.hext{text-decoration:none;border-color:var(--accent);background:linear-gradient(135deg,#FFF8E6 0%,#fff 70%)}
   .hcard.hext:hover{border-color:#D18F00}
   .hcard.hext::before{content:"\2197";position:absolute;right:16px;top:12px;font-weight:700;font-size:18px;color:var(--accent)}
@@ -52,45 +65,53 @@
   <h1>VolleySource<em>Compiled by <b>Monika Krzak</b> · Cambridge Volleyball Club</em></h1>
 </div></header>
 <nav class="cards" aria-label="Sections">
-    <button class="hcard" type="button" data-key="warmup" aria-pressed="false">
+    <button class="hcard g-train" type="button" data-key="warmup" aria-pressed="false">
       <span class="htitle">Dynamic Warm-up</span>
-      <span class="hdesc">17 exercises in 7 phases, about 33 minutes, with clips.</span>
+      <span class="hdesc">17 exercises in 7 phases, about 33 minutes, with clips, plus a dance warm-up.</span>
     </button>
-    <button class="hcard" type="button" data-key="program" aria-pressed="false">
+    <button class="hcard g-train" type="button" data-key="program" aria-pressed="false">
       <span class="htitle">S&amp;C Program</span>
       <span class="hdesc">At-home program from The Art of Coaching Volleyball, with round tracking.</span>
     </button>
-    <button class="hcard" type="button" data-key="gym" aria-pressed="false">
+    <button class="hcard g-train" type="button" data-key="gym" aria-pressed="false">
       <span class="htitle">Gym Program</span>
       <span class="hdesc">Agility, ballistics &amp; plyo (10 drills) and isometrics (16 holds), in one place.</span>
     </button>
-    <button class="hcard" type="button" data-key="receive" aria-pressed="false">
+    <button class="hcard g-sys" type="button" data-key="receive" aria-pressed="false">
       <span class="htitle">5:1 Receive</span>
       <span class="hdesc">Base positions and serve-receive formations for all six rotations.</span>
     </button>
-    <button class="hcard" type="button" data-key="defence" aria-pressed="false">
+    <button class="hcard g-sys" type="button" data-key="defence" aria-pressed="false">
       <span class="htitle">5:1 Defence</span>
       <span class="hdesc">Perimeter and rotational defensive systems, with the block following their hitter.</span>
     </button>
-    <button class="hcard" type="button" data-key="scoresheet" aria-pressed="false">
+    <button class="hcard g-sheet" type="button" data-key="scoresheet" aria-pressed="false">
       <span class="htitle">CVA Scoresheet</span>
       <span class="hdesc">How to fill in the CVA county league scoresheet, with an animated set.</span>
     </button>
-    <button class="hcard" type="button" data-key="rules" aria-pressed="false">
-      <span class="htitle">CVA League Rules 25/26</span>
-      <span class="hdesc">Match format, league points, postponements, referees and results, in plain words.</span>
-    </button>
-    <button class="hcard" type="button" data-key="cvarules" aria-pressed="false">
-      <span class="htitle">CVA Rules 26/27</span>
-      <span class="hdesc">2026&ndash;27 Volleyball England test rules adopted by the CVA: substitutions, warm-up, positions, tips and blocks.</span>
-    </button>
-    <button class="hcard" type="button" data-key="fivbsheet" aria-pressed="false">
+    <button class="hcard g-sheet" type="button" data-key="fivbsheet" aria-pressed="false">
       <span class="htitle">FIVB Scoresheet</span>
       <span class="hdesc">How to fill in the FIVB international scoresheet, following the FIVB instructions, with an animated set.</span>
     </button>
-    <button class="hcard" type="button" data-key="vbrules" aria-pressed="false">
-      <span class="htitle">FIVB Volleyball Rules</span>
+    <button class="hcard g-rule" type="button" data-key="rules" aria-pressed="false">
+      <span class="htitle">CVA Rules 25-26</span>
+      <span class="hdesc">Match format, league points, postponements, referees and results, in plain words.</span>
+    </button>
+    <button class="hcard g-rule" type="button" data-key="cvarules" aria-pressed="false">
+      <span class="htitle">CVA Rules 26-27</span>
+      <span class="hdesc">2026&ndash;27 Volleyball England test rules adopted by the CVA: substitutions, warm-up, positions, tips and blocks.</span>
+    </button>
+    <button class="hcard g-rule" type="button" data-key="vbrules" aria-pressed="false">
+      <span class="htitle">FIVB Rules 25-28</span>
       <span class="hdesc">Faults, refereeing and the official hand signals (FIVB rules 2025&ndash;2028).</span>
+    </button>
+    <button class="hcard g-fix" type="button" data-key="fixtures" aria-pressed="false">
+      <span class="htitle">CVA Fixtures</span>
+      <span class="hdesc">2026&ndash;27 women&rsquo;s and men&rsquo;s league tables and every game, with each CVC team&rsquo;s games and ref duties a tap away.</span>
+    </button>
+    <button class="hcard g-fix" type="button" data-key="nvl" aria-pressed="false">
+      <span class="htitle">NVL Fixtures</span>
+      <span class="hdesc">2026&ndash;27 tables and every game for all five CVC teams in the National League: women D1, D2, D3 and men D1, D3.</span>
     </button>
     <a class="hcard hext" href="signup.html">
       <span class="htitle">Game Sign-up</span>
@@ -111,6 +132,486 @@
 </nav>
 <main id="stage"></main>
 <footer class="sitefoot"><p>© <span id="cyear">2026</span> Monika Krzak, Cambridge Volleyball Club. All rights reserved.</p></footer>
+<script type="text/plain" id="src-fixtures">%%VBLT%%!DOCTYPE html>
+%%VBLT%%html lang="en">
+%%VBLT%%head>
+%%VBLT%%meta charset="utf-8">
+%%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
+%%VBLT%%meta name="color-scheme" content="light">
+%%VBLT%%title>CVA Fixtures 26-27%%VBLT%%/title>
+%%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+%%VBLT%%style>
+  :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--blue:#24507E;--accent:#F0A500;
+    --pan:#F08A28;--panS:#FFF4E8;--tig:#1E6EDB;--win:#15803d;--loss:#dc2626}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Barlow","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.45}
+  header{background:linear-gradient(100deg,#16283C 0%,#24507E 100%);color:#fff;border-bottom:6px solid var(--accent)}
+  .hin{max-width:1000px;margin:0 auto;padding:26px 20px 22px}
+  h1{font-family:"Barlow Condensed",Arial,sans-serif;font-size:clamp(28px,5vw,42px);margin:0;text-transform:uppercase;line-height:1}
+  h1 em{display:block;font-style:normal;font-weight:500;font-size:.42em;color:#A9C4E0;letter-spacing:.04em;margin-top:8px;text-transform:none}
+  h1 em b{color:var(--accent);font-weight:500}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 20px 50px}
+  h2{font-family:"Barlow Condensed",Arial,sans-serif;text-transform:uppercase;letter-spacing:.02em;font-size:26px;margin:0 0 10px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:18px}
+  .src{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:13.5px;color:var(--soft)}
+  .src a,.lnk{color:var(--blue);font-weight:600}
+  .src a.btn{color:#fff}
+  .btn{display:inline-block;font:inherit;font-weight:700;font-size:14px;background:var(--ink);color:#fff;border-radius:8px;padding:8px 14px;text-decoration:none}
+
+  /* next game */
+  .next{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:center;background:linear-gradient(120deg,#16283C,#24507E);color:#fff;border-radius:12px;padding:16px 18px;margin-top:18px}
+  .next .lab{grid-column:1/-1;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+  .next .dt{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:30px;line-height:1;text-align:center;background:rgba(255,255,255,.1);border-radius:10px;padding:8px 12px}
+  .next .dt small{display:block;font-size:13px;font-weight:600;color:#A9C4E0;letter-spacing:.06em}
+  .next .vs{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:24px;line-height:1.1}
+  .next .meta{font-size:14px;color:#cfe0f2}
+
+  /* table */
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  th{font-family:"Barlow Condensed",Arial,sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);text-align:right;padding:8px 8px;border-bottom:2px solid var(--line);white-space:nowrap}
+  td{text-align:right;padding:9px 8px;border-bottom:1px solid #EEF2F6;white-space:nowrap}
+  th.l,td.l{text-align:left}
+  td.pos{text-align:center;font-weight:700;color:var(--soft);width:28px}
+  td.pts{font-weight:800;font-size:17px}
+  tr.us td{background:var(--panS)}
+  tr.us td.l{font-weight:700}
+  .key{font-size:12.5px;color:var(--soft);margin-top:8px}
+
+  /* fixtures */
+  .bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:6px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+  .seg button{font:inherit;font-size:14px;font-weight:600;border:0;border-right:1px solid var(--line);background:none;color:var(--soft);padding:7px 12px;cursor:pointer}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--ink);color:#fff}
+  .month{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:16px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+  .fx{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:9px 10px;border-radius:9px;margin-bottom:5px;background:#fff;border:1px solid #EEF2F6}
+  .fx.us{border-color:#F6C391;background:var(--panS)}
+  .fx.ref{border-color:#c4d6ee;background:#F2F7FD}
+  .fx.past{opacity:.75}
+  .fx.isnext{box-shadow:0 0 0 2px var(--accent)}
+  .fx .d{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;text-align:center}
+  .fx .d small{display:block;font-size:12px;font-weight:600;color:var(--soft);letter-spacing:.06em;text-transform:uppercase}
+  .fx .teams{font-weight:600;min-width:0}
+  .fx .teams .v{color:var(--soft);font-weight:500;margin:0 5px}
+  .fx .teams b{font-weight:800}
+  .fx .sub{font-size:12.5px;color:var(--soft);margin-top:2px}
+  .fx .res{text-align:right;font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:22px;line-height:1}
+  .fx .res small{display:block;font-family:"Barlow",Arial,sans-serif;font-size:11.5px;font-weight:500;color:var(--soft);margin-top:3px}
+  .fx .res.w{color:var(--win)} .fx .res.lo{color:var(--loss)}
+  .chip{display:inline-block;font-size:11px;font-weight:700;border-radius:99px;padding:2px 8px;margin-left:6px;vertical-align:1px;white-space:nowrap}
+  .chip.ref{background:#24507E;color:#fff}
+  .chip.home{background:var(--pan);color:#fff}
+  .chip.away{background:#fff;color:var(--pan);border:1px solid var(--pan)}
+  @media (max-width:560px){ .fx{grid-template-columns:52px minmax(0,1fr)} .fx .res{grid-column:2;text-align:left} .fx .res small{display:inline;margin-left:6px} }
+  footer{font-size:13px;color:var(--soft);margin-top:22px;line-height:1.5}
+  .empty{color:var(--soft);padding:10px 0}
+  .divs{display:flex;gap:6px;flex-wrap:wrap;margin-top:18px}
+  .divs button{font:inherit;font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:.04em;text-transform:uppercase;border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:10px;padding:6px 16px;cursor:pointer}
+  .divs button.on{background:var(--ink);color:#fff}
+  .divs button.off{opacity:.45;border-style:dashed}
+  .teams-bar{display:flex;gap:6px;flex-wrap:wrap}
+  .teams-bar button{font:inherit;font-size:14px;font-weight:700;border:1.5px solid var(--line);background:#fff;color:var(--soft);border-radius:99px;padding:6px 13px;cursor:pointer}
+  .teams-bar button.on{background:var(--pan);border-color:var(--pan);color:#fff}
+  .teams-bar button[data-t="all"].on{background:var(--ink);border-color:var(--ink)}
+  .refopt{font-size:13px;color:var(--soft);display:flex;align-items:center;gap:6px;margin-top:8px}
+  tr.cvc td.l{font-weight:600}
+  tr.sel td{background:var(--panS)}
+  tr.sel td.l{font-weight:800}
+  .nodata{padding:14px 0;color:var(--soft);font-size:15px}
+%%VBLT%%/style>
+%%VBLT%%/head>
+%%VBLT%%body>
+%%VBLT%%header>%%VBLT%%div class="hin">
+  %%VBLT%%h1>CVA Fixtures 26-27%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
+%%VBLT%%/div>%%VBLT%%/header>
+%%VBLT%%div class="wrap">
+  %%VBLT%%div class="card src">
+    %%VBLT%%span>From the Cambridgeshire Volleyball Association website, checked %%VBLT%%b id="checked">%%VBLT%%/b>. Results and dates can change, so check the live page before a game.%%VBLT%%/span>
+    %%VBLT%%a class="btn" id="liveLink" href="https://www.cambsvolleyball.org.uk/RCVALeagueW.php" target="_blank" rel="noopener">Live CVA page ↗%%VBLT%%/a>
+  %%VBLT%%/div>
+
+  %%VBLT%%div class="divs" id="divs">%%VBLT%%/div>
+
+  %%VBLT%%div class="next" id="next" hidden>%%VBLT%%/div>
+
+  %%VBLT%%section class="card" id="tableCard">
+    %%VBLT%%h2 id="tableTitle">League table%%VBLT%%/h2>
+    %%VBLT%%div class="scroll">%%VBLT%%table id="table">%%VBLT%%/table>%%VBLT%%/div>
+    %%VBLT%%div class="key">Pd played · W won · L lost · SF/SA sets for/against · PF/PA points for/against · Pts league points. CVC teams in bold; the team you pick is highlighted.%%VBLT%%/div>
+  %%VBLT%%/section>
+
+  %%VBLT%%section class="card" id="fixCard">
+    %%VBLT%%div class="bar">
+      %%VBLT%%h2 style="margin:0">Fixtures &amp; results%%VBLT%%/h2>
+      %%VBLT%%div class="teams-bar" id="teamsBar">%%VBLT%%/div>
+    %%VBLT%%/div>
+    %%VBLT%%label class="refopt" id="refOpt" hidden>%%VBLT%%input type="checkbox" id="showRef" checked> Show their ref duties too%%VBLT%%/label>
+    %%VBLT%%div id="list">%%VBLT%%/div>
+  %%VBLT%%/section>
+
+  %%VBLT%%footer>Ref = the team that provides the referees. Venues are shortened as on the CVA site: NCA (North Cambridge Academy), Leys, Nether (Netherhall), Bury LC (Bury Leisure Centre), Stow (Stowmarket), Newm (Newmarket). Women's fixture 32 on the CVA site repeats fixture 31 and is shown once here.%%VBLT%%/footer>
+%%VBLT%%/div>
+
+%%VBLT%%script>
+/* ===== snapshot of the CVA league pages (cambsvolleyball.org.uk) ===== */
+const CHECKED = "2026-11-03";
+const DIVS = {
+  W: { name: "Women", url: "https://www.cambsvolleyball.org.uk/RCVALeagueW.php",
+    names: { B:"Bury Bobcats1 (W)", J:"CVC (W) MxJnr", Ti:"CVC1 (W) Tigers", P:"CVC2 (W) Panthers", Th:"Rhinos (W) Thunder", R:"Rhinos1 (W) Rhinette", S:"St Philips (W)", N:"Neutral" },
+    show: { "Bury Bobcats1 (W)":"Bury Bobcats", "CVC (W) MxJnr":"CVC MxJnr", "CVC1 (W) Tigers":"CVC Tigers", "CVC2 (W) Panthers":"CVC Panthers", "Rhinos (W) Thunder":"Rhinos Thunder", "Rhinos1 (W) Rhinette":"Rhinos Rhinette", "St Philips (W)":"St Philips" },
+    cvc: ["CVC2 (W) Panthers", "CVC1 (W) Tigers", "CVC (W) MxJnr"],
+    table: [["CVC1 (W) Tigers",1,1,0,3,1,81,71,5],["CVC2 (W) Panthers",1,0,1,1,3,71,81,2],["Bury Bobcats1 (W)",0,0,0,0,0,0,0,0],["CVC (W) MxJnr",0,0,0,0,0,0,0,0],
+      ["Rhinos (W) Thunder",0,0,0,0,0,0,0,0],["Rhinos1 (W) Rhinette",0,0,0,0,0,0,0,0],["St Philips (W)",0,0,0,0,0,0,0,0]],
+    fix: [
+      [1,"2026-12-13","B","J","N","Bury LC"],[2,"2027-03-14","B","Ti","N","Bury LC"],[3,"2027-02-28","B","P","N","Bury LC"],
+      [4,"2027-04-11","B","Th","N","Bury LC"],[5,"2027-02-07","B","R","N","Bury LC"],[6,"2026-11-22","B","S","N","Bury LC"],
+      [7,"2027-03-06","J","B","R","NCA"],[8,"2027-02-06","J","Ti","R","NCA"],[9,"2026-11-30","J","P","S","NCA"],
+      [10,"2026-11-21","J","Th","P","Bury LC"],[11,"2027-01-23","J","R","Ti","NCA"],[12,"2027-03-20","J","S","Ti","NCA"],
+      [13,"2027-01-11","Ti","B","R","NCA"],[14,"2027-04-05","Ti","J","R","NCA"],[15,"2026-11-23","Ti","Th","P","NCA"],
+      [16,"2026-11-09","Ti","R","P","NCA"],[17,"2026-12-14","Ti","S","R","NCA"],
+      [18,"2027-01-18","P","B","S","NCA"],[19,"2027-02-15","P","J","Th","NCA"],[20,"2027-03-08","P","Ti","Ti","NCA"],
+      [21,"2026-10-19","P","Ti","","","1-3","16-21, 20-22, 21-17, 14-21"],
+      [22,"2026-11-16","P","Th","R","NCA"],[23,"2027-02-12","P","R","J","NCA"],[24,"2027-01-25","P","S","Ti","NCA"],
+      [25,"2026-11-08","Th","B","Ti","Leys"],[26,"2027-01-17","Th","J","S","Leys"],[27,"2027-03-07","Th","Ti","J","Leys"],
+      [28,"2027-04-04","Th","P","S","Leys"],[29,"2027-03-14","Th","R","S","Leys"],[30,"2027-02-14","Th","S","J","Leys"],
+      [31,"2026-11-29","R","B","Ti","Leys"],[33,"2027-04-11","R","J","S","Leys"],[34,"2026-12-13","R","Ti","Th","Leys"],
+      [35,"2027-01-10","R","P","J","Leys"],[36,"2027-01-24","R","Th","J","Leys"],[37,"2027-01-31","R","S","P","Leys"],
+      [38,"2027-04-05","S","B","Th","Nether"],[39,"2026-11-09","S","J","Th","Nether"],[40,"2027-02-08","S","Ti","Th","Nether"],
+      [41,"2027-03-08","S","P","Th","Nether"],[42,"2027-01-11","S","Th","P","Nether"],[43,"2026-12-07","S","R","P","Nether"] ] },
+  M1: { name: "Men D1", url: "https://www.cambsvolleyball.org.uk/RCVALeagueM.php",
+    names: { B:"Bury Bobcats1 (M)", C1:"CVC1 (M)", C2:"CVC2 (M)", C3:"CVC3 (M)", I:"Ipswich Ravens", Nw:"Newmarket", R:"Rhinos1 (M)", S1:"St Philips1M", S2:"St Phillips2 (M)", St:"Stowmarket", N:"Neutral" },
+    show: { "Bury Bobcats1 (M)":"Bury Bobcats", "CVC1 (M)":"CVC 1", "CVC2 (M)":"CVC 2", "CVC3 (M)":"CVC 3", "Rhinos1 (M)":"Rhinos", "St Philips1M":"St Philips 1", "St Phillips2 (M)":"St Philips 2" },
+    cvc: ["CVC1 (M)", "CVC2 (M)", "CVC3 (M)"],
+    table: [["St Philips1M",1,1,0,3,2,85,84,5],["CVC1 (M)",1,0,1,2,3,84,85,3],["Bury Bobcats1 (M)",0,0,0,0,0,0,0,0],["CVC2 (M)",0,0,0,0,0,0,0,0],["CVC3 (M)",0,0,0,0,0,0,0,0],
+      ["Ipswich Ravens",0,0,0,0,0,0,0,0],["Newmarket",0,0,0,0,0,0,0,0],["Rhinos1 (M)",0,0,0,0,0,0,0,0],["St Phillips2 (M)",0,0,0,0,0,0,0,0],["Stowmarket",0,0,0,0,0,0,0,0]],
+    fix: [
+      [1,"2027-01-31","B","C2","N","Bury LC"],[2,"2027-02-07","B","C3","N","Bury LC"],[3,"2027-02-28","B","S1","N","Bury LC"],[4,"2027-01-17","B","S2","N","Bury LC"],
+      [5,"2026-11-21","C1","B","S1","NCA"],[6,"2027-01-23","C1","C3","S1","NCA"],[7,"2027-02-13","C1","Nw","S1","NCA"],[8,"2027-01-09","C1","S2","R","NCA"],
+      [9,"2027-01-16","C2","C1","C3","NCA"],[10,"2027-01-09","C2","I","S2","NCA"],[11,"2027-01-23","C2","Nw","C1","NCA"],[12,"2026-11-28","C2","St","R","NCA"],
+      [13,"2026-12-07","C3","I","C1","NCA"],[14,"2027-02-22","C3","Nw","R","NCA"],[15,"2026-11-02","C3","R","S2","NCA"],[16,"2027-02-01","C3","S1","S2","NCA"],
+      [17,"2027-01-22","I","B","N","Stow"],[18,"2027-02-20","I","R","N","Stow"],[19,"2026-12-12","I","S1","N","Stow"],[20,"2026-11-13","I","St","N","Stow"],
+      [21,"2026-11-18","Nw","I","N","Newm"],[22,"2027-01-13","Nw","R","N","Newm"],[23,"2026-11-11","Nw","S2","N","Newm"],[24,"2026-12-09","Nw","St","N","Newm"],
+      [25,"2026-11-15","R","B","C1","Leys"],[26,"2027-02-07","R","C1","S2","Leys"],[27,"2026-11-22","R","C2","C3","Leys"],[28,"2026-12-06","R","S2","S1","Leys"],
+      [29,"2026-11-02","S1","C1","","","3-2","21-18, 16-21, 21-14, 12-21, 15-10"],
+      [30,"2026-11-16","S1","C2","C3","Nether"],[31,"2026-11-30","S1","Nw","C1","Nether"],[32,"2027-01-18","S1","R","C2","Nether"],
+      [33,"2027-02-22","S2","C2","C3","Nether"],[34,"2027-02-15","S2","C3","C2","Nether"],[35,"2026-11-23","S2","I","C2","Nether"],[36,"2027-01-25","S2","St","R","Nether"],
+      [37,"2026-12-02","St","B","N","Stow"],[38,"2027-02-03","St","C1","N","Stow"],[39,"2027-01-06","St","C3","N","Stow"],[40,"2027-01-13","St","S1","N","Stow"] ] },
+  M2: { name: "Men D2", url: "https://www.cambsvolleyball.org.uk/RCVALeagueN.php", empty: true },
+  L:  { name: "Local", url: "https://www.cambsvolleyball.org.uk/RCVALeagueB.php", empty: true },
+};
+for(const d of Object.values(DIVS)) if(d.fix) d.fix = d.fix.map(([no, date, h, a, ref, venue, sets, sc]) => ({ no, date, home: d.names[h], away: d.names[a], ref: d.names[ref] || "", venue, sets: sets || "", sc: sc || "" }));
+/* ===================================================================== */
+
+const $ = id => document.getElementById(id);
+const D = s => new Date(s + "T12:00:00");
+const today = (() => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); })();
+$("checked").textContent = D(CHECKED).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+
+let div = "W", team = "all";
+const cur = () => DIVS[div];
+const nm = n => cur().show[n] || n;
+const plays = (f, t) => f.home === t || f.away === t;
+const focusTeam = () => team !== "all" ? team : (div === "W" ? "CVC2 (W) Panthers" : null);
+
+function renderDivs(){
+  $("divs").innerHTML = "";
+  for(const [k, d] of Object.entries(DIVS)){
+    const b = document.createElement("button"); b.type = "button"; b.textContent = d.name;
+    b.className = (k === div ? "on" : "") + (d.empty ? " off" : "");
+    b.title = d.empty ? "No fixtures on the CVA site yet" : "";
+    b.onclick = () => { div = k; team = "all"; render(); };
+    $("divs").appendChild(b);
+  }
+}
+function renderTable(){
+  const d = cur(), ft = focusTeam();
+  $("tableTitle").textContent = d.name + " league table";
+  const rows = [...d.table].sort((a, b) => b[8] - a[8] || (b[4] - b[5]) - (a[4] - a[5]) || (b[6] - b[7]) - (a[6] - a[7]) || nm(a[0]).localeCompare(nm(b[0])));
+  let h = '%%VBLT%%tr>%%VBLT%%th>%%VBLT%%/th>%%VBLT%%th class="l">Team%%VBLT%%/th>%%VBLT%%th>Pd%%VBLT%%/th>%%VBLT%%th>W%%VBLT%%/th>%%VBLT%%th>L%%VBLT%%/th>%%VBLT%%th>SF%%VBLT%%/th>%%VBLT%%th>SA%%VBLT%%/th>%%VBLT%%th>PF%%VBLT%%/th>%%VBLT%%th>PA%%VBLT%%/th>%%VBLT%%th>Pts%%VBLT%%/th>%%VBLT%%/tr>';
+  rows.forEach((r, i) => { h += `%%VBLT%%tr class="${d.cvc.includes(r[0]) ? "cvc" : ""} ${r[0] === ft ? "sel" : ""}">%%VBLT%%td class="pos">${i + 1}%%VBLT%%/td>%%VBLT%%td class="l">${nm(r[0])}%%VBLT%%/td>${r.slice(1, 8).map(v => `%%VBLT%%td>${v}%%VBLT%%/td>`).join("")}%%VBLT%%td class="pts">${r[8]}%%VBLT%%/td>%%VBLT%%/tr>`; });
+  $("table").innerHTML = h;
+}
+function renderNext(){
+  const ft = focusTeam(), box = $("next");
+  const g = ft && cur().fix.filter(f => plays(f, ft) && !f.sets && f.date >= today).sort((a, b) => a.date.localeCompare(b.date))[0];
+  if(!g){ box.hidden = true; return; }
+  const d = D(g.date); box.hidden = false;
+  box.innerHTML = `%%VBLT%%div class="lab">Next ${nm(ft)} game%%VBLT%%/div>
+    %%VBLT%%div class="dt">%%VBLT%%small>${d.toLocaleDateString("en-GB", { weekday: "short" })}%%VBLT%%/small>${d.getDate()}%%VBLT%%small>${d.toLocaleDateString("en-GB", { month: "short" })}%%VBLT%%/small>%%VBLT%%/div>
+    %%VBLT%%div>%%VBLT%%div class="vs">${nm(g.home)} v ${nm(g.away)}%%VBLT%%/div>%%VBLT%%div class="meta">${g.home === ft ? "Home" : "Away"} · ${g.venue}${g.ref ? " · ref: " + nm(g.ref) : ""}%%VBLT%%/div>%%VBLT%%/div>`;
+}
+function renderTeams(){
+  const bar = $("teamsBar"); bar.innerHTML = "";
+  [["all", "All games"], ...cur().cvc.map(t => [t, nm(t)])].forEach(([k, label]) => {
+    const b = document.createElement("button"); b.type = "button"; b.dataset.t = k; b.textContent = label; b.className = k === team ? "on" : "";
+    b.onclick = () => { team = k; render(); };
+    bar.appendChild(b);
+  });
+  $("refOpt").hidden = team === "all";
+}
+function renderList(){
+  const d = cur(), box = $("list"); box.innerHTML = "";
+  const withRef = $("showRef").checked;
+  const list = d.fix.filter(f => team === "all" || plays(f, team) || (withRef && f.ref === team)).sort((a, b) => a.date.localeCompare(b.date) || a.no - b.no);
+  const ft = focusTeam();
+  const nextG = ft && d.fix.filter(f => plays(f, ft) && !f.sets && f.date >= today).sort((a, b) => a.date.localeCompare(b.date))[0];
+  let month = "";
+  for(const f of list){
+    const dt = D(f.date), m = dt.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+    if(m !== month){ month = m; const h = document.createElement("div"); h.className = "month"; h.textContent = m; box.appendChild(h); }
+    const isT = team !== "all" && plays(f, team), isRef = team !== "all" && !isT && f.ref === team;
+    const anyCvc = d.cvc.some(t => plays(f, t));
+    const row = document.createElement("div");
+    row.className = "fx" + (isT || (team === "all" && anyCvc) ? " us" : isRef ? " ref" : "") + (f.date %%VBLT%% today || f.sets ? " past" : "") + (f === nextG ? " isnext" : "");
+    let res;
+    if(f.sets){
+      const [hs, as] = f.sets.split("-").map(Number), won = isT && (f.home === team ? hs > as : as > hs);
+      res = `%%VBLT%%div class="res ${isT ? (won ? "w" : "lo") : ""}">${hs} – ${as}%%VBLT%%small>${f.sc}%%VBLT%%/small>%%VBLT%%/div>`;
+    } else res = `%%VBLT%%div class="res" style="font-size:14px;font-family:Barlow,Arial,sans-serif;font-weight:600;color:var(--soft)">${f.date %%VBLT%% today ? "no result yet" : ""}%%VBLT%%/div>`;
+    const chip = isT ? `%%VBLT%%span class="chip ${f.home === team ? "home" : "away"}">${f.home === team ? "HOME" : "AWAY"}%%VBLT%%/span>` : isRef ? '%%VBLT%%span class="chip ref">REF DUTY%%VBLT%%/span>' : "";
+    const show = n => d.cvc.includes(n) ? "%%VBLT%%b>" + nm(n) + "%%VBLT%%/b>" : nm(n);
+    row.innerHTML = `%%VBLT%%div class="d">%%VBLT%%small>${dt.toLocaleDateString("en-GB", { weekday: "short" })}%%VBLT%%/small>${dt.getDate()}%%VBLT%%/div>
+      %%VBLT%%div class="teams">${show(f.home)}%%VBLT%%span class="v">v%%VBLT%%/span>${show(f.away)}${chip}
+        %%VBLT%%div class="sub">${[f.venue, f.ref ? "ref: " + nm(f.ref) : ""].filter(Boolean).join(" · ")}%%VBLT%%/div>%%VBLT%%/div>${res}`;
+    box.appendChild(row);
+  }
+  if(!list.length) box.innerHTML = '%%VBLT%%div class="nodata">No games.%%VBLT%%/div>';
+}
+function render(){
+  const d = cur();
+  renderDivs();
+  $("liveLink").href = d.url;
+  if(d.empty){
+    $("next").hidden = true; $("tableCard").hidden = true;
+    $("fixCard").hidden = false; $("teamsBar").innerHTML = ""; $("refOpt").hidden = true;
+    $("list").innerHTML = `%%VBLT%%div class="nodata">The CVA hasn't published ${d.name} fixtures for 2026-27 yet. %%VBLT%%a class="lnk" href="${d.url}" target="_blank" rel="noopener">Check the live page ↗%%VBLT%%/a>%%VBLT%%/div>`;
+    return;
+  }
+  $("tableCard").hidden = false;
+  renderTable(); renderNext(); renderTeams(); renderList();
+}
+$("showRef").onchange = renderList;
+render();
+%%VBLT%%/script>
+%%VBLT%%script data-vb-hub>
+(function(){
+  function send(){ try{ parent.postMessage({vbHub: window.name, h: document.documentElement.scrollHeight}, "*"); }catch(e){} }
+  if ("ResizeObserver" in window) new ResizeObserver(send).observe(document.documentElement);
+  window.addEventListener("load", send); send();
+})();
+%%VBLT%%/script>
+%%VBLT%%/body>
+%%VBLT%%/html>
+</script>
+<script type="text/plain" id="src-nvl">%%VBLT%%!DOCTYPE html>
+%%VBLT%%html lang="en">
+%%VBLT%%head>
+%%VBLT%%meta charset="utf-8">
+%%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
+%%VBLT%%meta name="color-scheme" content="light">
+%%VBLT%%title>NVL Fixtures 26-27%%VBLT%%/title>
+%%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+%%VBLT%%style>
+  :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--blue:#24507E;--accent:#F0A500;
+    --pan:#F08A28;--panS:#FFF4E8;--tig:#1E6EDB;--win:#15803d;--loss:#dc2626}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Barlow","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.45}
+  header{background:linear-gradient(100deg,#16283C 0%,#24507E 100%);color:#fff;border-bottom:6px solid var(--accent)}
+  .hin{max-width:1000px;margin:0 auto;padding:26px 20px 22px}
+  h1{font-family:"Barlow Condensed",Arial,sans-serif;font-size:clamp(28px,5vw,42px);margin:0;text-transform:uppercase;line-height:1}
+  h1 em{display:block;font-style:normal;font-weight:500;font-size:.42em;color:#A9C4E0;letter-spacing:.04em;margin-top:8px;text-transform:none}
+  h1 em b{color:var(--accent);font-weight:500}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 20px 50px}
+  h2{font-family:"Barlow Condensed",Arial,sans-serif;text-transform:uppercase;letter-spacing:.02em;font-size:26px;margin:0 0 10px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:18px}
+  .src{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:13.5px;color:var(--soft)}
+  .src a,.lnk{color:var(--blue);font-weight:600}
+  .src a.btn{color:#fff}
+  .btn{display:inline-block;font:inherit;font-weight:700;font-size:14px;background:var(--ink);color:#fff;border-radius:8px;padding:8px 14px;text-decoration:none}
+
+  /* next game */
+  .next{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:center;background:linear-gradient(120deg,#16283C,#24507E);color:#fff;border-radius:12px;padding:16px 18px;margin-top:18px}
+  .next .lab{grid-column:1/-1;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+  .next .dt{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:30px;line-height:1;text-align:center;background:rgba(255,255,255,.1);border-radius:10px;padding:8px 12px}
+  .next .dt small{display:block;font-size:13px;font-weight:600;color:#A9C4E0;letter-spacing:.06em}
+  .next .vs{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:24px;line-height:1.1}
+  .next .meta{font-size:14px;color:#cfe0f2}
+
+  /* table */
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  th{font-family:"Barlow Condensed",Arial,sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);text-align:right;padding:8px 8px;border-bottom:2px solid var(--line);white-space:nowrap}
+  td{text-align:right;padding:9px 8px;border-bottom:1px solid #EEF2F6;white-space:nowrap}
+  th.l,td.l{text-align:left}
+  td.pos{text-align:center;font-weight:700;color:var(--soft);width:28px}
+  td.pts{font-weight:800;font-size:17px}
+  tr.us td{background:var(--panS)}
+  tr.us td.l{font-weight:700}
+  .key{font-size:12.5px;color:var(--soft);margin-top:8px}
+
+  /* fixtures */
+  .bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:6px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+  .seg button{font:inherit;font-size:14px;font-weight:600;border:0;border-right:1px solid var(--line);background:none;color:var(--soft);padding:7px 12px;cursor:pointer}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--ink);color:#fff}
+  .month{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:16px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+  .fx{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:9px 10px;border-radius:9px;margin-bottom:5px;background:#fff;border:1px solid #EEF2F6}
+  .fx.us{border-color:#F6C391;background:var(--panS)}
+  .fx.ref{border-color:#c4d6ee;background:#F2F7FD}
+  .fx.past{opacity:.75}
+  .fx.isnext{box-shadow:0 0 0 2px var(--accent)}
+  .fx .d{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;text-align:center}
+  .fx .d small{display:block;font-size:12px;font-weight:600;color:var(--soft);letter-spacing:.06em;text-transform:uppercase}
+  .fx .teams{font-weight:600;min-width:0}
+  .fx .teams .v{color:var(--soft);font-weight:500;margin:0 5px}
+  .fx .teams b{font-weight:800}
+  .fx .sub{font-size:12.5px;color:var(--soft);margin-top:2px}
+  .fx .res{text-align:right;font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:22px;line-height:1}
+  .fx .res small{display:block;font-family:"Barlow",Arial,sans-serif;font-size:11.5px;font-weight:500;color:var(--soft);margin-top:3px}
+  .fx .res.w{color:var(--win)} .fx .res.lo{color:var(--loss)}
+  .chip{display:inline-block;font-size:11px;font-weight:700;border-radius:99px;padding:2px 8px;margin-left:6px;vertical-align:1px;white-space:nowrap}
+  .chip.ref{background:#24507E;color:#fff}
+  .chip.home{background:var(--pan);color:#fff}
+  .chip.away{background:#fff;color:var(--pan);border:1px solid var(--pan)}
+  @media (max-width:560px){ .fx{grid-template-columns:52px minmax(0,1fr)} .fx .res{grid-column:2;text-align:left} .fx .res small{display:inline;margin-left:6px} }
+  footer{font-size:13px;color:var(--soft);margin-top:22px;line-height:1.5}
+  .empty{color:var(--soft);padding:10px 0}
+  .fx .tm{font-size:12.5px;font-weight:700;color:var(--blue)}
+  .next ul{margin:6px 0 0;padding:0;list-style:none;font-size:15px}
+  .next li{margin:2px 0}
+  .next li b{color:var(--accent);margin-right:6px}
+  .divs{display:flex;gap:6px;flex-wrap:wrap;margin-top:18px}
+  .divs button{font:inherit;font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:.04em;text-transform:uppercase;border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:10px;padding:6px 16px;cursor:pointer}
+  .divs button.on{background:var(--ink);color:#fff}
+  .divs button.off{opacity:.45;border-style:dashed}
+  .teams-bar{display:flex;gap:6px;flex-wrap:wrap}
+  .teams-bar button{font:inherit;font-size:14px;font-weight:700;border:1.5px solid var(--line);background:#fff;color:var(--soft);border-radius:99px;padding:6px 13px;cursor:pointer}
+  .teams-bar button.on{background:var(--pan);border-color:var(--pan);color:#fff}
+  .teams-bar button[data-t="all"].on{background:var(--ink);border-color:var(--ink)}
+  .refopt{font-size:13px;color:var(--soft);display:flex;align-items:center;gap:6px;margin-top:8px}
+  tr.cvc td.l{font-weight:600}
+  tr.sel td{background:var(--panS)}
+  tr.sel td.l{font-weight:800}
+  .nodata{padding:14px 0;color:var(--soft);font-size:15px}
+  .divs button small{display:block;font-family:"Barlow",Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;opacity:.8}
+  @media (max-width:560px){ .divs{display:grid;grid-template-columns:1fr 1fr} .divs button{font-size:15px;padding:6px 8px} }
+%%VBLT%%/style>
+%%VBLT%%/head>
+%%VBLT%%body>
+%%VBLT%%header>%%VBLT%%div class="hin">
+  %%VBLT%%h1>NVL Fixtures 26-27%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
+%%VBLT%%/div>%%VBLT%%/header>
+%%VBLT%%div class="wrap">
+  %%VBLT%%div class="card src">
+    %%VBLT%%span>National Volleyball League, every division with a Cambridge Volleyball Club team, from Volleyball England&rsquo;s VolleyZone, checked %%VBLT%%b id="checked">%%VBLT%%/b>. Results go up on VolleyZone a few days after each game, so check the live page before a game.%%VBLT%%/span>
+    %%VBLT%%a class="btn" id="liveLink" href="#" target="_blank" rel="noopener">Live VolleyZone page ↗%%VBLT%%/a>
+  %%VBLT%%/div>
+
+  %%VBLT%%div class="divs" id="divs">%%VBLT%%/div>
+
+  %%VBLT%%div class="next" id="next" hidden>%%VBLT%%/div>
+
+  %%VBLT%%section class="card">
+    %%VBLT%%h2 id="tableTitle">League table%%VBLT%%/h2>
+    %%VBLT%%div class="scroll">%%VBLT%%table id="table">%%VBLT%%/table>%%VBLT%%/div>
+    %%VBLT%%div class="key">P played · W won · L lost · SF/SA sets for/against · PF/PA points for/against · Pts league points. The Cambridge VC team is highlighted.%%VBLT%%/div>
+  %%VBLT%%/section>
+
+  %%VBLT%%section class="card">
+    %%VBLT%%div class="bar">
+      %%VBLT%%h2 style="margin:0">Fixtures &amp; results%%VBLT%%/h2>
+      %%VBLT%%div class="teams-bar" id="teamsBar">%%VBLT%%/div>
+    %%VBLT%%/div>
+    %%VBLT%%div id="list">%%VBLT%%/div>
+  %%VBLT%%/section>
+
+  %%VBLT%%footer>NVL games are played as match days: two or three teams meet at one venue, so most dates have several games. Rhinos Cambridge is a different club. More NVL information is on the %%VBLT%%a class="lnk" href="https://www.volleyballengland.org/competitions/volleyball/nvl" target="_blank" rel="noopener">Volleyball England NVL page%%VBLT%%/a>.%%VBLT%%/footer>
+%%VBLT%%/div>
+
+%%VBLT%%script>
+/* ===== snapshot of VolleyZone, the NVL divisions with a Cambridge VC team ===== */
+const CHECKED = "2026-11-03";
+const DIVS = {"WD1N":{"name":"Women D1 North","team":"Cambridge ARU","url":"https://competitions.volleyzone.co.uk/league/216378/","table":[["Cambridge ARU",3,3,0,9,0,225,145,9],["Leeds Gorse",3,2,1,6,3,209,190,6],["DARKSTAR Derbyshire",4,2,2,8,8,351,341,6],["Northampton",3,2,1,6,7,264,282,4],["Manchester Marvels Mayhem",3,1,2,5,6,241,239,4],["Loughborough Students",2,1,1,5,5,210,214,3],["Everton Belugas",2,0,2,2,6,154,183,1],["Manchester Moss Side Jaguars",2,0,2,0,6,90,150,0]],"fix":[["2026-11-07","13:45","Everton Belugas","Manchester Moss Side Jaguars","Litherland High School, Liverpool","",""],["2026-11-08","14:00","Loughborough Students","Manchester Marvels Mayhem","Parkin Sports Centre","",""],["2026-11-21","12:00","Leeds Gorse","Cambridge ARU","Ruth Gorse Academy","",""],["2026-11-21","16:00","Loughborough Students","Everton Belugas","Parkin Sports Centre","",""],["2026-11-22","12:30","Manchester Moss Side Jaguars","Northampton","Moss Side Leisure Centre","",""],["2026-11-22","14:40","Manchester Marvels Mayhem","Loughborough Students","Dean Trust Ardwick","",""],["2026-11-28","12:00","Leeds Gorse","Everton Belugas","Ruth Gorse Academy","",""],["2026-11-28","13:30","Northampton","Cambridge ARU","Moulton College","",""],["2026-11-29","14:40","Manchester Marvels Mayhem","Manchester Moss Side Jaguars","Dean Trust Ardwick","",""],["2026-12-05","13:30","Northampton","Loughborough Students","Moulton College","",""],["2026-12-05","16:00","Cambridge ARU","Manchester Marvels Mayhem","Cambridge University Sports Centre","",""],["2026-12-06","12:00","DARKSTAR Derbyshire","Manchester Moss Side Jaguars","Derby University Sports Centre","",""],["2026-12-06","13:00","Everton Belugas","Loughborough Students","Litherland High School, Liverpool","",""],["2026-12-12","13:00","Cambridge ARU","DARKSTAR Derbyshire","North Cambridge Academy","",""],["2026-12-12","13:30","Northampton","Manchester Marvels Mayhem","Moulton College","",""],["2027-01-16","14:30","DARKSTAR Derbyshire","Northampton","Derby University Sports Centre","",""],["2027-01-17","14:00","Loughborough Students","Leeds Gorse","Parkin Sports Centre","",""],["2027-01-23","13:45","Everton Belugas","Cambridge ARU","Litherland High School, Liverpool","",""],["2027-01-24","12:30","DARKSTAR Derbyshire","Loughborough Students","Derby University Sports Centre","",""],["2027-01-24","14:30","Leeds Gorse","Manchester Marvels Mayhem","Ruth Gorse Academy","",""],["2027-01-30","15:30","Cambridge ARU","Northampton","North Cambridge Academy","",""],["2027-01-31","12:30","Manchester Moss Side Jaguars","Loughborough Students","Moss Side Leisure Centre","",""],["2027-02-06","12:00","Leeds Gorse","Northampton","Ruth Gorse Academy","",""],["2027-02-07","12:00","DARKSTAR Derbyshire","Cambridge ARU","Derby University Sports Centre","",""],["2027-02-07","13:00","Everton Belugas","Manchester Marvels Mayhem","Litherland High School, Liverpool","",""],["2027-02-07","14:00","Loughborough Students","Manchester Moss Side Jaguars","Parkin Sports Centre","",""],["2027-02-20","13:30","Northampton","DARKSTAR Derbyshire","Moulton College","",""],["2027-02-20","13:45","Everton Belugas","Leeds Gorse","Litherland High School, Liverpool","",""],["2027-02-20","14:00","Loughborough Students","Cambridge ARU","Parkin Sports Centre","",""],["2027-02-21","12:30","Manchester Moss Side Jaguars","DARKSTAR Derbyshire","Moss Side Leisure Centre","",""],["2027-02-21","14:40","Manchester Marvels Mayhem","Everton Belugas","Dean Trust Ardwick","",""],["2027-02-27","12:30","Manchester Marvels Mayhem","DARKSTAR Derbyshire","Dean Trust Ardwick","",""],["2027-02-27","13:00","Cambridge ARU","Loughborough Students","North Cambridge Academy","",""],["2027-02-28","12:30","Manchester Moss Side Jaguars","Everton Belugas","Moss Side Leisure Centre","",""],["2027-03-06","13:30","Northampton","Manchester Moss Side Jaguars","Moulton College","",""],["2027-03-06","13:45","Everton Belugas","DARKSTAR Derbyshire","Litherland High School, Liverpool","",""],["2027-03-06","16:00","Leeds Gorse","Loughborough Students","Ruth Gorse Academy","",""],["2027-03-13","13:45","Everton Belugas","Northampton","Litherland High School, Liverpool","",""],["2027-03-13","15:30","Cambridge ARU","Leeds Gorse","North Cambridge Academy","",""],["2027-03-14","12:30","Manchester Moss Side Jaguars","Manchester Marvels Mayhem","Moss Side Leisure Centre","",""],["2027-03-20","12:00","Leeds Gorse","Manchester Moss Side Jaguars","Ruth Gorse Academy","",""],["2027-03-20","16:00","Cambridge ARU","Everton Belugas","Cambridge University Sports Centre","",""],["2027-03-21","12:30","Manchester Moss Side Jaguars","Leeds Gorse","Moss Side Leisure Centre","",""],["2027-03-21","14:40","Manchester Marvels Mayhem","Northampton","Dean Trust Ardwick","",""],["2027-04-01","","DARKSTAR Derbyshire","Leeds Gorse","Derby University Sports Centre","",""],["2026-11-01","12:30","Manchester Moss Side Jaguars","Cambridge ARU","Moss Side Leisure Centre","0-3","19-25, 20-25, 10-25"],["2026-10-31","14:30","DARKSTAR Derbyshire","Manchester Marvels Mayhem","Derby University Sports Centre","3-2","25-23, 19-25, 20-25, 25-22, 16-14"],["2026-10-31","13:30","Northampton","Leeds Gorse","Moulton College","0-3","9-25, 21-25, 20-25"],["2026-10-25","16:30","Loughborough Students","DARKSTAR Derbyshire","Parkin Sports Centre","3-2","24-26, 27-25, 12-25, 25-22, 15-9"],["2026-10-24","13:00","Cambridge ARU","Manchester Moss Side Jaguars","North Cambridge Academy","3-0","25-13, 25-13, 25-15"],["2026-10-18","14:40","Manchester Marvels Mayhem","Leeds Gorse","Dean Trust Ardwick","3-0","25-15, 25-19, 27-25"],["2026-10-18","14:00","Loughborough Students","Northampton","Parkin Sports Centre","2-3","20-25, 25-17, 22-25, 25-23, 15-17"],["2026-10-17","13:30","Northampton","Everton Belugas","Moulton College","3-2","26-24, 19-25, 25-18, 22-25, 15-8"],["2026-10-11","14:40","Manchester Marvels Mayhem","Cambridge ARU","Dean Trust Ardwick","0-3","17-25, 21-25, 17-25"],["2026-10-11","12:30","DARKSTAR Derbyshire","Everton Belugas","Derby University Sports Centre","3-0","26-24, 25-9, 25-21"],["2026-10-10","12:00","Leeds Gorse","DARKSTAR Derbyshire","Ruth Gorse Academy","3-0","25-21, 25-19, 25-23"]]},"WD2C":{"name":"Women D2 Central","team":"Cambridge 2","url":"https://competitions.volleyzone.co.uk/league/216385/","table":[["Cambridge 2",1,1,0,3,1,96,71,3],["Bedminster",1,1,0,3,1,101,81,3],["Bristol 2",2,1,1,4,4,171,193,3],["Tamworth Spartans",2,1,1,4,4,155,181,3],["Wombourne",2,0,2,2,6,177,174,0],["Black Country",0,0,0,0,0,0,0,0],["MK City",0,0,0,0,0,0,0,0],["Leicester Athena Nova",0,0,0,0,0,0,0,0]],"fix":[["2026-10-03","11:30","Bristol 2","Bedminster","Avanti Gardens School","1-3","20-25, 28-26, 14-25, 19-25"],["2026-10-04","15:30","Tamworth Spartans","Wombourne","Wilnecote Leisure Centre","3-1","25-19, 25-20, 9-25, 25-21"],["2026-10-10","11:30","Bristol 2","Wombourne","Avanti Gardens School","3-1","15-25, 25-21, 25-23, 25-23"],["2026-10-10","13:00","Cambridge 2","Tamworth Spartans","North Cambridge Academy","3-1","21-25, 25-13, 25-20, 25-13"],["2026-10-18","12:30","Bedminster","Black Country","St. Brendan's Sixth Form College","",""],["2026-10-18","13:00","Tamworth Spartans","MK City","Wilnecote Leisure Centre","",""],["2026-10-24","11:30","Bristol 2","Leicester Athena Nova","Avanti Gardens School","",""],["2026-10-24","14:00","MK City","Bedminster","Glebe Farm School","",""],["2026-10-25","15:30","Tamworth Spartans","Bedminster","Wilnecote Leisure Centre","",""],["2026-11-01","13:30","Wombourne","Black Country","Dudley Evolve","",""],["2026-11-07","11:30","Bristol 2","Black Country","Avanti Gardens School","",""],["2026-11-07","12:00","Bedminster","Cambridge 2","Oasis Academy Brislington","",""],["2026-11-07","14:00","MK City","Leicester Athena Nova","Glebe Farm School","",""],["2026-11-08","11:30","Bristol 2","Cambridge 2","Avanti Gardens School","",""],["2026-11-08","12:00","Bedminster","Leicester Athena Nova","Oasis Academy Brislington","",""],["2026-11-21","13:00","Leicester Athena Nova","Bristol 2","Huncote Leisure Centre","",""],["2026-11-21","13:30","Black Country","Tamworth Spartans","Redhill School Sports Hall","",""],["2026-11-21","14:00","MK City","Wombourne","Glebe Farm School","",""],["2026-11-28","13:00","Leicester Athena Nova","Cambridge 2","Huncote Leisure Centre","",""],["2026-11-29","13:30","Wombourne","Tamworth Spartans","Dudley Evolve","",""],["2026-12-05","13:00","Leicester Athena Nova","Wombourne","Huncote Leisure Centre","",""],["2026-12-05","13:30","Cambridge 2","Bedminster","Cambridge University Sports Centre","",""],["2026-12-05","14:00","MK City","Black Country","Glebe Farm School","",""],["2026-12-06","13:30","Wombourne","Bristol 2","Dudley Evolve","",""],["2026-12-06","15:30","Tamworth Spartans","Leicester Athena Nova","Wilnecote Leisure Centre","",""],["2026-12-12","13:00","Leicester Athena Nova","MK City","Huncote Leisure Centre","",""],["2026-12-12","13:30","Black Country","Cambridge 2","Redhill School Sports Hall","",""],["2026-12-13","13:30","Wombourne","Cambridge 2","Dudley Evolve","",""],["2027-01-16","12:00","Bedminster","MK City","Oasis Academy Brislington","",""],["2027-01-16","13:30","Cambridge 2","Bristol 2","Cambridge University Sports Centre","",""],["2027-01-17","12:00","Bedminster","Wombourne","Oasis Academy Brislington","",""],["2027-01-23","11:00","MK City","Tamworth Spartans","Glebe Farm School","",""],["2027-01-23","13:30","Black Country","Leicester Athena Nova","Cleobury Mortimer Sports Centre","",""],["2027-01-24","13:30","Wombourne","Leicester Athena Nova","Dudley Evolve","",""],["2027-01-30","13:00","Cambridge 2","Black Country","North Cambridge Academy","",""],["2027-01-31","13:00","Tamworth Spartans","Bristol 2","Wilnecote Leisure Centre","",""],["2027-01-31","13:30","Wombourne","Bedminster","Dudley Evolve","",""],["2027-02-06","13:30","Black Country","MK City","Redhill School Sports Hall","",""],["2027-02-07","13:00","Tamworth Spartans","Cambridge 2","Wilnecote Leisure Centre","",""],["2027-02-20","13:00","Cambridge 2","Wombourne","North Cambridge Academy","",""],["2027-02-20","13:00","Leicester Athena Nova","Black Country","Huncote Leisure Centre","",""],["2027-02-20","14:00","MK City","Bristol 2","Glebe Farm School","",""],["2027-02-27","11:30","Bristol 2","MK City","Avanti Gardens School","",""],["2027-02-27","12:00","Black Country","Wombourne","Redhill School Sports Hall","",""],["2027-02-27","13:00","Leicester Athena Nova","Tamworth Spartans","Huncote Leisure Centre","",""],["2027-03-06","13:00","Leicester Athena Nova","Bedminster","Huncote Leisure Centre","",""],["2027-03-06","13:30","Black Country","Bristol 2","Redhill School Sports Hall","",""],["2027-03-06","14:00","MK City","Cambridge 2","Glebe Farm School","",""],["2027-03-07","13:00","Tamworth Spartans","Black Country","Wilnecote Leisure Centre","",""],["2027-03-13","11:30","Bristol 2","Tamworth Spartans","Avanti Gardens School","",""],["2027-03-13","12:00","Black Country","Bedminster","Redhill School Sports Hall","",""],["2027-03-13","13:00","Cambridge 2","MK City","North Cambridge Academy","",""],["2027-03-20","12:00","Bedminster","Tamworth Spartans","Oasis Academy Brislington","",""],["2027-03-20","13:30","Cambridge 2","Leicester Athena Nova","North Cambridge Academy","",""],["2027-03-21","12:00","Bedminster","Bristol 2","Oasis Academy Brislington","",""],["2027-03-21","13:30","Wombourne","MK City","Dudley Evolve","",""]]},"WD3C":{"name":"Women D3 Central","team":"Cambridge 3","url":"https://competitions.volleyzone.co.uk/league/216381/","table":[["Rhinos Cambridge",4,4,0,12,0,300,174,12],["Lincoln Cannons",4,3,1,9,5,319,295,9],["Loughborough Students 2",4,3,1,9,5,304,245,8],["Cambridge 3",2,2,0,6,3,215,185,5],["Northampton 2",2,1,1,5,4,203,189,4],["Coventry & Warwick Riga",2,1,1,4,4,181,182,3],["Nottingham Rockets",4,0,4,4,12,265,365,2],["Nuneaton Flames",6,1,5,5,17,401,533,2],["Norwich Spikers",2,0,2,2,6,171,191,0]],"fix":[["2026-10-11","11:30","Northampton 2","Nuneaton Flames","Moulton College, Northampton","3-1","25-16, 25-20, 23-25, 25-13"],["2026-10-11","12:30","Loughborough Students 2","Nottingham Rockets","Parkin Sports Centre, Loughborough","3-2","23-25, 22-25, 25-17, 25-15, 15-10"],["2026-10-11","13:00","Cambridge 3","Nuneaton Flames","Moulton College, Northampton","3-1","25-17, 25-13, 25-27, 25-23"],["2026-10-11","14:00","Rhinos Cambridge","Nottingham Rockets","Parkin Sports Centre, Loughborough","3-0","25-6, 25-9, 25-10"],["2026-10-11","14:00","Northampton 2","Cambridge 3","Moulton College, Northampton","2-3","23-25, 17-25, 29-27, 25-23, 11-15"],["2026-10-11","15:00","Loughborough Students 2","Rhinos Cambridge","Parkin Sports Centre, Loughborough","0-3","10-25, 11-25, 23-25"],["2026-10-18","12:30","Lincoln Cannons","Coventry & Warwick Riga","Riseholme College, Lincoln","3-1","25-17, 18-25, 25-15, 29-27"],["2026-10-18","14:00","Norwich Spikers","Coventry & Warwick Riga","Riseholme College, Lincoln","1-3","25-22, 23-25, 19-25, 18-25"],["2026-10-18","15:00","Lincoln Cannons","Norwich Spikers","Riseholme College, Lincoln","3-1","19-25, 25-22, 25-22, 25-17"],["2026-10-24","13:30","Loughborough Students 2","Nottingham Rockets","Parkin Sports Centre, Loughborough","3-0","25-14, 25-6, 25-18"],["2026-10-24","15:00","Nottingham Rockets","Nuneaton Flames","Parkin Sports Centre, Loughborough","2-3","25-20, 25-18, 25-27, 22-25, 13-15"],["2026-10-24","17:00","Loughborough Students 2","Nuneaton Flames","Parkin Sports Centre, Loughborough","3-0","25-22, 25-8, 25-10"],["2026-11-01","11:30","Nuneaton Flames","Lincoln Cannons","George Eliot School, Nuneaton","0-3","14-25, 17-25, 19-25"],["2026-11-01","13:30","Lincoln Cannons","Rhinos Cambridge","George Eliot School, Nuneaton","0-3","19-25, 13-25, 21-25"],["2026-11-01","15:30","Nuneaton Flames","Rhinos Cambridge","George Eliot School, Nuneaton","0-3","14-25, 16-25, 22-25"],["2026-11-22","10:45","Cambridge 3","Rhinos Cambridge","North Cambridge Academy","",""],["2026-11-22","12:15","Lincoln Cannons","Rhinos Cambridge","North Cambridge Academy","",""],["2026-11-22","12:30","Coventry & Warwick Riga","Northampton 2","Alan Higgs Centre, Coventry","",""],["2026-11-22","13:15","Cambridge 3","Lincoln Cannons","North Cambridge Academy","",""],["2026-11-22","14:00","Norwich Spikers","Northampton 2","Alan Higgs Centre, Coventry","",""],["2026-11-22","15:00","Coventry & Warwick Riga","Norwich Spikers","Alan Higgs Centre, Coventry","",""],["2026-11-29","11:30","Norwich Spikers","Loughborough Students 2","UEA Sportspark, Norwich","",""],["2026-11-29","12:30","Coventry & Warwick Riga","Northampton 2","Alan Higgs Centre, Coventry","",""],["2026-11-29","13:00","Loughborough Students 2","Cambridge 3","UEA Sportspark, Norwich","",""],["2026-11-29","14:00","Nottingham Rockets","Northampton 2","Alan Higgs Centre, Coventry","",""],["2026-11-29","15:00","Coventry & Warwick Riga","Nottingham Rockets","Alan Higgs Centre, Coventry","",""],["2026-11-29","15:30","Norwich Spikers","Cambridge 3","UEA Sportspark, Norwich","",""],["2026-12-12","10:00","Nottingham Rockets","Lincoln Cannons","Minver Sports Centre, Nottingham","",""],["2026-12-12","11:30","Lincoln Cannons","Coventry & Warwick Riga","Minver Sports Centre, Nottingham","",""],["2026-12-12","14:00","Nottingham Rockets","Coventry & Warwick Riga","Minver Sports Centre, Nottingham","",""],["2026-12-13","11:30","Northampton 2","Loughborough Students 2","Moulton College, Northampton","",""],["2026-12-13","12:30","Rhinos Cambridge","Nuneaton Flames","North Cambridge Academy","",""],["2026-12-13","13:00","Loughborough Students 2","Cambridge 3","Moulton College, Northampton","",""],["2026-12-13","14:00","Northampton 2","Cambridge 3","Moulton College, Northampton","",""],["2026-12-13","14:00","Norwich Spikers","Nuneaton Flames","North Cambridge Academy","",""],["2026-12-13","15:00","Rhinos Cambridge","Norwich Spikers","North Cambridge Academy","",""],["2027-01-17","10:45","Cambridge 3","Rhinos Cambridge","North Cambridge Academy","",""],["2027-01-17","12:15","Rhinos Cambridge","Coventry & Warwick Riga","North Cambridge Academy","",""],["2027-01-17","13:15","Cambridge 3","Coventry & Warwick Riga","North Cambridge Academy","",""],["2027-01-24","13:30","Lincoln Cannons","Northampton 2","Riseholme College, Lincoln","",""],["2027-01-24","15:00","Northampton 2","Nuneaton Flames","Riseholme College, Lincoln","",""],["2027-01-24","16:00","Lincoln Cannons","Nuneaton Flames","Riseholme College, Lincoln","",""],["2027-02-07","10:30","Rhinos Cambridge","Norwich Spikers","North Cambridge Academy","",""],["2027-02-07","11:30","Nuneaton Flames","Coventry & Warwick Riga","Bedworth Physical Activity Hub","",""],["2027-02-07","12:00","Norwich Spikers","Northampton 2","North Cambridge Academy","",""],["2027-02-07","12:30","Nottingham Rockets","Lincoln Cannons","Riseholme College, Lincoln","",""],["2027-02-07","13:00","Rhinos Cambridge","Northampton 2","North Cambridge Academy","",""],["2027-02-07","13:30","Loughborough Students 2","Coventry & Warwick Riga","Bedworth Physical Activity Hub","",""],["2027-02-07","14:00","Lincoln Cannons","Cambridge 3","Riseholme College, Lincoln","",""],["2027-02-07","15:00","Nottingham Rockets","Cambridge 3","Riseholme College, Lincoln","",""],["2027-02-07","15:30","Nuneaton Flames","Loughborough Students 2","Bedworth Physical Activity Hub","",""],["2027-02-21","12:30","Loughborough Students 2","Lincoln Cannons","Parkin Sports Centre, Loughborough","",""],["2027-02-21","14:00","Lincoln Cannons","Northampton 2","Parkin Sports Centre, Loughborough","",""],["2027-02-21","15:00","Loughborough Students 2","Northampton 2","Parkin Sports Centre, Loughborough","",""],["2027-02-27","12:10","Norwich Spikers","Nottingham Rockets","UEA Sportspark, Norwich","",""],["2027-02-27","14:10","Nottingham Rockets","Cambridge 3","UEA Sportspark, Norwich","",""],["2027-02-27","16:10","Norwich Spikers","Cambridge 3","UEA Sportspark, Norwich","",""],["2027-03-06","10:00","Nottingham Rockets","Nuneaton Flames","Minver Sports Centre, Nottingham","",""],["2027-03-06","12:00","Norwich Spikers","Nuneaton Flames","Minver Sports Centre, Nottingham","",""],["2027-03-06","14:00","Nottingham Rockets","Norwich Spikers","Minver Sports Centre, Nottingham","",""],["2027-03-07","12:30","Loughborough Students 2","Coventry & Warwick Riga","Parkin Sports Centre, Loughborough","",""],["2027-03-07","14:00","Rhinos Cambridge","Coventry & Warwick Riga","Parkin Sports Centre, Loughborough","",""],["2027-03-07","15:00","Loughborough Students 2","Rhinos Cambridge","Parkin Sports Centre, Loughborough","",""],["2027-03-14","11:30","Northampton 2","Nottingham Rockets","Moulton College, Northampton","",""],["2027-03-14","12:30","Lincoln Cannons","Loughborough Students 2","Riseholme College, Lincoln","",""],["2027-03-14","13:00","Rhinos Cambridge","Nottingham Rockets","Moulton College, Northampton","",""],["2027-03-14","14:00","Loughborough Students 2","Norwich Spikers","Riseholme College, Lincoln","",""],["2027-03-14","14:00","Northampton 2","Rhinos Cambridge","Moulton College, Northampton","",""],["2027-03-14","15:00","Lincoln Cannons","Norwich Spikers","Riseholme College, Lincoln","",""],["2027-03-21","11:30","Nuneaton Flames","Coventry & Warwick Riga","George Eliot School, Nuneaton","",""],["2027-03-21","13:30","Cambridge 3","Coventry & Warwick Riga","George Eliot School, Nuneaton","",""],["2027-03-21","15:30","Nuneaton Flames","Cambridge 3","George Eliot School, Nuneaton","",""]]},"MD1S":{"name":"Men D1 South","team":"Cambridge ARU","url":"https://competitions.volleyzone.co.uk/league/216369/","table":[["London Aces",3,3,0,9,2,270,235,9],["Southampton",2,1,1,4,4,187,185,3],["Oxford Bulls",1,0,1,1,3,84,91,0],["Dartford Crossers",1,0,1,1,3,88,108,0],["MK City",1,0,1,0,3,72,82,0],["Bristol",0,0,0,0,0,0,0,0],["Cambridge ARU",0,0,0,0,0,0,0,0],["Rhinos Cambridge",0,0,0,0,0,0,0,0]],"fix":[["2026-10-17","13:30","London Aces","Southampton","Lambeth Academy","3-1","25-15, 22-25, 25-19, 25-20"],["2026-10-11","12:00","Southampton","Dartford Crossers","Itchen College Sports Centre","3-1","26-24, 32-34, 25-14, 25-16"],["2026-10-10","13:30","Oxford Bulls","London Aces","Ferry Leisure Centre","1-3","24-26, 25-15, 20-25, 15-25"],["2026-10-03","13:30","London Aces","MK City","Lambeth Academy","3-0","25-22, 25-20, 32-30"],["2026-10-24","11:30","MK City","Bristol","Glebe Farm School","",""],["2026-10-24","15:30","Cambridge ARU","Southampton","North Cambridge Academy","",""],["2026-10-31","13:30","London Aces","Cambridge ARU","Lambeth Academy","",""],["2026-10-31","13:30","Oxford Bulls","MK City","Ferry Leisure Centre","",""],["2026-11-01","12:45","Rhinos Cambridge","London Aces","North Cambridge Academy","",""],["2026-11-07","11:30","MK City","London Aces","Glebe Farm School","",""],["2026-11-07","13:00","Cambridge ARU","Bristol","North Cambridge Academy","",""],["2026-11-08","12:00","Dartford Crossers","Oxford Bulls","Dartford Technology College","",""],["2026-11-08","12:45","Rhinos Cambridge","Bristol","North Cambridge Academy","",""],["2026-11-14","13:30","London Aces","Oxford Bulls","Lambeth Academy","",""],["2026-11-15","12:00","Dartford Crossers","Southampton","Dartford Technology College","",""],["2026-11-21","11:30","MK City","Dartford Crossers","Glebe Farm School","",""],["2026-11-21","13:30","London Aces","Rhinos Cambridge","Cambridge Regional College","",""],["2026-11-21","14:00","Bristol","Cambridge ARU","Avanti Gardens School","",""],["2026-11-22","12:00","Southampton","Cambridge ARU","Itchen College Sports Centre","",""],["2026-11-28","11:30","Bristol","Dartford Crossers","Avanti Gardens School","",""],["2026-11-28","12:45","Rhinos Cambridge","MK City","North Cambridge Academy","",""],["2026-12-05","11:30","MK City","Oxford Bulls","Glebe Farm School","",""],["2026-12-06","11:30","Bristol","Southampton","Avanti Gardens School","",""],["2026-12-06","11:30","Oxford Bulls","Cambridge ARU","Ferry Leisure Centre","",""],["2026-12-06","13:00","Dartford Crossers","Rhinos Cambridge","Cambridge Regional College","",""],["2026-12-12","14:00","Bristol","Oxford Bulls","Avanti Gardens School","",""],["2026-12-12","15:30","Cambridge ARU","Dartford Crossers","North Cambridge Academy","",""],["2027-01-16","13:30","London Aces","Bristol","Lambeth Academy","",""],["2027-01-16","16:00","Cambridge ARU","MK City","Cambridge University Sports Centre","",""],["2027-01-17","12:00","Southampton","Rhinos Cambridge","Itchen College Sports Centre","",""],["2027-01-17","13:00","Dartford Crossers","London Aces","Dartford Technology College","",""],["2027-01-23","12:30","Southampton","MK City","Itchen College Sports Centre","",""],["2027-01-23","13:30","Oxford Bulls","Bristol","Ferry Leisure Centre","",""],["2027-01-30","11:30","Bristol","MK City","Avanti Gardens School","",""],["2027-01-30","13:30","London Aces","Dartford Crossers","Lambeth Academy","",""],["2027-01-31","13:00","Dartford Crossers","Cambridge ARU","Dartford Technology College","",""],["2027-02-06","11:30","MK City","Cambridge ARU","Glebe Farm School","",""],["2027-02-06","12:45","Rhinos Cambridge","Dartford Crossers","North Cambridge Academy","",""],["2027-02-07","12:00","Southampton","Oxford Bulls","Itchen College Sports Centre","",""],["2027-02-20","11:30","MK City","Southampton","Glebe Farm School","",""],["2027-02-20","11:30","Oxford Bulls","Dartford Crossers","Ferry Leisure Centre","",""],["2027-02-20","14:00","Bristol","Rhinos Cambridge","Cambridge Regional College","",""],["2027-02-20","15:30","Cambridge ARU","London Aces","North Cambridge Academy","",""],["2027-02-27","12:30","Southampton","London Aces","Itchen College Sports Centre","",""],["2027-02-27","15:30","Cambridge ARU","Rhinos Cambridge","Cambridge Regional College","",""],["2027-02-28","12:00","Bristol","London Aces","Avanti Gardens School","",""],["2027-03-06","12:45","Rhinos Cambridge","Cambridge ARU","North Cambridge Academy","",""],["2027-03-13","11:30","MK City","Rhinos Cambridge","Cambridge Regional College","",""],["2027-03-13","12:45","Dartford Crossers","Bristol","Dartford Technology College","",""],["2027-03-13","13:30","Oxford Bulls","Southampton","Ferry Leisure Centre","",""],["2027-03-20","11:00","Cambridge ARU","Oxford Bulls","Cambridge University Sports Centre","",""],["2027-03-21","12:00","Southampton","Bristol","Itchen College Sports Centre","",""],["2027-03-21","13:00","Dartford Crossers","MK City","Dartford Technology College","",""],["2027-03-21","16:30","Rhinos Cambridge","Oxford Bulls","Cambridge University Sports Centre","",""],["2027-03-28","12:45","Rhinos Cambridge","Southampton","Chesterton Sports Centre","",""],["2027-04-30","","Oxford Bulls","Rhinos Cambridge","","",""]]},"MD3C":{"name":"Men D3 Central","team":"Cambridge 2","url":"https://competitions.volleyzone.co.uk/league/216373/","table":[["Norwich Spikers",4,4,0,12,2,339,272,12],["DARKSTAR Derbyshire 2",2,2,0,6,0,150,128,6],["GNG Bedford",2,1,1,4,4,186,180,3],["Coventry and Warwick Riga 2",2,1,1,3,3,131,129,3],["Black Country 2",2,1,1,3,4,162,156,3],["Cambridge 2",2,0,2,2,6,164,191,0],["Nuneaton Inferno",2,0,2,1,6,147,175,0],["Rhinos Cambridge 2",2,0,2,0,6,102,150,0],["Tamworth Spartans 2",0,0,0,0,0,0,0,0]],"fix":[["2026-10-04","10:30","Cambridge 2","GNG Bedford","North Cambridge Academy","1-3","25-27, 23-25, 25-23, 9-25"],["2026-10-04","12:00","Norwich Spikers","GNG Bedford","North Cambridge Academy","3-1","25-15, 25-22, 22-25, 26-24"],["2026-10-04","13:30","Cambridge 2","Norwich Spikers","North Cambridge Academy","1-3","17-25, 19-25, 25-16, 21-25"],["2026-10-10","12:00","Black Country 2","Nuneaton Inferno","Redhill School Sports Hall","3-1","25-23, 25-27, 25-11, 25-20"],["2026-10-10","13:30","DARKSTAR Derbyshire 2","Nuneaton Inferno","Redhill School Sports Hall","3-0","25-22, 25-22, 25-22"],["2026-10-10","14:30","Black Country 2","DARKSTAR Derbyshire 2","Redhill School Sports Hall","0-3","22-25, 22-25, 18-25"],["2026-10-11","12:30","Rhinos Cambridge 2","Coventry and Warwick Riga 2","North Cambridge Academy","0-3","22-25, 20-25, 12-25"],["2026-10-11","14:00","Norwich Spikers","Coventry and Warwick Riga 2","North Cambridge Academy","3-0","25-13, 25-22, 25-21"],["2026-10-11","15:00","Rhinos Cambridge 2","Norwich Spikers","North Cambridge Academy","0-3","21-25, 18-25, 9-25"],["2026-10-24","12:30","Coventry and Warwick Riga 2","DARKSTAR Derbyshire 2","Alan Higgs Centre","",""],["2026-10-24","14:00","DARKSTAR Derbyshire 2","Cambridge 2","Alan Higgs Centre","",""],["2026-10-24","15:00","Coventry and Warwick Riga 2","Cambridge 2","Alan Higgs Centre","",""],["2026-10-25","09:30","GNG Bedford","Rhinos Cambridge 2","Trinity Arts & Leisure","",""],["2026-10-25","11:00","Nuneaton Inferno","Tamworth Spartans 2","George Eliot School","",""],["2026-10-25","11:00","Rhinos Cambridge 2","Black Country 2","Trinity Arts & Leisure","",""],["2026-10-25","13:00","GNG Bedford","Black Country 2","Trinity Arts & Leisure","",""],["2026-10-25","13:00","Tamworth Spartans 2","Norwich Spikers","George Eliot School","",""],["2026-10-25","15:00","Nuneaton Inferno","Norwich Spikers","George Eliot School","",""],["2026-11-01","13:00","Tamworth Spartans 2","Black Country 2","Wilnecote Leisure Centre","",""],["2026-11-01","14:00","Cambridge 2","Black Country 2","Wilnecote Leisure Centre","",""],["2026-11-01","15:00","Tamworth Spartans 2","Cambridge 2","Wilnecote Leisure Centre","",""],["2026-11-21","12:30","Coventry and Warwick Riga 2","Black Country 2","Alan Higgs Centre","",""],["2026-11-21","14:00","DARKSTAR Derbyshire 2","Black Country 2","Alan Higgs Centre","",""],["2026-11-21","15:00","Coventry and Warwick Riga 2","DARKSTAR Derbyshire 2","Alan Higgs Centre","",""],["2026-11-29","12:30","Rhinos Cambridge 2","Cambridge 2","North Cambridge Academy","",""],["2026-11-29","14:00","Nuneaton Inferno","Cambridge 2","North Cambridge Academy","",""],["2026-11-29","15:00","Rhinos Cambridge 2","Nuneaton Inferno","North Cambridge Academy","",""],["2026-12-05","12:10","Norwich Spikers","DARKSTAR Derbyshire 2","UEA Norwich Sportspark","",""],["2026-12-05","14:10","DARKSTAR Derbyshire 2","GNG Bedford","UEA Norwich Sportspark","",""],["2026-12-05","16:10","Norwich Spikers","GNG Bedford","UEA Norwich Sportspark","",""],["2027-01-17","11:00","Nuneaton Inferno","DARKSTAR Derbyshire 2","George Eliot School","",""],["2027-01-17","13:00","Cambridge 2","DARKSTAR Derbyshire 2","George Eliot School","",""],["2027-01-17","15:00","Nuneaton Inferno","Cambridge 2","George Eliot School","",""],["2027-01-24","","DARKSTAR Derbyshire 2","Rhinos Cambridge 2","Landau Forte College","",""],["2027-01-24","10:30","Cambridge 2","Norwich Spikers","North Cambridge Academy","",""],["2027-01-24","11:00","GNG Bedford","Nuneaton Inferno","Bedford Greenacre Independent School","",""],["2027-01-24","11:30","DARKSTAR Derbyshire 2","Tamworth Spartans 2","Landau Forte College","",""],["2027-01-24","12:00","Norwich Spikers","Black Country 2","North Cambridge Academy","",""],["2027-01-24","13:00","Nuneaton Inferno","Coventry and Warwick Riga 2","Bedford Greenacre Independent School","",""],["2027-01-24","13:30","Cambridge 2","Black Country 2","North Cambridge Academy","",""],["2027-01-24","13:30","Rhinos Cambridge 2","Tamworth Spartans 2","Landau Forte College","",""],["2027-01-24","15:00","GNG Bedford","Coventry and Warwick Riga 2","Bedford Greenacre Independent School","",""],["2027-01-31","11:00","Nuneaton Inferno","Tamworth Spartans 2","George Eliot School","",""],["2027-01-31","13:00","Nuneaton Inferno","Rhinos Cambridge 2","George Eliot School","",""],["2027-01-31","15:00","Rhinos Cambridge 2","Tamworth Spartans 2","George Eliot School","",""],["2027-02-07","12:00","Black Country 2","Coventry and Warwick Riga 2","Redhill School Sports Hall","",""],["2027-02-07","13:30","Coventry and Warwick Riga 2","Tamworth Spartans 2","Redhill School Sports Hall","",""],["2027-02-07","14:30","Black Country 2","Tamworth Spartans 2","Redhill School Sports Hall","",""],["2027-02-21","11:30","Norwich Spikers","Nuneaton Inferno","UEA Norwich Sportspark","",""],["2027-02-21","13:30","Nuneaton Inferno","Coventry and Warwick Riga 2","UEA Norwich Sportspark","",""],["2027-02-21","15:30","Norwich Spikers","Coventry and Warwick Riga 2","UEA Norwich Sportspark","",""],["2027-02-28","10:30","Rhinos Cambridge 2","Black Country 2","North Cambridge Academy","",""],["2027-02-28","12:00","Norwich Spikers","Black Country 2","North Cambridge Academy","",""],["2027-02-28","13:00","Rhinos Cambridge 2","Norwich Spikers","North Cambridge Academy","",""],["2027-02-28","13:00","Tamworth Spartans 2","Coventry and Warwick Riga 2","Wilnecote Leisure Centre","",""],["2027-02-28","14:00","GNG Bedford","Coventry and Warwick Riga 2","Wilnecote Leisure Centre","",""],["2027-02-28","15:00","Tamworth Spartans 2","GNG Bedford","Wilnecote Leisure Centre","",""],["2027-03-07","10:30","Rhinos Cambridge 2","Cambridge 2","North Cambridge Academy","",""],["2027-03-07","11:00","Nuneaton Inferno","Black Country 2","George Eliot School","",""],["2027-03-07","11:30","DARKSTAR Derbyshire 2","Tamworth Spartans 2","Landau Forte College","",""],["2027-03-07","12:00","Cambridge 2","Coventry and Warwick Riga 2","North Cambridge Academy","",""],["2027-03-07","13:00","GNG Bedford","Black Country 2","George Eliot School","",""],["2027-03-07","13:00","Rhinos Cambridge 2","Coventry and Warwick Riga 2","North Cambridge Academy","",""],["2027-03-07","13:30","Norwich Spikers","Tamworth Spartans 2","Landau Forte College","",""],["2027-03-07","15:00","Nuneaton Inferno","GNG Bedford","George Eliot School","",""],["2027-03-07","15:30","DARKSTAR Derbyshire 2","Norwich Spikers","Landau Forte College","",""],["2027-03-14","11:30","GNG Bedford","Rhinos Cambridge 2","Bedford Greenacre Independent School","",""],["2027-03-14","14:00","GNG Bedford","DARKSTAR Derbyshire 2","Bedford Greenacre Independent School","",""],["2027-03-14","15:30","Rhinos Cambridge 2","DARKSTAR Derbyshire 2","Bedford Greenacre Independent School","",""],["2027-03-21","10:00","GNG Bedford","Cambridge 2","North Cambridge Academy","",""],["2027-03-21","12:00","Tamworth Spartans 2","Cambridge 2","North Cambridge Academy","",""],["2027-03-21","14:00","GNG Bedford","Tamworth Spartans 2","North Cambridge Academy","",""]]}};
+for(const d of Object.values(DIVS)) d.fix = d.fix.map(([date, time, home, away, venue, sets, sc]) => ({ date, time, home, away, venue, sets, sc }));
+/* ============================================================================ */
+
+const $ = id => document.getElementById(id);
+const D = s => new Date(s + "T12:00:00");
+const today = (() => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); })();
+$("checked").textContent = D(CHECKED).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+
+let div = "WD3C", only = false;
+const cur = () => DIVS[div];
+const plays = (f, t) => f.home === t || f.away === t;
+
+function render(){
+  const d = cur(), US = d.team;
+  $("liveLink").href = d.url;
+  // division tabs
+  $("divs").innerHTML = "";
+  for(const [k, x] of Object.entries(DIVS)){
+    const b = document.createElement("button"); b.type = "button"; b.className = k === div ? "on" : "";
+    b.innerHTML = x.name + "%%VBLT%%small>" + x.team + "%%VBLT%%/small>";
+    b.onclick = () => { div = k; only = false; render(); };
+    $("divs").appendChild(b);
+  }
+  // table
+  $("tableTitle").textContent = d.name + " league table";
+  let h = '%%VBLT%%tr>%%VBLT%%th>%%VBLT%%/th>%%VBLT%%th class="l">Team%%VBLT%%/th>%%VBLT%%th>P%%VBLT%%/th>%%VBLT%%th>W%%VBLT%%/th>%%VBLT%%th>L%%VBLT%%/th>%%VBLT%%th>SF%%VBLT%%/th>%%VBLT%%th>SA%%VBLT%%/th>%%VBLT%%th>PF%%VBLT%%/th>%%VBLT%%th>PA%%VBLT%%/th>%%VBLT%%th>Pts%%VBLT%%/th>%%VBLT%%/tr>';
+  d.table.forEach((r, i) => { h += `%%VBLT%%tr class="${r[0] === US ? "sel cvc" : ""}">%%VBLT%%td class="pos">${i + 1}%%VBLT%%/td>%%VBLT%%td class="l">${r[0]}%%VBLT%%/td>${r.slice(1, 8).map(v => `%%VBLT%%td>${v}%%VBLT%%/td>`).join("")}%%VBLT%%td class="pts">${r[8]}%%VBLT%%/td>%%VBLT%%/tr>`; });
+  $("table").innerHTML = h;
+  // next match day
+  const nextDay = d.fix.filter(f => plays(f, US) && !f.sets && f.date >= today).map(f => f.date).sort()[0];
+  if(nextDay){
+    const games = d.fix.filter(f => plays(f, US) && f.date === nextDay).sort((a, b) => a.time.localeCompare(b.time)), dt = D(nextDay);
+    $("next").hidden = false;
+    $("next").innerHTML = `%%VBLT%%div class="lab">Next ${US} match day%%VBLT%%/div>
+      %%VBLT%%div class="dt">%%VBLT%%small>${dt.toLocaleDateString("en-GB", { weekday: "short" })}%%VBLT%%/small>${dt.getDate()}%%VBLT%%small>${dt.toLocaleDateString("en-GB", { month: "short" })}%%VBLT%%/small>%%VBLT%%/div>
+      %%VBLT%%div>%%VBLT%%div class="vs">${games[0].venue || "Venue to be confirmed"}%%VBLT%%/div>%%VBLT%%ul>${games.map(g => `%%VBLT%%li>%%VBLT%%b>${g.time || "TBC"}%%VBLT%%/b>${g.home === US ? "v " + g.away + " (home)" : "v " + g.home + " (away)"}%%VBLT%%/li>`).join("")}%%VBLT%%/ul>%%VBLT%%/div>`;
+  } else $("next").hidden = true;
+  // team buttons
+  $("teamsBar").innerHTML = "";
+  [[false, "All games"], [true, US + " games"]].forEach(([v, label]) => {
+    const b = document.createElement("button"); b.type = "button"; b.textContent = label; b.className = v === only ? "on" : ""; if(!v) b.dataset.t = "all";
+    b.onclick = () => { only = v; render(); };
+    $("teamsBar").appendChild(b);
+  });
+  // fixtures
+  const box = $("list"); box.innerHTML = "";
+  const list = d.fix.filter(f => !only || plays(f, US)).sort((a, b) => a.date.localeCompare(b.date) || (a.time || "").localeCompare(b.time || ""));
+  let month = "";
+  for(const f of list){
+    const dt = D(f.date), m = dt.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+    if(m !== month){ month = m; const hh = document.createElement("div"); hh.className = "month"; hh.textContent = m; box.appendChild(hh); }
+    const us = plays(f, US), row = document.createElement("div");
+    row.className = "fx" + (us ? " us" : "") + (f.date %%VBLT%% today || f.sets ? " past" : "") + (us && f.date === nextDay ? " isnext" : "");
+    let res;
+    if(f.sets){
+      const [hs, as] = f.sets.split("-").map(Number), won = us && (f.home === US ? hs > as : as > hs);
+      res = `%%VBLT%%div class="res ${us ? (won ? "w" : "lo") : ""}">${hs} – ${as}%%VBLT%%small>${f.sc}%%VBLT%%/small>%%VBLT%%/div>`;
+    } else res = `%%VBLT%%div class="res" style="font-size:14px;font-family:Barlow,Arial,sans-serif;font-weight:600;color:var(--soft)">${f.date %%VBLT%% today ? "no result yet" : ""}%%VBLT%%/div>`;
+    const chip = us ? `%%VBLT%%span class="chip ${f.home === US ? "home" : "away"}">${f.home === US ? "HOME" : "AWAY"}%%VBLT%%/span>` : "";
+    const nm = n => n === US ? "%%VBLT%%b>" + n + "%%VBLT%%/b>" : n;
+    row.innerHTML = `%%VBLT%%div class="d">%%VBLT%%small>${dt.toLocaleDateString("en-GB", { weekday: "short" })}%%VBLT%%/small>${dt.getDate()}%%VBLT%%/div>
+      %%VBLT%%div class="teams">${nm(f.home)}%%VBLT%%span class="v">v%%VBLT%%/span>${nm(f.away)}${chip}
+        %%VBLT%%div class="sub">${[f.time ? '%%VBLT%%span class="tm">' + f.time + '%%VBLT%%/span>' : "", f.venue].filter(Boolean).join(" · ")}%%VBLT%%/div>%%VBLT%%/div>${res}`;
+    box.appendChild(row);
+  }
+}
+render();
+%%VBLT%%/script>
+%%VBLT%%script data-vb-hub>
+(function(){
+  function send(){ try{ parent.postMessage({vbHub: window.name, h: document.documentElement.scrollHeight}, "*"); }catch(e){} }
+  if ("ResizeObserver" in window) new ResizeObserver(send).observe(document.documentElement);
+  window.addEventListener("load", send); send();
+})();
+%%VBLT%%/script>
+%%VBLT%%/body>
+%%VBLT%%/html>
+</script>
 <script type="text/plain" id="src-warmup">%%VBLT%%!DOCTYPE html>
 %%VBLT%%html lang="en">
 %%VBLT%%head>
@@ -278,6 +779,9 @@ footer p{margin:0 0 8px;max-width:64ch}
   body{background:#fff;font-size:10pt}
 }
 .badge{line-height:1.35}
+/* dance warm-up: same card as the other clips; sound and controls when enlarged */
+.ex .credit{font-size:.78rem;color:var(--ink-3);margin:4px 0 10px}
+.ex .credit a{color:inherit}
 %%VBLT%%/style>
 %%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
 %%VBLT%%style>
@@ -527,6 +1031,21 @@ header.vbh h1 em a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(
   %%VBLT%%/article>
 
 %%VBLT%%/section>
+%%VBLT%%section class="phase" id="dance">
+  %%VBLT%%div class="phase-head">%%VBLT%%div class="phase-num">08%%VBLT%%/div>%%VBLT%%div>%%VBLT%%h2>Dance warm-up%%VBLT%%/h2>%%VBLT%%div class="phase-time">1 min &middot; follow along to the music%%VBLT%%/div>%%VBLT%%/div>%%VBLT%%/div>
+  %%VBLT%%article class="ex" id="ex-18">
+    %%VBLT%%button class="shot" aria-label="Enlarge clip: Leg dance routine" aria-pressed="false">
+      %%VBLT%%video src="dance-warmup.mp4" data-sound loop playsinline muted preload="metadata" aria-label="Dance warm-up video">%%VBLT%%/video>
+      %%VBLT%%span class="badge">18%%VBLT%%/span>
+    %%VBLT%%/button>
+    %%VBLT%%div class="meta">
+      %%VBLT%%h3>Leg dance routine%%VBLT%%/h3>
+      %%VBLT%%p class="cue">A fun squat-based routine to the beat that gets the legs and heart rate going. Tap the clip to enlarge it with sound and follow along &ndash; play it twice for a longer warm-up.%%VBLT%%/p>
+      %%VBLT%%p class="credit">Video: %%VBLT%%a href="https://www.facebook.com/reel/1853977155768131" target="_blank" rel="noopener">Esparta Gym on Facebook%%VBLT%%/a>%%VBLT%%/p>
+      %%VBLT%%button class="done-btn" aria-pressed="false">Mark done%%VBLT%%/button>
+    %%VBLT%%/div>
+  %%VBLT%%/article>
+%%VBLT%%/section>
 
   %%VBLT%%footer>
     %%VBLT%%p>Clips play on their own and loop; tap one to see it larger. &ldquo;Mark done&rdquo; is saved in this browser so you can work down the list during a session.%%VBLT%%/p>
@@ -548,7 +1067,8 @@ document.querySelectorAll('.ex').forEach(ex=>{
 
   if(done.has(id)){ex.classList.add('done');mark.textContent='Done';mark.setAttribute('aria-pressed','true');}
 
-  shot.addEventListener('click',()=>{
+  shot.addEventListener('click',(e)=>{
+    if(e.target.closest('video[controls]')) return;   // the dance video uses its own controls
     const opening=!ex.classList.contains('open');
     document.querySelectorAll('.ex.open').forEach(o=>{
       if(o!==ex){o.classList.remove('open');
@@ -556,6 +1076,10 @@ document.querySelectorAll('.ex').forEach(ex=>{
     });
     ex.classList.toggle('open',opening);
     shot.setAttribute('aria-pressed',String(opening));
+    document.querySelectorAll('.ex video[data-sound]').forEach(v=>{   // the dance video: sound and controls only when enlarged
+      const on=v.closest('.ex').classList.contains('open');
+      v.controls=on; v.muted=!on; if(on) v.play().catch(()=>{});
+    });
   });
 
   mark.addEventListener('click',()=>{
@@ -4355,7 +4879,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%meta charset="utf-8">
 %%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
 %%VBLT%%meta name="color-scheme" content="light">
-%%VBLT%%title>CVA League Rules 25/26%%VBLT%%/title>
+%%VBLT%%title>CVA Rules 25-26%%VBLT%%/title>
 %%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 %%VBLT%%style>
   :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--blue:#24507E;--accent:#F0A500;
@@ -4437,7 +4961,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%/head>
 %%VBLT%%body>
 %%VBLT%%header>%%VBLT%%div class="hin">
-  %%VBLT%%h1>CVA League Rules 25/26%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
+  %%VBLT%%h1>CVA Rules 25-26%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
 %%VBLT%%/div>%%VBLT%%/header>
 %%VBLT%%div class="wrap">
   %%VBLT%%p class="intro">&ldquo;The following constitute the rules which govern the Cambridgeshire Volleyball Association Leagues (Men&rsquo;s, Women&rsquo;s and Mixed/Beginner&rsquo;s). Please note that all teams should make every effort to ensure that all league matches are played. Teams are expected to be proactive, and act with good sportsmanship, when rescheduling a game is necessary.&rdquo;%%VBLT%%/p>
@@ -4620,7 +5144,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%meta charset="utf-8">
 %%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
 %%VBLT%%meta name="color-scheme" content="light">
-%%VBLT%%title>CVA Rules 26/27%%VBLT%%/title>
+%%VBLT%%title>CVA Rules 26-27%%VBLT%%/title>
 %%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 %%VBLT%%style>
   :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--blue:#24507E;--accent:#F0A500;
@@ -4703,7 +5227,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%/head>
 %%VBLT%%body>
 %%VBLT%%header>%%VBLT%%div class="hin">
-  %%VBLT%%h1>CVA Rules 26/27%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
+  %%VBLT%%h1>CVA Rules 26-27%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
 %%VBLT%%/div>%%VBLT%%/header>
 %%VBLT%%div class="wrap">
   %%VBLT%%p class="intro">For the 2026&ndash;27 season the FIVB introduced a set of %%VBLT%%b>test rules%%VBLT%%/b>. Volleyball England has adopted some of them, and the Cambridgeshire Volleyball Association (CVA) is following Volleyball England for the county league. They are trials, not a rewrite of the Rules of the Game; the next full review comes after the 2028 Los Angeles Olympics. Teams should brief their players, and match referees should know these changes.%%VBLT%%/p>
@@ -4889,7 +5413,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%meta charset="utf-8">
 %%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
 %%VBLT%%meta name="color-scheme" content="light">
-%%VBLT%%title>FIVB Volleyball Rules%%VBLT%%/title>
+%%VBLT%%title>FIVB Rules 25-28%%VBLT%%/title>
 %%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 %%VBLT%%style>
   :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--blue:#24507E;--accent:#F0A500;
@@ -4960,7 +5484,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%/head>
 %%VBLT%%body>
 %%VBLT%%header>%%VBLT%%div class="hin">
-  %%VBLT%%h1>FIVB Volleyball Rules%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
+  %%VBLT%%h1>FIVB Rules 25-28%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
 %%VBLT%%/div>%%VBLT%%/header>
 %%VBLT%%div class="wrap">
   %%VBLT%%p class="intro">The faults, the refereeing and the hand signals from the FIVB Official Volleyball Rules 2025&ndash;2028, as adopted by Volleyball England, with the rule number on every point.%%VBLT%%/p>
