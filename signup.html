@@ -96,6 +96,7 @@
 
   /* organiser */
   .groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+  .groups[hidden]{display:none}
   .grp{border-radius:10px;padding:10px;background:var(--soft)}
   .grp h3{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
   .grp.in h3{color:var(--in)} .grp.maybe h3{color:var(--maybe)} .grp.out h3{color:var(--out)} .grp.none h3{color:var(--muted)}
@@ -113,6 +114,13 @@
   .confirm button{font:inherit;font-size:13px;border-radius:8px;padding:4px 10px;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink)}
   .confirm .yes{background:var(--out);color:#fff;border-color:var(--out)}
   .tablewrap{overflow-x:auto}
+  .refh{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:18px 0 8px}
+  table.reftab{border-collapse:collapse;width:100%;font-size:13.5px}
+  table.reftab th{text-align:left;font-size:12px;color:var(--muted);font-weight:700;padding:6px 8px;border-bottom:1px solid var(--line)}
+  table.reftab td{padding:8px;border-bottom:1px solid var(--line)}
+  table.reftab td.free{color:#dc2626;font-weight:700}
+  table.reftab td.who{font-weight:700;color:var(--in)}
+  table.reftab tr{cursor:pointer}
   table.matrix{border-collapse:separate;border-spacing:0;font-size:13px;width:100%}
   .matrix th,.matrix td{padding:6px 6px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
   .matrix th:first-child,.matrix td:first-child{text-align:left;position:sticky;left:0;background:var(--card);font-weight:600;z-index:1}
@@ -425,6 +433,10 @@
   <section class="card" id="matrixCard" hidden>
     <h2 id="matrixTitle">Month at a glance</h2>
     <div class="tablewrap"><table class="matrix" id="matrix"></table></div>
+    <div id="refBox" hidden>
+      <h3 class="refh">Ref duties this month</h3>
+      <div class="tablewrap"><table class="reftab" id="refTable"></table></div>
+    </div>
   </section>
 
   <section class="card" id="toolsCard" hidden>
@@ -971,7 +983,7 @@ function renderDuties(g, r){
   const w = $("warn");
   if(filled < DUTIES.length){ w.className = "warn low"; w.textContent = `${DUTIES.length - filled} of ${DUTIES.length} duties still free — pick one below.`; }
   else { w.className = "warn ok"; w.textContent = "✓ All duties covered."; }
-  $("orgDetail").hidden = !organiser; $("groups").hidden = true;
+  $("orgDetail").hidden = !organiser; $("groups").hidden = true; $("groups").innerHTML = "";   // ref games: no In / Maybe / Out lists
   const ul = $("players"); ul.innerHTML = ""; ul.hidden = false;
   for(const [key, label] of DUTIES){
     const holder = dutyHolder(r, key);
@@ -1008,14 +1020,33 @@ async function assignDuty(g, key, player){
   finally{ pending--; render(); }
 }
 
+function renderRefTable(refs){
+  $("refBox").hidden = !refs.length;
+  const t = $("refTable"); t.innerHTML = "";
+  if(!refs.length) return;
+  let h = "<thead><tr><th>Date</th><th>Game</th>" + DUTIES.map(([, l]) => "<th>" + l + "</th>").join("") + "</tr></thead><tbody>";
+  t.innerHTML = h + "</tbody>";
+  const body = t.querySelector("tbody");
+  for(const g of refs){
+    const r = responses[g.id] || {}, tr = document.createElement("tr");
+    const c1 = document.createElement("td"); c1.textContent = fmtDate(g.date) + (g.time ? " · " + g.time : "");
+    const c2 = document.createElement("td"); c2.textContent = shortLabel(g).replace(/^Ref:?\s*/i, "");
+    tr.append(c1, c2);
+    for(const [k] of DUTIES){ const who = dutyHolder(r, k), td = document.createElement("td"); td.className = who ? "who" : "free"; td.textContent = who || "free"; tr.appendChild(td); }
+    tr.onclick = () => { select(g.id); openDrawer(); };
+    body.appendChild(tr);
+  }
+}
 function renderMatrix(){
   $("matrixCard").hidden = !organiser;
   if(!organiser) return;
   const first = ymd(new Date(viewY, viewM, 1)), last = ymd(new Date(viewY, viewM+1, 0));
-  const list = games.filter(g => g.date >= first && g.date <= last).sort((a,b)=>(a.date+(a.time||"")).localeCompare(b.date+(b.time||"")));
+  const all = games.filter(g => g.date >= first && g.date <= last).sort((a,b)=>(a.date+(a.time||"")).localeCompare(b.date+(b.time||"")));
+  const list = all.filter(g => !isRef(g)), refs = all.filter(isRef);   // ref games have duties, not In / Maybe / Out
+  renderRefTable(refs);
   $("matrixTitle").textContent = new Date(viewY,viewM,1).toLocaleDateString("en-GB",{month:"long"}) + " at a glance";
   const tb = $("matrix"); tb.innerHTML = "";
-  if(!list.length){ tb.innerHTML = '<tbody><tr><td class="empty" style="position:static">No games this month.</td></tr></tbody>'; return; }
+  if(!list.length){ tb.innerHTML = '<tbody><tr><td class="empty" style="position:static">' + (refs.length ? "No playing games this month." : "No games this month.") + '</td></tr></tbody>'; return; }
   const thead = document.createElement("thead"), hr = document.createElement("tr");
   hr.appendChild(document.createElement("th"));
   for(const g of list){
