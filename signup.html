@@ -97,6 +97,12 @@
   /* organiser */
   .xlbtn{font:inherit;font-size:13px;font-weight:700;border:1px solid #16a34a;background:#16a34a;color:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;margin-left:auto}
   .xlbtn:hover{filter:brightness(1.08)}
+  .xlbtn.calbtn{margin-left:6px;background:#2563eb;border-color:#2563eb}
+  .gcal{width:fit-content;display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;color:#2563eb;text-decoration:none;border:1px solid #bfdbfe;border-radius:999px;padding:3px 10px;margin-top:6px}
+  .gcal:hover{background:#eff6ff}
+  .calhelp{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:80;max-width:min(520px,calc(100vw - 32px));background:#1e293b;color:#fff;border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.45;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+  .calhelp a{color:#93c5fd}
+  .calhelp button{float:right;margin-left:10px;border:0;background:none;color:#fff;font-size:16px;cursor:pointer}
   .groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
   .groups[hidden]{display:none}
   .grp{border-radius:10px;padding:10px;background:var(--soft)}
@@ -377,6 +383,7 @@
       </div>
       <label class="pastchk" id="pastWrap"><input type="checkbox" id="showPast"> Show past games</label>
       <button type="button" class="xlbtn" id="xlBtn" title="Download every game and every answer as an Excel file">⬇ Excel</button>
+      <button type="button" class="xlbtn calbtn" id="icsBtn" title="Download all upcoming games for Google Calendar, Apple or Outlook">📅 Calendar</button>
     </div>
     <div id="calView">
     <div class="cal-head">
@@ -524,7 +531,7 @@ const VENUES = {
 };
 function venueInfo(name){
   const v = VENUES[String(name).trim().toLowerCase()] || { label: name, q: name + ", Cambridge" };
-  return { label: v.label, url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(v.q) };
+  return { label: v.label, q: v.q, url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(v.q) };
 }
 const dispTitle = g => String(g.opponent || "Game").replace(/^Ref:\s*/i, "");
 const TYPE_TAG = { home:"HOME", away:"AWAY", league:"LEAGUE", ref:"REF" };
@@ -839,6 +846,67 @@ function exportExcel(){
 }
 $("xlBtn").onclick = exportExcel;
 
+
+/* ---------- calendar: one .ics file with every upcoming game, and a Google Calendar link per game ---------- */
+const GAME_HOURS = 2;   // games are put in calendars as 2 hours long
+function gameTimes(g){
+  const m = /^(\d{1,2})[:.](\d{2})/.exec(g.time || "");
+  if(!m) return null;                                   // no time: an all-day event
+  const [y, mo, d] = g.date.split("-").map(Number);
+  const start = new Date(y, mo - 1, d, +m[1], +m[2]), end = new Date(start.getTime() + GAME_HOURS * 3600e3);
+  const f = t => t.getFullYear() + String(t.getMonth() + 1).padStart(2, "0") + String(t.getDate()).padStart(2, "0") + "T" + String(t.getHours()).padStart(2, "0") + String(t.getMinutes()).padStart(2, "0") + "00";
+  return [f(start), f(end)];
+}
+function calTitle(g){ return (isRef(g) ? "Ref duty: " : "") + dispTitle(g); }
+function calDetails(g){
+  const lines = [{ home:"Home game", away:"Away game", league:"Local league", ref:"Ref duty (1st ref, 2nd ref)" }[typeClass(g)]];
+  if(g.req && !isRef(g)) lines.push("Needed: " + g.req);
+  if(g.notes) lines.push(g.notes);
+  lines.push("Sign up / see who's in: " + pageUrl());
+  return lines.join("\n");
+}
+function calPlace(g){ return g.venue ? venueInfo(g.venue).q : ""; }
+function gcalLink(g){
+  const t = gameTimes(g), d = g.date.replace(/-/g, "");
+  const next = (() => { const x = parse(g.date); x.setDate(x.getDate() + 1); return ymd(x).replace(/-/g, ""); })();
+  const q = new URLSearchParams({ action: "TEMPLATE", text: calTitle(g), dates: t ? t[0] + "/" + t[1] : d + "/" + next, ctz: "Europe/London", details: calDetails(g), location: calPlace(g) });
+  return "https://calendar.google.com/calendar/render?" + q.toString();
+}
+function exportCalendar(){
+  if(!TOKEN){ demoNudge(); return; }
+  const today = ymd(new Date());
+  const list = games.filter(g => g.date >= today).sort((a, b) => (a.date + (a.time || "")).localeCompare(b.date + (b.time || "")));
+  if(!list.length){ setStatus("There are no upcoming games to add."); return; }
+  const esc = v => String(v).replace(/\\/g, "\\\\").replace(/;/g, "\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+  const fold = line => { const out = []; let s = line; while(s.length > 73){ out.push(s.slice(0, 73)); s = " " + s.slice(73); } out.push(s); return out.join("\r\n"); };
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+  const L = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//VolleySource//Game Sign-up//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:CVC Panthers games", "X-WR-TIMEZONE:Europe/London",
+    "BEGIN:VTIMEZONE", "TZID:Europe/London",
+    "BEGIN:DAYLIGHT", "TZOFFSETFROM:+0000", "TZOFFSETTO:+0100", "TZNAME:BST", "DTSTART:19700329T010000", "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU", "END:DAYLIGHT",
+    "BEGIN:STANDARD", "TZOFFSETFROM:+0100", "TZOFFSETTO:+0000", "TZNAME:GMT", "DTSTART:19701025T020000", "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU", "END:STANDARD",
+    "END:VTIMEZONE"];
+  for(const g of list){
+    const t = gameTimes(g);
+    L.push("BEGIN:VEVENT", "UID:" + g.id + "@volleysource-signup", "DTSTAMP:" + stamp);
+    if(t) L.push("DTSTART;TZID=Europe/London:" + t[0], "DTEND;TZID=Europe/London:" + t[1]);
+    else { const x = parse(g.date); x.setDate(x.getDate() + 1); L.push("DTSTART;VALUE=DATE:" + g.date.replace(/-/g, ""), "DTEND;VALUE=DATE:" + ymd(x).replace(/-/g, "")); }
+    L.push("SUMMARY:" + esc(calTitle(g)), "DESCRIPTION:" + esc(calDetails(g)));
+    if(g.venue) L.push("LOCATION:" + esc(calPlace(g)));
+    L.push("URL:" + pageUrl(), "END:VEVENT");
+  }
+  L.push("END:VCALENDAR");
+  const blob = new Blob([L.map(fold).join("\r\n") + "\r\n"], { type: "text/calendar;charset=utf-8" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Panthers games.ics";
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  let h = document.getElementById("calHelp");
+  if(!h){ h = document.createElement("div"); h.id = "calHelp"; h.className = "calhelp"; document.body.appendChild(h); }
+  h.innerHTML = '<button type="button" aria-label="Close">✕</button><b>' + list.length + ' upcoming games downloaded</b> as “Panthers games.ics”.<br>' +
+    'Google Calendar: on a computer open <a href="https://calendar.google.com/calendar/u/0/r/settings/export" target="_blank" rel="noopener">Settings → Import &amp; export</a>, choose the file and press Import. ' +
+    'iPhone / Mac: open the file and tap Add All. Outlook: open the file. Changes made here later aren’t updated in your calendar – download again, or use “Add to Google Calendar” on a game.';
+  h.querySelector("button").onclick = () => h.remove();
+}
+$("icsBtn").onclick = exportCalendar;
+
 /* ---------- preview before unlocking: example games and names, nothing saved ---------- */
 let demoOn = false;
 function demoData(){
@@ -992,6 +1060,8 @@ function renderGame(){
     const arrow = document.createElement("span"); arrow.className = "maparrow"; arrow.textContent = " Map ↗"; a.appendChild(arrow);
     meta.appendChild(a);
   }
+  const gl = document.createElement("a"); gl.className = "gcal"; gl.href = gcalLink(g); gl.target = "_blank"; gl.rel = "noopener";
+  gl.textContent = "📅 Add to Google Calendar"; meta.appendChild(gl);
   $("gNotes").textContent = g.notes || "";
   const c = counts(g.id), nd = need(g), r = responses[g.id] || {};
   const refGame = isRef(g);
