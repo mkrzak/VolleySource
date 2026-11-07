@@ -495,7 +495,8 @@ const isRef = g => typeClass(g) === "ref";
 const need = g => isRef(g) ? DUTIES.length : g.need === "all" ? (PLAYERS.length || DEFAULT_NEED) : (Number(g.need) || DEFAULT_NEED);
 function counts(gid){
   const r = responses[gid] || {}; const c = {in:0,maybe:0,out:0};
-  for(const p of PLAYERS){ const s = r[slug(p)]?.status; if(DUTY[s]) c.in++; else if(c[s] !== undefined) c[s]++; }
+  const g = games.find(x => x.id === gid), ref = g && isRef(g);
+  for(const p of PLAYERS){ const s = r[slug(p)]?.status; if(DUTY[s]) c.in++; else if(!ref && c[s] !== undefined) c[s]++; }   // ref games: only the duties count
   c.none = PLAYERS.length - c.in - c.maybe - c.out; return c;
 }
 function shortLabel(g){ return (g.opponent||"Game").replace(/^((CVC )?Panthers|Home|Away) vs\.? /i,""); }
@@ -591,7 +592,7 @@ let renaming = false;
 async function migrateNames(data){
   if(renaming || !data) return;
   const needs = (data.players || []).some(n => RENAMES[n]) || (data.responses || []).some(r => RENAMES[r.player])
-    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names") || !(data.done || []).includes("refs-only") || !(data.done || []).includes("remove-siri") || !(data.done || []).includes("team-need-12") || !(data.done || []).includes("team-need-all") || !(data.done || []).includes("league-need-all") || !(data.done || []).includes("add-olga") || !(data.done || []).includes("remove-olga");
+    || !(data.done || []).includes("team-need-9") || !(data.done || []).includes("ref-duties") || !(data.done || []).includes("juniors") || !(data.done || []).includes("panthers-titles") || !(data.done || []).includes("rhinos-thunders") || !(data.done || []).includes("st-phillips") || !(data.done || []).includes("cvc-names") || !(data.done || []).includes("refs-only") || !(data.done || []).includes("remove-siri") || !(data.done || []).includes("team-need-12") || !(data.done || []).includes("team-need-all") || !(data.done || []).includes("league-need-all") || !(data.done || []).includes("add-olga") || !(data.done || []).includes("remove-olga") || !(data.done || []).includes("ref-clean");
   if(!needs) return;
   renaming = true;
   try{ const { data: d } = await mutate(x => {
@@ -669,6 +670,11 @@ async function migrateNames(data){
       x.players = (x.players || []).filter(n => n !== "Olga");
       x.responses = (x.responses || []).filter(r => r.player !== "Olga");
       x.done.push("remove-olga");
+    }
+    if(!x.done.includes("ref-clean")){              // one-off: ref games keep only 1st/2nd ref duties (drop old In/Maybe/Out answers)
+      const refIds = new Set((x.games || []).filter(g => /^ref/i.test(g.type || "")).map(g => g.id));
+      x.responses = (x.responses || []).filter(r => !refIds.has(r.game) || /^ref[12]$/.test(r.status || ""));
+      x.done.push("ref-clean");
     }
   }, "Update squad names, team minimum (9), ref duties, Juniors and game titles (Rhinos Thunders, St Phillips, CVC teams); refs only; squad update; team and league games need the whole squad; Olga added, then removed"); ingest(d); render(); }
   catch(e){ /* someone else will retry on their next visit */ }
@@ -1025,7 +1031,8 @@ function renderMatrix(){
     const tr = document.createElement("tr");
     const td0 = document.createElement("td"); td0.textContent = p; tr.appendChild(td0);
     for(const g of list){
-      const x = (responses[g.id]||{})[slug(p)] || {};
+      const x0 = (responses[g.id]||{})[slug(p)] || {};
+      const x = isRef(g) && !DUTY[x0.status] ? {} : x0;   // ref games: show only who has a duty
       const td = document.createElement("td"); td.className = (DUTY[x.status] ? "in" : (x.status||"none")) + (g.id===selected ? " selcol" : "");
       td.textContent = SYM[x.status] || "·"; if(x.note) td.title = x.note;
       tr.appendChild(td);
