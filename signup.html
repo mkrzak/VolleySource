@@ -95,6 +95,8 @@
   @media (max-width:480px){ .btns button{min-width:0;padding:6px 10px} }
 
   /* organiser */
+  .xlbtn{font:inherit;font-size:13px;font-weight:700;border:1px solid #16a34a;background:#16a34a;color:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;margin-left:auto}
+  .xlbtn:hover{filter:brightness(1.08)}
   .groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
   .groups[hidden]{display:none}
   .grp{border-radius:10px;padding:10px;background:var(--soft)}
@@ -374,6 +376,7 @@
         <button type="button" id="vCal" role="tab">📅 Calendar</button>
       </div>
       <label class="pastchk" id="pastWrap"><input type="checkbox" id="showPast"> Show past games</label>
+      <button type="button" class="xlbtn" id="xlBtn" title="Download every game and every answer as an Excel file">⬇ Excel</button>
     </div>
     <div id="calView">
     <div class="cal-head">
@@ -752,6 +755,89 @@ async function saveResponse(gameId, player, patch){
   })();
   writing[id] = p; await p; if(writing[id]===p) delete writing[id];
 }
+
+
+/* ---------- export to Excel (.xlsx built here, no library needed) ---------- */
+function xlsxBlob(sheets){
+  const esc = v => String(v).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c])).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, "");
+  const col = n => { let s = ""; n++; while(n){ const m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = Math.floor((n - 1) / 26); } return s; };
+  // styles: 0 normal, 1 bold header, 2 In (green), 3 Maybe (amber), 4 Out (red), 5 ref duty (blue), 6 bold wrap
+  const FILL = { In:2, Maybe:3, Out:4, "1st ref":5, "2nd ref":5 };
+  const sheetXml = sh => {
+    const rows = sh.rows.map((r, ri) => `<row r="${ri + 1}">` + r.map((v, ci) => {
+      if(v === "" || v == null) return "";
+      const ref = col(ci) + (ri + 1), base = String(v).split(" – ")[0];
+      const st = ri < (sh.head || 1) || ci < (sh.headCols || 0) ? 1 : (FILL[base] || 0);
+      return typeof v === "number" ? `<c r="${ref}" s="${st}"><v>${v}</v></c>` : `<c r="${ref}" t="inlineStr" s="${st}"><is><t xml:space="preserve">${esc(v)}</t></is></c>`;
+    }).join("") + "</row>").join("");
+    const cols = (sh.widths || []).map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join("");
+    const fx = sh.freeze ? `<sheetViews><sheetView workbookViewId="0"><pane xSplit="${sh.freeze[0]}" ySplit="${sh.freeze[1]}" topLeftCell="${col(sh.freeze[0])}${sh.freeze[1] + 1}" activePane="bottomRight" state="frozen"/></sheetView></sheetViews>` : "";
+    return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">${fx}${cols ? "<cols>" + cols + "</cols>" : ""}<sheetData>${rows}</sheetData></worksheet>`;
+  };
+  const fill = c => `<fill><patternFill patternType="solid"><fgColor rgb="FF${c}"/><bgColor indexed="64"/></patternFill></fill>`;
+  const files = {
+    "[Content_Types].xml": `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${sheets.map((_, i) => `<Override PartName="/xl/worksheets/sheet${i + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join("")}</Types>`,
+    "_rels/.rels": `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`,
+    "xl/workbook.xml": `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${sheets.map((sh, i) => `<sheet name="${esc(sh.name)}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join("")}</sheets></workbook>`,
+    "xl/_rels/workbook.xml.rels": `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheets.map((_, i) => `<Relationship Id="rId${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join("")}<Relationship Id="rId${sheets.length + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`,
+    "xl/styles.xml": `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="6"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill>${fill("DCFCE7")}${fill("FEF3C7")}${fill("FEE2E2")}${fill("DBEAFE")}</fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="7"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1" applyAlignment="1"><alignment wrapText="1" vertical="top"/></xf><xf numFmtId="0" fontId="0" fillId="2" borderId="0" xfId="0" applyFill="1"/><xf numFmtId="0" fontId="0" fillId="3" borderId="0" xfId="0" applyFill="1"/><xf numFmtId="0" fontId="0" fillId="4" borderId="0" xfId="0" applyFill="1"/><xf numFmtId="0" fontId="0" fillId="5" borderId="0" xfId="0" applyFill="1"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1"/></cellXfs></styleSheet>`,
+  };
+  sheets.forEach((sh, i) => files[`xl/worksheets/sheet${i + 1}.xml`] = sheetXml(sh));
+  // a plain (stored) zip
+  const te = new TextEncoder(), crcT = Array.from({ length: 256 }, (_, n) => { let c = n; for(let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; return c >>> 0; });
+  const crc = b => { let c = 0xFFFFFFFF; for(const x of b) c = crcT[(c ^ x) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+  const parts = [], central = []; let off = 0;
+  const u16 = v => [v & 255, (v >>> 8) & 255], u32 = v => [v & 255, (v >>> 8) & 255, (v >>> 16) & 255, (v >>> 24) & 255];
+  for(const [name, text] of Object.entries(files)){
+    const nb = te.encode(name), db = te.encode(text), c = crc(db);
+    const head = [0x50,0x4b,3,4, ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(0x21), ...u32(c), ...u32(db.length), ...u32(db.length), ...u16(nb.length), ...u16(0)];
+    parts.push(new Uint8Array(head), nb, db);
+    central.push(new Uint8Array([0x50,0x4b,1,2, ...u16(20), ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(0x21), ...u32(c), ...u32(db.length), ...u32(db.length), ...u16(nb.length), ...u16(0), ...u16(0), ...u16(0), ...u16(0), ...u32(0), ...u32(off)]), nb);
+    off += head.length + nb.length + db.length;
+  }
+  const cdSize = central.reduce((a, b) => a + b.length, 0), n = Object.keys(files).length;
+  const end = new Uint8Array([0x50,0x4b,5,6, ...u16(0), ...u16(0), ...u16(n), ...u16(n), ...u32(cdSize), ...u32(off), ...u16(0)]);
+  return new Blob([...parts, ...central, end], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+}
+function exportExcel(){
+  if(!TOKEN){ demoNudge(); return; }
+  const list = [...games].sort((a, b) => (a.date + (a.time || "")).localeCompare(b.date + (b.time || "")));
+  const typeName = g => ({ home:"Home", away:"Away", league:"Local league", ref:"Ref duty" })[typeClass(g)];
+  const ans = (g, p) => {
+    const x = (responses[g.id] || {})[slug(p)] || {};
+    if(isRef(g)) return DUTY[x.status] || "";
+    const s = { in:"In", maybe:"Maybe", out:"Out" }[x.status] || "";
+    return s && x.note ? s + " – " + x.note : s;
+  };
+  // sheet 1: players down the side, games across, like the month table
+  const grid = [
+    ["Date", ...list.map(g => fmtDate(g.date) + " " + (g.date || "").slice(0, 4))],
+    ["Time", ...list.map(g => g.time || "")],
+    ["Type", ...list.map(typeName)],
+    ["Game", ...list.map(dispTitle)],
+    ["Venue", ...list.map(g => g.venue ? venueInfo(g.venue).label : "")],
+  ];
+  for(const p of PLAYERS) grid.push([p, ...list.map(g => ans(g, p))]);
+  grid.push(["In / needed", ...list.map(g => counts(g.id).in + "/" + need(g))]);
+  // sheet 2: one row per game, names grouped by answer
+  const names = (g, pred) => PLAYERS.filter(p => pred(((responses[g.id] || {})[slug(p)] || {}).status)).join(", ");
+  const byGame = [["Date", "Time", "Type", "Game", "Venue", "In", "Maybe", "Out", "No reply", "1st ref", "2nd ref", "In / needed"]];
+  for(const g of list){
+    const ref = isRef(g), r = responses[g.id] || {};
+    byGame.push([g.date, g.time || "", typeName(g), dispTitle(g), g.venue ? venueInfo(g.venue).label : "",
+      ref ? "" : names(g, s => s === "in"), ref ? "" : names(g, s => s === "maybe"), ref ? "" : names(g, s => s === "out"),
+      ref ? "" : names(g, s => !["in","maybe","out"].includes(s)),
+      ref ? dutyHolder(r, "ref1") : "", ref ? dutyHolder(r, "ref2") : "", counts(g.id).in + "/" + need(g)]);
+  }
+  const blob = xlsxBlob([
+    { name: "Players x games", rows: grid, head: 5, headCols: 1, freeze: [1, 5], widths: [16, ...list.map(() => 18)] },
+    { name: "By game", rows: byGame, head: 1, freeze: [0, 1], widths: [11, 7, 12, 34, 30, 40, 24, 24, 40, 14, 14, 11] },
+  ]);
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = "Panthers sign-up " + ymd(new Date()) + ".xlsx";
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+$("xlBtn").onclick = exportExcel;
 
 /* ---------- preview before unlocking: example games and names, nothing saved ---------- */
 let demoOn = false;
