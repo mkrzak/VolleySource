@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Game Sign-up · VolleySource</title>
+<title>CVA Game Sign-up · VolleySource</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -336,7 +336,7 @@
 <header>
   <div class="wrap">
     <div>
-      <h1 id="hTitle">Game Sign-up</h1>
+      <h1 id="hTitle">CVA Game Sign-up</h1>
       <p id="hSub"></p>
     </div>
     <div id="hSide"></div>
@@ -963,7 +963,7 @@ $("lockLink").onclick = (e) => { e.preventDefault(); lockDevice(); };
 
 /* ---------- views ---------- */
 function renderHeader(){
-  $("hTitle").textContent = organiser ? "Organiser view" : "Game Sign-up";
+  $("hTitle").textContent = organiser ? "Organiser view" : "CVA Game Sign-up";
   $("hSub").textContent = organiser ? "Who's in for each game, who hasn't replied, and reminders to send."
                                     : "";
   const side = $("hSide"); side.innerHTML = "";
