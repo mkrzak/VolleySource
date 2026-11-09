@@ -94,7 +94,7 @@
     </button>
     <button class="hcard g-cva" type="button" data-key="rules" aria-pressed="false">
       <span class="htitle">CVA Rules 25-27</span>
-      <span class="hdesc">CVA League Rules 25-26 plus the CVA Adaptation from VE Rules 26-27 (Volleyball England test rules): substitutions, warm-up, positions, tips and blocks.</span>
+      <span class="hdesc">CVA League Rules 25-26, the CVA Adaptation from VE Rules 26-27, and a Referee Manual for league referees.</span>
     </button>
     <button class="hcard g-cva" type="button" data-key="fixtures" aria-pressed="false">
       <span class="htitle">CVA Fixtures</span>
@@ -110,7 +110,7 @@
     </button>
     <button class="hcard g-nvl" type="button" data-key="nvlreg" aria-pressed="false">
       <span class="htitle">NVL Rules 26-27</span>
-      <span class="hdesc">Volleyball England NVL rules for 2026&ndash;27 in plain words: key dates, warm-up timeline, late arrival, playing up, kit, referees, cards and promotion.</span>
+      <span class="hdesc">Volleyball England NVL regulations 2026&ndash;27 in plain words, plus NVL Referee Rules with the 2026&ndash;27 changes marked NEW.</span>
     </button>
     <button class="hcard g-nvl" type="button" data-key="nvl" aria-pressed="false">
       <span class="htitle">NVL Fixtures</span>
@@ -842,6 +842,16 @@ render();
   .cardc{display:inline-block;width:11px;height:15px;border-radius:2px;vertical-align:-2px;margin-right:2px}
   .cardc.red{background:#D63A3B} .cardc.yel{background:#F0C000}
   td:last-child{white-space:nowrap}
+  .new{display:inline-block;font-family:"Barlow Condensed",Arial,sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.05em;color:#fff;background:linear-gradient(90deg,#E5007E,#FF5A1F);border-radius:5px;padding:1px 7px;margin-right:6px;vertical-align:1px;white-space:nowrap;text-transform:uppercase}
+  .nb{background:#FFF0F7;border:1px solid #F7B6D6;border-left:5px solid #E5007E;border-radius:8px;padding:9px 12px;margin-top:10px;font-size:14px}
+  .nb ul{margin-top:4px} .card .nb li::before{background:#E5007E}
+  .nb .nh{display:block;font-weight:700;color:#B0005F;margin-bottom:3px}
+  .jump{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+  .jump a{display:inline-block;padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none;color:#fff}
+  .part{margin:34px 0 0;padding:14px 18px;border-radius:12px;color:#fff;scroll-margin-top:10px}
+  .part h2{margin:0;color:#fff;font-size:26px}
+  .part h2 small{display:block;color:rgba(255,255,255,.88);font-size:13px;font-weight:600;text-transform:none;letter-spacing:0;font-family:inherit;margin-top:4px}
+  .part .new{font-size:11.5px}
 %%VBLT%%/style>
 %%VBLT%%/head>
 %%VBLT%%body>
@@ -851,7 +861,12 @@ render();
 %%VBLT%%div class="wrap">
   %%VBLT%%p class="intro">The key points of Volleyball England&rsquo;s %%VBLT%%b>National Competition Regulations 2026&ndash;27%%VBLT%%/b> for the National Volleyball League (NVL), National Cup and National Shield, in plain words and with the regulation number on every point. The order of authority is: the %%VBLT%%b>FIVB Rules of the Game%%VBLT%%/b>, then %%VBLT%%b>these NVL regulations%%VBLT%%/b>, then any competition-specific regulations. Questions go to %%VBLT%%a href="mailto:competitions@volleyballengland.org">competitions@volleyballengland.org%%VBLT%%/a>, and a written ruling is needed before acting on anything unclear.%%VBLT%%/p>
 
-  %%VBLT%%div class="nums">
+  %%VBLT%%nav class="jump">
+    %%VBLT%%a href="#regs" style="background:var(--c1)">NVL Regulations%%VBLT%%/a>
+    %%VBLT%%a href="#refrules" style="background:var(--c5)">NVL Referee Rules%%VBLT%%/a>
+  %%VBLT%%/nav>
+
+  %%VBLT%%div class="nums" id="regs">
     %%VBLT%%div class="num" style="background:var(--c1)">%%VBLT%%b>30%%VBLT%%small>min%%VBLT%%/small>%%VBLT%%/b>%%VBLT%%span>official warm-up before the published start time%%VBLT%%/span>%%VBLT%%/div>
     %%VBLT%%div class="num" style="background:var(--c4)">%%VBLT%%b>20%%VBLT%%small>min%%VBLT%%/small>%%VBLT%%/b>%%VBLT%%span>late on court = first set lost 25-0%%VBLT%%/span>%%VBLT%%/div>
     %%VBLT%%div class="num" style="background:var(--c3)">%%VBLT%%b>12%%VBLT%%small>+2%%VBLT%%/small>%%VBLT%%/b>%%VBLT%%span>players + Liberos on the team sheet%%VBLT%%/span>%%VBLT%%/div>
@@ -1120,7 +1135,160 @@ render();
 
   %%VBLT%%/div>
 
+  %%VBLT%%div class="part" id="refrules" style="background:var(--c5)">%%VBLT%%h2>NVL Referee Rules%%VBLT%%small>How to referee an NVL match: the FIVB Refereeing Guidelines &amp; Instructions in plain words, with the Volleyball England 2026&ndash;27 changes marked %%VBLT%%span class="new">NEW 26-27%%VBLT%%/span>%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+
+  %%VBLT%%div class="grid">
+
+    %%VBLT%%section class="card wide" style="--c:var(--c5)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/>%%VBLT%%path d="M9 12l2 2 4-4"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>Smooth refereeing%%VBLT%%small>The approach behind every decision%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>Stay in the background and %%VBLT%%b>intervene as little as possible%%VBLT%%/b>; don&rsquo;t go &ldquo;hunting&rdquo; for faults. Reward spectacular, legal play.%%VBLT%%/li>
+        %%VBLT%%li>Only call faults you actually %%VBLT%%b>see%%VBLT%%/b>. Judge the contact itself, not the player&rsquo;s body before or after, and not the noise of the hit.%%VBLT%%/li>
+        %%VBLT%%li>Tell the difference between %%VBLT%%b>normal emotion%%VBLT%%/b> (cheering, shouting encouragement) and deliberate unsportsmanlike behaviour, which is sanctioned.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>The first fault counts.%%VBLT%%/b> Whistle it straight away; once one referee has whistled, the other doesn&rsquo;t whistle again. After each rally, the referees %%VBLT%%b>glance at each other%%VBLT%%/b> to confirm the decision.%%VBLT%%/li>
+        %%VBLT%%li>Use only the %%VBLT%%b>official hand signals%%VBLT%%/b>.%%VBLT%%/li>
+      %%VBLT%%/ul>
+      %%VBLT%%div class="nb">%%VBLT%%span class="nh">%%VBLT%%span class="new">NEW 26-27%%VBLT%%/span>Reduced use of the whistle%%VBLT%%/span>
+        %%VBLT%%ul>%%VBLT%%li>In a %%VBLT%%b>clear and obvious%%VBLT%%/b> situation (ball clearly in or out, serve into the net, clear touch) the end of the rally needn&rsquo;t be whistled, but the %%VBLT%%b>hand signal%%VBLT%%/b> must still be shown.%%VBLT%%/li>
+        %%VBLT%%li>Faults that stop play are still whistled: net touch, penetration, ball-handling faults, ball in, four hits.%%VBLT%%/li>%%VBLT%%/ul>%%VBLT%%/div>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card" style="--c:var(--c1)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M4 21V4M20 21V4M4 7h16M4 11h16"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>Pre-match checks%%VBLT%%small>Rules 1&ndash;5 and NVL D5, E6%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>%%VBLT%%b>Net:%%VBLT%%/b> throw a ball into it; it must rebound from a tight net. Don&rsquo;t start with a torn net or band. Antennae on the outer edge of the side bands.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Height:%%VBLT%%/b> the 2nd referee measures it before the toss, with the 1st referee watching: men %%VBLT%%b>2.43 m%%VBLT%%/b>, women %%VBLT%%b>2.24 m%%VBLT%%/b>.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Safety:%%VBLT%%/b> padded posts and stand, nothing sticking out, the floor dry and flat, free zone clear.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Balls:%%VBLT%%/b> the 2nd referee checks the match balls are identical (colour, size, weight, %%VBLT%%b>pressure%%VBLT%%/b>).%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Players:%%VBLT%%/b> numbers on shirts match the %%VBLT%%b>team sheet%%VBLT%%/b>; uniforms match; the captain&rsquo;s stripe is visible. Players are in full kit for the protocol and net warm-up.%%VBLT%%/li>
+        %%VBLT%%li>Identify the %%VBLT%%b>game captain%%VBLT%%/b> and the %%VBLT%%b>coach%%VBLT%%/b>: only they may speak to the referees.%%VBLT%%/li>
+      %%VBLT%%/ul>
+      %%VBLT%%div class="nb">%%VBLT%%span class="nh">%%VBLT%%span class="new">NEW 26-27%%VBLT%%/span>Serving warm-up%%VBLT%%/span>
+        %%VBLT%%ul>%%VBLT%%li>Each team serves for %%VBLT%%b>90 seconds%%VBLT%%/b>, %%VBLT%%b>Team A first%%VBLT%%/b>; the other team stays off court with no balls. The NVL net warm-up is now 12 minutes (see the pre-match timeline above).%%VBLT%%/li>%%VBLT%%/ul>%%VBLT%%/div>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card" style="--c:var(--c2)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%rect x="3" y="3" width="18" height="18" rx="2"/>%%VBLT%%path d="M3 12h18M12 3v18"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>Line-ups and positions%%VBLT%%small>Rules 7, 24%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>The 2nd referee and scorer check each %%VBLT%%b>line-up sheet%%VBLT%%/b> against the scoresheet; a wrong number means a corrected sheet. The 2nd referee keeps the sheets in a pocket.%%VBLT%%/li>
+        %%VBLT%%li>At the end of each set, ask the coaches for the next line-up %%VBLT%%b>straight away%%VBLT%%/b>, so the 3-minute break isn&rsquo;t stretched.%%VBLT%%/li>
+        %%VBLT%%li>Check positions from %%VBLT%%b>position II or IV%%VBLT%%/b> of each team, turning the sheet to follow the rotation; the scorer tells you who should serve.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Positional fault:%%VBLT%%/b> whistle, show the signal and point to the %%VBLT%%b>two players%%VBLT%%/b>; if asked, show the game captain the line-up sheet (cover the other team&rsquo;s).%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Wrong server%%VBLT%%/b> found only after the rally: just %%VBLT%%b>one point%%VBLT%%/b> to the opponents; check the order before the next serve.%%VBLT%%/li>
+      %%VBLT%%/ul>
+      %%VBLT%%div class="nb">%%VBLT%%span class="nh">%%VBLT%%span class="new">NEW 26-27%%VBLT%%/span>Receiving team position%%VBLT%%/span>
+        %%VBLT%%ul>%%VBLT%%li>The receivers must be in order %%VBLT%%b>at the whistle%%VBLT%%/b> but may move once the %%VBLT%%b>server&rsquo;s motion starts%%VBLT%%/b>; a fault is still judged at the service hit, and everyone must be %%VBLT%%b>inside the court%%VBLT%%/b>. Only the receiving team can make a positional fault.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Fake serve:%%VBLT%%/b> play on, then warn the server %%VBLT%%span class="cardc yel">%%VBLT%%/span> (or the next sanction). The 2nd referee may need to move to see this.%%VBLT%%/li>%%VBLT%%/ul>%%VBLT%%/div>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card" style="--c:var(--c4)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%circle cx="12" cy="12" r="8"/>%%VBLT%%path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>Playing the ball%%VBLT%%small>Rules 9, 13, 14 &middot; mainly the 1st referee%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>A %%VBLT%%b>catch or throw%%VBLT%%/b> means the ball doesn&rsquo;t rebound from the contact. Allow legal overhand finger contacts.%%VBLT%%/li>
+        %%VBLT%%li>Be %%VBLT%%b>less strict%%VBLT%%/b> when a player is under pressure: the setter running or jumping to reach the ball, a ball coming fast off the block or a team-mate. The %%VBLT%%b>first team contact%%VBLT%%/b> is free unless the ball is caught or thrown.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Block:%%VBLT%%/b> a block that holds, lifts, pushes or carries the ball is a catch, but don&rsquo;t exaggerate. A ball touching the blocker&rsquo;s feet in the same action is still a block.%%VBLT%%/li>
+        %%VBLT%%li>Back-row and Libero attack faults only count once the attack is %%VBLT%%b>completed%%VBLT%%/b> (ball fully across the net plane or touched by a blocker).%%VBLT%%/li>
+      %%VBLT%%/ul>
+      %%VBLT%%div class="nb">%%VBLT%%span class="nh">%%VBLT%%span class="new">NEW 26-27%%VBLT%%/span>Internal pass, tips and doubles%%VBLT%%/span>
+        %%VBLT%%ul>%%VBLT%%li>%%VBLT%%b>Internal pass:%%VBLT%%/b> on the second contact, overhand finger contacts in one action are %%VBLT%%b>not a fault%%VBLT%%/b>, unless the ball clearly touches twice (e.g. off the hands onto the head).%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Push &ndash; catch &ndash; throw:%%VBLT%%/b> apply strictly. A tip is %%VBLT%%b>one hand%%VBLT%%/b>, a %%VBLT%%b>short contact%%VBLT%%/b>, in a %%VBLT%%b>straight line%%VBLT%%/b>; only contacts that extend the time on the ball are faults.%%VBLT%%/li>
+        %%VBLT%%li>An %%VBLT%%b>attack hit with a double contact%%VBLT%%/b> is a fault. A double set straight over the net or into the opponents&rsquo; block: fault; a double set to the attacker, or touched by attacker and blocker together: no fault.%%VBLT%%/li>%%VBLT%%/ul>%%VBLT%%/div>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card" style="--c:var(--c6)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M3 6h18M3 10h18M3 14h18M3 18h18M7 4v16M17 4v16"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>At the net%%VBLT%%small>Rules 10&ndash;11 &middot; mainly the 2nd referee%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>%%VBLT%%b>Who watches what:%%VBLT%%/b> the 1st referee follows the %%VBLT%%b>path of the ball%%VBLT%%/b>; the 2nd referee, standing on the %%VBLT%%b>blockers&rsquo; side%%VBLT%%/b>, watches net faults along the whole net, the centre line and the antenna on their side. Back-row and Libero faults can be called by either referee.%%VBLT%%/li>
+        %%VBLT%%li>Touching the net between the antennae while playing (or faking) the ball is a fault. Touching it %%VBLT%%b>outside the antennae%%VBLT%%/b> (top band, cables, posts) is not, unless it affects the net or is deliberate.%%VBLT%%/li>
+        %%VBLT%%li>Hair touching the net is only a fault if it affects the opponents or stops the rally.%%VBLT%%/li>
+        %%VBLT%%li>A ball driven into the net that pushes it onto a player is %%VBLT%%b>not a fault%%VBLT%%/b>, unless the player moves to change the ball&rsquo;s path.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Centre line:%%VBLT%%/b> a foot landing in the opponent&rsquo;s court is legal if part of it stays %%VBLT%%b>on or above the line%%VBLT%%/b>.%%VBLT%%/li>
+        %%VBLT%%li>An attack started on the attacker&rsquo;s side that finishes just past the net is not a fault.%%VBLT%%/li>
+        %%VBLT%%li>Accidental contact between opponents isn&rsquo;t automatically a fault; deliberate contact to cause a fault is a %%VBLT%%b>penalty%%VBLT%%/b> or more.%%VBLT%%/li>
+      %%VBLT%%/ul>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card" style="--c:var(--c3)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%circle cx="12" cy="7" r="3"/>%%VBLT%%path d="M12 10v6M8 21l4-5 4 5M6 12l6 1 6-3"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>The serve%%VBLT%%small>Rule 12 &middot; the 1st referee%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>Whistle as soon as the server %%VBLT%%b>has the ball%%VBLT%%/b>; you don&rsquo;t need to wait until they&rsquo;re ready. The %%VBLT%%b>8 seconds%%VBLT%%/b> start at the whistle. A server who delays coming to the service zone can get a delay sanction.%%VBLT%%/li>
+        %%VBLT%%li>The server&rsquo;s take-off foot must be fully %%VBLT%%b>inside the service zone%%VBLT%%/b>; the server may start the run-up outside it.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Screen:%%VBLT%%/b> players grouped together, waving arms or with hands above the head to hide the server. Whistle to tell them to separate; if they don&rsquo;t, call the screen. If the ball can be seen all the way, it isn&rsquo;t a screen.%%VBLT%%/li>
+        %%VBLT%%li>Don&rsquo;t whistle for the serve if a team has the wrong number of players, or a Libero has rotated to position 4.%%VBLT%%/li>
+      %%VBLT%%/ul>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card" style="--c:var(--c1)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M7 7h11l-3-3M17 17H6l3 3"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>Time-outs and substitutions%%VBLT%%small>Rules 15&ndash;16 &middot; the 2nd referee%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>Only the %%VBLT%%b>coach%%VBLT%%/b> (or game captain) asks, using the %%VBLT%%b>official hand signal%%VBLT%%/b>. Be proactive: make sure a time-out was really asked for before granting or refusing it.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Time-out:%%VBLT%%/b> 30 s. Teams may go back on early, but play restarts only when the time is up. Keep moving: watch the benches, the scorer and the Liberos, and count six players back on court.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Substitution:%%VBLT%%/b> the request is the moment the player %%VBLT%%b>enters the substitution zone%%VBLT%%/b>. With a paper scoresheet, do multiple substitutions %%VBLT%%b>one pair at a time%%VBLT%%/b> and wait for the scorer&rsquo;s signal.%%VBLT%%/li>
+        %%VBLT%%li>A substitute who isn&rsquo;t ready or walks in by mistake: %%VBLT%%b>reject without a sanction%%VBLT%%/b> if there was no delay.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Improper request%%VBLT%%/b> (first time, no delay): e.g. a time-out after the serve whistle, an extra time-out or substitution beyond the limit, or a second substitution before the next rally. A %%VBLT%%b>repeat%%VBLT%%/b> is a delay.%%VBLT%%/li>
+        %%VBLT%%li>Injured player: a legal substitution first; if impossible, an %%VBLT%%b>exceptional substitution%%VBLT%%/b> with any player not on court.%%VBLT%%/li>
+      %%VBLT%%/ul>
+      %%VBLT%%div class="nb">%%VBLT%%span class="nh">%%VBLT%%span class="new">NEW 26-27%%VBLT%%/span>8 substitutions per set%%VBLT%%/span>
+        %%VBLT%%ul>%%VBLT%%li>Up to %%VBLT%%b>8 substitutions%%VBLT%%/b> per set (was 6); the 2nd referee tells the coach or game captain when the %%VBLT%%b>7th and 8th%%VBLT%%/b> are used. Asking for a 9th is an improper request.%%VBLT%%/li>%%VBLT%%/ul>%%VBLT%%/div>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card" style="--c:var(--c2)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%span style="color:#fff;font-family:'Barlow Condensed',Arial,sans-serif;font-weight:700;font-size:20px">L%%VBLT%%/span>%%VBLT%%/div>
+        %%VBLT%%h2>Libero%%VBLT%%small>Rule 19%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>The Libero wears a different colour; two Liberos needn&rsquo;t match each other. A Libero can be the team or game captain.%%VBLT%%/li>
+        %%VBLT%%li>An %%VBLT%%b>illegal Libero replacement%%VBLT%%/b> is treated like an illegal substitution. The assistant scorer (or scorer) records every Libero replacement and tells the referees about faults %%VBLT%%b>straight away%%VBLT%%/b>.%%VBLT%%/li>
+        %%VBLT%%li>If a Libero can&rsquo;t continue, the coach may %%VBLT%%b>re-designate%%VBLT%%/b> any player not on court (except the player the Libero replaced) as the new Libero.%%VBLT%%/li>
+      %%VBLT%%/ul>
+      %%VBLT%%div class="nb">%%VBLT%%span class="nh">%%VBLT%%span class="new">NEW 26-27%%VBLT%%/span>How many Liberos%%VBLT%%/span>
+        %%VBLT%%ul>%%VBLT%%li>11 or fewer players: 0, 1 or 2 Liberos. %%VBLT%%b>12&ndash;14 players: at least 1%%VBLT%%/b> (can be 2).%%VBLT%%/li>%%VBLT%%/ul>%%VBLT%%/div>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card" style="--c:var(--c6)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%circle cx="12" cy="13" r="8"/>%%VBLT%%path d="M12 9v4l2.5 2.5M9 2h6"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>Between sets%%VBLT%%small>Rule 18%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>Breaks between sets last %%VBLT%%b>3 minutes%%VBLT%%/b>; teams change ends. In the deciding set they change at %%VBLT%%b>8 points%%VBLT%%/b>, without delay.%%VBLT%%/li>
+        %%VBLT%%li>Players may warm up in the free zone with spare balls, not the match balls.%%VBLT%%/li>
+        %%VBLT%%li>Ask for the next set&rsquo;s line-ups at once; a coach who keeps delaying gets a delay sanction.%%VBLT%%/li>
+      %%VBLT%%/ul>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card wide" style="--c:var(--c4)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%rect x="5" y="3" width="6" height="9" rx="1"/>%%VBLT%%rect x="13" y="3" width="6" height="9" rx="1"/>%%VBLT%%path d="M4 21h16M8 16h8"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>Behaviour and sanctions%%VBLT%%small>Rules 5, 21, 23 &middot; only the 1st referee gives sanctions%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%div class="cases">
+        %%VBLT%%div class="case">%%VBLT%%h3>Prevent first%%VBLT%%/h3>%%VBLT%%p>Use your personality to keep %%VBLT%%b>minor misconduct%%VBLT%%/b> under control (verbal warning, then a yellow card with no penalty), so it never reaches the sanction level. The 2nd referee can calm players down, then tells the 1st referee if it continues.%%VBLT%%/p>%%VBLT%%/div>
+        %%VBLT%%div class="case">%%VBLT%%h3>Player on court%%VBLT%%/h3>%%VBLT%%p>Whistle (when the ball is out of play, or at once if serious), call the player to the stand and show the card, saying why. The 2nd referee makes sure the scorer records it; if it&rsquo;s against the sanction scale, the 1st referee corrects it.%%VBLT%%/p>%%VBLT%%/div>
+        %%VBLT%%div class="case">%%VBLT%%h3>Off court or between sets%%VBLT%%/h3>%%VBLT%%p>Tell the %%VBLT%%b>game captain%%VBLT%%/b>, who informs the team member, and show the card. A sanction between sets is shown at the %%VBLT%%b>start of the next set%%VBLT%%/b>. Expelled or disqualified people leave the playing area.%%VBLT%%/p>%%VBLT%%/div>
+        %%VBLT%%div class="case">%%VBLT%%h3>The coach%%VBLT%%/h3>%%VBLT%%p>Can only ask for time-outs and substitutions (and check the score with the scorer). A short, polite answer from the 2nd referee to a respectful question is good practice. The %%VBLT%%b>game captain%%VBLT%%/b> may ask the 1st referee to explain a rule.%%VBLT%%/p>%%VBLT%%/div>
+      %%VBLT%%/div>
+      %%VBLT%%div class="nb">%%VBLT%%span class="nh">%%VBLT%%span class="new">NEW 26-27%%VBLT%%/span>Not adopted in the NVL%%VBLT%%/span>
+        %%VBLT%%ul>%%VBLT%%li>The FIVB tests on %%VBLT%%b>coach interaction with the 1st referee%%VBLT%%/b> and %%VBLT%%b>ball contact with the ceiling%%VBLT%%/b> are %%VBLT%%b>not%%VBLT%%/b> used: the current rules apply. Contact between coach and 2nd referee stays minimal and courteous.%%VBLT%%/li>
+        %%VBLT%%li>NVL disciplinary points for cards (3, 5, 9) and suspensions are in %%VBLT%%b>Cards and suspensions%%VBLT%%/b> above.%%VBLT%%/li>%%VBLT%%/ul>%%VBLT%%/div>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card wide" style="--c:#E5007E">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3v18M3 12h18"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>Injury and concussion %%VBLT%%span class="new">NEW 26-27%%VBLT%%/span>%%VBLT%%small>Rule 15.7 and VE guidance%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>Stop play for an injury only when there&rsquo;s %%VBLT%%b>obvious trauma or blood%%VBLT%%/b> and a risk of further harm.%%VBLT%%/li>
+        %%VBLT%%li>The player&rsquo;s %%VBLT%%b>wellbeing comes first%%VBLT%%/b>. Know the signs of concussion; ask for the match to be stopped and the player assessed if a health professional is there.%%VBLT%%/li>
+        %%VBLT%%li>If not, Volleyball England&rsquo;s %%VBLT%%b>recognise and remove%%VBLT%%/b> protocol applies, and it can&rsquo;t be overruled.%%VBLT%%/li>
+      %%VBLT%%/ul>
+    %%VBLT%%/section>
+
+  %%VBLT%%/div>
+
   %%VBLT%%footer>Summarised from %%VBLT%%b>Volleyball England National Competition Regulations 2026&ndash;27%%VBLT%%/b> (version 5, 8 October 2026). The full regulations (%%VBLT%%a href="nvl-regulations-26-27.pdf" target="_blank" rel="noopener">PDF%%VBLT%%/a>) are what count; if anything here differs, follow the document and ask %%VBLT%%a href="mailto:competitions@volleyballengland.org">competitions@volleyballengland.org%%VBLT%%/a>.%%VBLT%%/footer>
+  %%VBLT%%footer>%%VBLT%%b>NVL Referee Rules%%VBLT%%/b> are summarised from the %%VBLT%%b>FIVB Refereeing Guidelines and Instructions%%VBLT%%/b> (2024 edition, for the indoor Rules of the Game) and the Volleyball England %%VBLT%%b>2026&ndash;27 Pre-season Briefing%%VBLT%%/b> (marked %%VBLT%%span class="new">NEW 26-27%%VBLT%%/span>). International-only items (video challenge, e-scoresheet, tablets, reserve and 3rd referees) are left out.%%VBLT%%/footer>
 %%VBLT%%/div>
 %%VBLT%%script data-vb-hub>
 (function(){
@@ -5492,6 +5660,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
   .part h2 small{display:block;color:rgba(255,255,255,.85);font-size:13px;font-weight:600;text-transform:none;letter-spacing:0;font-family:inherit}
   .part:first-of-type{margin-top:0}
   footer + footer{margin-top:6px}
+  .rt td:nth-child(2){text-align:left}
 %%VBLT%%/style>
 %%VBLT%%/head>
 %%VBLT%%body>
@@ -5502,6 +5671,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
   %%VBLT%%nav class="jump">
     %%VBLT%%a href="#league" style="background:var(--c4)">CVA League Rules 25-26%%VBLT%%/a>
     %%VBLT%%a href="#adapt" style="background:var(--c1)">CVA Adaptation from VE Rules 26-27%%VBLT%%/a>
+    %%VBLT%%a href="#refman" style="background:var(--c3)">Referee Manual%%VBLT%%/a>
   %%VBLT%%/nav>
 
   %%VBLT%%div class="part" id="league" style="background:var(--c4)">%%VBLT%%h2>CVA League Rules 25-26%%VBLT%%small>The county league rules: match procedure, points, postponements, refereeing and eligibility%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
@@ -5821,8 +5991,87 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     %%VBLT%%/section>
   %%VBLT%%/div>
 
+
+  %%VBLT%%div class="part" id="refman" style="background:var(--c3)">%%VBLT%%h2>Referee Manual%%VBLT%%small>The basics for CVA league referees, updated for 2026&ndash;27. The full rules are in the FIVB Rules 25-28 card.%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+
+  %%VBLT%%div class="grid">
+
+
+    %%VBLT%%section class="card wide" style="--c:var(--c1)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%circle cx="12" cy="13" r="8"/>%%VBLT%%path d="M12 9v4l2.5 2.5M9 2h6"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>Before the match%%VBLT%%small>CVA League Rules 26-27: the first 20 minutes of the booking are the warm-up%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%p style="margin-bottom:4px">%%VBLT%%b>Preparing for the game%%VBLT%%/b>%%VBLT%%/p>
+      %%VBLT%%ul>
+        %%VBLT%%li>%%VBLT%%b>Confirm the fixture:%%VBLT%%/b> the %%VBLT%%b>home team%%VBLT%%/b> confirms the match time and venue (with directions if needed) with the opponents and the referees, using the contact details provided, at least %%VBLT%%b>one week before%%VBLT%%/b> %%VBLT%%span class="tag">Rule 1a%%VBLT%%/span>.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Print the scoresheet:%%VBLT%%/b> bring a %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/CVA_SCORESHEET_2019.pdf" target="_blank" rel="noopener">CVA league scoresheet (to print)%%VBLT%%/a>; the CVA Scoresheet card shows how to fill it in.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Referee duty:%%VBLT%%/b> referee duties are on the fixtures list. If a match is postponed, the postponing team tells the referees&rsquo; club contact %%VBLT%%span class="tag">Rule 2%%VBLT%%/span>.%%VBLT%%/li>
+      %%VBLT%%/ul>
+      %%VBLT%%p style="margin:10px 0 4px">%%VBLT%%b>On the day%%VBLT%%/b>%%VBLT%%/p>
+      %%VBLT%%ul>
+        %%VBLT%%li>%%VBLT%%b>Home team:%%VBLT%%/b> arrive about %%VBLT%%b>10 minutes before%%VBLT%%/b> the booking to put up the net and posts and set up the scoring table, %%VBLT%%b>scoresheet%%VBLT%%/b> and %%VBLT%%b>scoreboard%%VBLT%%/b>. The home team provides the scorer.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Referees:%%VBLT%%/b> the 1st referee arrives %%VBLT%%b>on time%%VBLT%%/b> to run the warm-up. Check the net height (women %%VBLT%%b>2.24 m%%VBLT%%/b>, men and mixed on a men&rsquo;s net %%VBLT%%b>2.43 m%%VBLT%%/b>), the antennae, the balls and the team names and shirt numbers on the scoresheet.%%VBLT%%/li>
+      %%VBLT%%/ul>
+      %%VBLT%%p style="margin-top:10px">%%VBLT%%b>Warm-up%%VBLT%%/b> (example for a booking starting at 19:00). The 1st referee keeps the time and calls each stage:%%VBLT%%/p>
+      %%VBLT%%table class="rt">
+        %%VBLT%%tr>%%VBLT%%th>Time%%VBLT%%/th>%%VBLT%%th style="text-align:left">Activity%%VBLT%%/th>%%VBLT%%th>Length%%VBLT%%/th>%%VBLT%%/tr>
+        %%VBLT%%tr>%%VBLT%%td>19:00%%VBLT%%/td>%%VBLT%%td>General warm-up, off the net%%VBLT%%/td>%%VBLT%%td>%%VBLT%%b>7 min%%VBLT%%/b>%%VBLT%%/td>%%VBLT%%/tr>
+        %%VBLT%%tr>%%VBLT%%td>19:07%%VBLT%%/td>%%VBLT%%td>Coin toss: the winning captain chooses to serve or receive, or the side of the court%%VBLT%%/td>%%VBLT%%td>%%VBLT%%b>1 min%%VBLT%%/b>%%VBLT%%/td>%%VBLT%%/tr>
+        %%VBLT%%tr>%%VBLT%%td>19:08%%VBLT%%/td>%%VBLT%%td>Hitting through position 4%%VBLT%%/td>%%VBLT%%td>%%VBLT%%b>3 min%%VBLT%%/b>%%VBLT%%/td>%%VBLT%%/tr>
+        %%VBLT%%tr>%%VBLT%%td>19:11%%VBLT%%/td>%%VBLT%%td>Hitting through position 2%%VBLT%%/td>%%VBLT%%td>%%VBLT%%b>3 min%%VBLT%%/b>%%VBLT%%/td>%%VBLT%%/tr>
+        %%VBLT%%tr>%%VBLT%%td>19:14%%VBLT%%/td>%%VBLT%%td>Serving &ndash; Team A (Team B off court, no balls)%%VBLT%%/td>%%VBLT%%td>%%VBLT%%b>60 s%%VBLT%%/b>%%VBLT%%/td>%%VBLT%%/tr>
+        %%VBLT%%tr>%%VBLT%%td>19:15%%VBLT%%/td>%%VBLT%%td>Serving &ndash; Team B (Team A off court, no balls)%%VBLT%%/td>%%VBLT%%td>%%VBLT%%b>60 s%%VBLT%%/b>%%VBLT%%/td>%%VBLT%%/tr>
+        %%VBLT%%tr>%%VBLT%%td>19:16%%VBLT%%/td>%%VBLT%%td>Line-ups to the 2nd referee and scorer; captains and coaches sign the scoresheet%%VBLT%%/td>%%VBLT%%td>%%VBLT%%/td>%%VBLT%%/tr>
+        %%VBLT%%tr>%%VBLT%%td>19:20%%VBLT%%/td>%%VBLT%%td>%%VBLT%%b>First serve%%VBLT%%/b> at the latest%%VBLT%%/td>%%VBLT%%td>%%VBLT%%/td>%%VBLT%%/tr>
+      %%VBLT%%/table>
+      %%VBLT%%div class="note">%%VBLT%%b>Team late?%%VBLT%%/b> If a team isn&rsquo;t there at the end of the warm-up, the match starts when it arrives, and it may take an extra warm-up. If the match then can&rsquo;t finish in the booking, the %%VBLT%%b>late team%%VBLT%%/b> gives up the remaining points and sets. A team with %%VBLT%%b>fewer than 6 players%%VBLT%%/b> loses %%VBLT%%b>3&ndash;0%%VBLT%%/b> (play a friendly instead).%%VBLT%%/div>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card" style="--c:var(--c4)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M4 21V9a8 8 0 0 1 16 0v12"/>%%VBLT%%path d="M8 13l4 3 4-3"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>1st referee%%VBLT%%small>On the stand: runs the match, final decisions%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>%%VBLT%%b>Whistle every serve.%%VBLT%%/b> End a rally with a whistle when there&rsquo;s a fault; when the ball is clearly in or out, a whistle isn&rsquo;t needed, but %%VBLT%%b>always show the hand signal%%VBLT%%/b>.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Serving team:%%VBLT%%/b> the server&rsquo;s foot faults, the 8-second limit and screening.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Ball handling:%%VBLT%%/b> catches, doubles and four hits. A double on a %%VBLT%%b>set%%VBLT%%/b> that stays on your side is allowed; tips must be short, clean contacts (no push, carry or throw).%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>At the net:%%VBLT%%/b> mainly the %%VBLT%%b>attacking side%%VBLT%%/b> (where the ball is): net touches, reaching over, the antenna on your side.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Ball in or out%%VBLT%%/b>, and touches off the block.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Sets:%%VBLT%%/b> sets 1&ndash;4 to %%VBLT%%b>21%%VBLT%%/b> (capped at 25), set 5 to %%VBLT%%b>15%%VBLT%%/b> (capped at 17). Keep breaks between sets short, about %%VBLT%%b>3 minutes%%VBLT%%/b>; teams change ends, and in set 5 change ends at %%VBLT%%b>8 points%%VBLT%%/b>.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Score:%%VBLT%%/b> make sure the scoreboard and scoresheet match the points awarded.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Behaviour:%%VBLT%%/b> warnings and cards. Explain a decision to the %%VBLT%%b>game captain%%VBLT%%/b> if asked.%%VBLT%%/li>
+      %%VBLT%%/ul>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card" style="--c:var(--c5)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%circle cx="9" cy="7" r="3"/>%%VBLT%%path d="M3 21c.5-4 3-6.5 6-6.5s5.5 2.5 6 6.5M17 8v8M14 12h6"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>2nd referee%%VBLT%%small>Standing by the post, opposite the 1st referee%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>%%VBLT%%b>Line-ups:%%VBLT%%/b> check both teams against their line-up sheets at the start of %%VBLT%%b>every set%%VBLT%%/b>.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Receiving team positions:%%VBLT%%/b> judged when the server %%VBLT%%b>starts the serving motion%%VBLT%%/b>; after that the receivers may move. Only call clear faults.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Right server:%%VBLT%%/b> with the scorer, check that the serving team serves in the correct order.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>At the net:%%VBLT%%/b> mainly the side %%VBLT%%b>opposite the ball%%VBLT%%/b> (the blockers&rsquo; side): net touches, feet %%VBLT%%b>completely over%%VBLT%%/b> the centre line, the antenna on your side.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Back-row and Libero faults:%%VBLT%%/b> a back-row player attacking above the net from in front of the 3 m line, back-row players blocking, and an attack off a Libero&rsquo;s %%VBLT%%b>overhand set from in front of the 3 m line%%VBLT%%/b>.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Time-outs and substitutions:%%VBLT%%/b> coaches (or the captain) ask the 2nd referee. Allow up to %%VBLT%%b>2 time-outs%%VBLT%%/b> (30 s) and %%VBLT%%b>8 substitutions%%VBLT%%/b> per set, and tell the coach when the %%VBLT%%b>7th and 8th%%VBLT%%/b> are used.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Score:%%VBLT%%/b> help the scorer and spot any difference between the scoreboard, the scoresheet and the points given.%%VBLT%%/li>
+      %%VBLT%%/ul>
+    %%VBLT%%/section>
+
+    %%VBLT%%section class="card wide" style="--c:var(--c6)">
+      %%VBLT%%div class="ch">%%VBLT%%div class="ic">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>%%VBLT%%path d="M14 3v6h6M8 13h8M8 17h5"/>%%VBLT%%/svg>%%VBLT%%/div>
+        %%VBLT%%h2>After the match%%VBLT%%small>CVA League Rules 1&ndash;5%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
+      %%VBLT%%ul>
+        %%VBLT%%li>Check the scoresheet: set scores, final result, time-outs and substitutions, then the captains and referees %%VBLT%%b>sign it%%VBLT%%/b>.%%VBLT%%/li>
+        %%VBLT%%li>Any %%VBLT%%b>dispute%%VBLT%%/b> goes in the comments box, signed by both teams and the referees.%%VBLT%%/li>
+        %%VBLT%%li>A %%VBLT%%b>missing referee%%VBLT%%/b> is noted on the scoresheet so the CVA can fine the team (&pound;10 for one, &pound;20 for none).%%VBLT%%/li>
+        %%VBLT%%li>The %%VBLT%%b>home team%%VBLT%%/b> emails the result and a photo of the scoresheet to the league organiser %%VBLT%%b>within 3 days%%VBLT%%/b>.%%VBLT%%/li>
+      %%VBLT%%/ul>
+    %%VBLT%%/section>
+
+
+  %%VBLT%%/div>
+
   %%VBLT%%footer>Quoted from the %%VBLT%%b>CVA County League Rules%%VBLT%%/b>, Cambridgeshire Volleyball Association Committee (last revised October 2025). Disputes and anything not covered here go to the CVA League Committee; check the full rules when it matters.%%VBLT%%/footer>
 %%VBLT%%footer>Summarised from %%VBLT%%b>CVA &ndash; Adoption of Volleyball England Competition Rules (September 2026)%%VBLT%%/b>, Cambridgeshire Volleyball Association. Read alongside the CVA League Rules; check the full document when it matters.%%VBLT%%/footer>
+%%VBLT%%footer>The %%VBLT%%b>Referee Manual%%VBLT%%/b> is a corrected version of the CVA refereeing guide, brought in line with the CVA League Rules 2026&ndash;27 (October 2026), the CVA adoption of the Volleyball England 2026&ndash;27 rules and the FIVB Rules of the Game.%%VBLT%%/footer>
 
 %%VBLT%%/div>
 %%VBLT%%script data-vb-hub>
