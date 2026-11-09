@@ -52,6 +52,9 @@
   .g-sheet{--g:#2563eb;--gs:#e8effd;--gd:#1e40af}
   .g-rule{--g:#dc2626;--gs:#fdeaea;--gd:#991b1b}
   .g-fix{--g:#0d9488;--gs:#e2f5f3;--gd:#115e59}
+  .g-cva{--g:#ea580c;--gs:#fdeee4;--gd:#9a3412}
+  .g-fivb{--g:#2563eb;--gs:#e8effd;--gd:#1e40af}
+  .g-nvl{--g:#4f46e5;--gs:#eceafd;--gd:#3730a3}
   .hcard.hext{text-decoration:none;border-color:var(--accent);background:linear-gradient(135deg,#FFF8E6 0%,#fff 70%)}
   .hcard.hext:hover{border-color:#D18F00}
   .hcard.hext::before{content:"\2197";position:absolute;right:16px;top:12px;font-weight:700;font-size:18px;color:var(--accent)}
@@ -85,31 +88,31 @@
       <span class="htitle">5:1 Defence</span>
       <span class="hdesc">Perimeter and rotational defensive systems, with the block following their hitter.</span>
     </button>
-    <button class="hcard g-sheet" type="button" data-key="scoresheet" aria-pressed="false">
+    <button class="hcard g-cva" type="button" data-key="scoresheet" aria-pressed="false">
       <span class="htitle">CVA Scoresheet</span>
       <span class="hdesc">How to fill in the CVA county league scoresheet, with an animated set.</span>
     </button>
-    <button class="hcard g-sheet" type="button" data-key="fivbsheet" aria-pressed="false">
-      <span class="htitle">FIVB Scoresheet</span>
-      <span class="hdesc">How to fill in the FIVB international scoresheet, following the FIVB instructions, with an animated set.</span>
-    </button>
-    <button class="hcard g-rule" type="button" data-key="rules" aria-pressed="false">
+    <button class="hcard g-cva" type="button" data-key="rules" aria-pressed="false">
       <span class="htitle">CVA Rules 25-27</span>
       <span class="hdesc">CVA League Rules 25-26 plus the CVA Adaptation from VE Rules 26-27 (Volleyball England test rules): substitutions, warm-up, positions, tips and blocks.</span>
     </button>
-    <button class="hcard g-rule" type="button" data-key="nvlreg" aria-pressed="false">
-      <span class="htitle">VE NVL Rules 26-27</span>
-      <span class="hdesc">Volleyball England NVL rules for 2026&ndash;27 in plain words: key dates, warm-up timeline, late arrival, playing up, kit, referees, cards and promotion.</span>
-    </button>
-    <button class="hcard g-rule" type="button" data-key="vbrules" aria-pressed="false">
-      <span class="htitle">FIVB Rules 25-28</span>
-      <span class="hdesc">Faults, refereeing and the official hand signals (FIVB rules 2025&ndash;2028), with the 2026&ndash;27 Volleyball England rule changes marked NEW.</span>
-    </button>
-    <button class="hcard g-fix" type="button" data-key="fixtures" aria-pressed="false">
+    <button class="hcard g-cva" type="button" data-key="fixtures" aria-pressed="false">
       <span class="htitle">CVA Fixtures</span>
       <span class="hdesc">2026&ndash;27 women&rsquo;s and men&rsquo;s league tables and every game, with each CVC team&rsquo;s games and ref duties a tap away.</span>
     </button>
-    <button class="hcard g-fix" type="button" data-key="nvl" aria-pressed="false">
+    <button class="hcard g-fivb" type="button" data-key="fivbsheet" aria-pressed="false">
+      <span class="htitle">FIVB Scoresheet</span>
+      <span class="hdesc">How to fill in the FIVB international scoresheet, following the FIVB instructions, with an animated set.</span>
+    </button>
+    <button class="hcard g-fivb" type="button" data-key="vbrules" aria-pressed="false">
+      <span class="htitle">FIVB Rules 25-28</span>
+      <span class="hdesc">Faults, refereeing and the official hand signals (FIVB rules 2025&ndash;2028), with the 2026&ndash;27 Volleyball England rule changes marked NEW.</span>
+    </button>
+    <button class="hcard g-nvl" type="button" data-key="nvlreg" aria-pressed="false">
+      <span class="htitle">NVL Rules 26-27</span>
+      <span class="hdesc">Volleyball England NVL rules for 2026&ndash;27 in plain words: key dates, warm-up timeline, late arrival, playing up, kit, referees, cards and promotion.</span>
+    </button>
+    <button class="hcard g-nvl" type="button" data-key="nvl" aria-pressed="false">
       <span class="htitle">NVL Fixtures</span>
       <span class="hdesc">2026&ndash;27 tables and every game for all five CVC teams in the National League: women D1, D2, D3 and men D1, D3.</span>
     </button>
@@ -740,7 +743,7 @@ render();
 %%VBLT%%meta charset="utf-8">
 %%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
 %%VBLT%%meta name="color-scheme" content="light">
-%%VBLT%%title>VE NVL Rules 26-27%%VBLT%%/title>
+%%VBLT%%title>NVL Rules 26-27%%VBLT%%/title>
 %%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 %%VBLT%%style>
   :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--blue:#24507E;--accent:#F0A500;
@@ -843,7 +846,7 @@ render();
 %%VBLT%%/head>
 %%VBLT%%body>
 %%VBLT%%header>%%VBLT%%div class="hin">
-  %%VBLT%%h1>VE NVL Rules 26-27%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
+  %%VBLT%%h1>NVL Rules 26-27%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
 %%VBLT%%/div>%%VBLT%%/header>
 %%VBLT%%div class="wrap">
   %%VBLT%%p class="intro">The key points of Volleyball England&rsquo;s %%VBLT%%b>National Competition Regulations 2026&ndash;27%%VBLT%%/b> for the National Volleyball League (NVL), National Cup and National Shield, in plain words and with the regulation number on every point. The order of authority is: the %%VBLT%%b>FIVB Rules of the Game%%VBLT%%/b>, then %%VBLT%%b>these NVL regulations%%VBLT%%/b>, then any competition-specific regulations. Questions go to %%VBLT%%a href="mailto:competitions@volleyballengland.org">competitions@volleyballengland.org%%VBLT%%/a>, and a written ruling is needed before acting on anything unclear.%%VBLT%%/p>
