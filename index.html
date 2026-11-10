@@ -58,6 +58,11 @@
   .hcard.hext{text-decoration:none;border-color:var(--accent);background:linear-gradient(135deg,#FFF8E6 0%,#fff 70%)}
   .hcard.hext:hover{border-color:#D18F00}
   .hcard.hext::before{content:"\2197";position:absolute;right:16px;top:12px;font-weight:700;font-size:18px;color:var(--accent)}
+  .g-app{--g:#db2777;--gs:#fde7f1;--gd:#9d174d}
+  .hcard.hext[class*="g-"]{border-color:var(--line);border-left-color:var(--g);background:linear-gradient(135deg,var(--gs) 0%,#fff 75%)}
+  .hcard.hext[class*="g-"]:hover{border-color:var(--g)}
+  .hcard.hext[class*="g-"]::before{color:var(--g)}
+  .hcard.hext .htitle::after{content:"APP";display:inline-block;margin-left:8px;vertical-align:3px;font-size:10.5px;font-weight:800;letter-spacing:.08em;color:#fff;background:var(--g,var(--accent));border-radius:99px;padding:2px 7px;line-height:1.3}
   .sitefoot{max-width:1100px;margin:0 auto;padding:18px 20px 24px;border-top:1px solid var(--line);text-align:center;font-size:14px;color:var(--soft)}
   .sitefoot p{margin:0}
   @media print{header,.cards{display:none}}
@@ -89,7 +94,7 @@
       <span class="hdesc">Perimeter and rotational defensive systems, with the block following their hitter.</span>
     </button>
     <button class="hcard g-cva" type="button" data-key="scoresheet" aria-pressed="false">
-      <span class="htitle">CVA Scoresheet</span>
+      <span class="htitle">CVA Scoresheet Guide</span>
       <span class="hdesc">How to fill in the CVA county league scoresheet, with an animated set.</span>
     </button>
     <button class="hcard g-cva" type="button" data-key="rules" aria-pressed="false">
@@ -100,8 +105,12 @@
       <span class="htitle">CVA Fixtures</span>
       <span class="hdesc">2026&ndash;27 women&rsquo;s and men&rsquo;s league tables and every game, with each CVC team&rsquo;s games and ref duties a tap away.</span>
     </button>
+    <a class="hcard hext g-cva" href="signup.html">
+      <span class="htitle">CVA Game Sign-up</span>
+      <span class="hdesc">Calendar of Panthers games and ref duties &mdash; tap In, Maybe or Out next to your name.</span>
+    </a>
     <button class="hcard g-fivb" type="button" data-key="fivbsheet" aria-pressed="false">
-      <span class="htitle">FIVB Scoresheet</span>
+      <span class="htitle">FIVB Scoresheet Guide</span>
       <span class="hdesc">How to fill in the FIVB international scoresheet, following the FIVB instructions, with an animated set.</span>
     </button>
     <button class="hcard g-fivb" type="button" data-key="vbrules" aria-pressed="false">
@@ -116,15 +125,11 @@
       <span class="htitle">NVL Fixtures</span>
       <span class="hdesc">2026&ndash;27 tables and every game for all five CVC teams in the National League: women D1, D2, D3 and men D1, D3.</span>
     </button>
-    <a class="hcard hext" href="signup.html">
-      <span class="htitle">CVA Game Sign-up</span>
-      <span class="hdesc">Calendar of Panthers games and ref duties &mdash; tap In, Maybe or Out next to your name.</span>
-    </a>
-    <a class="hcard hext" href="lineup.html">
+    <a class="hcard hext g-app" href="lineup.html">
       <span class="htitle">Game Line-up</span>
       <span class="hdesc">Organiser tool: pick players, positions and shirt numbers, then see every rotation and the serve-receive formation.</span>
     </a>
-    <a class="hcard hext" href="stats.html">
+    <a class="hcard hext g-app" href="stats.html">
       <span class="htitle">Match Stats</span>
       <span class="hdesc">Organiser tool: one tap for how each rally ended, plus where their attacks dropped on our court, to see what to work on.</span>
     </a>
@@ -4265,7 +4270,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%meta charset="utf-8">
 %%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
 %%VBLT%%meta name="color-scheme" content="light">
-%%VBLT%%title>CVA Scoresheet%%VBLT%%/title>
+%%VBLT%%title>CVA Scoresheet Guide%%VBLT%%/title>
 %%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 %%VBLT%%style>
   :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--blue:#24507E;--accent:#F0A500;--pen:#1F49B0;--plc:#17803D;--scc:#C62828;--k:#1E1E1E;--grey:#E4E4E2}
@@ -4450,7 +4455,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%/head>
 %%VBLT%%body>
 %%VBLT%%header>%%VBLT%%div class="hin">
-  %%VBLT%%h1>CVA Scoresheet%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
+  %%VBLT%%h1>CVA Scoresheet Guide%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
 %%VBLT%%/div>%%VBLT%%/header>
 %%VBLT%%div class="wrap">
 
@@ -4869,7 +4874,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%meta charset="utf-8">
 %%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
 %%VBLT%%meta name="color-scheme" content="light">
-%%VBLT%%title>FIVB Scoresheet%%VBLT%%/title>
+%%VBLT%%title>FIVB Scoresheet Guide%%VBLT%%/title>
 %%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 %%VBLT%%style>
   :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--blue:#24507E;--accent:#F0A500;--pen:#1F49B0;--plc:#17803D;--scc:#C62828;--k:#1E1E1E;--grey:#E9E9E6}
@@ -5115,7 +5120,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%/head>
 %%VBLT%%body>
 %%VBLT%%header>%%VBLT%%div class="hin">
-  %%VBLT%%h1>FIVB Scoresheet%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
+  %%VBLT%%h1>FIVB Scoresheet Guide%%VBLT%%em>Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> · Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>
 %%VBLT%%/div>%%VBLT%%/header>
 %%VBLT%%div class="wrap">
 
@@ -5776,6 +5781,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/20261031_cva_scoresheet_2026.pdf" target="_blank" rel="noopener">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>%%VBLT%%/svg>CVA scoresheet%%VBLT%%/a>
     %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/20261031_cva_scoresheet_2026.pdf" target="_blank" rel="noopener">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>%%VBLT%%/svg>Registration form%%VBLT%%/a>
     %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/FIVB_R-5_2010.pdf" target="_blank" rel="noopener">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>%%VBLT%%/svg>Rotation sheets%%VBLT%%/a>
+    %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/20261031_cva_county_league_rule_2026-27s.pdf" target="_blank" rel="noopener">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>%%VBLT%%/svg>CVA League Rules 26-27%%VBLT%%/a>
   %%VBLT%%/div>
 
   %%VBLT%%div class="part" id="league" style="background:var(--c4)">%%VBLT%%h2>CVA League Rules 25-26%%VBLT%%small>The county league rules: match procedure, points, postponements, refereeing and eligibility%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
@@ -6107,7 +6113,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
       %%VBLT%%p style="margin-bottom:4px">%%VBLT%%b>Preparing for the game%%VBLT%%/b>%%VBLT%%/p>
       %%VBLT%%ul>
         %%VBLT%%li>%%VBLT%%b>Confirm the fixture:%%VBLT%%/b> the %%VBLT%%b>home team%%VBLT%%/b> confirms the match time and venue (with directions if needed) with the opponents and the referees, using the contact details provided, at least %%VBLT%%b>one week before%%VBLT%%/b> %%VBLT%%span class="tag">Rule 1a%%VBLT%%/span>.%%VBLT%%/li>
-        %%VBLT%%li>%%VBLT%%b>Print the scoresheet:%%VBLT%%/b> bring a %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/20261031_cva_scoresheet_2026.pdf" target="_blank" rel="noopener">CVA league scoresheet (to print)%%VBLT%%/a>; the CVA Scoresheet card shows how to fill it in.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Print the scoresheet:%%VBLT%%/b> bring a %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/20261031_cva_scoresheet_2026.pdf" target="_blank" rel="noopener">CVA league scoresheet (to print)%%VBLT%%/a>; the CVA Scoresheet Guide card shows how to fill it in.%%VBLT%%/li>
         %%VBLT%%li>%%VBLT%%b>Referee duty:%%VBLT%%/b> referee duties are on the fixtures list. If a match is postponed, the postponing team tells the referees&rsquo; club contact %%VBLT%%span class="tag">Rule 2%%VBLT%%/span>.%%VBLT%%/li>
       %%VBLT%%/ul>
       %%VBLT%%p style="margin:10px 0 4px">%%VBLT%%b>On the day%%VBLT%%/b>%%VBLT%%/p>

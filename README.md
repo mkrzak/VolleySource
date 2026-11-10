@@ -11,8 +11,8 @@ One self-contained page (`index.html`) with ten sections:
 - **Gym Program**: agility, ballistics & plyo (10 drills) and isometrics (16 holds)
 - **5:1 Receive**: base positions and serve-receive formations for all six rotations, with a rotation-fault checker
 - **5:1 Defence**: perimeter (2-0-4) and rotational (2-1-3) defence; drag their hitter to see the block and defence move
-- **CVA Scoresheet**: animated guide to filling in the CVA county league scoresheet
-- **FIVB Scoresheet**: animated guide to filling in the FIVB international scoresheet, following the FIVB instructions
+- **CVA Scoresheet Guide**: animated guide to filling in the CVA county league scoresheet
+- **FIVB Scoresheet Guide**: animated guide to filling in the FIVB international scoresheet, following the FIVB instructions
 - **CVA Rules 25-27**: key rules from the CVA County League Rules 25-26, plus the CVA Adaptation from VE Rules 26-27 (Volleyball England test rules adopted by the CVA), and a Referee Manual for CVA league referees
 - **NVL Rules 26-27**: the Volleyball England National Competition Regulations 2026-27 in plain words, with the full PDF (`nvl-regulations-26-27.pdf`); plus NVL Referee Rules from the FIVB Refereeing Guidelines, with the 2026-27 changes marked NEW 26-27
 - **FIVB Rules 25-28**: faults, delays and misconduct, refereeing, and the referee hand signals, with the 2026-27 Volleyball England rule tests (8 substitutions, Libero, internal pass, push-catch-throw, receiving positions, less whistle, serving warm-up) marked NEW 26-27
