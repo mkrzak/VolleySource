@@ -16,13 +16,13 @@ One self-contained page (`index.html`) with ten sections:
 - **CVA Rules 25-27**: key rules from the CVA County League Rules 25-26, plus the CVA Adaptation from VE Rules 26-27 (Volleyball England test rules adopted by the CVA), and a Referee Manual for CVA league referees
 - **NVL Rules 26-27**: the Volleyball England National Competition Regulations 2026-27 in plain words, with the full PDF (`nvl-regulations-26-27.pdf`); plus NVL Referee Rules from the FIVB Refereeing Guidelines, with the 2026-27 changes marked NEW 26-27
 - **FIVB Rules 25-28**: faults, delays and misconduct, refereeing, and the referee hand signals, with the 2026-27 Volleyball England rule tests (8 substitutions, Libero, internal pass, push-catch-throw, receiving positions, less whistle, serving warm-up) marked NEW 26-27
-- **CVA Fixtures**: 2026-27 women's and men's tables, fixtures and results from the [CVA website](https://www.cambsvolleyball.org.uk/), with buttons for each CVC team's games and ref duties
+- **CVA Fixtures**: 2026-27 women's and men's tables, fixtures and results from the [CVA website](https://www.cambsvolleyball.org.uk/), with buttons for each CVC team's games and ref duties, and club contacts, training times and venues
 - **NVL Fixtures**: 2026-27 tables, fixtures and results from [VolleyZone](https://competitions.volleyzone.co.uk/) for every NVL division with a CVC team (women D1 North, D2 Central, D3 Central; men D1 South, D3 Central)
 - **About Me**
 
 Animated drills now have their own site: [VolleyDrills](https://mkrzak.github.io/VolleyDrills/).
 
-Everything (clips, images, scripts) is built into `index.html`, except the dance warm-up video, `dance-warmup.mp4`, and the NVL regulations PDF, `nvl-regulations-26-27.pdf`, which sit next to it. Keep the files together and it also works offline: just open `index.html` in a browser.
+Everything (clips, images, scripts) is built into `index.html`, except the dance warm-up video, `dance-warmup.mp4`, the NVL regulations PDF, `nvl-regulations-26-27.pdf`, and printable line-up sheets, `lineup-sheets.pdf`, which sit next to it. Keep the files together and it also works offline: just open `index.html` in a browser.
 
 ## Update the site
 

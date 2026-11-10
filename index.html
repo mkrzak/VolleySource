@@ -228,6 +228,20 @@
   .gl:hover{text-decoration:underline}
   .calhelp{margin-top:10px;background:#EEF4FF;border:1px solid #c7d7fe;border-radius:10px;padding:10px 12px;font-size:13.5px;color:var(--ink)}
   .calhelp a{color:var(--blue);font-weight:600}
+  .clubs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:12px}
+  .club{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff}
+  .club.cvc{border-color:#F6C391;background:var(--panS)}
+  .club h3{font-family:"Barlow Condensed",Arial,sans-serif;font-size:19px;text-transform:uppercase;margin:0 0 4px}
+  .club .venue{display:block;font-size:13px;color:var(--blue);text-decoration:none;margin-bottom:8px}
+  .club .venue:hover{text-decoration:underline}
+  .club ul{list-style:none;margin:0;padding:0}
+  .club li{padding:7px 0;border-top:1px solid #EEF2F6;display:grid;gap:1px}
+  .club .tn{font-weight:800}
+  .club .tn::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px;background:#94a3b8}
+  .club .tn.w::before{background:#e11d74} .club .tn.m::before{background:#2563eb}
+  .club .tr{font-size:13px;color:var(--soft)}
+  .club .ct{font-size:13.5px;overflow-wrap:anywhere}
+  .club .ct a{color:var(--blue);font-weight:600;text-decoration:none}
 %%VBLT%%/style>
 %%VBLT%%/head>
 %%VBLT%%body>
@@ -261,7 +275,73 @@
     %%VBLT%%div id="list">%%VBLT%%/div>
   %%VBLT%%/section>
 
-  %%VBLT%%footer>Ref = the team that provides the referees. Venues are shortened as on the CVA site: NCA (North Cambridge Academy), Leys, Nether (Netherhall), Bury LC (Bury Leisure Centre), Stow (Stowmarket), Newm (Newmarket). Women's fixture 32 on the CVA site repeats fixture 31 and is shown once here.%%VBLT%%/footer>
+  %%VBLT%%section class="card" id="clubsCard">
+    %%VBLT%%div class="bar">%%VBLT%%h2 style="margin:0">Clubs and contacts%%VBLT%%/h2>%%VBLT%%a class="lnk" href="https://www.cambsvolleyball.org.uk/RCVAClubs.php" target="_blank" rel="noopener">Live CVA clubs page ↗%%VBLT%%/a>%%VBLT%%/div>
+    %%VBLT%%p class="key" style="margin:0 0 10px">Team contacts, training times and home venues, as listed by the CVA. Use them to confirm fixtures and referees; details can change, so check the live page.%%VBLT%%/p>
+    %%VBLT%%div class="clubs">
+      %%VBLT%%div class="club">
+        %%VBLT%%h3>Bury Bobcats%%VBLT%%/h3>
+        %%VBLT%%a class="venue" href="https://www.google.com/maps/search/?api=1&query=Culford%20Sports%20%26%20Tennis%20Centre%2C%20Culford%2C%20Bury%20Saint%20Edmunds%2C%20IP28%206TU" target="_blank" rel="noopener">📍 Culford Sports &amp; Tennis Centre, Culford, Bury Saint Edmunds, IP28 6TU%%VBLT%%/a>
+        %%VBLT%%ul>
+          %%VBLT%%li>%%VBLT%%span class="tn m">Bury Bobcats 1 (M)%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Sun 13:00%%VBLT%%/span>%%VBLT%%span class="ct">Cairo Ivatt · %%VBLT%%a href="tel:07763625892">07763 625892%%VBLT%%/a> · %%VBLT%%a href="mailto:Cairoivatt16@gmail.com">Cairoivatt16@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+          %%VBLT%%li>%%VBLT%%span class="tn w">Bury Bobcats 1 (W)%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Sun 13:00%%VBLT%%/span>%%VBLT%%span class="ct">Erika Lazar · %%VBLT%%a href="tel:07495014002">07495 014002%%VBLT%%/a> · %%VBLT%%a href="mailto:burybobcats@gmail.com">burybobcats@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+        %%VBLT%%/ul>
+      %%VBLT%%/div>
+      %%VBLT%%div class="club cvc">
+        %%VBLT%%h3>Cambridge Volleyball Club (CVC)%%VBLT%%/h3>
+        %%VBLT%%a class="venue" href="https://www.google.com/maps/search/?api=1&query=North%20Cambridge%20Academy%2C%20Arbury%20Road%2C%20Cambridge%2C%20CB4%202JF" target="_blank" rel="noopener">📍 North Cambridge Academy, Arbury Road, Cambridge, CB4 2JF%%VBLT%%/a>
+        %%VBLT%%ul>
+          %%VBLT%%li>%%VBLT%%span class="tn w">CVC1 (W) Tigers%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Mon 19:00%%VBLT%%/span>%%VBLT%%span class="ct">Valentina De Sabata · %%VBLT%%a href="tel:07765038323">07765 038323%%VBLT%%/a> · %%VBLT%%a href="mailto:desabata.v@gmail.com">desabata.v@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+          %%VBLT%%li>%%VBLT%%span class="tn w">CVC2 (W) Panthers%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Mon 19:00%%VBLT%%/span>%%VBLT%%span class="ct">Claudia Gittel · %%VBLT%%a href="tel:07462388978">07462 388978%%VBLT%%/a> · %%VBLT%%a href="mailto:claudiagittel1@gmail.com">claudiagittel1@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+          %%VBLT%%li>%%VBLT%%span class="tn w">CVC (W) MxJnr%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Mon / Wed 19:00%%VBLT%%/span>%%VBLT%%span class="ct">Hazel Yip · %%VBLT%%a href="tel:07877032901">07877 032901%%VBLT%%/a> · %%VBLT%%a href="mailto:hazelyip@yahoo.com.hk">hazelyip@yahoo.com.hk%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+          %%VBLT%%li>%%VBLT%%span class="tn m">CVC1 (M)%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Sat 14:00%%VBLT%%/span>%%VBLT%%span class="ct">Andres Suarez · %%VBLT%%a href="mailto:andr3s.suarez@gmail.com">andr3s.suarez@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+          %%VBLT%%li>%%VBLT%%span class="tn m">CVC2 (M)%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Sat 14:00%%VBLT%%/span>%%VBLT%%span class="ct">Andres Suarez · %%VBLT%%a href="tel:07919841449">07919 841449%%VBLT%%/a> · %%VBLT%%a href="mailto:andr3s.suarez@gmail.com">andr3s.suarez@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+          %%VBLT%%li>%%VBLT%%span class="tn m">CVC3 (M)%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Mon 19:00%%VBLT%%/span>%%VBLT%%span class="ct">Juan Mosquera · %%VBLT%%a href="tel:07397386422">07397 386422%%VBLT%%/a> · %%VBLT%%a href="mailto:Juanfmx2@gmail.com">Juanfmx2@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+        %%VBLT%%/ul>
+      %%VBLT%%/div>
+      %%VBLT%%div class="club">
+        %%VBLT%%h3>Ipswich Ravens%%VBLT%%/h3>
+        %%VBLT%%a class="venue" href="https://www.google.com/maps/search/?api=1&query=St.%20Albans%20RC%20High%20School%2C%20Ipswich%2C%20IP4%203NJ" target="_blank" rel="noopener">📍 St. Albans RC High School, Ipswich, IP4 3NJ%%VBLT%%/a>
+        %%VBLT%%ul>
+          %%VBLT%%li>%%VBLT%%span class="tn x">Ipswich Ravens%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Fri 19:00%%VBLT%%/span>%%VBLT%%span class="ct">Dominik Marciniak · %%VBLT%%a href="tel:07985150083">07985 150083%%VBLT%%/a> · %%VBLT%%a href="mailto:dominikmarciniak6@gmail.com">dominikmarciniak6@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+        %%VBLT%%/ul>
+      %%VBLT%%/div>
+      %%VBLT%%div class="club">
+        %%VBLT%%h3>Newmarket%%VBLT%%/h3>
+        %%VBLT%%a class="venue" href="https://www.google.com/maps/search/?api=1&query=Newmarket%20Sports%20%26%20Leisure%20Centre%2C%20Exning%20Road%2C%20Newmarket%2C%20CB8%200EA" target="_blank" rel="noopener">📍 Newmarket Sports &amp; Leisure Centre, Exning Road, Newmarket, CB8 0EA%%VBLT%%/a>
+        %%VBLT%%ul>
+          %%VBLT%%li>%%VBLT%%span class="tn x">Newmarket%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Wed 20:00 / TBC%%VBLT%%/span>%%VBLT%%span class="ct">Samuel King · %%VBLT%%a href="tel:07874044330">07874 044330%%VBLT%%/a> · %%VBLT%%a href="mailto:05samuelking@googlemail.com">05samuelking@googlemail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+        %%VBLT%%/ul>
+      %%VBLT%%/div>
+      %%VBLT%%div class="club">
+        %%VBLT%%h3>Rhinos%%VBLT%%/h3>
+        %%VBLT%%a class="venue" href="https://www.google.com/maps/search/?api=1&query=The%20Leys%20Sports%20Centre%2C%20CB2%207AD" target="_blank" rel="noopener">📍 The Leys Sports Centre, CB2 7AD%%VBLT%%/a>
+        %%VBLT%%ul>
+          %%VBLT%%li>%%VBLT%%span class="tn w">Rhinos (W) Thunder%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Sun 16:00%%VBLT%%/span>%%VBLT%%span class="ct">Zoe Anca · %%VBLT%%a href="tel:07471064511">07471 064511%%VBLT%%/a> · %%VBLT%%a href="mailto:zoetaitanca@gmail.com">zoetaitanca@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+          %%VBLT%%li>%%VBLT%%span class="tn w">Rhinos1 (W) Rhinettes%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Sun 16:00%%VBLT%%/span>%%VBLT%%span class="ct">Germana Baldi · %%VBLT%%a href="tel:07742746563">07742 746563%%VBLT%%/a> · %%VBLT%%a href="mailto:germana.baldi@gmail.com">germana.baldi@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+          %%VBLT%%li>%%VBLT%%span class="tn m">Rhinos1 (M)%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Sun 16:00%%VBLT%%/span>%%VBLT%%span class="ct">Rajat Chauhan · %%VBLT%%a href="tel:07775993767">07775 993767%%VBLT%%/a> · %%VBLT%%a href="mailto:rajatprofessional74@gmail.com">rajatprofessional74@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+        %%VBLT%%/ul>
+      %%VBLT%%/div>
+      %%VBLT%%div class="club">
+        %%VBLT%%h3>St Philips%%VBLT%%/h3>
+        %%VBLT%%a class="venue" href="https://www.google.com/maps/search/?api=1&query=The%20Netherhall%20School%20%26%20Sixth%20Form%20College%2C%20Queen%20Ediths%20Way%2C%20Cambridge%2C%20CB1%208NN" target="_blank" rel="noopener">📍 The Netherhall School &amp; Sixth Form College, Queen Ediths Way, Cambridge, CB1 8NN%%VBLT%%/a>
+        %%VBLT%%ul>
+          %%VBLT%%li>%%VBLT%%span class="tn w">St Philips (W)%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Mon 20:00%%VBLT%%/span>%%VBLT%%span class="ct">Carrie Hodgson · %%VBLT%%a href="tel:07747848114">07747 848114%%VBLT%%/a> · %%VBLT%%a href="mailto:carolinejhodgson@gmail.com">carolinejhodgson@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+          %%VBLT%%li>%%VBLT%%span class="tn m">St Philips1 (M)%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Mon 20:00%%VBLT%%/span>%%VBLT%%span class="ct">Carrie Hodgson · %%VBLT%%a href="tel:07747848114">07747 848114%%VBLT%%/a> · %%VBLT%%a href="mailto:carolinejhodgson@gmail.com">carolinejhodgson@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+          %%VBLT%%li>%%VBLT%%span class="tn m">St Philips2 (M)%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Mon 20:00%%VBLT%%/span>%%VBLT%%span class="ct">Carrie Hodgson · %%VBLT%%a href="tel:07747848114">07747 848114%%VBLT%%/a> · %%VBLT%%a href="mailto:carolinejhodgson@gmail.com">carolinejhodgson@gmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+        %%VBLT%%/ul>
+      %%VBLT%%/div>
+      %%VBLT%%div class="club">
+        %%VBLT%%h3>Stowmarket%%VBLT%%/h3>
+        %%VBLT%%a class="venue" href="https://www.google.com/maps/search/?api=1&query=Stowupland%20High%20School%2C%20Church%20Road%2C%20Stowupland%2C%20Stowmarket%2C%20IP14%204BQ" target="_blank" rel="noopener">📍 Stowupland High School, Church Road, Stowupland, Stowmarket, IP14 4BQ%%VBLT%%/a>
+        %%VBLT%%ul>
+          %%VBLT%%li>%%VBLT%%span class="tn x">Stowmarket%%VBLT%%/span>%%VBLT%%span class="tr">🏐 Wed 20:00%%VBLT%%/span>%%VBLT%%span class="ct">Simon Papworth · %%VBLT%%a href="tel:07717765253">07717 765253%%VBLT%%/a> · %%VBLT%%a href="mailto:simonpapworth24@hotmail.com">simonpapworth24@hotmail.com%%VBLT%%/a>%%VBLT%%/span>%%VBLT%%/li>
+        %%VBLT%%/ul>
+      %%VBLT%%/div>
+    %%VBLT%%/div>
+  %%VBLT%%/section>
+
+  %%VBLT%%footer>Ref = the team that provides the referees. Venues are shortened as on the CVA site: NCA (North Cambridge Academy), Leys, Nether (Netherhall), Bury LC (Bury Leisure Centre), Stow (Stowmarket), Newm (Newmarket). Club contacts are from the CVA clubs page. Women's fixture 32 on the CVA site repeats fixture 31 and is shown once here.%%VBLT%%/footer>
 %%VBLT%%/div>
 
 %%VBLT%%script>
@@ -852,6 +932,11 @@ render();
   .part h2{margin:0;color:#fff;font-size:26px}
   .part h2 small{display:block;color:rgba(255,255,255,.88);font-size:13px;font-weight:600;text-transform:none;letter-spacing:0;font-family:inherit;margin-top:4px}
   .part .new{font-size:11.5px}
+  .dl{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-left:6px solid var(--c3);border-radius:10px;padding:12px 16px;margin:18px 0 0}
+  .dl h2{font-size:19px;margin-right:6px}
+  .dl a{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:8px;background:color-mix(in srgb,var(--c3) 12%,#fff);color:#146B47;font-weight:700;font-size:14px;text-decoration:none;border:1px solid color-mix(in srgb,var(--c3) 35%,#fff)}
+  .dl a:hover{background:color-mix(in srgb,var(--c3) 22%,#fff)}
+  .dl svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 %%VBLT%%/style>
 %%VBLT%%/head>
 %%VBLT%%body>
@@ -865,6 +950,13 @@ render();
     %%VBLT%%a href="#regs" style="background:var(--c1)">NVL Regulations%%VBLT%%/a>
     %%VBLT%%a href="#refrules" style="background:var(--c5)">NVL Referee Rules%%VBLT%%/a>
   %%VBLT%%/nav>
+
+  %%VBLT%%div class="dl">
+    %%VBLT%%h2>Download (PDF)%%VBLT%%/h2>
+    %%VBLT%%a href="https://www.bucs.org.uk/static/8be53d2e-be80-418c-b854c5a488621222/FIVB-Volleyball-Scoresheet-A3.pdf" target="_blank" rel="noopener">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>%%VBLT%%/svg>NVL scoresheet%%VBLT%%/a>
+    %%VBLT%%a href="lineup-sheets.pdf" target="_blank" rel="noopener">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>%%VBLT%%/svg>Rotation sheets%%VBLT%%/a>
+    %%VBLT%%a href="nvl-regulations-26-27.pdf" target="_blank" rel="noopener">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>%%VBLT%%/svg>NVL Regulations 26-27%%VBLT%%/a>
+  %%VBLT%%/div>
 
   %%VBLT%%div class="nums" id="regs">
     %%VBLT%%div class="num" style="background:var(--c1)">%%VBLT%%b>30%%VBLT%%small>min%%VBLT%%/small>%%VBLT%%/b>%%VBLT%%span>official warm-up before the published start time%%VBLT%%/span>%%VBLT%%/div>
@@ -5661,6 +5753,11 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
   .part:first-of-type{margin-top:0}
   footer + footer{margin-top:6px}
   .rt td:nth-child(2){text-align:left}
+  .dl{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-left:6px solid var(--c3);border-radius:10px;padding:12px 16px;margin:0 0 18px}
+  .dl h2{font-size:19px;margin-right:6px}
+  .dl a{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:8px;background:color-mix(in srgb,var(--c3) 12%,#fff);color:#146B47;font-weight:700;font-size:14px;text-decoration:none;border:1px solid color-mix(in srgb,var(--c3) 35%,#fff)}
+  .dl a:hover{background:color-mix(in srgb,var(--c3) 22%,#fff)}
+  .dl svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 %%VBLT%%/style>
 %%VBLT%%/head>
 %%VBLT%%body>
@@ -5673,6 +5770,13 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     %%VBLT%%a href="#adapt" style="background:var(--c1)">CVA Adaptation from VE Rules 26-27%%VBLT%%/a>
     %%VBLT%%a href="#refman" style="background:var(--c3)">Referee Manual%%VBLT%%/a>
   %%VBLT%%/nav>
+
+  %%VBLT%%div class="dl">
+    %%VBLT%%h2>Download (PDF)%%VBLT%%/h2>
+    %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/20261031_cva_scoresheet_2026.pdf" target="_blank" rel="noopener">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>%%VBLT%%/svg>CVA scoresheet%%VBLT%%/a>
+    %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/20261031_cva_scoresheet_2026.pdf" target="_blank" rel="noopener">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>%%VBLT%%/svg>Registration form%%VBLT%%/a>
+    %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/FIVB_R-5_2010.pdf" target="_blank" rel="noopener">%%VBLT%%svg viewBox="0 0 24 24">%%VBLT%%path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>%%VBLT%%/svg>Rotation sheets%%VBLT%%/a>
+  %%VBLT%%/div>
 
   %%VBLT%%div class="part" id="league" style="background:var(--c4)">%%VBLT%%h2>CVA League Rules 25-26%%VBLT%%small>The county league rules: match procedure, points, postponements, refereeing and eligibility%%VBLT%%/small>%%VBLT%%/h2>%%VBLT%%/div>
   %%VBLT%%p class="intro">&ldquo;The following constitute the rules which govern the Cambridgeshire Volleyball Association Leagues (Men&rsquo;s, Women&rsquo;s and Mixed/Beginner&rsquo;s). Please note that all teams should make every effort to ensure that all league matches are played. Teams are expected to be proactive, and act with good sportsmanship, when rescheduling a game is necessary.&rdquo;%%VBLT%%/p>
@@ -6003,7 +6107,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
       %%VBLT%%p style="margin-bottom:4px">%%VBLT%%b>Preparing for the game%%VBLT%%/b>%%VBLT%%/p>
       %%VBLT%%ul>
         %%VBLT%%li>%%VBLT%%b>Confirm the fixture:%%VBLT%%/b> the %%VBLT%%b>home team%%VBLT%%/b> confirms the match time and venue (with directions if needed) with the opponents and the referees, using the contact details provided, at least %%VBLT%%b>one week before%%VBLT%%/b> %%VBLT%%span class="tag">Rule 1a%%VBLT%%/span>.%%VBLT%%/li>
-        %%VBLT%%li>%%VBLT%%b>Print the scoresheet:%%VBLT%%/b> bring a %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/CVA_SCORESHEET_2019.pdf" target="_blank" rel="noopener">CVA league scoresheet (to print)%%VBLT%%/a>; the CVA Scoresheet card shows how to fill it in.%%VBLT%%/li>
+        %%VBLT%%li>%%VBLT%%b>Print the scoresheet:%%VBLT%%/b> bring a %%VBLT%%a href="https://www.cambsvolleyball.org.uk/RCVADocs/20261031_cva_scoresheet_2026.pdf" target="_blank" rel="noopener">CVA league scoresheet (to print)%%VBLT%%/a>; the CVA Scoresheet card shows how to fill it in.%%VBLT%%/li>
         %%VBLT%%li>%%VBLT%%b>Referee duty:%%VBLT%%/b> referee duties are on the fixtures list. If a match is postponed, the postponing team tells the referees&rsquo; club contact %%VBLT%%span class="tag">Rule 2%%VBLT%%/span>.%%VBLT%%/li>
       %%VBLT%%/ul>
       %%VBLT%%p style="margin:10px 0 4px">%%VBLT%%b>On the day%%VBLT%%/b>%%VBLT%%/p>
