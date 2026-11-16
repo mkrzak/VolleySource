@@ -123,7 +123,7 @@
     </button>
     <button class="hcard g-nvl" type="button" data-key="nvl" aria-pressed="false">
       <span class="htitle">NVL Fixtures</span>
-      <span class="hdesc">2026&ndash;27 tables and every game for all five CVC teams in the National League: women D1, D2, D3 and men D1, D3.</span>
+      <span class="hdesc">2026&ndash;27 tables and every game for all five CVC teams in the National League: women D1, D2, D3 and men D1, D3, plus a National Cup &amp; Shield tab for every CVC team.</span>
     </button>
     <a class="hcard hext g-app" href="lineup.html">
       <span class="htitle">Game Line-up</span>
@@ -654,6 +654,25 @@ render();
   .gl:hover{text-decoration:underline}
   .calhelp{margin-top:10px;background:#EEF4FF;border:1px solid #c7d7fe;border-radius:10px;padding:10px 12px;font-size:13.5px;color:var(--ink)}
   .calhelp a{color:var(--blue);font-weight:600}
+  .next[hidden],section[hidden]{display:none}
+  .cups{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:12px;margin-top:14px}
+  .cupc{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff;border-top:5px solid var(--cc,#4f46e5)}
+  .cupc.out{opacity:.7}
+  .cupc .comp{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cc)}
+  .cupc h3{font-family:"Barlow Condensed",Arial,sans-serif;font-size:24px;margin:2px 0 8px;text-transform:uppercase;line-height:1}
+  .path{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+  .path span{font-size:11.5px;font-weight:700;border-radius:99px;padding:3px 8px;background:#EEF2F6;color:#8796A6;white-space:nowrap}
+  .path span.won{background:#dcfce7;color:#166534}
+  .path span.lost{background:#fee2e2;color:#991b1b}
+  .path span.nx{background:var(--cc);color:#fff;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--cc)}
+  .cupc .gm{font-size:14px;padding:6px 0;border-top:1px solid #EEF2F6}
+  .cupc .gm b.w{color:var(--win)} .cupc .gm b.lo{color:var(--loss)}
+  .cupc .gm small{display:block;color:var(--soft);font-size:12.5px}
+  .cupc .nextr{margin-top:8px;padding:9px 11px;border-radius:9px;background:color-mix(in srgb,var(--cc) 10%,#fff);font-size:14px}
+  .cupc .nextr b{color:var(--cc)}
+  .cupc .outr{margin-top:8px;padding:8px 11px;border-radius:9px;background:#F5F6F8;font-size:13.5px;color:var(--soft)}
+  .divs button.cupbtn{border-color:#b45309;color:#b45309}
+  .divs button.cupbtn.on{background:#b45309;color:#fff}
 %%VBLT%%/style>
 %%VBLT%%/head>
 %%VBLT%%body>
@@ -670,13 +689,13 @@ render();
 
   %%VBLT%%div class="next" id="next" hidden>%%VBLT%%/div>
 
-  %%VBLT%%section class="card">
+  %%VBLT%%section class="card" id="tableSec">
     %%VBLT%%h2 id="tableTitle">League table%%VBLT%%/h2>
     %%VBLT%%div class="scroll">%%VBLT%%table id="table">%%VBLT%%/table>%%VBLT%%/div>
     %%VBLT%%div class="key">P played · W won · L lost · SF/SA sets for/against · PF/PA points for/against · Pts league points. The Cambridge VC team is highlighted.%%VBLT%%/div>
   %%VBLT%%/section>
 
-  %%VBLT%%section class="card">
+  %%VBLT%%section class="card" id="fixSec">
     %%VBLT%%div class="bar">
       %%VBLT%%h2 style="margin:0">Fixtures &amp; results%%VBLT%%/h2>
       %%VBLT%%div class="teams-bar" id="teamsBar">%%VBLT%%/div>
@@ -686,7 +705,20 @@ render();
     %%VBLT%%div id="list">%%VBLT%%/div>
   %%VBLT%%/section>
 
-  %%VBLT%%footer>NVL games are played as match days: two or three teams meet at one venue, so most dates have several games. Rhinos Cambridge is a different club. More NVL information is on the %%VBLT%%a class="lnk" href="https://www.volleyballengland.org/competitions/volleyball/nvl" target="_blank" rel="noopener">Volleyball England NVL page%%VBLT%%/a>.%%VBLT%%/footer>
+  %%VBLT%%section class="card" id="cupSec" hidden>
+    %%VBLT%%div class="bar">
+      %%VBLT%%h2 style="margin:0">National Cup &amp; Shield 26-27%%VBLT%%/h2>
+      %%VBLT%%a class="lnk" id="drawLink" href="#" target="_blank" rel="noopener">Full draw ↗%%VBLT%%/a>
+    %%VBLT%%/div>
+    %%VBLT%%p class="key" style="margin:0 0 6px">Knockout competitions: lose once and you&rsquo;re out. %%VBLT%%b>Cup%%VBLT%%/b>: Super League and Division 1 teams. %%VBLT%%b>Shield%%VBLT%%/b>: Division 2 and 3 teams. Opponents for the next round appear on the draw once the previous round is played.%%VBLT%%/p>
+    %%VBLT%%div style="margin-top:6px">%%VBLT%%button class="calbtn" id="cupCalBtn" type="button">📅 Add the next rounds to my calendar%%VBLT%%/button>%%VBLT%%/div>
+    %%VBLT%%div class="calhelp" id="cupCalHelp" hidden>%%VBLT%%/div>
+    %%VBLT%%div class="cups" id="cups">%%VBLT%%/div>
+    %%VBLT%%h2 style="margin:18px 0 0;font-size:22px">All CVC cup games%%VBLT%%/h2>
+    %%VBLT%%div id="cupList">%%VBLT%%/div>
+  %%VBLT%%/section>
+
+  %%VBLT%%footer>NVL games are played as match days: two or three teams meet at one venue, so most dates have several games. Rhinos Cambridge is a different club. Cup &amp; Shield results are from the VolleyZone National Cup page and the Volleyball England draw; the men&rsquo;s Shield team is listed on VolleyZone simply as &ldquo;Cambridge&rdquo;. More NVL information is on the %%VBLT%%a class="lnk" href="https://www.volleyballengland.org/competitions/volleyball/nvl" target="_blank" rel="noopener">Volleyball England NVL page%%VBLT%%/a>.%%VBLT%%/footer>
 %%VBLT%%/div>
 
 %%VBLT%%script>
@@ -749,13 +781,74 @@ const D = s => new Date(s + "T12:00:00");
 const today = (() => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); })();
 $("checked").textContent = D(CHECKED).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 
+
+/* ===== National Cup & Shield: CVC entries (VolleyZone + VE draw) ===== */
+const CUP_CHECKED = "2026-11-16";
+const CUP_URL = "https://competitions.volleyzone.co.uk/fixture-and-results/national-cup/";
+const CUP_DRAW = "https://docs.google.com/spreadsheets/d/1LX2BamWU_R1PJ5jJCSVZsmLmkPYoWzYuPeovUEltOAg/edit";
+const ROUNDS = ["Last 64", "Last 32", "Last 16", "Quarter-final", "Semi-final", "Final"];
+const RDATES = { M: { "Last 64": "2026-09-26", "Last 32": "2026-11-14", "Last 16": "2027-01-09", "Quarter-final": "2027-02-13", "Semi-final": "2027-04-03", "Final": "2027-04-24" },
+                 W: { "Last 64": "2026-09-27", "Last 32": "2026-11-15", "Last 16": "2027-01-10", "Quarter-final": "2027-02-14", "Semi-final": "2027-04-04", "Final": "2027-04-25" } };
+const CUP = [
+  { team: "Cambridge ARU", g: "W", comp: "Women's National Cup", col: "#b45309", first: "Last 32",
+    games: [["Last 32", "2026-11-15", "Leeds Gorse", "Cambridge ARU", "Ruth Gorse Academy, Leeds", "2-3", "28-26, 22-25, 27-25, 16-25, 14-16"]] },
+  { team: "Cambridge ARU", g: "M", comp: "Men's National Cup", col: "#b45309", first: "Last 32",
+    games: [["Last 32", "2026-11-14", "Cambridge ARU", "Bristol", "North Cambridge Academy, CB4 2JF", "3-0", "25-15, 25-19, 25-21"]] },
+  { team: "Cambridge 3", g: "W", comp: "Women's National Shield", col: "#0e7490", first: "Last 64",
+    games: [["Last 64", "2026-09-26", "Worthing", "Cambridge 3", "Lancing Leisure Centre", "0-3", "23-25, 19-25, 20-25"],
+            ["Last 32", "2026-11-14", "Cambridge 3", "Essex Ravens", "North Cambridge Academy, CB4 2JF", "3-0", "25-15, 25-21, 25-19"]] },
+  { team: "Cambridge (men)", vz: "Cambridge", g: "M", comp: "Men's National Shield", col: "#0e7490", first: "Last 64",
+    games: [["Last 64", "2026-09-27", "GNG Bedford", "Cambridge", "Bedford Trinity Arts and Leisure, MK40 2BS", "3-0", "27-25, 25-12, 25-17"]] }
+];
+for(const c of CUP){
+  const me = c.vz || c.team;
+  c.games = c.games.map(([round, date, home, away, venue, sets, sc]) => {
+    const [h, a] = sets.split("-").map(Number); return { round, date, home, away, venue, sets, sc, won: home === me ? h > a : a > h, home_us: home === me };
+  });
+  const last = c.games[c.games.length - 1];
+  c.out = !last.won;
+  c.next = c.out ? null : ROUNDS[ROUNDS.indexOf(last.round) + 1];
+}
+function cupEvent(c){
+  return { uid: "cup-" + c.comp + "-" + c.team + "-" + c.next, date: RDATES[c.g][c.next], time: "",
+    title: c.team + " – " + c.comp + " " + c.next + " (opponent TBC)",
+    details: c.comp + " " + c.next + ". Opponent, venue and time are on the draw once confirmed:\n" + CUP_DRAW, place: "" };
+}
+function renderCup(){
+  ["tableSec", "fixSec", "next"].forEach(id => $(id).hidden = true);
+  $("cupSec").hidden = false;
+  $("liveLink").href = CUP_URL; $("drawLink").href = CUP_DRAW;
+  $("checked").textContent = D(CUP_CHECKED).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const fmt = d => D(d).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+  $("cups").innerHTML = CUP.map(c => {
+    const done = Object.fromEntries(c.games.map(g => [g.round, g.won ? "won" : "lost"]));
+    const path = ROUNDS.slice(ROUNDS.indexOf(c.first)).map(r => `%%VBLT%%span class="${done[r] || (r === c.next ? "nx" : "")}">${r}%%VBLT%%/span>`).join("");
+    const games = c.games.map(g => `%%VBLT%%div class="gm">${g.round}: ${g.home} v ${g.away} %%VBLT%%b class="${g.won ? "w" : "lo"}">${g.sets.replace("-", "–")} ${g.won ? "won" : "lost"}%%VBLT%%/b>
+      %%VBLT%%small>${fmt(g.date)} · ${g.venue} · ${g.sc}%%VBLT%%/small>%%VBLT%%/div>`).join("");
+    const tail = c.out ? `%%VBLT%%div class="outr">Out of the ${c.comp.replace(/^(Men's|Women's) /, "")} this season.%%VBLT%%/div>`
+      : `%%VBLT%%div class="nextr">Next: %%VBLT%%b>${c.next}%%VBLT%%/b> · ${fmt(RDATES[c.g][c.next])} · opponent TBC %%VBLT%%a class="gl" target="_blank" rel="noopener" href="${gLink(cupEvent(c))}">📅 Google%%VBLT%%/a>%%VBLT%%/div>`;
+    return `%%VBLT%%div class="cupc${c.out ? " out" : ""}" style="--cc:${c.col}">%%VBLT%%div class="comp">${c.comp}%%VBLT%%/div>%%VBLT%%h3>${c.team}%%VBLT%%/h3>%%VBLT%%div class="path">${path}%%VBLT%%/div>${games}${tail}%%VBLT%%/div>`;
+  }).join("");
+  const all = CUP.flatMap(c => c.games.map(g => ({ ...g, c }))).sort((a, b) => a.date.localeCompare(b.date));
+  let month = "", h = "";
+  for(const f of all){
+    const dt = D(f.date), m = dt.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+    if(m !== month){ month = m; h += `%%VBLT%%div class="month">${m}%%VBLT%%/div>`; }
+    const me = f.c.vz || f.c.team, nm = n => n === me ? "%%VBLT%%b>" + n + "%%VBLT%%/b>" : n, [hs, as] = f.sets.split("-");
+    h += `%%VBLT%%div class="fx us past">%%VBLT%%div class="d">%%VBLT%%small>${dt.toLocaleDateString("en-GB", { weekday: "short" })}%%VBLT%%/small>${dt.getDate()}%%VBLT%%/div>
+      %%VBLT%%div class="teams">${nm(f.home)}%%VBLT%%span class="v">v%%VBLT%%/span>${nm(f.away)}%%VBLT%%span class="chip ${f.home_us ? "home" : "away"}">${f.home_us ? "HOME" : "AWAY"}%%VBLT%%/span>
+      %%VBLT%%div class="sub">${f.c.comp} · ${f.round} · ${f.venue}%%VBLT%%/div>%%VBLT%%/div>%%VBLT%%div class="res ${f.won ? "w" : "lo"}">${hs} – ${as}%%VBLT%%small>${f.sc}%%VBLT%%/small>%%VBLT%%/div>%%VBLT%%/div>`;
+  }
+  $("cupList").innerHTML = h;
+  const nexts = CUP.filter(c => !c.out && RDATES[c.g][c.next] >= today);
+  $("cupCalBtn").hidden = !nexts.length;
+}
+$("cupCalBtn").onclick = () => { downloadIcs(CUP.filter(c => !c.out && RDATES[c.g][c.next] >= today).map(cupEvent), "CVC National Cup and Shield.ics", "CVC National Cup & Shield"); $("cupCalHelp").hidden = false; $("cupCalHelp").innerHTML = $("calHelp").innerHTML; $("calHelp").hidden = true; };
 let div = "WD3C", only = false;
 const cur = () => DIVS[div];
 const plays = (f, t) => f.home === t || f.away === t;
 
 function render(){
-  const d = cur(), US = d.team;
-  $("liveLink").href = d.url;
   // division tabs
   $("divs").innerHTML = "";
   for(const [k, x] of Object.entries(DIVS)){
@@ -764,6 +857,14 @@ function render(){
     b.onclick = () => { div = k; only = false; render(); };
     $("divs").appendChild(b);
   }
+  const cb = document.createElement("button"); cb.type = "button"; cb.className = "cupbtn" + (div === "CUP" ? " on" : "");
+  cb.innerHTML = "🏆 Cup &amp; Shield%%VBLT%%small>all CVC teams%%VBLT%%/small>"; cb.onclick = () => { div = "CUP"; render(); };
+  $("divs").appendChild(cb);
+  if(div === "CUP"){ renderCup(); return; }
+  ["tableSec", "fixSec"].forEach(id => $(id).hidden = false); $("cupSec").hidden = true;
+  $("checked").textContent = D(CHECKED).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const d = cur(), US = d.team;
+  $("liveLink").href = d.url;
   // table
   $("tableTitle").textContent = d.name + " league table";
   let h = '%%VBLT%%tr>%%VBLT%%th>%%VBLT%%/th>%%VBLT%%th class="l">Team%%VBLT%%/th>%%VBLT%%th>P%%VBLT%%/th>%%VBLT%%th>W%%VBLT%%/th>%%VBLT%%th>L%%VBLT%%/th>%%VBLT%%th>SF%%VBLT%%/th>%%VBLT%%th>SA%%VBLT%%/th>%%VBLT%%th>PF%%VBLT%%/th>%%VBLT%%th>PA%%VBLT%%/th>%%VBLT%%th>Pts%%VBLT%%/th>%%VBLT%%/tr>';
