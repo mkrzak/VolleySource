@@ -233,6 +233,7 @@
   .gl:hover{text-decoration:underline}
   .calhelp{margin-top:10px;background:#EEF4FF;border:1px solid #c7d7fe;border-radius:10px;padding:10px 12px;font-size:13.5px;color:var(--ink)}
   .calhelp a{color:var(--blue);font-weight:600}
+  .fx .tm{font-weight:800;color:var(--ink)}
   .clubs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:12px}
   .club{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff}
   .club.cvc{border-color:#F6C391;background:var(--panS)}
@@ -346,64 +347,131 @@
     %%VBLT%%/div>
   %%VBLT%%/section>
 
-  %%VBLT%%footer>Ref = the team that provides the referees. Venues are shortened as on the CVA site: NCA (North Cambridge Academy), Leys, Nether (Netherhall), Bury LC (Bury Leisure Centre), Stow (Stowmarket), Newm (Newmarket). Club contacts are from the CVA clubs page. Women's fixture 32 on the CVA site repeats fixture 31 and is shown once here.%%VBLT%%/footer>
+  %%VBLT%%footer>%%VBLT%%b>Times:%%VBLT%%/b> women&rsquo;s start times are from the CVA women&rsquo;s fixture list 2026-27. A time with %%VBLT%%b>*%%VBLT%%/b> is the home team&rsquo;s usual start time from the CVA clubs page (for games moved since the list). Men&rsquo;s start times aren&rsquo;t published, so check with the home team. The home team confirms the time a week before. Ref = the team that provides the referees. Venues are shortened as on the CVA site: NCA (North Cambridge Academy), Leys, Nether (Netherhall), Bury (Culford, Bury St Edmunds), Perse (The Perse School), Ipsw (Ipswich), Stow (Stowmarket), Newm (Newmarket). Club contacts are from the CVA clubs page.%%VBLT%%/footer>
 %%VBLT%%/div>
 
 %%VBLT%%script>
 /* ===== snapshot of the CVA league pages (cambsvolleyball.org.uk) ===== */
-const CHECKED = "2026-11-03";
+const CHECKED = "2026-11-17";
 const DIVS = {
   W: { name: "Women", url: "https://www.cambsvolleyball.org.uk/RCVALeagueW.php",
     names: { B:"Bury Bobcats1 (W)", J:"CVC (W) MxJnr", Ti:"CVC1 (W) Tigers", P:"CVC2 (W) Panthers", Th:"Rhinos (W) Thunder", R:"Rhinos1 (W) Rhinette", S:"St Philips (W)", N:"Neutral" },
     show: { "Bury Bobcats1 (W)":"Bury Bobcats", "CVC (W) MxJnr":"CVC MxJnr", "CVC1 (W) Tigers":"CVC Tigers", "CVC2 (W) Panthers":"CVC Panthers", "Rhinos (W) Thunder":"Rhinos Thunder", "Rhinos1 (W) Rhinette":"Rhinos Rhinette", "St Philips (W)":"St Philips" },
     cvc: ["CVC2 (W) Panthers", "CVC1 (W) Tigers", "CVC (W) MxJnr"],
-    table: [["CVC1 (W) Tigers",1,1,0,3,1,81,71,5],["CVC2 (W) Panthers",1,0,1,1,3,71,81,2],["Bury Bobcats1 (W)",0,0,0,0,0,0,0,0],["CVC (W) MxJnr",0,0,0,0,0,0,0,0],
-      ["Rhinos (W) Thunder",0,0,0,0,0,0,0,0],["Rhinos1 (W) Rhinette",0,0,0,0,0,0,0,0],["St Philips (W)",0,0,0,0,0,0,0,0]],
+    table: [["Rhinos (W) Thunder",1,1,0,3,0,63,32,5],["CVC1 (W) Tigers",1,1,0,3,1,81,71,5],["CVC (W) MxJnr",1,1,0,3,2,86,73,5],["St Philips (W)",1,0,1,2,3,73,86,3],
+      ["CVC2 (W) Panthers",1,0,1,1,3,71,81,2],["Bury Bobcats1 (W)",1,0,1,0,3,32,63,1],["Rhinos1 (W) Rhinette",0,0,0,0,0,0,0,0]],
     fix: [
-      [1,"2026-12-13","B","J","N","Bury LC"],[2,"2027-03-14","B","Ti","N","Bury LC"],[3,"2027-02-28","B","P","N","Bury LC"],
-      [4,"2027-04-11","B","Th","N","Bury LC"],[5,"2027-02-07","B","R","N","Bury LC"],[6,"2026-11-22","B","S","N","Bury LC"],
-      [7,"2027-03-06","J","B","R","NCA"],[8,"2027-02-06","J","Ti","R","NCA"],[9,"2026-11-30","J","P","S","NCA"],
-      [10,"2026-11-21","J","Th","P","Bury LC"],[11,"2027-01-23","J","R","Ti","NCA"],[12,"2027-03-20","J","S","Ti","NCA"],
-      [13,"2027-01-11","Ti","B","R","NCA"],[14,"2027-04-05","Ti","J","R","NCA"],[15,"2026-11-23","Ti","Th","P","NCA"],
-      [16,"2026-11-09","Ti","R","P","NCA"],[17,"2026-12-14","Ti","S","R","NCA"],
-      [18,"2027-01-18","P","B","S","NCA"],[19,"2027-02-15","P","J","Th","NCA"],[20,"2027-03-08","P","Ti","Ti","NCA"],
-      [21,"2026-10-19","P","Ti","","","1-3","16-21, 20-22, 21-17, 14-21"],
-      [22,"2026-11-16","P","Th","R","NCA"],[23,"2027-02-12","P","R","J","NCA"],[24,"2027-01-25","P","S","Ti","NCA"],
-      [25,"2026-11-08","Th","B","Ti","Leys"],[26,"2027-01-17","Th","J","S","Leys"],[27,"2027-03-07","Th","Ti","J","Leys"],
-      [28,"2027-04-04","Th","P","S","Leys"],[29,"2027-03-14","Th","R","S","Leys"],[30,"2027-02-14","Th","S","J","Leys"],
-      [31,"2026-11-29","R","B","Ti","Leys"],[33,"2027-04-11","R","J","S","Leys"],[34,"2026-12-13","R","Ti","Th","Leys"],
-      [35,"2027-01-10","R","P","J","Leys"],[36,"2027-01-24","R","Th","J","Leys"],[37,"2027-01-31","R","S","P","Leys"],
-      [38,"2027-04-05","S","B","Th","Nether"],[39,"2026-11-09","S","J","Th","Nether"],[40,"2027-02-08","S","Ti","Th","Nether"],
-      [41,"2027-03-08","S","P","Th","Nether"],[42,"2027-01-11","S","Th","P","Nether"],[43,"2026-12-07","S","R","P","Nether"] ] },
+      [1,"2026-12-13","B","J","N","Bury"],
+      [2,"2027-03-14","B","Ti","N","Bury"],
+      [3,"2027-02-28","B","P","N","Bury"],
+      [4,"2027-04-11","B","Th","N","Bury"],
+      [5,"2027-02-07","B","R","N","Bury"],
+      [6,"2027-01-17","B","S","N","Bury"],
+      [7,"2027-03-06","J","B","R","NCA"],
+      [8,"2027-02-06","J","Ti","R","NCA"],
+      [9,"2026-11-30","J","P","S","NCA"],
+      [10,"2026-11-21","J","Th","P","NCA"],
+      [11,"2027-01-23","J","R","Ti","NCA"],
+      [12,"2027-03-20","J","S","Ti","NCA"],
+      [13,"2027-01-11","Ti","B","R","NCA"],
+      [14,"2027-04-05","Ti","J","R","NCA"],
+      [15,"2027-03-08","Ti","P","Ti","NCA"],
+      [16,"2026-11-23","Ti","Th","P","NCA"],
+      [17,"2026-11-27","Ti","R","P","Perse"],
+      [18,"2026-12-14","Ti","S","R","NCA"],
+      [19,"2027-01-18","P","B","S","NCA"],
+      [20,"2027-02-15","P","J","Th","NCA"],
+      [21,"2026-10-19","P","Ti","","","1-3","16-21,20-22,21-17,14-21"],
+      [22,"2026-11-16","P","Th","R","NCA"],
+      [23,"2027-02-12","P","R","J","Perse"],
+      [24,"2027-01-25","P","S","Ti","NCA"],
+      [25,"2026-11-08","Th","B","","","3-0","21-10,21-7,21-15"],
+      [26,"2027-01-17","Th","J","S","Leys"],
+      [27,"2027-03-07","Th","Ti","J","Leys"],
+      [28,"2027-04-04","Th","P","S","Leys"],
+      [29,"2027-03-14","Th","R","S","Leys"],
+      [30,"2027-02-14","Th","S","J","Leys"],
+      [31,"2026-11-29","R","B","Ti","Leys"],
+      [32,"2027-04-11","R","J","S","Leys"],
+      [33,"2026-12-13","R","Ti","Th","Leys"],
+      [34,"2027-01-10","R","P","J","Leys"],
+      [35,"2027-01-24","R","Th","J","Leys"],
+      [36,"2027-01-31","R","S","P","Leys"],
+      [37,"2027-04-05","S","B","Th","Nether"],
+      [38,"2026-11-09","S","J","","","2-3","15-21,21-17,6-21,21-12,10-15"],
+      [39,"2027-02-08","S","Ti","Th","Nether"],
+      [40,"2027-03-08","S","P","Th","Nether"],
+      [41,"2027-01-11","S","Th","P","Nether"],
+      [42,"2026-12-07","S","R","P","Nether"] ] },
   M1: { name: "Men D1", url: "https://www.cambsvolleyball.org.uk/RCVALeagueM.php",
     names: { B:"Bury Bobcats1 (M)", C1:"CVC1 (M)", C2:"CVC2 (M)", C3:"CVC3 (M)", I:"Ipswich Ravens", Nw:"Newmarket", R:"Rhinos1 (M)", S1:"St Philips1M", S2:"St Phillips2 (M)", St:"Stowmarket", N:"Neutral" },
     show: { "Bury Bobcats1 (M)":"Bury Bobcats", "CVC1 (M)":"CVC 1", "CVC2 (M)":"CVC 2", "CVC3 (M)":"CVC 3", "Rhinos1 (M)":"Rhinos", "St Philips1M":"St Philips 1", "St Phillips2 (M)":"St Philips 2" },
     cvc: ["CVC1 (M)", "CVC2 (M)", "CVC3 (M)"],
-    table: [["St Philips1M",1,1,0,3,2,85,84,5],["CVC1 (M)",1,0,1,2,3,84,85,3],["Bury Bobcats1 (M)",0,0,0,0,0,0,0,0],["CVC2 (M)",0,0,0,0,0,0,0,0],["CVC3 (M)",0,0,0,0,0,0,0,0],
-      ["Ipswich Ravens",0,0,0,0,0,0,0,0],["Newmarket",0,0,0,0,0,0,0,0],["Rhinos1 (M)",0,0,0,0,0,0,0,0],["St Phillips2 (M)",0,0,0,0,0,0,0,0],["Stowmarket",0,0,0,0,0,0,0,0]],
+    table: [["Rhinos1 (M)",1,1,0,3,1,78,72,5],["St Philips1M",1,1,0,3,2,85,84,5],["CVC1 (M)",1,0,1,2,3,84,85,3],["CVC3 (M)",1,0,1,1,3,72,78,2],
+      ["Bury Bobcats1 (M)",0,0,0,0,0,0,0,0],["CVC2 (M)",0,0,0,0,0,0,0,0],["Ipswich Ravens",0,0,0,0,0,0,0,0],["Newmarket",0,0,0,0,0,0,0,0],["St Phillips2 (M)",0,0,0,0,0,0,0,0],["Stowmarket",0,0,0,0,0,0,0,0]],
     fix: [
-      [1,"2027-01-31","B","C2","N","Bury LC"],[2,"2027-02-07","B","C3","N","Bury LC"],[3,"2027-02-28","B","S1","N","Bury LC"],[4,"2027-01-17","B","S2","N","Bury LC"],
-      [5,"2026-11-21","C1","B","S1","NCA"],[6,"2027-01-23","C1","C3","S1","NCA"],[7,"2027-02-13","C1","Nw","S1","NCA"],[8,"2027-01-09","C1","S2","R","NCA"],
-      [9,"2027-01-16","C2","C1","C3","NCA"],[10,"2027-01-09","C2","I","S2","NCA"],[11,"2027-01-23","C2","Nw","C1","NCA"],[12,"2026-11-28","C2","St","R","NCA"],
-      [13,"2026-12-07","C3","I","C1","NCA"],[14,"2027-02-22","C3","Nw","R","NCA"],[15,"2026-11-02","C3","R","S2","NCA"],[16,"2027-02-01","C3","S1","S2","NCA"],
-      [17,"2027-01-22","I","B","N","Stow"],[18,"2027-02-20","I","R","N","Stow"],[19,"2026-12-12","I","S1","N","Stow"],[20,"2026-11-13","I","St","N","Stow"],
-      [21,"2026-11-18","Nw","I","N","Newm"],[22,"2027-01-13","Nw","R","N","Newm"],[23,"2026-11-11","Nw","S2","N","Newm"],[24,"2026-12-09","Nw","St","N","Newm"],
-      [25,"2026-11-15","R","B","C1","Leys"],[26,"2027-02-07","R","C1","S2","Leys"],[27,"2026-11-22","R","C2","C3","Leys"],[28,"2026-12-06","R","S2","S1","Leys"],
-      [29,"2026-11-02","S1","C1","","","3-2","21-18, 16-21, 21-14, 12-21, 15-10"],
-      [30,"2026-11-16","S1","C2","C3","Nether"],[31,"2026-11-30","S1","Nw","C1","Nether"],[32,"2027-01-18","S1","R","C2","Nether"],
-      [33,"2027-02-22","S2","C2","C3","Nether"],[34,"2027-02-15","S2","C3","C2","Nether"],[35,"2026-11-23","S2","I","C2","Nether"],[36,"2027-01-25","S2","St","R","Nether"],
-      [37,"2026-12-02","St","B","N","Stow"],[38,"2027-02-03","St","C1","N","Stow"],[39,"2027-01-06","St","C3","N","Stow"],[40,"2027-01-13","St","S1","N","Stow"] ] },
+      [1,"2027-01-31","B","C2","N","Bury"],
+      [2,"2027-02-07","B","C3","N","Bury"],
+      [3,"2027-02-28","B","S1","N","Bury"],
+      [4,"2027-01-17","B","S2","N","Bury"],
+      [5,"2026-11-21","C1","B","S1","NCA"],
+      [6,"2027-01-23","C1","C3","S1","NCA"],
+      [7,"2027-02-13","C1","Nw","S1","NCA"],
+      [8,"2027-01-09","C1","S2","R","NCA"],
+      [9,"2027-01-16","C2","C1","C3","NCA"],
+      [10,"2027-01-09","C2","I","S2","NCA"],
+      [11,"2027-01-23","C2","Nw","C1","NCA"],
+      [12,"2026-11-28","C2","St","R","NCA"],
+      [13,"2026-12-07","C3","I","C1","NCA"],
+      [14,"2027-02-22","C3","Nw","R","NCA"],
+      [15,"2026-11-02","C3","R","","","1-3","15-21,21-13,21-23,15-21"],
+      [16,"2027-02-01","C3","S1","S2","NCA"],
+      [17,"2027-01-22","I","B","N","Ipsw"],
+      [18,"2027-02-20","I","R","N","Ipsw"],
+      [19,"2026-12-12","I","S1","N","Ipsw"],
+      [20,"2026-11-13","I","St","N","Ipsw"],
+      [21,"2026-11-18","Nw","I","N","Newm"],
+      [22,"2027-01-13","Nw","R","N","Newm"],
+      [23,"2026-11-11","Nw","S2","N","Newm"],
+      [24,"2026-12-09","Nw","St","N","Newm"],
+      [25,"2026-11-15","R","B","C1","Leys"],
+      [26,"2027-02-07","R","C1","S2","Leys"],
+      [27,"2026-11-22","R","C2","C3","Leys"],
+      [28,"2026-12-06","R","S2","S1","Leys"],
+      [29,"2026-11-02","S1","C1","","","3-2","21-18,16-21,21-14,12-21,15-10"],
+      [30,"2026-11-16","S1","C2","C3","Nether"],
+      [31,"2026-11-30","S1","Nw","C1","Nether"],
+      [32,"2027-01-18","S1","R","C2","Nether"],
+      [33,"2027-02-22","S2","C2","C3","Nether"],
+      [34,"2027-02-15","S2","C3","C2","Nether"],
+      [35,"2026-11-23","S2","I","C2","Nether"],
+      [36,"2027-01-25","S2","St","R","Nether"],
+      [37,"2026-12-02","St","B","N","Stow"],
+      [38,"2027-02-03","St","C1","N","Stow"],
+      [39,"2027-01-06","St","C3","N","Stow"],
+      [40,"2027-01-13","St","S1","N","Stow"] ] },
   M2: { name: "Men D2", url: "https://www.cambsvolleyball.org.uk/RCVALeagueN.php", empty: true },
   L:  { name: "Local", url: "https://www.cambsvolleyball.org.uk/RCVALeagueB.php", empty: true },
 };
-for(const d of Object.values(DIVS)) if(d.fix) d.fix = d.fix.map(([no, date, h, a, ref, venue, sets, sc]) => ({ no, date, home: d.names[h], away: d.names[a], ref: d.names[ref] || "", venue, sets: sets || "", sc: sc || "" }));
+/* usual home start time (CVA clubs page): [weekdays 0=Sun..6=Sat, time]; used only when the game falls on that day */
+const SLOT = { "Bury Bobcats1 (W)": [[0], "13:00"], "CVC (W) MxJnr": [[1, 3], "19:00"], "CVC1 (W) Tigers": [[1], "19:00"], "CVC2 (W) Panthers": [[1], "19:00"],
+  "Rhinos (W) Thunder": [[0], "16:00"], "Rhinos1 (W) Rhinette": [[0], "16:00"], "St Philips (W)": [[1], "20:00"],
+  "Bury Bobcats1 (M)": [[0], "13:00"], "CVC1 (M)": [[6], "14:00"], "CVC2 (M)": [[6], "14:00"], "CVC3 (M)": [[1], "19:00"], "Ipswich Ravens": [[5], "19:00"],
+  "Newmarket": [[3], "20:00"], "Rhinos1 (M)": [[0], "16:00"], "St Philips1M": [[1], "20:00"], "St Phillips2 (M)": [[1], "20:00"], "Stowmarket": [[3], "20:00"] };
+/* start times from the CVA women's fixture list 2026-27 (draft 3), by fixture number */
+const TIMES = { W: {"1": "13:00", "2": "13:00", "3": "13:00", "4": "13:00", "5": "13:00", "7": "16:00", "8": "16:00", "9": "19:00", "10": "10:00", "11": "16:30", "12": "10:30", "13": "19:00", "14": "19:00", "15": "19:00", "16": "19:00", "18": "19:00", "19": "19:00", "20": "19:00", "21": "19:00", "22": "19:00", "23": "20:00", "24": "19:00", "25": "16:00", "26": "16:00", "27": "16:00", "28": "16:00", "29": "16:00", "30": "16:00", "31": "16:00", "32": "16:00", "33": "16:00", "34": "16:00", "35": "16:00", "36": "16:00", "37": "20:00", "38": "20:00", "39": "20:00", "40": "20:00", "41": "20:00", "42": "20:00"} };
+const usualTime = (home, date) => { const s = SLOT[home]; return s && s[0].includes(new Date(date + "T12:00:00").getDay()) ? s[1] : ""; };
+for(const [k, d] of Object.entries(DIVS)) if(d.fix) d.fix = d.fix.map(([no, date, h, a, ref, venue, sets, sc]) => {
+  const set = (TIMES[k] || {})[no], est = sets || k !== "W" ? "" : usualTime(d.names[h], date);
+  return { no, date, home: d.names[h], away: d.names[a], ref: d.names[ref] || "", venue, sets: sets || "", sc: sc || "", time: sets ? "" : (set || est), est: !set && !!est, noTime: k !== "W" };
+});
 /* ===================================================================== */
 const CAL_PLACE = { "NCA":"North Cambridge Academy, Arbury Road, Cambridge CB4 2JF", "Leys":"Leys Sports Complex, Trumpington Road, Cambridge CB2 7AD",
-  "Nether":"Netherhall School, Queen Edith's Way, Cambridge CB1 8NN", "Bury LC":"Bury St Edmunds Leisure Centre", "Stow":"Stowmarket", "Newm":"Newmarket" };
+  "Nether":"Netherhall School, Queen Edith's Way, Cambridge CB1 8NN", "Bury":"Culford Sports & Tennis Centre, Culford, Bury St Edmunds IP28 6TU", "Bury LC":"Culford Sports & Tennis Centre, Culford, Bury St Edmunds IP28 6TU", "Stow":"Stowupland High School, Church Road, Stowupland, Stowmarket IP14 4BQ", "Newm":"Newmarket Sports & Leisure Centre, Exning Road, Newmarket CB8 0EA", "Ipsw":"St Albans RC High School, Ipswich IP4 3NJ", "Perse":"The Perse School, Cambridge" };
 let shownCal = [];
 function cvaEvent(f){
   const d = cur(), isRef = team !== "all" && !plays(f, team) && f.ref === team;
-  return { uid: "cva-" + div + "-" + f.no, date: f.date, time: "",
+  return { uid: "cva-" + div + "-" + f.no, date: f.date, time: f.time || "",
     title: (isRef ? "Ref duty: " : "") + nm(f.home) + " v " + nm(f.away) + " (CVA " + d.name + ")",
     details: "CVA " + d.name + " league, fixture " + f.no + (f.ref ? "\nRef: " + nm(f.ref) : "") + "\nVenue: " + f.venue + "\nCheck the time and any changes: " + d.url,
     place: CAL_PLACE[f.venue] || f.venue };
@@ -486,7 +554,7 @@ function renderNext(){
   const d = D(g.date); box.hidden = false;
   box.innerHTML = `%%VBLT%%div class="lab">Next ${nm(ft)} game%%VBLT%%/div>
     %%VBLT%%div class="dt">%%VBLT%%small>${d.toLocaleDateString("en-GB", { weekday: "short" })}%%VBLT%%/small>${d.getDate()}%%VBLT%%small>${d.toLocaleDateString("en-GB", { month: "short" })}%%VBLT%%/small>%%VBLT%%/div>
-    %%VBLT%%div>%%VBLT%%div class="vs">${nm(g.home)} v ${nm(g.away)}%%VBLT%%/div>%%VBLT%%div class="meta">${g.home === ft ? "Home" : "Away"} · ${g.venue}${g.ref ? " · ref: " + nm(g.ref) : ""}%%VBLT%%/div>%%VBLT%%/div>`;
+    %%VBLT%%div>%%VBLT%%div class="vs">${nm(g.home)} v ${nm(g.away)}%%VBLT%%/div>%%VBLT%%div class="meta">${g.time ? g.time + (g.est ? "*" : "") + " · " : ""}${g.home === ft ? "Home" : "Away"} · ${g.venue}${g.ref ? " · ref: " + nm(g.ref) : ""}%%VBLT%%/div>%%VBLT%%/div>`;
 }
 function renderTeams(){
   const bar = $("teamsBar"); bar.innerHTML = "";
@@ -520,7 +588,7 @@ function renderList(){
     const show = n => d.cvc.includes(n) ? "%%VBLT%%b>" + nm(n) + "%%VBLT%%/b>" : nm(n);
     row.innerHTML = `%%VBLT%%div class="d">%%VBLT%%small>${dt.toLocaleDateString("en-GB", { weekday: "short" })}%%VBLT%%/small>${dt.getDate()}%%VBLT%%/div>
       %%VBLT%%div class="teams">${show(f.home)}%%VBLT%%span class="v">v%%VBLT%%/span>${show(f.away)}${chip}
-        %%VBLT%%div class="sub">${[f.venue, f.ref ? "ref: " + nm(f.ref) : ""].filter(Boolean).join(" · ")}%%VBLT%%/div>%%VBLT%%/div>${res}`;
+        %%VBLT%%div class="sub">${[f.sets || f.noTime ? "" : '%%VBLT%%span class="tm">' + (f.time ? f.time + (f.est ? "*" : "") : "time TBC") + "%%VBLT%%/span>", f.venue, f.ref ? "ref: " + nm(f.ref) : ""].filter(Boolean).join(" · ")}%%VBLT%%/div>%%VBLT%%/div>${res}`;
     if(!f.sets && f.date >= today){ const sub = row.querySelector(".sub"); sub.append(" · ", calLinkEl(cvaEvent(f))); shownCal.push(f); }
     box.appendChild(row);
   }
