@@ -233,6 +233,8 @@
   .gl:hover{text-decoration:underline}
   .calhelp{margin-top:10px;background:#EEF4FF;border:1px solid #c7d7fe;border-radius:10px;padding:10px 12px;font-size:13.5px;color:var(--ink)}
   .calhelp a{color:var(--blue);font-weight:600}
+  .vlink{color:var(--blue);font-weight:600;text-decoration:none} .vlink:hover{text-decoration:underline}
+  .next .vlink{color:#9FD0FF}
   .fx .tm{font-weight:800;color:var(--ink)}
   .clubs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:12px}
   .club{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff}
@@ -347,7 +349,7 @@
     %%VBLT%%/div>
   %%VBLT%%/section>
 
-  %%VBLT%%footer>%%VBLT%%b>Times:%%VBLT%%/b> women&rsquo;s start times are from the CVA women&rsquo;s fixture list 2026-27. A time with %%VBLT%%b>*%%VBLT%%/b> is the home team&rsquo;s usual start time from the CVA clubs page (for games moved since the list). Men&rsquo;s start times aren&rsquo;t published, so check with the home team. The home team confirms the time a week before. Ref = the team that provides the referees. Venues are shortened as on the CVA site: NCA (North Cambridge Academy), Leys, Nether (Netherhall), Bury (Culford, Bury St Edmunds), Perse (The Perse School), Ipsw (Ipswich), Stow (Stowmarket), Newm (Newmarket). Club contacts are from the CVA clubs page.%%VBLT%%/footer>
+  %%VBLT%%footer>%%VBLT%%b>Times:%%VBLT%%/b> women&rsquo;s start times are from the CVA women&rsquo;s fixture list 2026-27. A time with %%VBLT%%b>*%%VBLT%%/b> is the home team&rsquo;s usual start time from the CVA clubs page (for games moved since the list). Men&rsquo;s start times aren&rsquo;t published, so check with the home team. The home team confirms the time a week before. Ref = the team that provides the referees. Tap a venue to open it in Google Maps. Club contacts are from the CVA clubs page.%%VBLT%%/footer>
 %%VBLT%%/div>
 
 %%VBLT%%script>
@@ -362,10 +364,10 @@ const DIVS = {
       ["CVC2 (W) Panthers",1,0,1,1,3,71,81,2],["Bury Bobcats1 (W)",1,0,1,0,3,32,63,1],["Rhinos1 (W) Rhinette",0,0,0,0,0,0,0,0]],
     fix: [
       [1,"2026-12-13","B","J","N","Bury"],
-      [2,"2027-03-14","B","Ti","N","Bury"],
-      [3,"2027-02-28","B","P","N","Bury"],
+      [2,"2027-03-14","B","Ti","N","Abbey"],
+      [3,"2027-02-28","B","P","N","Abbey"],
       [4,"2027-04-11","B","Th","N","Bury"],
-      [5,"2027-02-07","B","R","N","Bury"],
+      [5,"2027-02-07","B","R","N","Abbey"],
       [6,"2027-01-17","B","S","N","Bury"],
       [7,"2027-03-06","J","B","R","NCA"],
       [8,"2027-02-06","J","Ti","R","NCA"],
@@ -468,13 +470,28 @@ for(const [k, d] of Object.entries(DIVS)) if(d.fix) d.fix = d.fix.map(([no, date
 /* ===================================================================== */
 const CAL_PLACE = { "NCA":"North Cambridge Academy, Arbury Road, Cambridge CB4 2JF", "Leys":"Leys Sports Complex, Trumpington Road, Cambridge CB2 7AD",
   "Nether":"Netherhall School, Queen Edith's Way, Cambridge CB1 8NN", "Bury":"Culford Sports & Tennis Centre, Culford, Bury St Edmunds IP28 6TU", "Bury LC":"Culford Sports & Tennis Centre, Culford, Bury St Edmunds IP28 6TU", "Stow":"Stowupland High School, Church Road, Stowupland, Stowmarket IP14 4BQ", "Newm":"Newmarket Sports & Leisure Centre, Exning Road, Newmarket CB8 0EA", "Ipsw":"St Albans RC High School, Ipswich IP4 3NJ", "Perse":"The Perse School, Cambridge" };
+/* full venue names and addresses (for Google Maps) */
+const VENUES = {
+  "NCA": ["North Cambridge Academy", "North Cambridge Academy, Arbury Road, Cambridge CB4 2JF"],
+  "Leys": ["The Leys School", "The Leys School Sports Centre, Trumpington Road, Cambridge CB2 7AD"],
+  "Nether": ["Netherhall School", "Netherhall School, Queen Edith's Way, Cambridge CB1 8NN"],
+  "Perse": ["The Perse School", "The Perse School, Hills Road, Cambridge CB2 8QF"],
+  "Bury": ["Culford Sports & Tennis Centre", "Culford Sports & Tennis Centre, Culford, Bury St Edmunds IP28 6TU"],
+  "Bury LC": ["Culford Sports & Tennis Centre", "Culford Sports & Tennis Centre, Culford, Bury St Edmunds IP28 6TU"],
+  "Abbey": ["Bury St Edmunds Leisure Centre (Abbeycroft)", "Abbeycroft Leisure, Bury St Edmunds Leisure Centre, Beetons Way, Bury St Edmunds IP32 6RD"],
+  "Ipsw": ["St Alban's Catholic High School, Ipswich", "St Alban's Catholic High School, Digby Road, Ipswich IP4 3NJ"],
+  "Stow": ["Stowupland High School", "Stowupland High School, Church Road, Stowupland, Stowmarket IP14 4BQ"],
+  "Newm": ["Newmarket Sports & Leisure Centre", "Newmarket Sports & Leisure Centre, Exning Road, Newmarket CB8 0EA"] };
+const vName = v => (VENUES[v] || [v])[0];
+const vAddr = v => (VENUES[v] || [v, v])[1];
+const vLink = v => v ? `%%VBLT%%a class="vlink" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(vAddr(v))}" target="_blank" rel="noopener" title="${vAddr(v)}">📍 ${vName(v)}%%VBLT%%/a>` : "";
 let shownCal = [];
 function cvaEvent(f){
   const d = cur(), isRef = team !== "all" && !plays(f, team) && f.ref === team;
   return { uid: "cva-" + div + "-" + f.no, date: f.date, time: f.time || "",
     title: (isRef ? "Ref duty: " : "") + nm(f.home) + " v " + nm(f.away) + " (CVA " + d.name + ")",
-    details: "CVA " + d.name + " league, fixture " + f.no + (f.ref ? "\nRef: " + nm(f.ref) : "") + "\nVenue: " + f.venue + "\nCheck the time and any changes: " + d.url,
-    place: CAL_PLACE[f.venue] || f.venue };
+    details: "CVA " + d.name + " league, fixture " + f.no + (f.ref ? "\nRef: " + nm(f.ref) : "") + "\nVenue: " + vName(f.venue) + "\nCheck the time and any changes: " + d.url,
+    place: f.venue ? vAddr(f.venue) : "" };
 }
 
 
@@ -554,7 +571,7 @@ function renderNext(){
   const d = D(g.date); box.hidden = false;
   box.innerHTML = `%%VBLT%%div class="lab">Next ${nm(ft)} game%%VBLT%%/div>
     %%VBLT%%div class="dt">%%VBLT%%small>${d.toLocaleDateString("en-GB", { weekday: "short" })}%%VBLT%%/small>${d.getDate()}%%VBLT%%small>${d.toLocaleDateString("en-GB", { month: "short" })}%%VBLT%%/small>%%VBLT%%/div>
-    %%VBLT%%div>%%VBLT%%div class="vs">${nm(g.home)} v ${nm(g.away)}%%VBLT%%/div>%%VBLT%%div class="meta">${g.time ? g.time + (g.est ? "*" : "") + " · " : ""}${g.home === ft ? "Home" : "Away"} · ${g.venue}${g.ref ? " · ref: " + nm(g.ref) : ""}%%VBLT%%/div>%%VBLT%%/div>`;
+    %%VBLT%%div>%%VBLT%%div class="vs">${nm(g.home)} v ${nm(g.away)}%%VBLT%%/div>%%VBLT%%div class="meta">${g.time ? g.time + (g.est ? "*" : "") + " · " : ""}${g.home === ft ? "Home" : "Away"} · ${vLink(g.venue)}${g.ref ? " · ref: " + nm(g.ref) : ""}%%VBLT%%/div>%%VBLT%%/div>`;
 }
 function renderTeams(){
   const bar = $("teamsBar"); bar.innerHTML = "";
@@ -588,7 +605,7 @@ function renderList(){
     const show = n => d.cvc.includes(n) ? "%%VBLT%%b>" + nm(n) + "%%VBLT%%/b>" : nm(n);
     row.innerHTML = `%%VBLT%%div class="d">%%VBLT%%small>${dt.toLocaleDateString("en-GB", { weekday: "short" })}%%VBLT%%/small>${dt.getDate()}%%VBLT%%/div>
       %%VBLT%%div class="teams">${show(f.home)}%%VBLT%%span class="v">v%%VBLT%%/span>${show(f.away)}${chip}
-        %%VBLT%%div class="sub">${[f.noTime || (f.sets && !f.time) ? "" : '%%VBLT%%span class="tm">' + (f.time ? f.time + (f.est ? "*" : "") : "time TBC") + "%%VBLT%%/span>", f.venue, f.ref ? "ref: " + nm(f.ref) : ""].filter(Boolean).join(" · ")}%%VBLT%%/div>%%VBLT%%/div>${res}`;
+        %%VBLT%%div class="sub">${[f.noTime || (f.sets && !f.time) ? "" : '%%VBLT%%span class="tm">' + (f.time ? f.time + (f.est ? "*" : "") : "time TBC") + "%%VBLT%%/span>", vLink(f.venue), f.ref ? "ref: " + nm(f.ref) : ""].filter(Boolean).join(" · ")}%%VBLT%%/div>%%VBLT%%/div>${res}`;
     if(!f.sets && f.date >= today){ const sub = row.querySelector(".sub"); sub.append(" · ", calLinkEl(cvaEvent(f))); shownCal.push(f); }
     box.appendChild(row);
   }
