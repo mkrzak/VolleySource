@@ -381,11 +381,11 @@ const DIVS = {
       [18,"2026-12-14","Ti","S","R","NCA"],
       [19,"2027-01-18","P","B","S","NCA"],
       [20,"2027-02-15","P","J","Th","NCA"],
-      [21,"2026-10-19","P","Ti","","","1-3","16-21,20-22,21-17,14-21"],
+      [21,"2026-10-19","P","Ti","J","NCA","1-3","16-21,20-22,21-17,14-21"],
       [22,"2026-11-16","P","Th","R","NCA"],
       [23,"2027-02-12","P","R","J","Perse"],
       [24,"2027-01-25","P","S","Ti","NCA"],
-      [25,"2026-11-08","Th","B","","","3-0","21-10,21-7,21-15"],
+      [25,"2026-11-08","Th","B","Ti","Leys","3-0","21-10,21-7,21-15"],
       [26,"2027-01-17","Th","J","S","Leys"],
       [27,"2027-03-07","Th","Ti","J","Leys"],
       [28,"2027-04-04","Th","P","S","Leys"],
@@ -398,7 +398,7 @@ const DIVS = {
       [35,"2027-01-24","R","Th","J","Leys"],
       [36,"2027-01-31","R","S","P","Leys"],
       [37,"2027-04-05","S","B","Th","Nether"],
-      [38,"2026-11-09","S","J","","","2-3","15-21,21-17,6-21,21-12,10-15"],
+      [38,"2026-11-09","S","J","Th","Nether","2-3","15-21,21-17,6-21,21-12,10-15"],
       [39,"2027-02-08","S","Ti","Th","Nether"],
       [40,"2027-03-08","S","P","Th","Nether"],
       [41,"2027-01-11","S","Th","P","Nether"],
@@ -463,7 +463,7 @@ const TIMES = { W: {"1": "13:00", "2": "13:00", "3": "13:00", "4": "13:00", "5":
 const usualTime = (home, date) => { const s = SLOT[home]; return s && s[0].includes(new Date(date + "T12:00:00").getDay()) ? s[1] : ""; };
 for(const [k, d] of Object.entries(DIVS)) if(d.fix) d.fix = d.fix.map(([no, date, h, a, ref, venue, sets, sc]) => {
   const set = (TIMES[k] || {})[no], est = sets || k !== "W" ? "" : usualTime(d.names[h], date);
-  return { no, date, home: d.names[h], away: d.names[a], ref: d.names[ref] || "", venue, sets: sets || "", sc: sc || "", time: sets ? "" : (set || est), est: !set && !!est, noTime: k !== "W" };
+  return { no, date, home: d.names[h], away: d.names[a], ref: d.names[ref] || "", venue, sets: sets || "", sc: sc || "", time: set || (sets ? "" : est), est: !set && !!est, noTime: k !== "W" };
 });
 /* ===================================================================== */
 const CAL_PLACE = { "NCA":"North Cambridge Academy, Arbury Road, Cambridge CB4 2JF", "Leys":"Leys Sports Complex, Trumpington Road, Cambridge CB2 7AD",
@@ -588,7 +588,7 @@ function renderList(){
     const show = n => d.cvc.includes(n) ? "%%VBLT%%b>" + nm(n) + "%%VBLT%%/b>" : nm(n);
     row.innerHTML = `%%VBLT%%div class="d">%%VBLT%%small>${dt.toLocaleDateString("en-GB", { weekday: "short" })}%%VBLT%%/small>${dt.getDate()}%%VBLT%%/div>
       %%VBLT%%div class="teams">${show(f.home)}%%VBLT%%span class="v">v%%VBLT%%/span>${show(f.away)}${chip}
-        %%VBLT%%div class="sub">${[f.sets || f.noTime ? "" : '%%VBLT%%span class="tm">' + (f.time ? f.time + (f.est ? "*" : "") : "time TBC") + "%%VBLT%%/span>", f.venue, f.ref ? "ref: " + nm(f.ref) : ""].filter(Boolean).join(" · ")}%%VBLT%%/div>%%VBLT%%/div>${res}`;
+        %%VBLT%%div class="sub">${[f.noTime || (f.sets && !f.time) ? "" : '%%VBLT%%span class="tm">' + (f.time ? f.time + (f.est ? "*" : "") : "time TBC") + "%%VBLT%%/span>", f.venue, f.ref ? "ref: " + nm(f.ref) : ""].filter(Boolean).join(" · ")}%%VBLT%%/div>%%VBLT%%/div>${res}`;
     if(!f.sets && f.date >= today){ const sub = row.querySelector(".sub"); sub.append(" · ", calLinkEl(cvaEvent(f))); shownCal.push(f); }
     box.appendChild(row);
   }
