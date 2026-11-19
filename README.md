@@ -9,8 +9,10 @@ One self-contained page (`index.html`) with ten sections:
 - **Dynamic Warm-up**: 17 exercises in 7 phases, with clips, plus a dance warm-up video (`dance-warmup.mp4`)
 - **S&C Program**: 4-day at-home program, workouts from [The Art of Coaching Volleyball](https://www.theartofcoachingvolleyball.com)
 - **Gym Program**: agility, ballistics & plyo (10 drills) and isometrics (16 holds)
+- **Footwork**: transition footwork clips for the middle blocker, outside hitter and right-side hitter, from Elevate Yourself YouTube videos (linked as references)
 - **5:1 Receive**: base positions and serve-receive formations for all six rotations, with a rotation-fault checker
 - **5:1 Defence**: perimeter (2-0-4) and rotational (2-1-3) defence; drag their hitter to see the block and defence move
+- **CVA Tactics**: animated 5:1 rotations showing where the opposite can help with serve receive without a rotation fault
 - **CVA Scoresheet Guide**: animated guide to filling in the CVA county league scoresheet
 - **FIVB Scoresheet Guide**: animated guide to filling in the FIVB international scoresheet, following the FIVB instructions
 - **CVA Rules 25-27**: key rules from the CVA County League Rules 25-26, plus the CVA Adaptation from VE Rules 26-27 (Volleyball England test rules adopted by the CVA), and a Referee Manual for CVA league referees
@@ -22,7 +24,7 @@ One self-contained page (`index.html`) with ten sections:
 
 Animated drills now have their own site: [VolleyDrills](https://mkrzak.github.io/VolleyDrills/).
 
-Everything (clips, images, scripts) is built into `index.html`, except the dance warm-up video, `dance-warmup.mp4`, the NVL regulations PDF, `nvl-regulations-26-27.pdf`, and printable line-up sheets, `lineup-sheets.pdf`, which sit next to it. Keep the files together and it also works offline: just open `index.html` in a browser.
+Everything (clips, images, scripts) is built into `index.html`, except the dance warm-up video, `dance-warmup.mp4`, the NVL regulations PDF, `nvl-regulations-26-27.pdf`, printable line-up sheets, `lineup-sheets.pdf`, and the footwork clips, `footwork-*.gif`, `outside-*.gif` and `right-side-*.gif`, which sit next to it. Keep the files together and it also works offline: just open `index.html` in a browser.
 
 ## Update the site
 

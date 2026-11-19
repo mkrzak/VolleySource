@@ -85,6 +85,10 @@
       <span class="htitle">Gym Program</span>
       <span class="hdesc">Agility, ballistics &amp; plyo (10 drills) and isometrics (16 holds), in one place.</span>
     </button>
+    <button class="hcard g-train" type="button" data-key="footwork" aria-pressed="false">
+      <span class="htitle">Footwork</span>
+      <span class="hdesc">Transition footwork clips: middle blocker (block left, front, right, then quick attack) and outside and right-side hitters (block or dig, then attack).</span>
+    </button>
     <button class="hcard g-sys" type="button" data-key="receive" aria-pressed="false">
       <span class="htitle">5:1 Receive</span>
       <span class="hdesc">Base positions and serve-receive formations for all six rotations.</span>
@@ -109,6 +113,10 @@
       <span class="htitle">CVA Game Sign-up</span>
       <span class="hdesc">Calendar of Panthers games and ref duties &mdash; tap In, Maybe or Out next to your name.</span>
     </a>
+    <button class="hcard g-cva" type="button" data-key="tactics" aria-pressed="false">
+      <span class="htitle">CVA Tactics</span>
+      <span class="hdesc">Animated 5:1 rotations for passing in 4: the opposite steps in (rotations 2&ndash;4) or steps back (1 and 5), and the middle helps in rotation 6.</span>
+    </button>
     <button class="hcard g-fivb" type="button" data-key="fivbsheet" aria-pressed="false">
       <span class="htitle">FIVB Scoresheet Guide</span>
       <span class="hdesc">How to fill in the FIVB international scoresheet, following the FIVB instructions, with an animated set.</span>
@@ -1573,6 +1581,488 @@ render();
   %%VBLT%%footer>Summarised from %%VBLT%%b>Volleyball England National Competition Regulations 2026&ndash;27%%VBLT%%/b> (version 5, 8 October 2026). The full regulations (%%VBLT%%a href="nvl-regulations-26-27.pdf" target="_blank" rel="noopener">PDF%%VBLT%%/a>) are what count; if anything here differs, follow the document and ask %%VBLT%%a href="mailto:competitions@volleyballengland.org">competitions@volleyballengland.org%%VBLT%%/a>.%%VBLT%%/footer>
   %%VBLT%%footer>%%VBLT%%b>NVL Referee Rules%%VBLT%%/b> are summarised from the %%VBLT%%b>FIVB Refereeing Guidelines and Instructions%%VBLT%%/b> (2024 edition, for the indoor Rules of the Game) and the Volleyball England %%VBLT%%b>2026&ndash;27 Pre-season Briefing%%VBLT%%/b> (marked %%VBLT%%span class="new">NEW 26-27%%VBLT%%/span>). International-only items (video challenge, e-scoresheet, tablets, reserve and 3rd referees) are left out.%%VBLT%%/footer>
 %%VBLT%%/div>
+%%VBLT%%script data-vb-hub>
+(function(){
+  function send(){ try{ parent.postMessage({vbHub: window.name, h: document.documentElement.scrollHeight}, "*"); }catch(e){} }
+  if ("ResizeObserver" in window) new ResizeObserver(send).observe(document.documentElement);
+  window.addEventListener("load", send); send();
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var t = document.getElementById(a.getAttribute("href").slice(1));
+    e.preventDefault();
+    if (t) parent.postMessage({vbHub: window.name, scrollTo: t.getBoundingClientRect().top}, "*");
+  });
+})();
+%%VBLT%%/script>
+%%VBLT%%/body>
+%%VBLT%%/html>
+</script>
+<script type="text/plain" id="src-tactics">%%VBLT%%!DOCTYPE html>
+%%VBLT%%html lang="en">
+%%VBLT%%head>
+%%VBLT%%meta charset="utf-8">
+%%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
+%%VBLT%%meta name="color-scheme" content="light">
+%%VBLT%%title>CVA Tactics%%VBLT%%/title>
+%%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+%%VBLT%%style>
+  :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--in:#16A34A;--back:#E08A00;--no:#C0392B;--mid:#7B4FD8}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Barlow","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.5}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px 60px}
+  header{background:linear-gradient(100deg,#16283C 0%,#24507E 100%);color:#fff;border-bottom:6px solid #F0A500}
+  .hin{max-width:1100px;margin:0 auto;padding:26px 20px 22px}
+  h1{font-family:"Barlow Condensed",Arial,sans-serif;font-size:clamp(28px,5vw,42px);margin:0;text-transform:uppercase;line-height:1}
+  h1 em{display:block;font-style:normal;font-weight:500;font-size:.42em;color:#A9C4E0;letter-spacing:.04em;margin-top:8px;text-transform:none}
+  h1 em b{color:#F0A500;font-weight:500}
+  h2{font-family:"Barlow Condensed",Arial,sans-serif;font-size:24px;margin:0 0 8px;text-transform:uppercase;letter-spacing:.02em}
+  .intro{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-top:22px}
+  .intro ul{margin:6px 0 0;padding-left:18px}
+  .sum{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .sum span{border-radius:99px;padding:4px 12px;font-weight:700;font-size:14px;color:#fff}
+  .key{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .k{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:4px 12px 4px 5px;font-size:14px}
+  .dot{width:22px;height:22px;border-radius:50%;color:#fff;font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center}
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:16px 0 0;background:#fff;border:1px solid var(--line);border-radius:8px;padding:11px 14px}
+  .tnote{flex:1 1 220px;font-size:14px;color:var(--soft)}
+  .tbtn{font:inherit;font-size:14px;font-weight:600;background:#fff;border:1px solid var(--line);border-radius:6px;padding:6px 14px;color:var(--ink);cursor:pointer}
+  .tbtn:hover{border-color:#24507E;color:#24507E}
+  .tbtn.primary{background:#24507E;border-color:#24507E;color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+  @media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:600px){.grid{grid-template-columns:1fr}}
+  .rot{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;border-top:6px solid var(--c)}
+  .rot.in{--c:var(--in)} .rot.back{--c:var(--back)} .rot.no{--c:var(--no)} .rot.mid{--c:var(--mid)}
+  .rhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:6px 10px;margin-bottom:6px}
+  .rnum{font-family:"Barlow Condensed",Arial,sans-serif;font-size:15px;font-weight:600;color:var(--soft);text-transform:uppercase;line-height:1.05}
+  .rnum span{font-size:36px;color:#24507E;font-weight:700;margin-right:6px;vertical-align:-4px}
+  .rnum small{display:block;font-size:13px;text-transform:none;font-family:"Barlow",Arial,sans-serif}
+  .badge{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:14.5px;letter-spacing:.03em;text-transform:uppercase;color:#fff;background:var(--c);border-radius:6px;padding:4px 10px;white-space:nowrap}
+  .rot.in .badge{background:var(--in)} .rot.back .badge{background:var(--back)} .rot.no .badge{background:var(--no)} .rot.mid .badge{background:var(--mid)}
+  .court{width:100%;height:auto;display:block}
+  .netlbl{font-family:"Barlow Condensed",Arial,sans-serif;font-size:10px;font-weight:600;letter-spacing:.2em;fill:#33475B;text-anchor:middle}
+  .chip{font-family:"Barlow Condensed",Arial,sans-serif;font-size:11.5px;font-weight:700;fill:#fff;text-anchor:middle}
+  .chip-sm{font-size:8.5px;letter-spacing:-.03em}
+  .flagt{font-family:"Barlow Condensed",Arial,sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.06em;fill:#fff}
+  .status{margin:6px 0 4px;font-weight:700;font-size:14px;color:var(--soft);min-height:21px}
+  .status.ok{color:var(--in)} .status.warn{color:var(--back)} .status.bad{color:var(--no)} .status.mid{color:var(--mid)}
+  .cap{margin:0;font-size:14px}
+  .cbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px}
+  .cbtn{font:inherit;font-size:13px;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:6px;padding:4px 10px;color:var(--ink);cursor:pointer}
+  .cbtn:hover{border-color:#24507E;color:#24507E}
+  .cbtn.cplay{background:#24507E;border-color:#24507E;color:#fff;min-width:82px}
+  .chint{font-size:12.5px;color:var(--soft)}
+  .court .pl{touch-action:none}
+  .court.faulted > rect:first-of-type{stroke:#C0392B}
+  .court{touch-action:pan-y}
+  footer{margin-top:24px;font-size:13.5px;color:var(--soft)}
+  @media (prefers-reduced-motion:reduce){.court *{transition:none!important}}
+%%VBLT%%/style>
+%%VBLT%%/head>
+%%VBLT%%body>
+%%VBLT%%header>%%VBLT%%div class="hin">%%VBLT%%h1>CVA Tactics%%VBLT%%em>Can the opposite help with passing? &middot; Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> &middot; Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>%%VBLT%%/div>%%VBLT%%/header>
+%%VBLT%%div class="wrap">
+  %%VBLT%%div class="intro">
+    %%VBLT%%h2>Passing in 4 (opposite or middle) (5:1)%%VBLT%%/h2>
+    %%VBLT%%p style="margin:0">Starting from the six base formations in the %%VBLT%%b>5:1 Receive%%VBLT%%/b> card, the animations show where the %%VBLT%%b>opposite%%VBLT%%/b> (yellow ring, red trail) can join the passing, and in rotation 6 where the %%VBLT%%b>middle%%VBLT%%/b> (purple ring, purple trail) helps instead, without a rotation fault. At the serve each player must stay in front of / behind and left / right of her neighbours in the rotation (FIVB rule 7.4); after the serve everyone can move.%%VBLT%%/p>
+    %%VBLT%%div class="sum">%%VBLT%%span style="background:var(--in)">Steps in, 4 in receive: rotations 2, 3, 4%%VBLT%%/span>%%VBLT%%span style="background:var(--back)">Steps back: rotations 1, 5%%VBLT%%/span>%%VBLT%%span style="background:var(--mid)">Middle steps back instead: rotation 6%%VBLT%%/span>%%VBLT%%/div>
+    %%VBLT%%div class="key">%%VBLT%%span class="k">%%VBLT%%span class="dot" style="background:#1E6EDB">S%%VBLT%%/span>Setter%%VBLT%%/span>%%VBLT%%span class="k">%%VBLT%%span class="dot" style="background:#F08A28">P1%%VBLT%%/span>Outside 1%%VBLT%%/span>%%VBLT%%span class="k">%%VBLT%%span class="dot" style="background:#F08A28">P2%%VBLT%%/span>Outside 2%%VBLT%%/span>%%VBLT%%span class="k">%%VBLT%%span class="dot" style="background:#7B4FD8">M1%%VBLT%%/span>Middle%%VBLT%%/span>%%VBLT%%span class="k">%%VBLT%%span class="dot" style="background:#D63A3B">OP%%VBLT%%/span>Opposite%%VBLT%%/span>%%VBLT%%span class="k">%%VBLT%%span class="dot" style="background:#1EA36A">L%%VBLT%%/span>Libero%%VBLT%%/span>%%VBLT%%/div>
+  %%VBLT%%/div>
+  %%VBLT%%p style="margin:16px 0 0;font-size:14.5px;color:var(--soft)">Rotations in %%VBLT%%b>game order%%VBLT%%/b>: 1 &rarr; 6 &rarr; 5 &rarr; 4 &rarr; 3 &rarr; 2 (after rotation 1 the setter moves to position 6).%%VBLT%%/p>
+  %%VBLT%%div class="toolbar">%%VBLT%%span class="tnote">Each court plays on a loop. %%VBLT%%b>Pause%%VBLT%%/b> any court (or just grab a player) and %%VBLT%%b>drag players%%VBLT%%/b> to test: the court turns red and names the rotation fault.%%VBLT%%/span>
+    %%VBLT%%button class="tbtn primary" id="playBtn" type="button">Pause%%VBLT%%/button>%%VBLT%%button class="tbtn" id="stepBtn" type="button">All: helping%%VBLT%%/button>%%VBLT%%button class="tbtn" id="baseBtn" type="button">All: base%%VBLT%%/button>%%VBLT%%/div>
+  %%VBLT%%div class="grid">
+  %%VBLT%%section class="rot back" data-n="1">
+    %%VBLT%%div class="rhead">%%VBLT%%div class="rnum">%%VBLT%%span>1%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 1%%VBLT%%/small>%%VBLT%%/div>%%VBLT%%div class="badge back">⚠ Opposite steps back%%VBLT%%/div>%%VBLT%%/div>
+    %%VBLT%%svg viewBox="0 0 300 314" class="court" id="c1" xmlns="http://www.w3.org/2000/svg">
+%%VBLT%%defs>%%VBLT%%marker id="ar1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#D63A3B"/>%%VBLT%%/marker>
+%%VBLT%%marker id="as1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
+%%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
+%%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
+%%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
+%%VBLT%%line x1="10" y1="115.3" x2="290" y2="115.3" stroke="#33475B" stroke-width="1.6"/>
+%%VBLT%%line x1="103.3" y1="22" x2="103.3" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%line x1="196.7" y1="22" x2="196.7" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%rect x="6" y="17" width="288" height="5" fill="#33475B"/>
+%%VBLT%%circle cx="196.7" cy="53.9" r="4.5" fill="#fff" stroke="#24507E" stroke-width="1.6"/>
+%%VBLT%%path class="trail" d="" fill="none" stroke="#D63A3B" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ar1)"/>
+%%VBLT%%g class="pl" data-pos="1" transform="translate(265,209)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="2" transform="translate(231,196)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="3" transform="translate(116,100)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="4" transform="translate(34,131)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#FFD34D" stroke-width="3"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="5" transform="translate(59,206)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="6" transform="translate(150,236)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="flag" opacity="0">%%VBLT%%rect x="70" y="128" width="160" height="26" rx="5" fill="#16283C" fill-opacity=".92"/>%%VBLT%%text x="150" y="145.5" class="flagt" text-anchor="middle">%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%/svg>
+    %%VBLT%%p class="status" id="st1">Base serve-receive formation%%VBLT%%/p>
+    %%VBLT%%p class="cap">The opposite starts front-left in position 4 and must stay %%VBLT%%b>in front of P2%%VBLT%%/b> (position 5). The opposite drops to pass short on the left, %%VBLT%%b>P2 shifts towards the middle%%VBLT%%/b>, just a step deeper than the opposite, and the %%VBLT%%b>libero and P1 shift a little to the right%%VBLT%%/b>: a 4-person receive, and the opposite loses the left-side attack run.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%section class="rot mid" data-n="6">
+    %%VBLT%%div class="rhead">%%VBLT%%div class="rnum">%%VBLT%%span>6%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 6%%VBLT%%/small>%%VBLT%%/div>%%VBLT%%div class="badge mid">↩ Middle steps back%%VBLT%%/div>%%VBLT%%/div>
+    %%VBLT%%svg viewBox="0 0 300 314" class="court" id="c6" xmlns="http://www.w3.org/2000/svg">
+%%VBLT%%defs>%%VBLT%%marker id="ar6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#D63A3B"/>%%VBLT%%/marker>
+%%VBLT%%marker id="am6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#7B4FD8"/>%%VBLT%%/marker>
+%%VBLT%%marker id="as6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
+%%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
+%%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
+%%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
+%%VBLT%%line x1="10" y1="115.3" x2="290" y2="115.3" stroke="#33475B" stroke-width="1.6"/>
+%%VBLT%%line x1="103.3" y1="22" x2="103.3" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%line x1="196.7" y1="22" x2="196.7" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%rect x="6" y="17" width="288" height="5" fill="#33475B"/>
+%%VBLT%%path class="trail" d="" fill="none" stroke="#7B4FD8" stroke-width="2" stroke-dasharray="2 3" marker-end="url(#am6)"/>
+%%VBLT%%g class="pl" data-pos="1" transform="translate(240,206)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="2" transform="translate(242,100)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#C9A7FF" stroke-width="3.5"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="3" transform="translate(224,49)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="4" transform="translate(56,190)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="5" transform="translate(142,238)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="6" transform="translate(207,77)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="flag" opacity="0">%%VBLT%%rect x="70" y="128" width="160" height="26" rx="5" fill="#16283C" fill-opacity=".92"/>%%VBLT%%text x="150" y="145.5" class="flagt" text-anchor="middle">%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%/svg>
+    %%VBLT%%p class="status" id="st6">Base serve-receive formation%%VBLT%%/p>
+    %%VBLT%%p class="cap">Here the opposite is front-middle (position 3) with the %%VBLT%%b>setter right behind%%VBLT%%/b>, so the opposite can&rsquo;t drop back. Instead the %%VBLT%%b>middle steps back%%VBLT%%/b>: M1 starts front-right in position 2 and must stay %%VBLT%%b>in front of P1%%VBLT%%/b> (position 1) and %%VBLT%%b>right of the opposite%%VBLT%%/b>. The middle drops to pass on the right, %%VBLT%%b>P1 stays just a step deeper%%VBLT%%/b>, and P2 and the libero %%VBLT%%b>shift a little to the left%%VBLT%%/b>: %%VBLT%%b>P2, libero, P1 and M1%%VBLT%%/b> receive in four.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%section class="rot back" data-n="5">
+    %%VBLT%%div class="rhead">%%VBLT%%div class="rnum">%%VBLT%%span>5%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 5%%VBLT%%/small>%%VBLT%%/div>%%VBLT%%div class="badge back">⚠ Opposite steps back%%VBLT%%/div>%%VBLT%%/div>
+    %%VBLT%%svg viewBox="0 0 300 314" class="court" id="c5" xmlns="http://www.w3.org/2000/svg">
+%%VBLT%%defs>%%VBLT%%marker id="ar5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#D63A3B"/>%%VBLT%%/marker>
+%%VBLT%%marker id="as5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
+%%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
+%%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
+%%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
+%%VBLT%%line x1="10" y1="115.3" x2="290" y2="115.3" stroke="#33475B" stroke-width="1.6"/>
+%%VBLT%%line x1="103.3" y1="22" x2="103.3" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%line x1="196.7" y1="22" x2="196.7" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%rect x="6" y="17" width="288" height="5" fill="#33475B"/>
+%%VBLT%%circle cx="196.7" cy="53.9" r="4.5" fill="#fff" stroke="#24507E" stroke-width="1.6"/>
+%%VBLT%%path class="trail" d="" fill="none" stroke="#D63A3B" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ar5)"/>
+%%VBLT%%g class="pl" data-pos="1" transform="translate(238,201)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="2" transform="translate(251,98)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#FFD34D" stroke-width="3"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="3" transform="translate(63,187)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="4" transform="translate(31,98)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="5" transform="translate(135,102)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="6" transform="translate(150,224)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="flag" opacity="0">%%VBLT%%rect x="70" y="128" width="160" height="26" rx="5" fill="#16283C" fill-opacity=".92"/>%%VBLT%%text x="150" y="145.5" class="flagt" text-anchor="middle">%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%/svg>
+    %%VBLT%%p class="status" id="st5">Base serve-receive formation%%VBLT%%/p>
+    %%VBLT%%p class="cap">The opposite starts front-right in position 2 and must stay %%VBLT%%b>in front of the libero%%VBLT%%/b> (position 1). The opposite drops to pass short on the right, the %%VBLT%%b>libero shifts towards the middle%%VBLT%%/b>, just a step deeper than the opposite, and %%VBLT%%b>P1 and P2 shift a little to the left%%VBLT%%/b>: a 4-person receive, with a front-row hitter passing.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%section class="rot in" data-n="4">
+    %%VBLT%%div class="rhead">%%VBLT%%div class="rnum">%%VBLT%%span>4%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 4%%VBLT%%/small>%%VBLT%%/div>%%VBLT%%div class="badge in">✓ Opposite steps in%%VBLT%%/div>%%VBLT%%/div>
+    %%VBLT%%svg viewBox="0 0 300 314" class="court" id="c4" xmlns="http://www.w3.org/2000/svg">
+%%VBLT%%defs>%%VBLT%%marker id="ar4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#D63A3B"/>%%VBLT%%/marker>
+%%VBLT%%marker id="as4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
+%%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
+%%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
+%%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
+%%VBLT%%line x1="10" y1="115.3" x2="290" y2="115.3" stroke="#33475B" stroke-width="1.6"/>
+%%VBLT%%line x1="103.3" y1="22" x2="103.3" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%line x1="196.7" y1="22" x2="196.7" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%rect x="6" y="17" width="288" height="5" fill="#33475B"/>
+%%VBLT%%circle cx="196.7" cy="53.9" r="4.5" fill="#fff" stroke="#24507E" stroke-width="1.6"/>
+%%VBLT%%path class="trail" d="" fill="none" stroke="#D63A3B" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ar4)"/>
+%%VBLT%%g class="pl" data-pos="1" transform="translate(275,255)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#FFD34D" stroke-width="3"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="2" transform="translate(70,191)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="3" transform="translate(46,100)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="4" transform="translate(34,48)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="5" transform="translate(150,230)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="6" transform="translate(232,205)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="flag" opacity="0">%%VBLT%%rect x="70" y="128" width="160" height="26" rx="5" fill="#16283C" fill-opacity=".92"/>%%VBLT%%text x="150" y="145.5" class="flagt" text-anchor="middle">%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%/svg>
+    %%VBLT%%p class="status" id="st4">Base serve-receive formation%%VBLT%%/p>
+    %%VBLT%%p class="cap">Back-right (position 1): the opposite has to stay %%VBLT%%b>behind P2%%VBLT%%/b> and %%VBLT%%b>right of the libero%%VBLT%%/b>. The opposite %%VBLT%%b>steps forward%%VBLT%%/b> into the right lane but stays %%VBLT%%b>a little deeper than the libero%%VBLT%%/b>; the libero and P1 shift one lane left and P2 takes the left: %%VBLT%%b>P2, P1, libero and OP%%VBLT%%/b> receive in four.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%section class="rot in" data-n="3">
+    %%VBLT%%div class="rhead">%%VBLT%%div class="rnum">%%VBLT%%span>3%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 3%%VBLT%%/small>%%VBLT%%/div>%%VBLT%%div class="badge in">✓ Opposite steps in%%VBLT%%/div>%%VBLT%%/div>
+    %%VBLT%%svg viewBox="0 0 300 314" class="court" id="c3" xmlns="http://www.w3.org/2000/svg">
+%%VBLT%%defs>%%VBLT%%marker id="ar3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#D63A3B"/>%%VBLT%%/marker>
+%%VBLT%%marker id="as3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
+%%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
+%%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
+%%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
+%%VBLT%%line x1="10" y1="115.3" x2="290" y2="115.3" stroke="#33475B" stroke-width="1.6"/>
+%%VBLT%%line x1="103.3" y1="22" x2="103.3" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%line x1="196.7" y1="22" x2="196.7" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%rect x="6" y="17" width="288" height="5" fill="#33475B"/>
+%%VBLT%%path class="trail" d="" fill="none" stroke="#D63A3B" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ar3)"/>
+%%VBLT%%g class="pl" data-pos="1" transform="translate(233,206)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="2" transform="translate(214,100)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="3" transform="translate(197,48)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="4" transform="translate(57,189)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="5" transform="translate(141,225)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="6" transform="translate(193,256)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#FFD34D" stroke-width="3"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="flag" opacity="0">%%VBLT%%rect x="70" y="128" width="160" height="26" rx="5" fill="#16283C" fill-opacity=".92"/>%%VBLT%%text x="150" y="145.5" class="flagt" text-anchor="middle">%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%/svg>
+    %%VBLT%%p class="status" id="st3">Base serve-receive formation%%VBLT%%/p>
+    %%VBLT%%p class="cap">Back-row middle (position 6): the opposite just has to stay %%VBLT%%b>between the libero and P2%%VBLT%%/b>. The opposite %%VBLT%%b>steps in as a 4th passer%%VBLT%%/b>: %%VBLT%%b>P1, libero, OP and P2%%VBLT%%/b> receive in four lanes across the court.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%section class="rot in" data-n="2">
+    %%VBLT%%div class="rhead">%%VBLT%%div class="rnum">%%VBLT%%span>2%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 2%%VBLT%%/small>%%VBLT%%/div>%%VBLT%%div class="badge in">✓ Opposite steps in%%VBLT%%/div>%%VBLT%%/div>
+    %%VBLT%%svg viewBox="0 0 300 314" class="court" id="c2" xmlns="http://www.w3.org/2000/svg">
+%%VBLT%%defs>%%VBLT%%marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#D63A3B"/>%%VBLT%%/marker>
+%%VBLT%%marker id="as2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
+%%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
+%%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
+%%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
+%%VBLT%%line x1="10" y1="115.3" x2="290" y2="115.3" stroke="#33475B" stroke-width="1.6"/>
+%%VBLT%%line x1="103.3" y1="22" x2="103.3" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%line x1="196.7" y1="22" x2="196.7" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%rect x="6" y="17" width="288" height="5" fill="#33475B"/>
+%%VBLT%%path class="trail" d="" fill="none" stroke="#D63A3B" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ar2)"/>
+%%VBLT%%g class="pl" data-pos="1" transform="translate(240,202)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="2" transform="translate(197,48)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="3" transform="translate(63,187)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="4" transform="translate(60,102)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="5" transform="translate(106,258)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#FFD34D" stroke-width="3"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="6" transform="translate(144,221)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="flag" opacity="0">%%VBLT%%rect x="70" y="128" width="160" height="26" rx="5" fill="#16283C" fill-opacity=".92"/>%%VBLT%%text x="150" y="145.5" class="flagt" text-anchor="middle">%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%/svg>
+    %%VBLT%%p class="status" id="st2">Base serve-receive formation%%VBLT%%/p>
+    %%VBLT%%p class="cap">The opposite is in the back row (position 5), so nothing limits how deep the opposite stands. The opposite %%VBLT%%b>steps in as a 4th passer%%VBLT%%/b> between P1 and P2: %%VBLT%%b>P1, OP, P2 and the libero%%VBLT%%/b> receive in four lanes, and the middle tucks in at the net.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%/div>
+  %%VBLT%%footer>Base formations from the 5:1 Receive card; every &ldquo;helping&rdquo; formation is checked against the overlap rules (rule 7.4). In rotations 2&ndash;4 the opposite is in the back row, so adding her as a 4th passer costs nothing at the net and shrinks every passer&rsquo;s lane. &copy; 2026 Monika Krzak, Cambridge Volleyball Club. All rights reserved.%%VBLT%%/footer>
+%%VBLT%%/div>
+%%VBLT%%script>
+(function(){
+  var D = {"1": {"kind": "back", "base": {"1": [265, 209], "2": [231, 196], "3": [116, 100], "4": [34, 131], "5": [59, 206], "6": [150, 236]}, "names": {"1": "S", "2": "P1", "3": "M1", "4": "OP", "5": "P2", "6": "L"}, "end": {"4": [48, 184], "5": [110, 214], "6": [176, 234], "2": [239, 188]}, "fix": {}, "helper": "OP"}, "2": {"kind": "in", "base": {"1": [240, 202], "2": [197, 48], "3": [63, 187], "4": [60, 102], "5": [106, 258], "6": [144, 221]}, "names": {"1": "L", "2": "S", "3": "P1", "4": "M1", "5": "OP", "6": "P2"}, "end": {"4": [40, 100], "3": [55, 192], "5": [120, 212], "6": [190, 222], "1": [255, 205]}, "fix": {}, "helper": "OP"}, "3": {"kind": "in", "base": {"1": [233, 206], "2": [214, 100], "3": [197, 48], "4": [57, 189], "5": [141, 225], "6": [193, 256]}, "names": {"1": "P2", "2": "M2", "3": "S", "4": "P1", "5": "L", "6": "OP"}, "end": {"4": [50, 192], "5": [118, 215], "6": [185, 220], "1": [255, 205]}, "fix": {}, "helper": "OP"}, "4": {"kind": "in", "base": {"1": [275, 255], "2": [70, 191], "3": [46, 100], "4": [34, 48], "5": [150, 230], "6": [232, 205]}, "names": {"1": "OP", "2": "P2", "3": "M2", "4": "S", "5": "P1", "6": "L"}, "end": {"2": [60, 192], "5": [122, 214], "6": [196, 204], "1": [262, 226]}, "fix": {}, "helper": "OP"}, "5": {"kind": "back", "base": {"1": [238, 201], "2": [251, 98], "3": [63, 187], "4": [31, 98], "5": [135, 102], "6": [150, 224]}, "names": {"1": "L", "2": "OP", "3": "P2", "4": "M2", "5": "S", "6": "P1"}, "end": {"2": [234, 172], "1": [192, 212], "6": [140, 226], "3": [46, 188]}, "fix": {}, "helper": "OP"}, "6": {"kind": "mid", "base": {"1": [240, 206], "2": [242, 100], "3": [224, 49], "4": [56, 190], "5": [142, 238], "6": [207, 77]}, "names": {"1": "P1", "2": "M1", "3": "OP", "4": "P2", "5": "L", "6": "S"}, "end": {"2": [252, 172], "1": [216, 200], "5": [124, 232], "4": [44, 188]}, "fix": {}, "helper": "M1"}};
+  var RULES = [["4","3","x"],["3","2","x"],["5","6","x"],["6","1","x"],["4","5","y"],["3","6","y"],["2","1","y"]];
+  var NAMES = {S:"the setter",P1:"P1",P2:"P2",M1:"the middle",M2:"the middle",OP:"the opposite",L:"the libero"};
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var PERIOD = 7000, t0 = performance.now();
+  var run = {}, cur = {};               // per-court: playing?  current positions when stopped
+  for (var n in D) run[n] = !reduce;
+  function lerp(a,b,t){ return a+(b-a)*t; }
+  function ease(t){ return t%%VBLT%%.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
+  function faults(pos, names){
+    var bad=[];
+    RULES.forEach(function(r){ var a=pos[r[0]], b=pos[r[1]];
+      if(r[2]==="x" ? a[0]>b[0] : a[1]>b[1]){ bad.push(NAMES[names[r[0]]]+(r[2]==="x"?" must stay left of ":" must stay in front of ")+NAMES[names[r[1]]]); } });
+    return bad;
+  }
+  function frame(d, s){
+    var T=[0.15,0.40,0.80,0.95], pos={}, k;
+    for(k in d.base) pos[k]=d.base[k].slice();
+    var p = s%%VBLT%%T[0]?0 : s%%VBLT%%T[1]?ease((s-T[0])/(T[1]-T[0])) : s%%VBLT%%T[2]?1 : s%%VBLT%%T[3]?1-ease((s-T[2])/(T[3]-T[2])) : 0;
+    for(k in d.end) pos[k]=[lerp(d.base[k][0],d.end[k][0],p), lerp(d.base[k][1],d.end[k][1],p)];
+    var st="Base serve-receive formation", cls="";
+    if(p>0.98){ st = d.kind==="in" ? "✓ Legal: 4-person receive with the opposite" : d.kind==="mid" ? "✓ Legal: 4-person receive with the middle" : "⚠ Legal, but only with a 4-person receive"; cls = d.kind==="back"?"warn":d.kind==="mid"?"mid":"ok"; }
+    return {pos:pos, st:st, cls:cls};
+  }
+  function place(n, pos){
+    var svg=document.getElementById("c"+n), d=D[n];
+    svg.querySelectorAll(".pl").forEach(function(g){ var q=pos[g.dataset.pos]; g.setAttribute("transform","translate("+q[0].toFixed(1)+","+q[1].toFixed(1)+")"); });
+    var h=Object.keys(d.names).find(function(k){ return d.names[k]===d.helper; }), b=d.base[h], q=pos[h];
+    var dist=Math.hypot(q[0]-b[0],q[1]-b[1]), tr=svg.querySelector(".trail");
+    if(dist>16){ var ux=(q[0]-b[0])/dist, uy=(q[1]-b[1])/dist; tr.setAttribute("d","M"+b[0].toFixed(1)+" "+b[1].toFixed(1)+"L"+(q[0]-ux*13).toFixed(1)+" "+(q[1]-uy*13).toFixed(1)); }
+    else tr.setAttribute("d","");
+  }
+  function setStatus(n, txt, cls){ var st=document.getElementById("st"+n); st.textContent=txt; st.className="status "+cls; }
+  function showFlag(n, on){ var svg=document.getElementById("c"+n), fl=svg.querySelector(".flag");
+    fl.setAttribute("opacity", on?1:0); fl.querySelector("text").textContent = on ? "ROTATION FAULT" : ""; svg.classList.toggle("faulted", !!on); }
+  // check a stopped court against the overlap rules
+  function judge(n){
+    var bad=faults(cur[n], D[n].names);
+    showFlag(n, bad.length);
+    if(bad.length){ var t=bad.join("; "); setStatus(n, "✗ Rotation fault: "+t.charAt(0).toUpperCase()+t.slice(1), "bad"); }
+    else setStatus(n, "✓ Legal formation (paused: drag players to test)", "ok");
+  }
+  function grab(n){ var svg=document.getElementById("c"+n), o={};
+    svg.querySelectorAll(".pl").forEach(function(g){ var t=g.getAttribute("transform").match(/-?[\d.]+/g); o[g.dataset.pos]=[+t[0],+t[1]]; }); return o; }
+  function stop(n){ if(!run[n]) return; run[n]=false; cur[n]=grab(n); syncBtn(n); judge(n); }
+  function go(n){ run[n]=true; showFlag(n,false); syncBtn(n); }
+  function syncBtn(n){ var b=document.querySelector('.rot[data-n="'+n+'"] .cplay'); if(b) b.textContent = run[n] ? "❚❚ Pause" : "▶ Play"; }
+  function syncAll(){ var any=Object.keys(run).some(function(n){ return run[n]; }); document.getElementById("playBtn").textContent = any ? "Pause all" : "Play all"; }
+  function tick(now){
+    var s=((now-t0)%PERIOD)/PERIOD;
+    for(var n in D) if(run[n]){ var f=frame(D[n], s); place(n, f.pos); setStatus(n, f.st, f.cls); }
+    requestAnimationFrame(tick);
+  }
+  // per-court buttons
+  document.querySelectorAll(".rot").forEach(function(sec){
+    var n=sec.dataset.n, bar=document.createElement("div"); bar.className="cbar";
+    bar.innerHTML='%%VBLT%%button class="cbtn cplay" type="button">%%VBLT%%/button>%%VBLT%%button class="cbtn chelp" type="button">Helping%%VBLT%%/button>%%VBLT%%button class="cbtn cbase" type="button">Base%%VBLT%%/button>%%VBLT%%span class="chint">or drag any player%%VBLT%%/span>';
+    sec.querySelector(".status").before(bar);
+    bar.querySelector(".cplay").onclick=function(){ if(run[n]) stop(n); else go(n); syncAll(); };
+    bar.querySelector(".chelp").onclick=function(){ run[n]=false; cur[n]=frame(D[n],0.6).pos; place(n,cur[n]); syncBtn(n); judge(n); syncAll(); };
+    bar.querySelector(".cbase").onclick=function(){ run[n]=false; cur[n]=frame(D[n],0).pos; place(n,cur[n]); syncBtn(n); judge(n); syncAll(); };
+    syncBtn(n);
+  });
+  // dragging
+  document.querySelectorAll(".court").forEach(function(svg){
+    var n=svg.id.slice(1), drag=null;
+    function pt(e){ var m=svg.getScreenCTM().inverse(), p=svg.createSVGPoint(); p.x=e.clientX; p.y=e.clientY; p=p.matrixTransform(m);
+      return [Math.max(14,Math.min(286,p.x)), Math.max(30,Math.min(298,p.y))]; }
+    svg.querySelectorAll(".pl").forEach(function(g){
+      g.style.cursor="grab";
+      g.addEventListener("pointerdown", function(e){ e.preventDefault(); stop(n); syncAll(); drag=g.dataset.pos; g.setPointerCapture(e.pointerId); g.style.cursor="grabbing"; });
+      g.addEventListener("pointermove", function(e){ if(!drag) return; cur[n][drag]=pt(e); place(n,cur[n]); judge(n); });
+      g.addEventListener("pointerup", function(){ drag=null; g.style.cursor="grab"; });
+      g.addEventListener("pointercancel", function(){ drag=null; });
+    });
+  });
+  document.getElementById("playBtn").onclick=function(){
+    var any=Object.keys(run).some(function(n){ return run[n]; });
+    for(var n in D){ if(any) stop(n); else go(n); }
+    t0=performance.now(); syncAll();
+  };
+  document.getElementById("stepBtn").onclick=function(){ for(var n in D){ run[n]=false; cur[n]=frame(D[n],0.6).pos; place(n,cur[n]); syncBtn(n); judge(n); } syncAll(); };
+  document.getElementById("baseBtn").onclick=function(){ for(var n in D){ run[n]=false; cur[n]=frame(D[n],0).pos; place(n,cur[n]); syncBtn(n); judge(n); } syncAll(); };
+  if(reduce){ for(var n in D){ cur[n]=frame(D[n],0.6).pos; place(n,cur[n]); judge(n); } }
+  syncAll();
+  requestAnimationFrame(tick);
+})();
+%%VBLT%%/script>
+%%VBLT%%script data-vb-hub>
+(function(){
+  function send(){ try{ parent.postMessage({vbHub: window.name, h: document.documentElement.scrollHeight}, "*"); }catch(e){} }
+  if ("ResizeObserver" in window) new ResizeObserver(send).observe(document.documentElement);
+  window.addEventListener("load", send); send();
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var t = document.getElementById(a.getAttribute("href").slice(1));
+    e.preventDefault();
+    if (t) parent.postMessage({vbHub: window.name, scrollTo: t.getBoundingClientRect().top}, "*");
+  });
+})();
+%%VBLT%%/script>
+%%VBLT%%/body>
+%%VBLT%%/html>
+</script>
+<script type="text/plain" id="src-footwork">%%VBLT%%!DOCTYPE html>
+%%VBLT%%html lang="en">
+%%VBLT%%head>
+%%VBLT%%meta charset="utf-8">
+%%VBLT%%meta name="viewport" content="width=device-width, initial-scale=1">
+%%VBLT%%meta name="color-scheme" content="light">
+%%VBLT%%title>Footwork%%VBLT%%/title>
+%%VBLT%%link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+%%VBLT%%style>
+  :root{--ink:#16283C;--soft:#4A6076;--line:#DCE3EB;--paper:#F7F9FC;--L:#1E6EDB;--R:#F08A28}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Barlow","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.5}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px 60px}
+  header{background:linear-gradient(100deg,#16283C 0%,#24507E 100%);color:#fff;border-bottom:6px solid #F0A500}
+  .hin{max-width:1000px;margin:0 auto;padding:26px 20px 22px}
+  h1{font-family:"Barlow Condensed",Arial,sans-serif;font-size:clamp(28px,5vw,42px);margin:0;text-transform:uppercase;line-height:1}
+  h1 em{display:block;font-style:normal;font-weight:500;font-size:.42em;color:#A9C4E0;letter-spacing:.04em;margin-top:8px;text-transform:none}
+  h1 em b{color:#F0A500;font-weight:500}
+  h2,h3{font-family:"Barlow Condensed",Arial,sans-serif;text-transform:uppercase;letter-spacing:.02em;margin:0 0 8px}
+  h2{font-size:24px} h3{font-size:19px;color:#24507E}
+  .box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-top:20px}
+  .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#000;margin-top:8px}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .credit{font-size:13.5px;color:var(--soft);margin:8px 0 0}
+  .credit a{color:#24507E;font-weight:600}
+  .key{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .k{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:4px 12px 4px 5px;font-size:14px}
+  .ft{width:14px;height:20px;border-radius:50%/45%;display:inline-block}
+  .fwc.oh{border-left-color:#F08A28;background:#FFFBF6}
+  .fwc:not(.oh){background:#FCFAFF}
+  .fwc{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:16px;border-left:6px solid #7B4FD8}
+  .fw{width:100%;height:auto;display:block;max-width:720px}
+  .lbl{font-family:"Barlow Condensed",Arial,sans-serif;font-size:10px;font-weight:600;letter-spacing:.15em;fill:#33475B}
+  .zn{font-family:"Barlow Condensed",Arial,sans-serif;font-size:13px;font-weight:700;fill:#9FB6CC}
+  .chip{font-family:"Barlow Condensed",Arial,sans-serif;font-size:11px;font-weight:700;fill:#fff;text-anchor:middle}
+  .ph{font-family:"Barlow Condensed",Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:.05em;fill:#fff}
+  .fl{font-family:"Barlow Condensed",Arial,sans-serif;font-size:8px;font-weight:700;fill:#fff;text-anchor:middle}
+  .fn{font-family:"Barlow",Arial,sans-serif;font-size:7.5px;font-weight:700;fill:#16283C;text-anchor:middle}
+  .ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px}
+  .b{font:inherit;font-size:13.5px;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:6px;padding:5px 12px;color:var(--ink);cursor:pointer}
+  .b:hover{border-color:#24507E;color:#24507E}
+  .b.play{background:#24507E;border-color:#24507E;color:#fff;min-width:90px}
+  .stepn{font-size:13.5px;color:var(--soft)}
+  .note{margin:8px 0 0;font-size:14.5px}
+  ul{margin:6px 0 0;padding-left:18px} li{margin-bottom:4px}
+  .pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:14px;align-items:start}
+  .clip{margin:0}.clip img{width:100%;max-width:720px;height:auto;display:block;border-radius:8px;background:#000}
+  .clip figcaption{font-size:12.5px;color:var(--soft);margin-top:4px}.clip figcaption a{color:#24507E;font-weight:600}
+  @media (max-width:700px){.pair{grid-template-columns:1fr}}
+  .box.mb{background:#F4EFFE;border-color:#D9C8FB;border-left:6px solid #7B4FD8}
+  .box.mb h2{color:#5B21B6}
+  .box.oh{background:#FFF4EA;border-color:#FAD3B0;border-left:6px solid #F08A28}
+  .box.oh h2{color:#B45309}
+  .fwc .note{}
+  .rowh{font-size:17px;color:#B45309;margin:18px 0 0}
+  .fwgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+  .fwgrid .fwc{margin-top:0}
+  .fwgrid h3{font-size:16.5px}
+  .fwgrid .note{font-size:14px}
+  @media (max-width:820px){.fwgrid{grid-template-columns:1fr}}
+  footer a{color:#24507E;font-weight:600}
+  footer{margin-top:24px;font-size:13.5px;color:var(--soft)}
+%%VBLT%%/style>
+%%VBLT%%/head>
+%%VBLT%%body>
+%%VBLT%%header>%%VBLT%%div class="hin">%%VBLT%%h1>Footwork%%VBLT%%em>Middle blocker and outside hitter: block, transition, attack &middot; Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> &middot; Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>%%VBLT%%/div>%%VBLT%%/header>
+%%VBLT%%div class="wrap">
+  %%VBLT%%div class="box mb">
+    %%VBLT%%h2>Middle blocker: block, transition, quick attack%%VBLT%%/h2>
+    %%VBLT%%ul>
+      %%VBLT%%li>%%VBLT%%b>Block:%%VBLT%%/b> open &ndash; cross &ndash; hop to the hitter, hips square to the net, hands over the net.%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%b>Transition:%%VBLT%%/b> land on %%VBLT%%b>both feet%%VBLT%%/b>, open up towards the centre and run off the net to about the %%VBLT%%b>3 m line%%VBLT%%/b>, eyes on the ball.%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%b>Attack:%%VBLT%%/b> approach %%VBLT%%b>left&ndash;right&ndash;left%%VBLT%%/b> (left-handers mirror it) and hit the quick in front of the setter.%%VBLT%%/li>
+    %%VBLT%%/ul>
+  %%VBLT%%/div>
+
+  %%VBLT%%div class="fwgrid">
+  %%VBLT%%section class="fwc" data-k="left">
+    %%VBLT%%h3>Block left (position 4)%%VBLT%%/h3>
+    %%VBLT%%figure class="clip">%%VBLT%%img src="footwork-left.gif" alt="Middle blocker footwork clip: left" loading="lazy" width="480" height="270">%%VBLT%%/figure>
+    %%VBLT%%p class="note">Open with the %%VBLT%%b>left foot%%VBLT%%/b>, %%VBLT%%b>cross over%%VBLT%%/b> with the right, plant the left and jump square to the net. Land on two feet, turn and run off the net to about the 3 m line, then a %%VBLT%%b>left&ndash;right&ndash;left%%VBLT%%/b> approach to hit the quick in front of the setter.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%section class="fwc" data-k="front">
+    %%VBLT%%h3>Block in front (position 3)%%VBLT%%/h3>
+    %%VBLT%%figure class="clip">%%VBLT%%img src="footwork-middle.gif" alt="Middle blocker footwork clip: front" loading="lazy" width="480" height="270">%%VBLT%%/figure>
+    %%VBLT%%p class="note">No lateral move: %%VBLT%%b>read%%VBLT%%/b>, block straight up in front of the middle hitter. Land, turn and run straight off the net to the 3 m line (2&ndash;3 quick steps), then %%VBLT%%b>left&ndash;right&ndash;left%%VBLT%%/b> into the quick in front of the setter.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%section class="fwc" data-k="right">
+    %%VBLT%%h3>Block right (position 2)%%VBLT%%/h3>
+    %%VBLT%%figure class="clip">%%VBLT%%img src="footwork-right.gif" alt="Middle blocker footwork clip: right" loading="lazy" width="480" height="270">%%VBLT%%/figure>
+    %%VBLT%%p class="note">Mirror image: open with the %%VBLT%%b>right foot%%VBLT%%/b>, %%VBLT%%b>cross over%%VBLT%%/b> with the left, plant the right and jump. Land, open to the court and run back to the 3 m line, then a %%VBLT%%b>left&ndash;right&ndash;left%%VBLT%%/b> approach for the quick in front of the setter.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%/div>
+
+  %%VBLT%%div class="box oh" style="margin-top:28px">
+    %%VBLT%%h2>Outside and right-side hitters: block or dig, transition, attack%%VBLT%%/h2>
+    %%VBLT%%ul>
+      %%VBLT%%li>%%VBLT%%b>From the block:%%VBLT%%/b> land on both feet, then %%VBLT%%b>open &ndash; cross &ndash; hop%%VBLT%%/b>: open towards the court, cross over and get back off the net and wide, outside the court, ready to approach.%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%b>From the dig:%%VBLT%%/b> after the pass, get up and move straight out to the same wide starting spot; don&rsquo;t drift towards the middle.%%VBLT%%/li>
+      %%VBLT%%li>%%VBLT%%b>Attack:%%VBLT%%/b> be loaded and ready to spike %%VBLT%%b>before%%VBLT%%/b> the setter sets, then approach %%VBLT%%b>left&ndash;right&ndash;left%%VBLT%%/b> (left-handers mirror it).%%VBLT%%/li>
+    %%VBLT%%/ul>
+  %%VBLT%%/div>
+  %%VBLT%%h3 class="rowh">From the block%%VBLT%%/h3>
+  %%VBLT%%div class="fwgrid">
+  %%VBLT%%section class="fwc oh" data-k="oh-block">
+    %%VBLT%%h3>Left side: block, transition, attack%%VBLT%%/h3>
+    %%VBLT%%figure class="clip">%%VBLT%%img src="outside-block.gif" alt="Outside hitter on the left: block, transition and attack" loading="lazy" width="480" height="270">%%VBLT%%/figure>
+    %%VBLT%%p class="note">Block on the left, land, %%VBLT%%b>open &ndash; cross &ndash; hop%%VBLT%%/b> off the net to the wide approach spot outside the left sideline, then attack.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%section class="fwc oh" data-k="oh-block-r">
+    %%VBLT%%h3>Right side: block, transition, attack%%VBLT%%/h3>
+    %%VBLT%%figure class="clip">%%VBLT%%img src="right-side-block.gif" alt="Right-side hitter: block, transition and attack" loading="lazy" width="480" height="270">%%VBLT%%/figure>
+    %%VBLT%%p class="note">Right-side hitter: block on the right, land, %%VBLT%%b>open &ndash; cross &ndash; hop%%VBLT%%/b> off the net and out wide outside the right sideline, then attack.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%/div>
+  %%VBLT%%h3 class="rowh">From the dig%%VBLT%%/h3>
+  %%VBLT%%div class="fwgrid">
+  %%VBLT%%section class="fwc oh" data-k="oh-dig">
+    %%VBLT%%h3>Left side: dig, transition, attack%%VBLT%%/h3>
+    %%VBLT%%figure class="clip">%%VBLT%%img src="outside-dig.gif" alt="Outside hitter on the left: dig, transition and attack" loading="lazy" width="480" height="270">%%VBLT%%/figure>
+    %%VBLT%%p class="note">Dig, recover quickly and move out wide outside the left sideline, then a full approach to hit.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%section class="fwc oh" data-k="oh-dig-r">
+    %%VBLT%%h3>Right side: dig, transition, attack%%VBLT%%/h3>
+    %%VBLT%%figure class="clip">%%VBLT%%img src="right-side-dig.gif" alt="Right-side hitter: dig, transition and attack" loading="lazy" width="480" height="270">%%VBLT%%/figure>
+    %%VBLT%%p class="note">Right-side hitter: dig, recover and move out wide outside the right sideline, then a full approach to hit.%%VBLT%%/p>
+  %%VBLT%%/section>
+  %%VBLT%%/div>
+
+  %%VBLT%%footer>%%VBLT%%b>References:%%VBLT%%/b> middle clips from %%VBLT%%a href="https://www.youtube.com/watch?v=NGeKyKQ356Y" target="_blank" rel="noopener">&ldquo;Middle Transition Footwork &ndash; Volleyball Tutorial&rdquo; &#8599;%%VBLT%%/a> outside clips from %%VBLT%%a href="https://www.youtube.com/watch?v=afgj_NmW4eI" target="_blank" rel="noopener">&ldquo;Outside Hitter TRANSITION Footwork &ndash; Left Wing Spiker &ndash; Volleyball Tutorial&rdquo; &#8599;%%VBLT%%/a> and right-side clips from %%VBLT%%a href="https://www.youtube.com/watch?v=_1XdnahmQEk" target="_blank" rel="noopener">&ldquo;Right Side Hitter TRANSITION FOOTWORK &ndash; Volleyball Tutorial&rdquo; &#8599;%%VBLT%%/a>, all by Elevate Yourself on YouTube. All rights belong to the creators. Footwork described for a right-handed middle; left-handers mirror the feet. &copy; 2026 Monika Krzak, Cambridge Volleyball Club. All rights reserved.%%VBLT%%/footer>
+%%VBLT%%/div>
+
 %%VBLT%%script data-vb-hub>
 (function(){
   function send(){ try{ parent.postMessage({vbHub: window.name, h: document.documentElement.scrollHeight}, "*"); }catch(e){} }
@@ -3314,6 +3804,13 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     fill:#fff;text-anchor:middle}
   .chip-sm{font-size:8.5px;letter-spacing:-.03em}
   .sub{font-family:"Barlow",Arial,sans-serif;font-size:9.5px;fill:#5B7089;text-anchor:middle}
+  .rorder{margin:18px 0 0;font-size:14.5px;color:var(--soft)}
+  .rots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+  .rots .row{grid-template-columns:minmax(0,1fr) 108px;gap:8px 12px;margin-top:0;padding:12px 14px}
+  .rots .row .rlabel{padding-top:4px}
+  .rots .row .cell:not(.base){grid-column:1/-1}
+  @media (max-width:900px){.rots{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:600px){.rots{grid-template-columns:1fr}}
   footer{margin-top:24px;font-size:13.5px;color:var(--soft)}
   @media (max-width:680px){
     .heads{display:none}
@@ -3420,6 +3917,8 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     %%VBLT%%/div>
   %%VBLT%%/div>
 
+%%VBLT%%p class="rorder">Rotations are shown in %%VBLT%%b>game order%%VBLT%%/b>: 1 &rarr; 6 &rarr; 5 &rarr; 4 &rarr; 3 &rarr; 2. Each time your team wins the serve back, everyone rotates clockwise, so after rotation 1 the setter moves from position 1 to position 6.%%VBLT%%/p>
+%%VBLT%%div class="rots">
   %%VBLT%%section class="row">
     %%VBLT%%div class="rlabel">%%VBLT%%span>1%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 1%%VBLT%%/small>%%VBLT%%/div>
     %%VBLT%%div class="cell base">%%VBLT%%div class="ctag">Base positions%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 124 90" xmlns="http://www.w3.org/2000/svg" class="mini">%%VBLT%%rect x="0" y="0" width="124" height="5" fill="#33475B"/>%%VBLT%%rect x="2" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="18" class="mz">4%%VBLT%%/text>%%VBLT%%text x="22" y="34" class="mlab" fill="#D63A3B">OP%%VBLT%%/text>%%VBLT%%rect x="42" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="18" class="mz">3%%VBLT%%/text>%%VBLT%%text x="62" y="34" class="mlab" fill="#7B4FD8">M1%%VBLT%%/text>%%VBLT%%rect x="82" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="18" class="mz">2%%VBLT%%/text>%%VBLT%%text x="102" y="34" class="mlab" fill="#F08A28">P1%%VBLT%%/text>%%VBLT%%rect x="2" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="58" class="mz">5%%VBLT%%/text>%%VBLT%%text x="22" y="74" class="mlab" fill="#F08A28">P2%%VBLT%%/text>%%VBLT%%rect x="42" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="58" class="mz">6%%VBLT%%/text>%%VBLT%%text x="62" y="74" class="mlab" fill="#1EA36A">L%%VBLT%%/text>%%VBLT%%text x="62" y="82" class="msub">for M2%%VBLT%%/text>%%VBLT%%rect x="82" y="48" width="40" height="40" fill="#EAF1F8" stroke="#1E6EDB" stroke-width="2"/>%%VBLT%%text x="86" y="58" class="mz">1%%VBLT%%/text>%%VBLT%%text x="102" y="74" class="mlab" fill="#1E6EDB">S%%VBLT%%/text>%%VBLT%%/svg>%%VBLT%%/div>
@@ -3453,10 +3952,10 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%/svg>%%VBLT%%p class="status">Legal formation%%VBLT%%/p>%%VBLT%%/div>
   %%VBLT%%/section>
   %%VBLT%%section class="row">
-    %%VBLT%%div class="rlabel">%%VBLT%%span>2%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 2%%VBLT%%/small>%%VBLT%%/div>
-    %%VBLT%%div class="cell base">%%VBLT%%div class="ctag">Base positions%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 124 90" xmlns="http://www.w3.org/2000/svg" class="mini">%%VBLT%%rect x="0" y="0" width="124" height="5" fill="#33475B"/>%%VBLT%%rect x="2" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="18" class="mz">4%%VBLT%%/text>%%VBLT%%text x="22" y="34" class="mlab" fill="#7B4FD8">M1%%VBLT%%/text>%%VBLT%%rect x="42" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="18" class="mz">3%%VBLT%%/text>%%VBLT%%text x="62" y="34" class="mlab" fill="#F08A28">P1%%VBLT%%/text>%%VBLT%%rect x="82" y="8" width="40" height="40" fill="#D8E6F4" stroke="#1E6EDB" stroke-width="2"/>%%VBLT%%text x="86" y="18" class="mz">2%%VBLT%%/text>%%VBLT%%text x="102" y="34" class="mlab" fill="#1E6EDB">S%%VBLT%%/text>%%VBLT%%rect x="2" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="58" class="mz">5%%VBLT%%/text>%%VBLT%%text x="22" y="74" class="mlab" fill="#D63A3B">OP%%VBLT%%/text>%%VBLT%%rect x="42" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="58" class="mz">6%%VBLT%%/text>%%VBLT%%text x="62" y="74" class="mlab" fill="#F08A28">P2%%VBLT%%/text>%%VBLT%%rect x="82" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="58" class="mz">1%%VBLT%%/text>%%VBLT%%text x="102" y="74" class="mlab" fill="#1EA36A">L%%VBLT%%/text>%%VBLT%%text x="102" y="82" class="msub">for M2%%VBLT%%/text>%%VBLT%%/svg>%%VBLT%%/div>
+    %%VBLT%%div class="rlabel">%%VBLT%%span>6%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 6%%VBLT%%/small>%%VBLT%%/div>
+    %%VBLT%%div class="cell base">%%VBLT%%div class="ctag">Base positions%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 124 90" xmlns="http://www.w3.org/2000/svg" class="mini">%%VBLT%%rect x="0" y="0" width="124" height="5" fill="#33475B"/>%%VBLT%%rect x="2" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="18" class="mz">4%%VBLT%%/text>%%VBLT%%text x="22" y="34" class="mlab" fill="#F08A28">P2%%VBLT%%/text>%%VBLT%%rect x="42" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="18" class="mz">3%%VBLT%%/text>%%VBLT%%text x="62" y="34" class="mlab" fill="#D63A3B">OP%%VBLT%%/text>%%VBLT%%rect x="82" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="18" class="mz">2%%VBLT%%/text>%%VBLT%%text x="102" y="34" class="mlab" fill="#7B4FD8">M1%%VBLT%%/text>%%VBLT%%rect x="2" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="58" class="mz">5%%VBLT%%/text>%%VBLT%%text x="22" y="74" class="mlab" fill="#1EA36A">L%%VBLT%%/text>%%VBLT%%text x="22" y="82" class="msub">for M2%%VBLT%%/text>%%VBLT%%rect x="42" y="48" width="40" height="40" fill="#EAF1F8" stroke="#1E6EDB" stroke-width="2"/>%%VBLT%%text x="46" y="58" class="mz">6%%VBLT%%/text>%%VBLT%%text x="62" y="74" class="mlab" fill="#1E6EDB">S%%VBLT%%/text>%%VBLT%%rect x="82" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="58" class="mz">1%%VBLT%%/text>%%VBLT%%text x="102" y="74" class="mlab" fill="#F08A28">P1%%VBLT%%/text>%%VBLT%%/svg>%%VBLT%%/div>
     %%VBLT%%div class="cell">%%VBLT%%div class="ctag">At serve receive %%VBLT%%button class="reset" type="button">reset%%VBLT%%/button>%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 300 314" class="live" data-w="300" data-h="314" xmlns="http://www.w3.org/2000/svg">
-%%VBLT%%defs>%%VBLT%%marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
+%%VBLT%%defs>%%VBLT%%marker id="ah6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
 %%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
 %%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
 %%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
@@ -3474,74 +3973,12 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%text x="19.0" y="226.7" class="zn">5%%VBLT%%/text>
 %%VBLT%%text x="112.3" y="226.7" class="zn">6%%VBLT%%/text>
 %%VBLT%%text x="205.7" y="226.7" class="zn">1%%VBLT%%/text>
-%%VBLT%%g class="pl" data-pos="1" data-x="240.4" data-y="202.5" transform="translate(240.4,202.5)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="2" data-x="196.7" data-y="47.8" transform="translate(196.7,47.8)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="3" data-x="62.8" data-y="187.1" transform="translate(62.8,187.1)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="4" data-x="59.5" data-y="102.2" transform="translate(59.5,102.2)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M1%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="5" data-x="106.2" data-y="258.4" transform="translate(106.2,258.4)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="6" data-x="144.4" data-y="220.7" transform="translate(144.4,220.7)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%/svg>%%VBLT%%p class="status">Legal formation%%VBLT%%/p>%%VBLT%%/div>
-  %%VBLT%%/section>
-  %%VBLT%%section class="row">
-    %%VBLT%%div class="rlabel">%%VBLT%%span>3%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 3%%VBLT%%/small>%%VBLT%%/div>
-    %%VBLT%%div class="cell base">%%VBLT%%div class="ctag">Base positions%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 124 90" xmlns="http://www.w3.org/2000/svg" class="mini">%%VBLT%%rect x="0" y="0" width="124" height="5" fill="#33475B"/>%%VBLT%%rect x="2" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="18" class="mz">4%%VBLT%%/text>%%VBLT%%text x="22" y="34" class="mlab" fill="#F08A28">P1%%VBLT%%/text>%%VBLT%%rect x="42" y="8" width="40" height="40" fill="#D8E6F4" stroke="#1E6EDB" stroke-width="2"/>%%VBLT%%text x="46" y="18" class="mz">3%%VBLT%%/text>%%VBLT%%text x="62" y="34" class="mlab" fill="#1E6EDB">S%%VBLT%%/text>%%VBLT%%rect x="82" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="18" class="mz">2%%VBLT%%/text>%%VBLT%%text x="102" y="34" class="mlab" fill="#7B4FD8">M2%%VBLT%%/text>%%VBLT%%rect x="2" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="58" class="mz">5%%VBLT%%/text>%%VBLT%%text x="22" y="74" class="mlab" fill="#1EA36A">L%%VBLT%%/text>%%VBLT%%text x="22" y="82" class="msub">for M1%%VBLT%%/text>%%VBLT%%rect x="42" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="58" class="mz">6%%VBLT%%/text>%%VBLT%%text x="62" y="74" class="mlab" fill="#D63A3B">OP%%VBLT%%/text>%%VBLT%%rect x="82" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="58" class="mz">1%%VBLT%%/text>%%VBLT%%text x="102" y="74" class="mlab" fill="#F08A28">P2%%VBLT%%/text>%%VBLT%%/svg>%%VBLT%%/div>
-    %%VBLT%%div class="cell">%%VBLT%%div class="ctag">At serve receive %%VBLT%%button class="reset" type="button">reset%%VBLT%%/button>%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 300 314" class="live" data-w="300" data-h="314" xmlns="http://www.w3.org/2000/svg">
-%%VBLT%%defs>%%VBLT%%marker id="ah3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
-%%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
-%%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
-%%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
-%%VBLT%%line x1="10" y1="115.3" x2="290" y2="115.3" stroke="#33475B" stroke-width="1.6"/>
-%%VBLT%%line x1="103.3" y1="22" x2="103.3" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
-%%VBLT%%line x1="196.7" y1="22" x2="196.7" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
-%%VBLT%%rect x="6" y="17" width="288" height="5" fill="#33475B"/>
-%%VBLT%%line x1="10" y1="208.7" x2="290" y2="208.7" stroke="#9FB6CC" stroke-width="1" stroke-dasharray="3 3"/>
-%%VBLT%%text x="19.0" y="40.0" class="zn">4%%VBLT%%/text>
-%%VBLT%%text x="112.3" y="40.0" class="zn">3%%VBLT%%/text>
-%%VBLT%%text x="205.7" y="40.0" class="zn">2%%VBLT%%/text>
-%%VBLT%%text x="19.0" y="133.3" class="zn">7%%VBLT%%/text>
-%%VBLT%%text x="112.3" y="133.3" class="zn">8%%VBLT%%/text>
-%%VBLT%%text x="205.7" y="133.3" class="zn">9%%VBLT%%/text>
-%%VBLT%%text x="19.0" y="226.7" class="zn">5%%VBLT%%/text>
-%%VBLT%%text x="112.3" y="226.7" class="zn">6%%VBLT%%/text>
-%%VBLT%%text x="205.7" y="226.7" class="zn">1%%VBLT%%/text>
-%%VBLT%%g class="pl" data-pos="1" data-x="233.1" data-y="205.7" transform="translate(233.1,205.7)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="2" data-x="213.6" data-y="100.3" transform="translate(213.6,100.3)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M2%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="3" data-x="196.7" data-y="47.8" transform="translate(196.7,47.8)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="4" data-x="56.9" data-y="188.6" transform="translate(56.9,188.6)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="5" data-x="141.2" data-y="224.8" transform="translate(141.2,224.8)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="6" data-x="193.4" data-y="255.6" transform="translate(193.4,255.6)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%/svg>%%VBLT%%p class="status">Legal formation%%VBLT%%/p>%%VBLT%%/div>
-  %%VBLT%%/section>
-  %%VBLT%%section class="row">
-    %%VBLT%%div class="rlabel">%%VBLT%%span>4%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 4%%VBLT%%/small>%%VBLT%%/div>
-    %%VBLT%%div class="cell base">%%VBLT%%div class="ctag">Base positions%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 124 90" xmlns="http://www.w3.org/2000/svg" class="mini">%%VBLT%%rect x="0" y="0" width="124" height="5" fill="#33475B"/>%%VBLT%%rect x="2" y="8" width="40" height="40" fill="#D8E6F4" stroke="#1E6EDB" stroke-width="2"/>%%VBLT%%text x="6" y="18" class="mz">4%%VBLT%%/text>%%VBLT%%text x="22" y="34" class="mlab" fill="#1E6EDB">S%%VBLT%%/text>%%VBLT%%rect x="42" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="18" class="mz">3%%VBLT%%/text>%%VBLT%%text x="62" y="34" class="mlab" fill="#7B4FD8">M2%%VBLT%%/text>%%VBLT%%rect x="82" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="18" class="mz">2%%VBLT%%/text>%%VBLT%%text x="102" y="34" class="mlab" fill="#F08A28">P2%%VBLT%%/text>%%VBLT%%rect x="2" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="58" class="mz">5%%VBLT%%/text>%%VBLT%%text x="22" y="74" class="mlab" fill="#F08A28">P1%%VBLT%%/text>%%VBLT%%rect x="42" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="58" class="mz">6%%VBLT%%/text>%%VBLT%%text x="62" y="74" class="mlab" fill="#1EA36A">L%%VBLT%%/text>%%VBLT%%text x="62" y="82" class="msub">for M1%%VBLT%%/text>%%VBLT%%rect x="82" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="58" class="mz">1%%VBLT%%/text>%%VBLT%%text x="102" y="74" class="mlab" fill="#D63A3B">OP%%VBLT%%/text>%%VBLT%%/svg>%%VBLT%%/div>
-    %%VBLT%%div class="cell">%%VBLT%%div class="ctag">At serve receive %%VBLT%%button class="reset" type="button">reset%%VBLT%%/button>%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 300 314" class="live" data-w="300" data-h="314" xmlns="http://www.w3.org/2000/svg">
-%%VBLT%%defs>%%VBLT%%marker id="ah4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
-%%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
-%%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
-%%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
-%%VBLT%%line x1="10" y1="115.3" x2="290" y2="115.3" stroke="#33475B" stroke-width="1.6"/>
-%%VBLT%%line x1="103.3" y1="22" x2="103.3" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
-%%VBLT%%line x1="196.7" y1="22" x2="196.7" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
-%%VBLT%%rect x="6" y="17" width="288" height="5" fill="#33475B"/>
-%%VBLT%%line x1="10" y1="208.7" x2="290" y2="208.7" stroke="#9FB6CC" stroke-width="1" stroke-dasharray="3 3"/>
-%%VBLT%%text x="19.0" y="40.0" class="zn">4%%VBLT%%/text>
-%%VBLT%%text x="112.3" y="40.0" class="zn">3%%VBLT%%/text>
-%%VBLT%%text x="205.7" y="40.0" class="zn">2%%VBLT%%/text>
-%%VBLT%%text x="19.0" y="133.3" class="zn">7%%VBLT%%/text>
-%%VBLT%%text x="112.3" y="133.3" class="zn">8%%VBLT%%/text>
-%%VBLT%%text x="205.7" y="133.3" class="zn">9%%VBLT%%/text>
-%%VBLT%%text x="19.0" y="226.7" class="zn">5%%VBLT%%/text>
-%%VBLT%%text x="112.3" y="226.7" class="zn">6%%VBLT%%/text>
-%%VBLT%%text x="205.7" y="226.7" class="zn">1%%VBLT%%/text>
-%%VBLT%%circle class="tgt" cx="196.7" cy="53.9" r="4.5" fill="#fff" stroke="#24507E" stroke-width="1.6"/>
-%%VBLT%%line class="run" x1="0" y1="0" x2="0" y2="0" stroke="#24507E" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#ah4)"/>
-%%VBLT%%g class="pl" data-pos="1" data-x="275.0" data-y="255.0" transform="translate(275.0,255.0)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="2" data-x="70.0" data-y="191.0" transform="translate(70.0,191.0)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="3" data-x="46.0" data-y="100.3" transform="translate(46.0,100.3)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M2%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="4" data-x="34.0" data-y="47.8" transform="translate(34.0,47.8)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="5" data-x="150.1" data-y="230.3" transform="translate(150.1,230.3)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="6" data-x="232.0" data-y="205.0" transform="translate(232.0,205.0)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="1" data-x="239.7" data-y="205.7" transform="translate(239.7,205.7)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="2" data-x="241.9" data-y="100.3" transform="translate(241.9,100.3)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="3" data-x="224.5" data-y="49.2" transform="translate(224.5,49.2)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="4" data-x="56.2" data-y="190.4" transform="translate(56.2,190.4)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="5" data-x="142.5" data-y="238.1" transform="translate(142.5,238.1)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="6" data-x="207.0" data-y="77.3" transform="translate(207.0,77.3)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
 %%VBLT%%/svg>%%VBLT%%p class="status">Legal formation%%VBLT%%/p>%%VBLT%%/div>
   %%VBLT%%/section>
   %%VBLT%%section class="row">
@@ -3577,10 +4014,10 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%/svg>%%VBLT%%p class="status">Legal formation%%VBLT%%/p>%%VBLT%%/div>
   %%VBLT%%/section>
   %%VBLT%%section class="row">
-    %%VBLT%%div class="rlabel">%%VBLT%%span>6%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 6%%VBLT%%/small>%%VBLT%%/div>
-    %%VBLT%%div class="cell base">%%VBLT%%div class="ctag">Base positions%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 124 90" xmlns="http://www.w3.org/2000/svg" class="mini">%%VBLT%%rect x="0" y="0" width="124" height="5" fill="#33475B"/>%%VBLT%%rect x="2" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="18" class="mz">4%%VBLT%%/text>%%VBLT%%text x="22" y="34" class="mlab" fill="#F08A28">P2%%VBLT%%/text>%%VBLT%%rect x="42" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="18" class="mz">3%%VBLT%%/text>%%VBLT%%text x="62" y="34" class="mlab" fill="#D63A3B">OP%%VBLT%%/text>%%VBLT%%rect x="82" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="18" class="mz">2%%VBLT%%/text>%%VBLT%%text x="102" y="34" class="mlab" fill="#7B4FD8">M1%%VBLT%%/text>%%VBLT%%rect x="2" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="58" class="mz">5%%VBLT%%/text>%%VBLT%%text x="22" y="74" class="mlab" fill="#1EA36A">L%%VBLT%%/text>%%VBLT%%text x="22" y="82" class="msub">for M2%%VBLT%%/text>%%VBLT%%rect x="42" y="48" width="40" height="40" fill="#EAF1F8" stroke="#1E6EDB" stroke-width="2"/>%%VBLT%%text x="46" y="58" class="mz">6%%VBLT%%/text>%%VBLT%%text x="62" y="74" class="mlab" fill="#1E6EDB">S%%VBLT%%/text>%%VBLT%%rect x="82" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="58" class="mz">1%%VBLT%%/text>%%VBLT%%text x="102" y="74" class="mlab" fill="#F08A28">P1%%VBLT%%/text>%%VBLT%%/svg>%%VBLT%%/div>
+    %%VBLT%%div class="rlabel">%%VBLT%%span>4%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 4%%VBLT%%/small>%%VBLT%%/div>
+    %%VBLT%%div class="cell base">%%VBLT%%div class="ctag">Base positions%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 124 90" xmlns="http://www.w3.org/2000/svg" class="mini">%%VBLT%%rect x="0" y="0" width="124" height="5" fill="#33475B"/>%%VBLT%%rect x="2" y="8" width="40" height="40" fill="#D8E6F4" stroke="#1E6EDB" stroke-width="2"/>%%VBLT%%text x="6" y="18" class="mz">4%%VBLT%%/text>%%VBLT%%text x="22" y="34" class="mlab" fill="#1E6EDB">S%%VBLT%%/text>%%VBLT%%rect x="42" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="18" class="mz">3%%VBLT%%/text>%%VBLT%%text x="62" y="34" class="mlab" fill="#7B4FD8">M2%%VBLT%%/text>%%VBLT%%rect x="82" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="18" class="mz">2%%VBLT%%/text>%%VBLT%%text x="102" y="34" class="mlab" fill="#F08A28">P2%%VBLT%%/text>%%VBLT%%rect x="2" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="58" class="mz">5%%VBLT%%/text>%%VBLT%%text x="22" y="74" class="mlab" fill="#F08A28">P1%%VBLT%%/text>%%VBLT%%rect x="42" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="58" class="mz">6%%VBLT%%/text>%%VBLT%%text x="62" y="74" class="mlab" fill="#1EA36A">L%%VBLT%%/text>%%VBLT%%text x="62" y="82" class="msub">for M1%%VBLT%%/text>%%VBLT%%rect x="82" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="58" class="mz">1%%VBLT%%/text>%%VBLT%%text x="102" y="74" class="mlab" fill="#D63A3B">OP%%VBLT%%/text>%%VBLT%%/svg>%%VBLT%%/div>
     %%VBLT%%div class="cell">%%VBLT%%div class="ctag">At serve receive %%VBLT%%button class="reset" type="button">reset%%VBLT%%/button>%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 300 314" class="live" data-w="300" data-h="314" xmlns="http://www.w3.org/2000/svg">
-%%VBLT%%defs>%%VBLT%%marker id="ah6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
+%%VBLT%%defs>%%VBLT%%marker id="ah4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
 %%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
 %%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
 %%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
@@ -3598,14 +4035,77 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 %%VBLT%%text x="19.0" y="226.7" class="zn">5%%VBLT%%/text>
 %%VBLT%%text x="112.3" y="226.7" class="zn">6%%VBLT%%/text>
 %%VBLT%%text x="205.7" y="226.7" class="zn">1%%VBLT%%/text>
-%%VBLT%%g class="pl" data-pos="1" data-x="239.7" data-y="205.7" transform="translate(239.7,205.7)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="2" data-x="241.9" data-y="100.3" transform="translate(241.9,100.3)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M1%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="3" data-x="224.5" data-y="49.2" transform="translate(224.5,49.2)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="4" data-x="56.2" data-y="190.4" transform="translate(56.2,190.4)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="5" data-x="142.5" data-y="238.1" transform="translate(142.5,238.1)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
-%%VBLT%%g class="pl" data-pos="6" data-x="207.0" data-y="77.3" transform="translate(207.0,77.3)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%circle class="tgt" cx="196.7" cy="53.9" r="4.5" fill="#fff" stroke="#24507E" stroke-width="1.6"/>
+%%VBLT%%line class="run" x1="0" y1="0" x2="0" y2="0" stroke="#24507E" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#ah4)"/>
+%%VBLT%%g class="pl" data-pos="1" data-x="275.0" data-y="255.0" transform="translate(275.0,255.0)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="2" data-x="70.0" data-y="191.0" transform="translate(70.0,191.0)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="3" data-x="46.0" data-y="100.3" transform="translate(46.0,100.3)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="4" data-x="34.0" data-y="47.8" transform="translate(34.0,47.8)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="5" data-x="150.1" data-y="230.3" transform="translate(150.1,230.3)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="6" data-x="232.0" data-y="205.0" transform="translate(232.0,205.0)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
 %%VBLT%%/svg>%%VBLT%%p class="status">Legal formation%%VBLT%%/p>%%VBLT%%/div>
   %%VBLT%%/section>
+  %%VBLT%%section class="row">
+    %%VBLT%%div class="rlabel">%%VBLT%%span>3%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 3%%VBLT%%/small>%%VBLT%%/div>
+    %%VBLT%%div class="cell base">%%VBLT%%div class="ctag">Base positions%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 124 90" xmlns="http://www.w3.org/2000/svg" class="mini">%%VBLT%%rect x="0" y="0" width="124" height="5" fill="#33475B"/>%%VBLT%%rect x="2" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="18" class="mz">4%%VBLT%%/text>%%VBLT%%text x="22" y="34" class="mlab" fill="#F08A28">P1%%VBLT%%/text>%%VBLT%%rect x="42" y="8" width="40" height="40" fill="#D8E6F4" stroke="#1E6EDB" stroke-width="2"/>%%VBLT%%text x="46" y="18" class="mz">3%%VBLT%%/text>%%VBLT%%text x="62" y="34" class="mlab" fill="#1E6EDB">S%%VBLT%%/text>%%VBLT%%rect x="82" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="18" class="mz">2%%VBLT%%/text>%%VBLT%%text x="102" y="34" class="mlab" fill="#7B4FD8">M2%%VBLT%%/text>%%VBLT%%rect x="2" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="58" class="mz">5%%VBLT%%/text>%%VBLT%%text x="22" y="74" class="mlab" fill="#1EA36A">L%%VBLT%%/text>%%VBLT%%text x="22" y="82" class="msub">for M1%%VBLT%%/text>%%VBLT%%rect x="42" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="58" class="mz">6%%VBLT%%/text>%%VBLT%%text x="62" y="74" class="mlab" fill="#D63A3B">OP%%VBLT%%/text>%%VBLT%%rect x="82" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="58" class="mz">1%%VBLT%%/text>%%VBLT%%text x="102" y="74" class="mlab" fill="#F08A28">P2%%VBLT%%/text>%%VBLT%%/svg>%%VBLT%%/div>
+    %%VBLT%%div class="cell">%%VBLT%%div class="ctag">At serve receive %%VBLT%%button class="reset" type="button">reset%%VBLT%%/button>%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 300 314" class="live" data-w="300" data-h="314" xmlns="http://www.w3.org/2000/svg">
+%%VBLT%%defs>%%VBLT%%marker id="ah3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
+%%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
+%%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
+%%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
+%%VBLT%%line x1="10" y1="115.3" x2="290" y2="115.3" stroke="#33475B" stroke-width="1.6"/>
+%%VBLT%%line x1="103.3" y1="22" x2="103.3" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%line x1="196.7" y1="22" x2="196.7" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%rect x="6" y="17" width="288" height="5" fill="#33475B"/>
+%%VBLT%%line x1="10" y1="208.7" x2="290" y2="208.7" stroke="#9FB6CC" stroke-width="1" stroke-dasharray="3 3"/>
+%%VBLT%%text x="19.0" y="40.0" class="zn">4%%VBLT%%/text>
+%%VBLT%%text x="112.3" y="40.0" class="zn">3%%VBLT%%/text>
+%%VBLT%%text x="205.7" y="40.0" class="zn">2%%VBLT%%/text>
+%%VBLT%%text x="19.0" y="133.3" class="zn">7%%VBLT%%/text>
+%%VBLT%%text x="112.3" y="133.3" class="zn">8%%VBLT%%/text>
+%%VBLT%%text x="205.7" y="133.3" class="zn">9%%VBLT%%/text>
+%%VBLT%%text x="19.0" y="226.7" class="zn">5%%VBLT%%/text>
+%%VBLT%%text x="112.3" y="226.7" class="zn">6%%VBLT%%/text>
+%%VBLT%%text x="205.7" y="226.7" class="zn">1%%VBLT%%/text>
+%%VBLT%%g class="pl" data-pos="1" data-x="233.1" data-y="205.7" transform="translate(233.1,205.7)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="2" data-x="213.6" data-y="100.3" transform="translate(213.6,100.3)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="3" data-x="196.7" data-y="47.8" transform="translate(196.7,47.8)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="4" data-x="56.9" data-y="188.6" transform="translate(56.9,188.6)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="5" data-x="141.2" data-y="224.8" transform="translate(141.2,224.8)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="6" data-x="193.4" data-y="255.6" transform="translate(193.4,255.6)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%/svg>%%VBLT%%p class="status">Legal formation%%VBLT%%/p>%%VBLT%%/div>
+  %%VBLT%%/section>
+  %%VBLT%%section class="row">
+    %%VBLT%%div class="rlabel">%%VBLT%%span>2%%VBLT%%/span>Rotation%%VBLT%%small>Setter in position 2%%VBLT%%/small>%%VBLT%%/div>
+    %%VBLT%%div class="cell base">%%VBLT%%div class="ctag">Base positions%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 124 90" xmlns="http://www.w3.org/2000/svg" class="mini">%%VBLT%%rect x="0" y="0" width="124" height="5" fill="#33475B"/>%%VBLT%%rect x="2" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="18" class="mz">4%%VBLT%%/text>%%VBLT%%text x="22" y="34" class="mlab" fill="#7B4FD8">M1%%VBLT%%/text>%%VBLT%%rect x="42" y="8" width="40" height="40" fill="#D8E6F4" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="18" class="mz">3%%VBLT%%/text>%%VBLT%%text x="62" y="34" class="mlab" fill="#F08A28">P1%%VBLT%%/text>%%VBLT%%rect x="82" y="8" width="40" height="40" fill="#D8E6F4" stroke="#1E6EDB" stroke-width="2"/>%%VBLT%%text x="86" y="18" class="mz">2%%VBLT%%/text>%%VBLT%%text x="102" y="34" class="mlab" fill="#1E6EDB">S%%VBLT%%/text>%%VBLT%%rect x="2" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="6" y="58" class="mz">5%%VBLT%%/text>%%VBLT%%text x="22" y="74" class="mlab" fill="#D63A3B">OP%%VBLT%%/text>%%VBLT%%rect x="42" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="46" y="58" class="mz">6%%VBLT%%/text>%%VBLT%%text x="62" y="74" class="mlab" fill="#F08A28">P2%%VBLT%%/text>%%VBLT%%rect x="82" y="48" width="40" height="40" fill="#EAF1F8" stroke="#C9D5E2" stroke-width="1"/>%%VBLT%%text x="86" y="58" class="mz">1%%VBLT%%/text>%%VBLT%%text x="102" y="74" class="mlab" fill="#1EA36A">L%%VBLT%%/text>%%VBLT%%text x="102" y="82" class="msub">for M2%%VBLT%%/text>%%VBLT%%/svg>%%VBLT%%/div>
+    %%VBLT%%div class="cell">%%VBLT%%div class="ctag">At serve receive %%VBLT%%button class="reset" type="button">reset%%VBLT%%/button>%%VBLT%%/div>%%VBLT%%svg viewBox="0 0 300 314" class="live" data-w="300" data-h="314" xmlns="http://www.w3.org/2000/svg">
+%%VBLT%%defs>%%VBLT%%marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">%%VBLT%%path d="M0 0 10 5 0 10z" fill="#24507E"/>%%VBLT%%/marker>%%VBLT%%/defs>
+%%VBLT%%text x="150" y="9" class="netlbl">NET%%VBLT%%/text>
+%%VBLT%%rect x="10" y="22" width="280" height="280" fill="#EAF1F8" stroke="#33475B" stroke-width="2.5" rx="2"/>
+%%VBLT%%rect x="10" y="22" width="280" height="93.3" fill="#D8E6F4"/>
+%%VBLT%%line x1="10" y1="115.3" x2="290" y2="115.3" stroke="#33475B" stroke-width="1.6"/>
+%%VBLT%%line x1="103.3" y1="22" x2="103.3" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%line x1="196.7" y1="22" x2="196.7" y2="302" stroke="#9FB6CC" stroke-width="1.2" stroke-dasharray="5 4"/>
+%%VBLT%%rect x="6" y="17" width="288" height="5" fill="#33475B"/>
+%%VBLT%%line x1="10" y1="208.7" x2="290" y2="208.7" stroke="#9FB6CC" stroke-width="1" stroke-dasharray="3 3"/>
+%%VBLT%%text x="19.0" y="40.0" class="zn">4%%VBLT%%/text>
+%%VBLT%%text x="112.3" y="40.0" class="zn">3%%VBLT%%/text>
+%%VBLT%%text x="205.7" y="40.0" class="zn">2%%VBLT%%/text>
+%%VBLT%%text x="19.0" y="133.3" class="zn">7%%VBLT%%/text>
+%%VBLT%%text x="112.3" y="133.3" class="zn">8%%VBLT%%/text>
+%%VBLT%%text x="205.7" y="133.3" class="zn">9%%VBLT%%/text>
+%%VBLT%%text x="19.0" y="226.7" class="zn">5%%VBLT%%/text>
+%%VBLT%%text x="112.3" y="226.7" class="zn">6%%VBLT%%/text>
+%%VBLT%%text x="205.7" y="226.7" class="zn">1%%VBLT%%/text>
+%%VBLT%%g class="pl" data-pos="1" data-x="240.4" data-y="202.5" transform="translate(240.4,202.5)">%%VBLT%%circle r="12" fill="#1EA36A" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">L%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="2" data-x="196.7" data-y="47.8" transform="translate(196.7,47.8)">%%VBLT%%circle r="10.5" fill="#1E6EDB" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">S%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="3" data-x="62.8" data-y="187.1" transform="translate(62.8,187.1)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="4" data-x="59.5" data-y="102.2" transform="translate(59.5,102.2)">%%VBLT%%circle r="10.5" fill="#7B4FD8" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">M1%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="5" data-x="106.2" data-y="258.4" transform="translate(106.2,258.4)">%%VBLT%%circle r="10.5" fill="#D63A3B" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip chip-sm">OP%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%g class="pl" data-pos="6" data-x="144.4" data-y="220.7" transform="translate(144.4,220.7)">%%VBLT%%circle r="12" fill="#F08A28" stroke="#fff" stroke-width="1.8"/>%%VBLT%%text x="0" y="3.6" class="chip">P2%%VBLT%%/text>%%VBLT%%/g>
+%%VBLT%%/svg>%%VBLT%%p class="status">Legal formation%%VBLT%%/p>%%VBLT%%/div>
+  %%VBLT%%/section>
+%%VBLT%%/div>
 
   %%VBLT%%footer>
     %%VBLT%%p>Net at the top of each court. Formations taken from the volleyball-rotations PDF and checked against the overlap rules. Drag any player to try a different shape &mdash; the referee blows the whistle straight away if the move creates a rotation fault (turn the sound off with the button at the top). Correct for the 2026-27 season under FIVB 2025-2028 rules as adopted by Volleyball England &mdash; check the current NVL regulations before a match if in doubt.%%VBLT%%/p>
