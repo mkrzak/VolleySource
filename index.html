@@ -87,7 +87,7 @@
     </button>
     <button class="hcard g-train" type="button" data-key="footwork" aria-pressed="false">
       <span class="htitle">Footwork</span>
-      <span class="hdesc">Transition footwork clips: middle blocker (block left, front, right, then quick attack) and outside and right-side hitters (block or dig, then attack).</span>
+      <span class="hdesc">Transition footwork clips: middle blocker (block left, front, right, then quick attack) outside and right-side hitters (block or dig, then attack).</span>
     </button>
     <button class="hcard g-sys" type="button" data-key="receive" aria-pressed="false">
       <span class="htitle">5:1 Receive</span>
@@ -95,7 +95,7 @@
     </button>
     <button class="hcard g-sys" type="button" data-key="defence" aria-pressed="false">
       <span class="htitle">5:1 Defence</span>
-      <span class="hdesc">Perimeter and rotational defensive systems, with the block following their hitter.</span>
+      <span class="hdesc">Perimeter and rotational defensive systems, with the block following their hitter, plus defence clips against left and right side attacks.</span>
     </button>
     <button class="hcard g-cva" type="button" data-key="scoresheet" aria-pressed="false">
       <span class="htitle">CVA Scoresheet Guide</span>
@@ -1985,6 +1985,9 @@ render();
   .box.oh{background:#FFF4EA;border-color:#FAD3B0;border-left:6px solid #F08A28}
   .box.oh h2{color:#B45309}
   .fwc .note{}
+  .box.df{background:#EAF6F1;border-color:#B7E2CF;border-left:6px solid #16A34A}
+  .box.df h2{color:#166534}
+  .fwc.df{border-left-color:#16A34A;background:#F7FCF9}
   .rowh{font-size:17px;color:#B45309;margin:18px 0 0}
   .fwgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
   .fwgrid .fwc{margin-top:0}
@@ -1996,7 +1999,7 @@ render();
 %%VBLT%%/style>
 %%VBLT%%/head>
 %%VBLT%%body>
-%%VBLT%%header>%%VBLT%%div class="hin">%%VBLT%%h1>Footwork%%VBLT%%em>Middle blocker and outside hitter: block, transition, attack &middot; Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> &middot; Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>%%VBLT%%/div>%%VBLT%%/header>
+%%VBLT%%header>%%VBLT%%div class="hin">%%VBLT%%h1>Footwork%%VBLT%%em>Middle blocker and outside and right-side hitters: block, transition, attack &middot; Compiled by %%VBLT%%b>Monika Krzak%%VBLT%%/b> &middot; Cambridge Volleyball Club%%VBLT%%/em>%%VBLT%%/h1>%%VBLT%%/div>%%VBLT%%/header>
 %%VBLT%%div class="wrap">
   %%VBLT%%div class="box mb">
     %%VBLT%%h2>Middle blocker: block, transition, quick attack%%VBLT%%/h2>
@@ -2010,7 +2013,7 @@ render();
   %%VBLT%%div class="fwgrid">
   %%VBLT%%section class="fwc" data-k="left">
     %%VBLT%%h3>Block left (position 4)%%VBLT%%/h3>
-    %%VBLT%%figure class="clip">%%VBLT%%img src="footwork-left.gif" alt="Middle blocker footwork clip: left" loading="lazy" width="480" height="270">%%VBLT%%/figure>
+    %%VBLT%%figure class="clip">%%VBLT%%img src="footwork-right.gif" alt="Middle blocker footwork clip: left" loading="lazy" width="480" height="270">%%VBLT%%/figure>
     %%VBLT%%p class="note">Open with the %%VBLT%%b>left foot%%VBLT%%/b>, %%VBLT%%b>cross over%%VBLT%%/b> with the right, plant the left and jump square to the net. Land on two feet, turn and run off the net to about the 3 m line, then a %%VBLT%%b>left&ndash;right&ndash;left%%VBLT%%/b> approach to hit the quick in front of the setter.%%VBLT%%/p>
   %%VBLT%%/section>
   %%VBLT%%section class="fwc" data-k="front">
@@ -2020,7 +2023,7 @@ render();
   %%VBLT%%/section>
   %%VBLT%%section class="fwc" data-k="right">
     %%VBLT%%h3>Block right (position 2)%%VBLT%%/h3>
-    %%VBLT%%figure class="clip">%%VBLT%%img src="footwork-right.gif" alt="Middle blocker footwork clip: right" loading="lazy" width="480" height="270">%%VBLT%%/figure>
+    %%VBLT%%figure class="clip">%%VBLT%%img src="footwork-left.gif" alt="Middle blocker footwork clip: right" loading="lazy" width="480" height="270">%%VBLT%%/figure>
     %%VBLT%%p class="note">Mirror image: open with the %%VBLT%%b>right foot%%VBLT%%/b>, %%VBLT%%b>cross over%%VBLT%%/b> with the left, plant the right and jump. Land, open to the court and run back to the 3 m line, then a %%VBLT%%b>left&ndash;right&ndash;left%%VBLT%%/b> approach for the quick in front of the setter.%%VBLT%%/p>
   %%VBLT%%/section>
   %%VBLT%%/div>
@@ -2059,6 +2062,7 @@ render();
     %%VBLT%%p class="note">Right-side hitter: dig, recover and move out wide outside the right sideline, then a full approach to hit.%%VBLT%%/p>
   %%VBLT%%/section>
   %%VBLT%%/div>
+
 
   %%VBLT%%footer>%%VBLT%%b>References:%%VBLT%%/b> middle clips from %%VBLT%%a href="https://www.youtube.com/watch?v=NGeKyKQ356Y" target="_blank" rel="noopener">&ldquo;Middle Transition Footwork &ndash; Volleyball Tutorial&rdquo; &#8599;%%VBLT%%/a> outside clips from %%VBLT%%a href="https://www.youtube.com/watch?v=afgj_NmW4eI" target="_blank" rel="noopener">&ldquo;Outside Hitter TRANSITION Footwork &ndash; Left Wing Spiker &ndash; Volleyball Tutorial&rdquo; &#8599;%%VBLT%%/a> and right-side clips from %%VBLT%%a href="https://www.youtube.com/watch?v=_1XdnahmQEk" target="_blank" rel="noopener">&ldquo;Right Side Hitter TRANSITION FOOTWORK &ndash; Volleyball Tutorial&rdquo; &#8599;%%VBLT%%/a>, all by Elevate Yourself on YouTube. All rights belong to the creators. Footwork described for a right-handed middle; left-handers mirror the feet. &copy; 2026 Monika Krzak, Cambridge Volleyball Club. All rights reserved.%%VBLT%%/footer>
 %%VBLT%%/div>
@@ -4397,6 +4401,17 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     fill:#8A6A6A;letter-spacing:.08em}
   .who{font-family:"Barlow",Arial,sans-serif;font-size:11.5px;color:var(--soft);margin:6px 0 0;line-height:1.35}
   footer{margin-top:24px;font-size:13.5px;color:var(--soft)}
+  footer a{color:#24507E;font-weight:600}
+  .dvids{background:#EAF6F1;border:1px solid #B7E2CF;border-left:6px solid #16A34A;border-radius:8px;margin-top:16px;padding:16px 18px}
+  .dvids h2{color:#166534;margin-bottom:12px}
+  .dvids ul{margin:0 0 12px;padding-left:18px} .dvids li{margin-bottom:4px}
+  .dvgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .dvid{margin:0;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+  .dvid h3{font-family:"Barlow Condensed",Arial,sans-serif;font-size:18px;text-transform:uppercase;letter-spacing:.02em;color:#24507E;margin:0 0 8px}
+  .dvid img{width:100%;height:auto;display:block;border-radius:6px;background:#000}
+  .dvid figcaption{font-size:14.5px;margin-top:8px}
+  .vsrc{margin:12px 0 0;font-size:13.5px;color:var(--soft)} .vsrc a{color:#24507E;font-weight:600}
+  @media (max-width:760px){.dvgrid{grid-template-columns:1fr}}
   .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:18px 0 0;
     background:#fff;border:1px solid var(--line);border-radius:8px;padding:11px 14px}
   .tnote{flex:1 1 220px;font-size:14px;color:var(--soft)}
@@ -4421,6 +4436,8 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     color:var(--soft);cursor:pointer}
   .reset:hover{border-color:#24507E;color:#24507E}
   svg.live{touch-action:none}
+  svg.live .me{cursor:grab}
+  .tiplab{font-family:"Barlow Condensed",Arial,sans-serif;font-size:12px;font-weight:700;fill:#B45309;letter-spacing:.03em}
   .sysname{color:#24507E}
   @media (max-width:820px){
     .row{grid-template-columns:1fr 1fr}
@@ -4506,7 +4523,6 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
       %%VBLT%%/div>
       %%VBLT%%h3>On the courts%%VBLT%%/h3>
       %%VBLT%%div class="key">
-        %%VBLT%%span class="k">%%VBLT%%span class="sw" style="background:rgba(240,138,40,.25)">%%VBLT%%/span>Player's area to dig%%VBLT%%/span>
         %%VBLT%%span class="k">%%VBLT%%span class="sw" style="background:repeating-linear-gradient(45deg,rgba(43,47,54,.55) 0 1.5px,rgba(43,47,54,.1) 1.5px 5px)">%%VBLT%%/span>Block shadow%%VBLT%%/span>
       %%VBLT%%/div>
     %%VBLT%%/div>
@@ -4537,8 +4553,18 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     %%VBLT%%p class="src">Source: Terry Liskevych, %%VBLT%%a href="https://www.theartofcoachingvolleyball.com/defensive-systems/" target="_blank" rel="noopener">&ldquo;Volleyball defense systems and strategies&rdquo;%%VBLT%%/a>, The Art of Coaching Volleyball; Gold Medal Squared, &ldquo;How to Choose the Right Volleyball Defense System for Your Team&rdquo;. The courts are drawn for this page.%%VBLT%%/p>
   %%VBLT%%/section>
 
+  %%VBLT%%section class="dvids">
+    %%VBLT%%h2>Defence: positioning against left and right side attacks%%VBLT%%/h2>
+    %%VBLT%%div class="dvgrid">
+      %%VBLT%%figure class="dvid">%%VBLT%%h3>Against a left-side attack (their outside hitter)%%VBLT%%/h3>%%VBLT%%img src="defense-vs-left.gif" alt="Defence positioning against an attack from the opponents' left side" loading="lazy" width="480" height="270">%%VBLT%%figcaption>The block forms on %%VBLT%%b>our right%%VBLT%%/b> (position 2). The right-back covers the line, the middle-back and left-back take the deep cross court, and the left-front drops off the net for the sharp angle and tips.%%VBLT%%/figcaption>%%VBLT%%/figure>
+      %%VBLT%%figure class="dvid">%%VBLT%%h3>Against a right-side attack (their opposite)%%VBLT%%/h3>%%VBLT%%img src="defense-vs-right.gif" alt="Defence positioning against an attack from the opponents' right side" loading="lazy" width="480" height="270">%%VBLT%%figcaption>Mirror image: the block forms on %%VBLT%%b>our left%%VBLT%%/b> (position 4). The left-back covers the line, the middle-back and right-back take the cross court, and the right-front drops off the net.%%VBLT%%/figcaption>%%VBLT%%/figure>
+    %%VBLT%%/div>
+    %%VBLT%%p class="vsrc">Clips from %%VBLT%%a href="https://www.youtube.com/watch?v=IGfj8k9QjwI" target="_blank" rel="noopener">&ldquo;How to position yourself PERFECTLY in Volleyball Defense&rdquo; &#8599;%%VBLT%%/a> by Four Athletes (Meghan Nally) on YouTube. All rights belong to the creator.%%VBLT%%/p>
+  %%VBLT%%/section>
+
   %%VBLT%%footer>
-    %%VBLT%%p>Shading shows each defender's area &mdash; if the ball lands there, it's theirs. Blockers are drawn at the net with their block band; back-row players and the libero never block. Drag their attacker along the net to see how the block and our defence shift; &ldquo;reset&rdquo; puts the hitter back.%%VBLT%%/p>
+    %%VBLT%%p>Blockers are drawn at the net with their block band; back-row players and the libero never block. Drag their attacker along the net to see how the block and our defence shift, or %%VBLT%%b>drag any of our players%%VBLT%%/b> to adjust their spot, then %%VBLT%%b>Save this version%%VBLT%%/b>; &ldquo;reset&rdquo; puts the hitter back.%%VBLT%%/p>
+    %%VBLT%%p>%%VBLT%%b>Reference:%%VBLT%%/b> %%VBLT%%a href="https://www.theartofcoachingvolleyball.com/defensive-systems/" target="_blank" rel="noopener">The Art of Coaching Volleyball &ndash; Volleyball defense systems and strategies &#8599;%%VBLT%%/a>%%VBLT%%/p>
   %%VBLT%%/footer>
 %%VBLT%%/div>
 
@@ -4560,21 +4586,21 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
               Z: { LF: [5, -8], RF: [-2, -1], LB: [11, -48], RB: [-13, -50], MB: [0.5, 8] } };
   var SHAPES = {
     per: {
-      out: { att: 205, aim: 93,  LF: [22, 77], MF: [158, 14, 1], RF: [196, 14, 1], LB: [23, 150], MB: [108, 203], RB: [203, 150],
+      out: { att: 205, aim: 93,  LF: [65, 71], MF: [179, 14, 1], RF: [205, 14, 1], LB: [32, 144], MB: [86, 196], RB: [196, 144],
              Z: { LF: [28, 11], RB: [-24, -22], MB: [29, -32], LB: [54, -28] } },
       mid: MID,
       opp: { att: 20,  aim: 132, LF: [27, 14, 1], MF: [65, 14, 1], RF: [203, 77], LB: [22, 150], MB: [117, 203], RB: [202, 150],
              Z: { LB: [-1, -3.5], RF: [0, -1.4], RB: [-29, -46], MB: [-42, -34] } }
     },
     rot: {
-      out: { att: 205, aim: 93,  LF: [22, 77], MF: [158, 14, 1], RF: [196, 14, 1], LB: [22, 205], MB: [201, 205], RB: [205, 77] },
+      out: { att: 205, aim: 93,  LF: [37, 73], MF: [153, 14, 1], RF: [189, 14, 1], LB: [37, 196], MB: [197, 197], RB: [190, 74] },
       mid: MID,
       opp: { att: 20,  aim: 132, LF: [27, 14, 1], MF: [65, 14, 1], RF: [203, 77], LB: [20, 77], MB: [24, 205], RB: [203, 205] }
     },
     /* counter rotation (anti-clockwise): off-blocker in for tips, far back up into the sharp angle,
        middle back to the deep cross corner, player behind the block stays on the line */
     ctr: {
-      out: { att: 205, aim: 93,  LF: [86, 77], MF: [158, 14, 1], RF: [196, 14, 1], LB: [23, 77], MB: [22, 203], RB: [203, 203] },
+      out: { att: 205, aim: 93,  LF: [129, 72], MF: [149, 14, 1], RF: [185, 14, 1], LB: [29, 74], MB: [33, 197], RB: [198, 196] },
       mid: MID,
       opp: { att: 20,  aim: 132, LF: [27, 14, 1], MF: [65, 14, 1], RF: [139, 77], LB: [22, 203], MB: [203, 203], RB: [202, 77] }
     },
@@ -4639,6 +4665,12 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     var sv = JSON.parse(SAVED.textContent);
     ["per", "rot", "ctr", "hyb"].forEach(function (s) { if (sv[s]) for (var a in sv[s]) if (typeof sv[s][a] === "number") att[s][a] = sv[s][a]; });
   } catch (e) {}
+  // our players' adjustments per court: OFF["per|out"][slot] = [dx, dy]
+  var OFF = {};
+  try { if (SAVED) { var so = JSON.parse(SAVED.textContent).__off; if (so) OFF = so; } } catch (e) {}
+  try { var lo = JSON.parse(localStorage.getItem("vs-defence-off4") || "null"); if (lo) OFF = lo; } catch (e) {}
+  function keep(){ try { localStorage.setItem("vs-defence-off4", JSON.stringify(OFF)); } catch (e) {} }
+  function ckey(svg){ return svg.dataset.sys + "|" + svg.dataset.att; }
 
   /* our shape for an attacker at x: hold each base shape (shifting a little with the hitter)
      and blend between them as the hitter moves from one zone to the next */
@@ -4661,8 +4693,23 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     return o;
   }
   function ease(t) { t = Math.min(1, Math.max(0, t)); return t * t * (3 - 2 * t); }
-  function shapeAt(s, ax) {
-    var O = moved(SHAPES[s].opp, ax), M = moved(SHAPES[s].mid, ax), U = moved(SHAPES[s].out, ax);
+  /* the shape against their opposite is the exact mirror of the shape against their outside
+     (including any adjustments made by dragging players) */
+  var MSLOT = { LF: "RF", MF: "MF", RF: "LF", LB: "RB", MB: "MB", RB: "LB" };
+  function outShape(s, off) {
+    var B = SHAPES[s].out, o = { att: B.att, aim: B.aim, Z: {} };
+    SLOTS.forEach(function (sl) { var d = (off || {})[sl] || [0, 0], p = B[sl];
+      o[sl] = [Math.min(205, Math.max(20, p[0] + d[0])), Math.min(212, Math.max(14, p[1] + d[1])), p[2] || 0]; });
+    return o;
+  }
+  function mirrorShape(U) {
+    var o = { att: 225 - U.att, aim: 225 - U.aim, Z: {} };
+    SLOTS.forEach(function (sl) { var p = U[MSLOT[sl]]; o[sl] = [225 - p[0], p[1], p[2]]; });
+    return o;
+  }
+  function shapeAt(s, ax, off) {
+    var Ub = outShape(s, off);
+    var O = moved(mirrorShape(Ub), ax), M = moved(SHAPES[s].mid, ax), U = moved(Ub, ax);
     if (ax %%VBLT%%= 50) return O;
     if (ax %%VBLT%% 80) return blend(O, M, ease((ax - 50) / 30));
     if (ax %%VBLT%%= 145) return M;
@@ -4708,7 +4755,8 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 
   /* ---------- drawing one court ---------- */
   function draw(svg) {
-    var sys = svg.dataset.sys, r = sys + svg.dataset.rot, a = svg.dataset.att, shape = shapeAt(sys, att[sys][a]), P = shape;
+    var sys = svg.dataset.sys, r = sys + svg.dataset.rot, a = svg.dataset.att, shape = shapeAt(sys, att[sys][a], OFF[ckey(svg)]), P = shape;
+    var mir = att[sys][a] %%VBLT%% 112.5;
     var who = ROT[svg.dataset.rot];
     svg.innerHTML = "";
     var defs = el("defs", {}, svg);
@@ -4721,21 +4769,6 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
 
     // our court
     el("rect", { x: 2, y: 5, width: 221, height: 218, fill: "#F1F5F9" }, svg);
-
-    // responsibility areas (diggers only)
-    var diggers = SLOTS.filter(function (sl) { return !shape[sl][2]; });
-    var Z = shape.Z || {};
-    var pts = diggers.map(function (sl) { var z = Z[sl] || [0, 0]; return [P[sl][0] + z[0], P[sl][1] + z[1]]; });
-    var fixed = null;
-    if (AREAS[sys]) {
-      if (Math.abs(shape.att - 205) %%VBLT%%= 25) fixed = AREAS[sys][0];
-      else if (Math.abs(shape.att - 20) %%VBLT%%= 25) fixed = AREAS[sys][1];
-    }
-    diggers.forEach(function (sl, i) {
-      var tag = who[sl], c = ZONECOL[tag] || COL[tag];
-      el("path", { d: path(fixed && fixed[sl] ? fixed[sl] : cell(i, pts)), fill: c, "fill-opacity": tag.indexOf("/L") > -1 ? ".30" : ".24",
-        stroke: "#fff", "stroke-width": 2, "stroke-linejoin": "round" }, svg);
-    });
 
     el("rect", { x: 2, y: 2, width: 221, height: 221, fill: "none", stroke: "#33475B", "stroke-width": 2.5, rx: 2 }, svg);
     el("line", { x1: 2, y1: 75, x2: 223, y2: 75, stroke: "#9FB6CC", "stroke-width": 1.5, "stroke-dasharray": "5 4" }, svg);
@@ -4775,7 +4808,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     el("path", { d: "M-5.3 -1.5q5 -1 7 -4.6M-2 5q1.5-5 6.7-6.6M-3.8 -3.8q4.6 3 4.2 9.2", fill: "none", stroke: "#16283C", "stroke-width": .9 }, ball);
 
     // arrows from the starting spot to the defensive spot
-    var F = fromFor(sys, shape.att);
+    var F = null;   // no start-spot circles or arrows
     if (F) {
       var ga = el("g", { fill: "none", stroke: "#33475B", "stroke-width": 1.5, "stroke-linecap": "round" }, svg);
       Object.keys(F).forEach(function (sl) {
@@ -4791,11 +4824,19 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
     // our players
     SLOTS.forEach(function (sl) {
       var tag = who[sl], p = P[sl];
-      var gp = el("g", { "class": "me", "data-slot": sl, transform: "translate(" + p[0] + "," + p[1] + ")" }, svg);
-      var w = 36;   // every player the same size
-      el("rect", { x: -w / 2, y: -10.4, width: w, height: 20.9, rx: 2.5, fill: fillFor(defs, tag, a),
+      var gp = el("g", { "class": "me pl", "data-slot": sl, transform: "translate(" + p[0] + "," + p[1] + ")" }, svg);
+      var w = 26;   // every player the same size: a square
+      el("rect", { x: -w / 2, y: -w / 2, width: w, height: w, rx: 3, fill: fillFor(defs, tag, a),
         stroke: "#fff", "stroke-width": 1.8 }, gp);
-      el("text", { x: 0, y: 4, "class": "chip", style: tag.length > 3 ? "font-size:9.5px" : "" }, gp).textContent = tag;
+      if (tag.indexOf("/") > -1) {
+        var parts = tag.split("/");
+        el("text", { x: 0, y: -1.5, "class": "chip", style: "font-size:9px" }, gp).textContent = parts[0] + "/";
+        el("text", { x: 0, y: 8.5, "class": "chip", style: "font-size:9px" }, gp).textContent = parts[1];
+      } else el("text", { x: 0, y: 4, "class": "chip", style: "font-size:12px" }, gp).textContent = tag;
+      if ((TIP[sys] || {})[mir ? MSLOT[sl] : sl] && Math.abs(att[sys][a] - 112.5) > 40) {
+        var tx = p[0] > 150 ? -w / 2 - 4 : w / 2 + 4;
+        el("text", { x: tx, y: 4, "class": "tiplab", "text-anchor": p[0] > 150 ? "end" : "start" }, gp).textContent = "tip";
+      }
     });
 
   }
@@ -4823,6 +4864,8 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
       "stroke-dasharray": "none" }, g);
   }
 
+  /* who covers tips (their outside attacking): clockwise = off-blocker, anti-clockwise = player behind the block */
+  var TIP = { ctr: { LF: 1 }, rot: { RB: 1 } };
   /* where each digger starts before the rotation (base spots), for the arrows; hitter on their outside */
   var FROM = { rot: { LF: [22, 22], LB: [22, 149], MB: [106, 205], RB: [205, 160] },
                ctr: { LF: [22, 22], LB: [23, 150], MB: [108, 203], RB: [203, 150] } };
@@ -4856,7 +4899,7 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
         ? '%%VBLT%%div class="rotgrid">' +
             court("ctr", "out", "%%VBLT%%b>Clockwise%%VBLT%%/b>") +
             court("rot", "out", "%%VBLT%%b>Anti-clockwise%%VBLT%%/b>") + '%%VBLT%%/div>'
-        : court(s, "out", ""));
+        : court(s, "out", "&nbsp;"));
     rows.appendChild(box);
   });
   var cmp = document.createElement("section");
@@ -4874,8 +4917,16 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
   }
 
   document.querySelectorAll("svg.live").forEach(function (svg) {
-    var drag = false, off = 0;
+    var drag = false, off = 0, pdrag = null, p0 = null, d0 = null;
     svg.addEventListener("pointerdown", function (e) {
+      if (document.body.classList.contains("locked")) return;
+      var me = e.target.closest(".me");
+      if (me) {
+        var mirr = att[svg.dataset.sys][svg.dataset.att] %%VBLT%% 112.5;
+        pdrag = mirr ? MSLOT[me.dataset.slot] : me.dataset.slot; p0 = point(svg, e); p0.m = mirr ? -1 : 1;
+        var O = OFF[ckey(svg)] || {}; d0 = (O[pdrag] || [0, 0]).slice();
+        svg.setPointerCapture(e.pointerId); e.preventDefault(); return;
+      }
       if (!e.target.closest(".attacker")) return;
       drag = true; svg.setPointerCapture(e.pointerId);
       var sys = svg.dataset.sys;
@@ -4884,18 +4935,33 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
       e.preventDefault();
     });
     svg.addEventListener("pointermove", function (e) {
+      if (pdrag) {
+        var q = point(svg, e), k = ckey(svg);
+        OFF[k] = OFF[k] || {}; OFF[k][pdrag] = [d0[0] + (q.x - p0.x) * p0.m, d0[1] + q.y - p0.y];
+        draw(svg); return;
+      }
       if (!drag) return;
       att[svg.dataset.sys][svg.dataset.att] = Math.min(213, Math.max(12, point(svg, e).x - off));
       draw(svg);
     });
-    ["pointerup", "pointercancel"].forEach(function (ev) { svg.addEventListener(ev, function () { drag = false; }); });
+    ["pointerup", "pointercancel"].forEach(function (ev) { svg.addEventListener(ev, function () { if (pdrag) keep(); drag = false; pdrag = null; }); });
     svg.closest(".sysbox").querySelector(".reset").addEventListener("click", function () {
       att[svg.dataset.sys][svg.dataset.att] = SHAPES[svg.dataset.sys][svg.dataset.att].att;
+      delete OFF[ckey(svg)]; keep();
       draw(svg);
     });
   });
 
   function drawAll() { document.querySelectorAll("svg.live").forEach(draw); }
+  // keep all three courts the same size and on one level
+  function sameSize() {
+    var rs = document.querySelector('.rotbox svg.live'), pc = document.querySelector('.sysbox:not(.rotbox) .cell');
+    if (!rs || !pc) return;
+    pc.style.maxWidth = "";
+    if (getComputedStyle(document.getElementById("rows")).gridTemplateColumns.split(" ").length > 1) pc.style.maxWidth = rs.getBoundingClientRect().width + "px";
+  }
+  window.addEventListener("resize", sameSize);
+  setTimeout(sameSize, 0);
   drawAll();
 
   var lockBtn = document.getElementById("lockBtn"), saveBtn = document.getElementById("saveBtn");
@@ -4915,7 +4981,8 @@ if("ResizeObserver" in window)new ResizeObserver(s).observe(document.documentEle
       tag.type = "application/json"; tag.id = "saved-att";
       document.body.insertBefore(tag, document.body.querySelector("script"));
     }
-    tag.textContent = JSON.stringify(att);
+    var sv = JSON.parse(JSON.stringify(att)); sv.__off = OFF;
+    tag.textContent = JSON.stringify(sv);
     // save the page as it was written, not with the courts and table the script builds
     var copy = document.documentElement.cloneNode(true);
     var rw = copy.querySelector("#rows"); if (rw) { rw.innerHTML = ""; rw.removeAttribute("class"); }
